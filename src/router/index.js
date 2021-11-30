@@ -25,7 +25,7 @@ const routes = [
     },
     {
         // get params id
-        path: '/b',
+        path: '/b/:boardId',
         name: 'board',
         component: board
     },

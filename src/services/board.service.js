@@ -4,7 +4,7 @@ import { utilService } from './util.service.js'
 
 const KEY = 'boardDB';
 
-export const productService = {
+export const boardService = {
     query,
     getById,
     remove,
@@ -18,7 +18,10 @@ _createBoards()
 
 // TODO: support paging and filtering and sorting
 function query() {
-    return storageService.query(KEY)
+    // return storageService.query(KEY)
+    const boards =  storageService.query(KEY)
+    console.log(boards);
+    return boards
 }
 
 function getById(id) {
@@ -93,7 +96,7 @@ function _createBoards() {
 
 function _createBoard(title) {
     const board = getEmptyBoard(title)
-    board._id = utilService.makeId()
+    // board._id = utilService.makeId()
     return board
 }
 

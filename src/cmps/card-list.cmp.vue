@@ -1,15 +1,25 @@
 <template>
   <li>
-      <!-- card preview gats card and mini-list-->
-    <card-preview></card-preview>
+    <!-- card preview gats card and mini-list-->
+    <card-preview :card="card" :list="list"></card-preview>
   </li>
 </template>
 
 <script>
 import cardPreview from "./card-preview.cmp.vue";
-// props- card
-// props mini-list
+
+
 export default {
+  props: {
+    card:{
+      type: Object
+    },
+    list:{
+      type: Object
+    }
+  },
+  // props- card
+  // props mini-list
   components: {
     cardPreview
   }

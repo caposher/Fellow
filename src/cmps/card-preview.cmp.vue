@@ -4,7 +4,7 @@
     <div>
       <!-- v-for labels -->
       <small>labels</small>
-      <h4>Title</h4>
+      <h4>{{card.title}}</h4>
       <button>Quick edit</button>
     </div>
     <div class="card-icons"></div>
@@ -16,10 +16,17 @@
 
 <script>
 import cardDetails from "./card-details.cmp.vue";
-
+  export default {
+props:{
+  card:{
+      type: Object
+    },
+    list:{
+      type: Object
+    }
+},
 // props: card
 // props: mini-list
-export default {
   data() {
     return {
       showDetails: false

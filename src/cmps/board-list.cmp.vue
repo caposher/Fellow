@@ -2,14 +2,14 @@
   <li>
     <header>
       <h4>{{list.title}}</h4>
-      <div class="actions"></div>
+      <button class="actions">...</button>
     </header>
-    <ul>
+    <ul v-for="card in list.cards" :key="card.id">
     <!-- v-for cards in list.cards  :mini-list="mini-list"-->
-    <card-list></card-list>
+    <card-list :card="card" :list="list"></card-list>
     </ul>
     <footer>
-      <button>+Add card</button>
+      <button @click="addCard">+Add card</button>
     </footer>
   </li>
 </template>
@@ -22,6 +22,17 @@ export default {
   props:{
     list:{
       type:Object
+    }
+  },
+  methods:{
+    async addCard(){
+       const title = prompt('card title')
+      try{
+        this.$store.dispatch({type:'addCard',boardId:this.$store.getters.boardId,list: this.list, title})
+      }
+      catch(err){
+        console.log('cant add card', err);
+      }
     }
   },
   components: {

@@ -42,10 +42,10 @@ function save(board) {
 async function saveList(list, boardId) {
     try{
         var board = await getById(boardId);
-        console.log(board);
+        console.log('list.id', list.id);
         if (list.id) {
           const idx = board.lists.findIndex((currList) => currList.id === list.id);
-          board.lists.splice(idx, 1, list);
+          board.lists.splice(idx, 1 ,list);
         } else {
           list.id = 'L' + utilService.makeId();
           board.lists.push(list);

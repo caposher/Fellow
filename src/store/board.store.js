@@ -13,6 +13,9 @@ export const boardStore = {
     boards(state) {
       return JSON.parse(JSON.stringify(state.boards));
     },
+    boardId(state){
+      return state.currBoard._id
+    }
   },
 
   mutations: {
@@ -63,6 +66,19 @@ export const boardStore = {
         return updatedBoard;
       } catch (err) {
         console.log('cant addList', err);
+      }
+    },
+    async addCard({ commit }, { boardId,list, title }) {
+      const card = boardService.getEmptyCard(title);
+      console.log('card',card);
+      const updatedList = list.cards.unshift(card)
+      console.log('updatedList',updatedList);
+      try {
+        const updatedBoard = await boardService.saveList(updatedList, boardId);
+        commit({ type: 'setBoard', board: updatedBoard });
+        return updatedBoard;
+      } catch (err) {
+        console.log('cant add card', err);
       }
     },
   },

@@ -1,7 +1,7 @@
 <template>
   <li>
     <header>
-      <h4>Title</h4>
+      <h4>{{list.title}}</h4>
       <div class="actions"></div>
     </header>
     <ul>
@@ -19,6 +19,11 @@ import cardList from "./card-list.cmp.vue";
 
 // props- list
 export default {
+  props:{
+    list:{
+      type:Object
+    }
+  },
   components: {
     cardList
   }

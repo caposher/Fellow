@@ -2,11 +2,10 @@
   <section>
     <board-header />
     <ul>
-      <!-- v- for lists -->
-      <!-- board-list gets list -->
       <li v-for="list in board.lists" :key="list.id">
-        <board-list></board-list>
+        <board-list :list="list"></board-list>
       </li>
+      <li @click="addList">Add list</li>
     </ul>
   </section>
 </template>
@@ -16,21 +15,26 @@ import boardHeader from "../cmps/board-header.cmp.vue";
 import mainMenu from "../cmps/main-menu.cmp.vue";
 import boardMenu from "../cmps/board-menu.cmp.vue";
 import boardList from "../cmps/board-list.cmp.vue";
-// gets board from store (by params) - loadBoard
-// gets lists from board (board.lists)
+
 export default {
   data() {
-    return {
-      board: null
-    };
+    return {};
   },
-  async created() {
-    const { boardId } = this.$route.params;
-    try {
-      const board = await this.$store.dispatch({type: 'loadAndWatchBoard', boardId});
-      this.board = board;
-    } catch (err) {
-      console.log("problem with getting toy in detailed", err);
+  computed: {
+    board() {
+      console.log(this.$store.getters.board);
+      return this.$store.getters.board;
+    }
+  },
+  methods: {
+    async addList() {
+      const title = prompt('list title')
+      try{
+        this.$store.dispatch({type:'addList', title, boardId:this.board._id})
+      }
+      catch(err){
+        console.log('cant add list', err);
+      }
     }
   },
   components: {

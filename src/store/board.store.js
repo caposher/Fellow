@@ -3,21 +3,22 @@ import { boardService } from '../services/board.service.js';
 export const boardStore = {
   state: {
     currBoard: null,
-    boards: null
+    boards: null,
   },
 
   getters: {
     board(state) {
-      return state.currBoard;
+      return JSON.parse(JSON.stringify(state.currBoard));
     },
     boards(state) {
-      return state.boards;
+      return JSON.parse(JSON.stringify(state.boards));
     },
   },
 
   mutations: {
     setBoard(state, { board }) {
       state.currBoard = board;
+      console.log('state.currBoard', state.currBoard);
     },
     setBoards(state, { boards }) {
       state.boards = boards;
@@ -29,7 +30,7 @@ export const boardStore = {
       try {
         const boards = await boardService.query();
         console.log('boards', boards);
-        commit({type:'setBoards', boards})
+        commit({ type: 'setBoards', boards });
         return boards;
       } catch (err) {
         console.log('cant load boards:', err);
@@ -44,12 +45,25 @@ export const boardStore = {
         console.log('cant load board:' + id, err);
       }
     },
-    async createBoard({ commit },{title}){
-      const board = boardService.getEmptyBoard(title);
-      const savedBoard = boardService.save(board)
-      commit({ type: 'setBoard',board: savedBoard });
-      return savedBoard
-
-    }
+    async createBoard({ commit }, { title }) {
+      try {
+        const board = boardService.getEmptyBoard(title);
+        const savedBoard = boardService.save(board);
+        commit({ type: 'setBoard', board: savedBoard });
+        return savedBoard;
+      } catch (err) {
+        console.log('cant creat board', err);
+      }
+    },
+    async addList({ commit }, { boardId, title }) {
+      const list = boardService.getEmptyList(title);
+      try {
+        const updatedBoard = await boardService.saveList(list, boardId);
+        commit({ type: 'setBoard', board: updatedBoard });
+        return updatedBoard;
+      } catch (err) {
+        console.log('cant addList', err);
+      }
+    },
   },
 };

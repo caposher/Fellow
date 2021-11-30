@@ -20,7 +20,6 @@ _createBoards();
 function query() {
   // return storageService.query(KEY)
   const boards = storageService.query(KEY);
-  console.log(boards);
   return boards;
 }
 
@@ -42,7 +41,6 @@ function save(board) {
 async function saveList(list, boardId) {
     try{
         var board = await getById(boardId);
-        console.log('list.id', list.id);
         if (list.id) {
           const idx = board.lists.findIndex((currList) => currList.id === list.id);
           board.lists.splice(idx, 1 ,list);

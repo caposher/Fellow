@@ -13,9 +13,9 @@ export const boardStore = {
     boards(state) {
       return JSON.parse(JSON.stringify(state.boards));
     },
-    boardId(state){
-      return state.currBoard._id
-    }
+    boardId(state) {
+      return state.currBoard._id;
+    },
   },
 
   mutations: {
@@ -34,7 +34,16 @@ export const boardStore = {
         const boards = await boardService.query();
         console.log('boards', boards);
         commit({ type: 'setBoards', boards });
-        return boards;
+        // return boards;
+      } catch (err) {
+        console.log('cant load boards:', err);
+      }
+    },
+    async loadBoard({ commit }, {boardId}) {
+      try {
+        const board = await boardService.getById(boardId);
+        commit({ type: 'setBoard', board });
+        // return board;
       } catch (err) {
         console.log('cant load boards:', err);
       }
@@ -68,13 +77,13 @@ export const boardStore = {
         console.log('cant addList', err);
       }
     },
-    async addCard({ commit }, { boardId,list, title }) {
+    async addCard({ commit }, { boardId, list, title }) {
       const card = boardService.getEmptyCard(title);
-      console.log('card',card);
-      const updatedList = list.cards.unshift(card)
-      console.log('updatedList',updatedList);
+      console.log('card', card);
+      list.cards.unshift(card);
+      console.log('updatedList', list);
       try {
-        const updatedBoard = await boardService.saveList(updatedList, boardId);
+        const updatedBoard = await boardService.saveList(list, boardId);
         commit({ type: 'setBoard', board: updatedBoard });
         return updatedBoard;
       } catch (err) {

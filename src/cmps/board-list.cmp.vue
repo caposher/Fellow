@@ -27,6 +27,7 @@ export default {
   methods:{
     async addCard(){
        const title = prompt('card title')
+       if(!title) return
       try{
         this.$store.dispatch({type:'addCard',boardId:this.$store.getters.boardId,list: this.list, title})
       }

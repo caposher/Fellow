@@ -28,6 +28,8 @@ export default {
   methods: {
     async createBoard() {
       const title = prompt("add title");
+       if(!title) return
+
       try {
         const board = await this.$store.dispatch({
           type: "createBoard",

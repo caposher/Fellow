@@ -1,21 +1,21 @@
 <template>
-  <li>
-    <header>
-      <h4>{{list.title}}</h4>
-      <button class="actions">...</button>
-    </header>
-    <ul v-for="card in list.cards" :key="card.id">
-    <!-- v-for cards in list.cards  :mini-list="mini-list"-->
-    <card-list :card="card" :list="list"></card-list>
-    </ul>
-    <footer>
-      <button @click="addCard">+Add card</button>
-    </footer>
-  </li>
+    <li class="list">
+        <header>
+            <h4>{{ list.title }}</h4>
+            <button class="actions">...</button>
+        </header>
+        <ul v-for="card in list.cards" :key="card.id">
+            <!-- v-for cards in list.cards  :mini-list="mini-list"-->
+            <card-list :card="card" :list="list"></card-list>
+        </ul>
+        <footer>
+            <button @click="addCard">+Add card</button>
+        </footer>
+    </li>
 </template>
 
 <script>
-import cardList from "./card-list.cmp.vue";
+import cardList from './card-list.cmp.vue';
 
 // props- list
 export default {
@@ -45,5 +45,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

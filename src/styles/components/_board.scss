@@ -1,0 +1,51 @@
+.board {
+    display: flex;
+    list-style: none;
+    > * {
+        margin-inline-start: 8px;
+        border-radius: 3px;
+        background-color: hsl(227, 14%, 93%);
+    }
+}
+
+.list-wrapper {
+    max-height: 100vh;
+}
+
+.list {
+    margin: 0 4px;
+    padding: 0 4px;
+    position: relative;
+    > * {
+        width: 222px;
+        font-weight: 600;
+    }
+
+    header {
+        display: flex;
+        height: 40px;
+        align-items: center;
+        padding-inline-start: 16px;
+
+        button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 6px;
+            width: 20px;
+            height: 20px;
+            font-size: 16px;
+            line-height: 20px;
+        }
+    }
+
+    footer {
+        button {
+            margin: 2px 0 8px 8px;
+            padding: 4px 8px;
+            color: #5e6c84;
+            width: 100%;
+            text-align: left;
+        }
+    }
+}

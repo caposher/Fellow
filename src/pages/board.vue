@@ -1,8 +1,8 @@
 <template>
   <section v-if="board">
     <board-header />
-    <ul>
-      <li v-for="list in board.lists" :key="list.id">
+    <ul class="board">
+      <li class="list-wrapper" v-for="list in board.lists" :key="list.id">
         <board-list :list="list"></board-list>
       </li>
       <li @click="addList">Add list</li>
@@ -79,5 +79,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

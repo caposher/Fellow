@@ -66,10 +66,10 @@ export const boardStore = {
     },
     async loadListAndCard({ commit }, {boardId, cardId}) {
       try {
-        const data =await boardService.getCardById(boardId, cardId)
+        const data =await boardService.getListAndCardById(boardId, cardId)
         const card = data.card
         const list = data.list
-        console.log(data.card);
+        // console.log(data.card);
         commit({ type: 'setCard', card });
         commit({ type: 'setList', list });
         // return board;

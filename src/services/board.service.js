@@ -12,6 +12,7 @@ export const boardService = {
   getEmptyList,
   getEmptyCard,
   saveList,
+  getCardById
 };
 
 _createBoards();
@@ -25,6 +26,18 @@ function query() {
 
 function getById(id) {
   return storageService.get(KEY, id);
+}
+
+
+async function getCardById(boardId,cardId) {
+  const board = await getById(boardId)
+  const list = board.lists.find(list => {
+    return list.cards.find(card=> card.id===cardId)
+  });
+  const card = list.cards.find(card=> card.id===cardId)
+  console.log('card', card);
+  return {card, list}
+  // return storageService.get(KEY, id);
 }
 
 function remove(id) {

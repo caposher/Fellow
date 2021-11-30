@@ -34,6 +34,9 @@ export default {
       catch(err){
         console.log('cant add card', err);
       }
+    },
+    selectCard(card){
+      console.log(card);
     }
   },
   components: {

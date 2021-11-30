@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <app-header/>
+    <app-header />
     <router-view />
   </div>
 </template>
@@ -10,7 +10,7 @@ import appHeader from "@/cmps/app-header.cmp.vue";
 
 export default {
   components: {
-    appHeader
-  }
+    appHeader,
+  },
 };
 </script>

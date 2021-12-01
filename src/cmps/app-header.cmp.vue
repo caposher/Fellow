@@ -1,23 +1,28 @@
 <template>
   <header class="main-header">
-    <div id="nav">
-      <router-link to="/" aria-label="Back to home">Fellow</router-link>
-      <!-- <router-link to="/about">About</router-link> -->
-    </div>
     <div>
+      <router-link to="/" aria-label="Back to home">Fellow</router-link>
       <button>Workspaces</button>
       <button>Recent</button>
       <button>Starred</button>
       <button>Templates</button>
-
-      <input
-        autocomplete="off"
-        autocorrect="off"
-        spellcheck="false"
-        type="search"
-        placeholder="Search…"
-        value=""
-      />
+      <button>Create</button>
+    </div>
+    <div class="container">
+      <div class="input-container">
+        <i class="fas fa-search search-icon"></i>
+        <input
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          type="search"
+          placeholder="Search"
+          value=""
+        />
+      </div>
+      <button>!</button>
+      <button>BELL</button>
+      <span>USER</span>
     </div>
   </header>
 </template>

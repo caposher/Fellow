@@ -3,25 +3,82 @@
   position: absolute;
   top: 5px;
   display: flex;
+  gap: 35px;
   flex-direction: column;
   padding: 20px;
   min-height: 80vh;
-  header{
-      position: relative;
-      .header{
-          display: flex;
-          gap: 5px;
+  header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    .header {
+      flex-grow: 1;
+      display: flex;
+      gap: 5px;
+      .header-text {
+        flex-grow: 1;
+        input {
+          border: none;
+          min-width: calc(100% - 30px);
+          &:focus-visible {
+            width: fit-content;
+            outline-color: #0079bf;
+          }
+        }
       }
-      .close{
-          right: 0;
-          position: absolute;
-          font-size: 20px;
-      }
+    }
+    .close {
+      right: 0;
+      position: absolute;
+      font-size: 20px;
+    }
   }
   .card-body {
     display: flex;
     .main-details {
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
       flex-grow: 1;
+      .description {
+        header {
+          display: flex;
+          gap: 15px;
+        }
+        textarea {
+          &:focus-visible {
+            outline-color: #0079bf;
+          }
+          border: none;
+          resize: none;
+          width: 100%;
+        }
+        .buttons {
+          display: flex;
+          gap: 10px;
+          // align-items: center;
+          >*{
+            &:hover{
+              cursor: pointer;
+
+            }
+            justify-content: center;
+            align-items: center;
+            display: flex;
+          }
+          .save {
+            background-color: #0079bf;
+            border: none;
+            color: #fff;
+            border-radius: 3px;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: 400;
+            justify-content: center;
+            line-height: 20px;
+          }
+        }
+      }
     }
     .side-menu {
       display: flex;

@@ -4,8 +4,8 @@
       <button @click="closeModal" class="close">x</button>
       <div class="header">
         <span class="fa fa-newspaper"></span>
-        <div>
-          <input @input="updateCard" v-model="card.title" />
+        <div class="header-text">
+          <input @blur="updateCard" v-model="card.title" />
           <h5>in list {{list.title}}</h5>
         </div>
       </div>
@@ -21,11 +21,22 @@
           </div>
         </div>
         <div class="description">
-          <span>icon</span>
-          <h4>Description</h4>
-          <textarea></textarea>
-          <button>undo</button>
-          <button>save</button>
+          <header>
+            <span class="fa fa-align-left"></span>
+            <h4>Description</h4>
+            <button v-show="card.description&&!isEditDesc" @click="setFocus">Edit</button>
+          </header>
+          <textarea
+            ref="desc"
+            @focus="setEditDesc"
+            @blur="updateCard"
+            placeholder="Add a more detailed description..."
+            v-model="card.description"
+          ></textarea>
+          <div class="buttons" v-show="isEditDesc">
+            <button class="save">save</button>
+            <button @click.stop="undoDesc">X</button>
+          </div>
         </div>
         <div class="activity-log">
           <span>icon</span>
@@ -47,18 +58,21 @@
 
 <script>
 export default {
+  data() {
+    return {
+      lastCardDesc: null,
+      isEditDesc: false
+    };
+  },
   computed: {
     card() {
-      console.log("card", this.$store.getters.card);
       return this.$store.getters.card;
     },
     list() {
-      console.log("list", this.$store.getters.list);
       return this.$store.getters.list;
     },
-    boardId(){
+    boardId() {
       return this.$store.getters.boardId;
-
     }
   },
   methods: {
@@ -66,13 +80,50 @@ export default {
       const { boardId } = this.$route.params;
       this.$router.push("/b/" + boardId);
     },
-    async updateCard(){
-      try{
-        this.$store.dispatch({type: 'updateCard',boardId:this.boardId, list: this.list, card:this.card})
+    async updateCard() {
+      if (this.card.description === this.lastCardDesc) {
+        this.isEditDesc = false;
+        return;
       }
-      catch(err){
-        console.log('cant update card', err);
+      try {
+        await this.$store.dispatch({
+          type: "updateCard",
+          boardId: this.boardId,
+          list: this.list,
+          card: this.card
+        });
+        this.isEditDesc = false;
+        console.log("card updated");
+      } catch (err) {
+        console.log("cant update card", err);
       }
+    },
+    setEditDesc() {
+      this.lastCardDesc = this.card.description;
+      this.isEditDesc = true;
+    },
+    async undoDesc() {
+         if (this.card.description === this.lastCardDesc) {
+        this.isEditDesc = false;
+        return;
+      }
+      var card = this.card;
+      card.description = this.lastCardDesc;
+      try {
+        await this.$store.dispatch({
+          type: "updateCard",
+          boardId: this.boardId,
+          list: this.list,
+          card
+        });
+        console.log("card desc undo");
+      } catch (err) {
+        console.log("cant update card", err);
+      }
+    },
+    setFocus() {
+      this.isEditDesc = true;
+      this.$refs.desc.focus();
     }
   }
 };

@@ -1,7 +1,9 @@
 <template>
   <section class="home">
-    <ul>
-      <li v-for="board in boards" :key="board._id" @click="setBoard(board._id)">{{ board.title }}</li>
+    <ul style="background-color: white">
+      <li v-for="board in boards" :key="board._id" @click="setBoard(board._id)">
+        {{ board.title }}
+      </li>
       <li @click="createBoard">Add board</li>
     </ul>
   </section>

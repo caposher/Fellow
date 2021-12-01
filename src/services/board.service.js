@@ -12,7 +12,7 @@ export const boardService = {
   getEmptyList,
   getEmptyCard,
   saveList,
-  getListAndCardById
+  getListAndCardById,
 };
 
 _createBoards();
@@ -28,15 +28,14 @@ function getById(id) {
   return storageService.get(KEY, id);
 }
 
-
-async function getListAndCardById(boardId,cardId) {
-  const board = await getById(boardId)
-  const list = board.lists.find(list => {
-    return list.cards.find(card=> card.id===cardId)
+async function getListAndCardById(boardId, cardId) {
+  const board = await getById(boardId);
+  const list = board.lists.find((list) => {
+    return list.cards.find((card) => card.id === cardId);
   });
-  const card = list.cards.find(card=> card.id===cardId)
+  const card = list.cards.find((card) => card.id === cardId);
   // console.log('card', card);
-  return {card, list}
+  return { card, list };
   // return storageService.get(KEY, id);
 }
 
@@ -45,34 +44,39 @@ function remove(id) {
 }
 
 function save(board) {
-  const savedBoard = board._id
-    ? storageService.put(KEY, board)
-    : storageService.post(KEY, board);
+  const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
   return savedBoard;
 }
 
 async function saveList(list, boardId) {
-    try{
-        var board = await getById(boardId);
-        if (list.id) {
-          const idx = board.lists.findIndex((currList) => currList.id === list.id);
-          board.lists.splice(idx, 1 ,list);
-        } else {
-          list.id = 'L' + utilService.makeId();
-          board.lists.push(list);
-        }
-        try{
-            const savedBoard = await save(board);
-            return savedBoard;
-        }
-        catch(err){
-            console.log('cant save board', err);
-        }
+  try {
+    var board = await getById(boardId);
+    if (list.id) {
+      const idx = board.lists.findIndex((currList) => currList.id === list.id);
+      board.lists.splice(idx, 1, list);
+    } else {
+      list.id = 'L' + utilService.makeId();
+      board.lists.push(list);
     }
-    catch(err){
-        console.log('cant save list'+list, err);
+    try {
+      const savedBoard = await save(board);
+      return savedBoard;
+    } catch (err) {
+      console.log('cant save board', err);
     }
+  } catch (err) {
+    console.log('cant save list' + list, err);
+  }
 }
+
+// async function updateList(list, boardId) {
+//   try {
+//     var board = await getById(boardId);
+//     const idx = board.lists.findIndex((currList) => currList.id === list.id);
+//   } catch (err) {
+//     console.log('cant update list' + list, err);
+//   }
+// }
 
 function getEmptyBoard(title) {
   return {
@@ -111,8 +115,7 @@ function getEmptyCard(title) {
       id: 'u101',
       username: 'Tal',
       fullname: 'Tal Tarablus',
-      imgUrl:
-        'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+      imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
     },
     activities: [],
   };

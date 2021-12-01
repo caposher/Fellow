@@ -2,14 +2,7 @@
   <li class="list">
     <header>
       <h4 v-if="!editTitle" @click="editTitle = true">{{ list.title }}</h4>
-      <textarea
-        v-else
-        ref="edit"
-        :value="list.title"
-        v-focus="editTitle"
-        @focus="editTitle = true"
-        @blur="editTitle = false"
-      ></textarea>
+      <input type="text" v-else v-model="updatedList.title" v-focus="editTitle" @blur="updateList()" />
       <button class="actions">...</button>
     </header>
     <ul class="card-list">
@@ -36,6 +29,7 @@ export default {
   directives: { focus },
   data() {
     return {
+      updatedList: JSON.parse(JSON.stringify(this.list)),
       editTitle: false,
     };
   },
@@ -52,11 +46,13 @@ export default {
     selectCard(card) {
       console.log(card);
     },
+    updateList() {
+      this.editTitle = false;
+      this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
+    },
   },
   components: {
     cardList,
   },
 };
 </script>
-
-<style></style>

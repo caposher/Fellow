@@ -5,7 +5,7 @@ export const boardStore = {
     currBoard: null,
     boards: null,
     currCard: null,
-    currList: null
+    currList: null,
   },
 
   getters: {
@@ -18,14 +18,12 @@ export const boardStore = {
     boardId(state) {
       return state.currBoard._id;
     },
-    card(state){
+    card(state) {
       return JSON.parse(JSON.stringify(state.currCard));
-
     },
-    list(state){
+    list(state) {
       return JSON.parse(JSON.stringify(state.currList));
-
-    }
+    },
   },
 
   mutations: {
@@ -42,7 +40,6 @@ export const boardStore = {
     },
     setList(state, { list }) {
       state.currList = list;
-      ;
       // console.log(state.currList);
     },
   },
@@ -58,7 +55,7 @@ export const boardStore = {
         console.log('cant load boards:', err);
       }
     },
-    async loadBoard({ commit }, {boardId}) {
+    async loadBoard({ commit }, { boardId }) {
       try {
         const board = await boardService.getById(boardId);
         commit({ type: 'setBoard', board });
@@ -67,20 +64,19 @@ export const boardStore = {
         console.log('cant load boards:', err);
       }
     },
-    async setListAndCard({ commit }, {boardId, cardId}) {
+    async setListAndCard({ commit }, { boardId, cardId }) {
       try {
-        if (cardId){
-          const data =await boardService.getListAndCardById(boardId, cardId)
-          const card = data.card
-          const list = data.list
+        if (cardId) {
+          const data = await boardService.getListAndCardById(boardId, cardId);
+          const card = data.card;
+          const list = data.list;
           // console.log('list', list);
           // console.log('card', card);
           commit({ type: 'setCard', card });
           commit({ type: 'setList', list });
-        }
-        else{
-          commit({ type: 'setCard', card:null });
-          commit({ type: 'setList', list:null });
+        } else {
+          commit({ type: 'setCard', card: null });
+          commit({ type: 'setList', list: null });
         }
       } catch (err) {
         console.log('cant load card:', err);
@@ -113,6 +109,15 @@ export const boardStore = {
         return updatedBoard;
       } catch (err) {
         console.log('cant addList', err);
+      }
+    },
+    async updateList({ commit }, { boardId, list }) {
+      try {
+        const updatedBoard = await boardService.saveList(list, boardId);
+        commit({ type: 'setBoard', board: updatedBoard });
+        return updatedBoard;
+      } catch (err) {
+        console.log('cant update list', err);
       }
     },
     async addCard({ commit }, { boardId, list, title }) {

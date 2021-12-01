@@ -6,6 +6,9 @@ header.main-header {
   padding: 6px 4px;
   box-sizing: border-box;
   display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
 
   & button,
   a {

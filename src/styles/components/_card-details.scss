@@ -1,0 +1,12 @@
+.card-details {
+  background-color: #f4f5f7;
+  // max-width: 770px;
+
+  margin: 0 auto;
+  width: 100%;
+  position: absolute;
+  @media (max-width: 784px) {
+    margin: 0 7px;
+  }
+  // 784
+}

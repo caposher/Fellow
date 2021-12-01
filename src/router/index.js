@@ -4,7 +4,7 @@ import home from '../pages/home.vue';
 import about from '../pages/about.vue';
 import login from '../pages/login.vue';
 import board from '../pages/board.vue';
-import cardDetails from '../cmps/card-details.cmp.vue';
+import cardDetails from '../pages/card-details.vue';
 
 Vue.use(VueRouter);
 

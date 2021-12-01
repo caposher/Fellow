@@ -9,13 +9,10 @@
     </div>
     <div class="card-icons"></div>
     <div class="card-members"></div>
-    <!-- gets :card="card" +mini-list-->
-    <!-- <card-details v-if="showDetails"></card-details> -->
   </section>
 </template>
 
 <script>
-import cardDetails from './card-details.cmp.vue';
 export default {
   props: {
     card: {
@@ -39,7 +36,6 @@ export default {
     },
   },
   components: {
-    cardDetails,
   },
 };
 </script>

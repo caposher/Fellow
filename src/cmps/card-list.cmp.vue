@@ -6,25 +6,23 @@
 </template>
 
 <script>
-import cardPreview from "./card-preview.cmp.vue";
-
+import cardPreview from './card-preview.cmp.vue';
 
 export default {
   props: {
-    card:{
-      type: Object
+    card: {
+      type: Object,
     },
-    list:{
-      type: Object
-    }
+    list: {
+      type: Object,
+    },
   },
   // props- card
   // props mini-list
   components: {
-    cardPreview
-  }
+    cardPreview,
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

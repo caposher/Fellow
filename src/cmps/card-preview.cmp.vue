@@ -1,10 +1,10 @@
 <template>
-  <section @click="showDetails">
-    <img class="card-cover" />
+  <section class="card" @click="showDetails">
+    <!-- <img :url="" class="card-cover" /> -->
     <div>
       <!-- v-for labels -->
       <small>labels</small>
-      <h4>{{card.title}}</h4>
+      <h4>{{ card.title }}</h4>
       <button>Quick edit</button>
     </div>
     <div class="card-icons"></div>
@@ -15,34 +15,33 @@
 </template>
 
 <script>
-import cardDetails from "./card-details.cmp.vue";
-  export default {
-props:{
-  card:{
-      type: Object
+import cardDetails from './card-details.cmp.vue';
+export default {
+  props: {
+    card: {
+      type: Object,
     },
-    list:{
-      type: Object
-    }
-},
-// props: card
-// props: mini-list
+    list: {
+      type: Object,
+    },
+  },
+  // props: card
+  // props: mini-list
   data() {
     return {
       // showDetails: false
     };
   },
-  methods:{
-    showDetails(){
-      this.$router.push(this.$route.path+'/c/'+ this.card.id)
+  methods: {
+    showDetails() {
+      this.$router.push(this.$route.path + '/c/' + this.card.id);
       console.log(this.$route.path);
-    }
+    },
   },
   components: {
-    cardDetails
-  }
+    cardDetails,
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

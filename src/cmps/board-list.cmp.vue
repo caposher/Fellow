@@ -1,17 +1,17 @@
 <template>
-    <li class="list">
-        <header>
-            <h4>{{ list.title }}</h4>
-            <button class="actions">...</button>
-        </header>
-        <ul v-for="card in list.cards" :key="card.id">
-            <!-- v-for cards in list.cards  :mini-list="mini-list"-->
-            <card-list :card="card" :list="list"></card-list>
-        </ul>
-        <footer>
-            <button @click="addCard">+Add card</button>
-        </footer>
-    </li>
+  <li class="list">
+    <header>
+      <h4>{{ list.title }}</h4>
+      <button class="actions">...</button>
+    </header>
+    <ul class="card-list">
+      <!-- v-for cards in list.cards  :mini-list="mini-list"-->
+      <card-list v-for="card in list.cards" :key="card.id" :card="card" :list="list"></card-list>
+    </ul>
+    <footer>
+      <button @click="addCard">+Add card</button>
+    </footer>
+  </li>
 </template>
 
 <script>
@@ -19,29 +19,28 @@ import cardList from './card-list.cmp.vue';
 
 // props- list
 export default {
-  props:{
-    list:{
-      type:Object
-    }
+  props: {
+    list: {
+      type: Object,
+    },
   },
-  methods:{
-    async addCard(){
-       const title = prompt('card title')
-       if(!title) return
-      try{
-        this.$store.dispatch({type:'addCard',boardId:this.$store.getters.boardId,list: this.list, title})
-      }
-      catch(err){
+  methods: {
+    async addCard() {
+      const title = prompt('card title');
+      if (!title) return;
+      try {
+        this.$store.dispatch({ type: 'addCard', boardId: this.$store.getters.boardId, list: this.list, title });
+      } catch (err) {
         console.log('cant add card', err);
       }
     },
-    selectCard(card){
+    selectCard(card) {
       console.log(card);
-    }
+    },
   },
   components: {
-    cardList
-  }
+    cardList,
+  },
 };
 </script>
 

@@ -1,51 +1,86 @@
-.board {
-    display: flex;
-    list-style: none;
-    > * {
-        margin-inline-start: 8px;
-        border-radius: 3px;
-        background-color: hsl(227, 14%, 93%);
-    }
+body {
+  background-image: url(../assets/img/background1.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+.board {
+  display: flex;
+  list-style: none;
+  align-items: flex-start;
+  margin: 10px 0;
+  > * {
+    margin: 4px;
+    border-radius: 3px;
+    background-color: hsl(227, 14%, 93%);
+  }
 
-.list-wrapper {
-    max-height: 100vh;
+  .list-wrapper:first-child {
+    margin-inline-start: 12px;
+  }
 }
 
 .list {
-    margin: 0 4px;
-    padding: 0 4px;
-    position: relative;
-    > * {
-        width: 222px;
-        font-weight: 600;
-    }
+  max-height: 90vh;
+  margin: 0 4px;
+  padding: 0 4px;
+  position: relative;
+  > * {
+    width: 272px;
+    font-weight: 600;
+  }
 
-    header {
-        display: flex;
-        height: 40px;
-        align-items: center;
-        padding-inline-start: 16px;
+  header {
+    display: flex;
+    height: 40px;
+    align-items: center;
+    padding-inline-start: 16px;
 
-        button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            padding: 6px;
-            width: 20px;
-            height: 20px;
-            font-size: 16px;
-            line-height: 20px;
-        }
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 6px;
+      width: 20px;
+      height: 20px;
+      font-size: 16px;
+      line-height: 20px;
     }
+  }
 
-    footer {
-        button {
-            margin: 2px 0 8px 8px;
-            padding: 4px 8px;
-            color: #5e6c84;
-            width: 100%;
-            text-align: left;
-        }
+  .card-list {
+    list-style: none;
+    // overflow-y: scroll; //TODO:
+  }
+
+  footer {
+    button {
+      margin: 2px 0 8px 8px;
+      padding: 4px 8px;
+      color: #5e6c84;
+      width: 100%;
+      text-align: left;
     }
+  }
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 #091e4240;
+  max-width: 300px;
+  min-height: 20px;
+  margin-block-end: 8px;
+  padding: 6px 8px 2px;
+
+  small {
+    background-color: #61bd4f;
+    height: 16px;
+    line-height: 16px;
+    max-width: 198px;
+    padding: 0 8px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 700;
+  }
 }

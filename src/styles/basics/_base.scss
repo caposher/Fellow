@@ -5,7 +5,7 @@
 html {
   //   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
   //     "Helvetica Neue", Arial, sans-serif #665;
-  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif #665;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif #665;
   line-height: 1.8;
 }
 
@@ -61,10 +61,10 @@ ul {
 }
 
 #app {
-  padding-block-start: 44px;
+  padding-block-start: 96px;
   .display-modal {
     position: relative;
     overflow-x: hidden;
-    height: calc(100vh - 44px);
+    height: calc(100vh - 96px);
   }
 }

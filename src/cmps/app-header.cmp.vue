@@ -2,10 +2,10 @@
   <header class="main-header">
     <div>
       <router-link to="/" aria-label="Back to home">Fellow</router-link>
-      <button>Workspaces</button>
-      <button>Recent</button>
-      <button>Starred</button>
-      <button>Templates</button>
+      <button>Workspaces <i class="fas fa-chevron-down"></i></button>
+      <button>Recent <i class="fas fa-chevron-down"></i></button>
+      <button>Starred <i class="fas fa-chevron-down"></i></button>
+      <button>Templates <i class="fas fa-chevron-down"></i></button>
       <button>Create</button>
     </div>
     <div class="container">

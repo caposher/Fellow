@@ -12,12 +12,12 @@ export const boardService = {
   getEmptyList,
   getEmptyCard,
   saveList,
-  getListAndCardById
+  getListAndCardById,
+  updateCard,
 };
 
 _createBoards();
 
-// TODO: support paging and filtering and sorting
 function query() {
   // return storageService.query(KEY)
   const boards = storageService.query(KEY);
@@ -28,16 +28,13 @@ function getById(id) {
   return storageService.get(KEY, id);
 }
 
-
-async function getListAndCardById(boardId,cardId) {
-  const board = await getById(boardId)
-  const list = board.lists.find(list => {
-    return list.cards.find(card=> card.id===cardId)
+async function getListAndCardById(boardId, cardId) {
+  const board = await getById(boardId);
+  const list = board.lists.find((list) => {
+    return list.cards.find((card) => card.id === cardId);
   });
-  const card = list.cards.find(card=> card.id===cardId)
-  // console.log('card', card);
-  return {card, list}
-  // return storageService.get(KEY, id);
+  const card = list.cards.find((card) => card.id === cardId);
+  return { card, list };
 }
 
 function remove(id) {
@@ -52,26 +49,48 @@ function save(board) {
 }
 
 async function saveList(list, boardId) {
-    try{
-        var board = await getById(boardId);
-        if (list.id) {
-          const idx = board.lists.findIndex((currList) => currList.id === list.id);
-          board.lists.splice(idx, 1 ,list);
-        } else {
-          list.id = 'L' + utilService.makeId();
-          board.lists.push(list);
-        }
-        try{
-            const savedBoard = await save(board);
-            return savedBoard;
-        }
-        catch(err){
-            console.log('cant save board', err);
-        }
+  try {
+    var board = await getById(boardId);
+    if (list.id) {
+      const idx = board.lists.findIndex((currList) => currList.id === list.id);
+      board.lists.splice(idx, 1, list);
+    } else {
+      list.id = 'L' + utilService.makeId();
+      board.lists.push(list);
     }
-    catch(err){
-        console.log('cant save list'+list, err);
+    try {
+      const savedBoard = await save(board);
+      return savedBoard;
+    } catch (err) {
+      console.log('cant save board', err);
     }
+  } catch (err) {
+    console.log('cant save list' + list, err);
+  }
+}
+
+async function updateCard(cardToUpdate, listToUpdate, boardId) {
+  try {
+    var boardToUpdate = await getById(boardId);
+    const listIdx = boardToUpdate.lists.findIndex(
+      (currList) => listToUpdate.id === currList.id
+    );
+    const cardIdx = listToUpdate.cards.findIndex(
+      (currCard) => currCard.id === cardToUpdate.id
+    );
+    listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
+    boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
+    try {
+      const savedBoard = await save(boardToUpdate);
+      const savedList = savedBoard.lists[listIdx];
+      const savedCard = savedList.cards[cardIdx];
+      return { savedBoard, savedList, savedCard };
+    } catch (err) {
+      console.log('cant save board', err);
+    }
+  } catch (err) {
+    console.log('cant save list' + listToUpdate, err);
+  }
 }
 
 function getEmptyBoard(title) {

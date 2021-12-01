@@ -1,7 +1,15 @@
 <template>
   <li class="list">
     <header>
-      <h4>{{ list.title }}</h4>
+      <h4 v-if="!editTitle" @click="editTitle = true">{{ list.title }}</h4>
+      <textarea
+        v-else
+        ref="edit"
+        :value="list.title"
+        v-focus="editTitle"
+        @focus="editTitle = true"
+        @blur="editTitle = false"
+      ></textarea>
       <button class="actions">...</button>
     </header>
     <ul class="card-list">
@@ -16,6 +24,7 @@
 
 <script>
 import cardList from './card-list.cmp.vue';
+import { focus } from 'vue-focus';
 
 // props- list
 export default {
@@ -23,6 +32,12 @@ export default {
     list: {
       type: Object,
     },
+  },
+  directives: { focus },
+  data() {
+    return {
+      editTitle: false,
+    };
   },
   methods: {
     async addCard() {

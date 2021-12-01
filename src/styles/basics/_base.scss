@@ -5,7 +5,7 @@
 html {
   //   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
   //     "Helvetica Neue", Arial, sans-serif #665;
-  font-family: Roboto, "Helvetica Neue", Arial, sans-serif #665;
+  font-family: Roboto, 'Helvetica Neue', Arial, sans-serif #665;
   line-height: 1.8;
 }
 
@@ -15,6 +15,7 @@ html {
 }
 
 body {
+  padding-block-start: 44px;
   margin: 0;
 }
 

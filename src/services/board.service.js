@@ -13,11 +13,11 @@ export const boardService = {
   getEmptyCard,
   saveList,
   getListAndCardById,
+  updateCard,
 };
 
 _createBoards();
 
-// TODO: support paging and filtering and sorting
 function query() {
   // return storageService.query(KEY)
   const boards = storageService.query(KEY);
@@ -34,9 +34,7 @@ async function getListAndCardById(boardId, cardId) {
     return list.cards.find((card) => card.id === cardId);
   });
   const card = list.cards.find((card) => card.id === cardId);
-  // console.log('card', card);
   return { card, list };
-  // return storageService.get(KEY, id);
 }
 
 function remove(id) {
@@ -66,6 +64,26 @@ async function saveList(list, boardId) {
     }
   } catch (err) {
     console.log('cant save list' + list, err);
+  }
+}
+
+async function updateCard(cardToUpdate, listToUpdate, boardId) {
+  try {
+    var boardToUpdate = await getById(boardId);
+    const listIdx = boardToUpdate.lists.findIndex((currList) => listToUpdate.id === currList.id);
+    const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardToUpdate.id);
+    listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
+    boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
+    try {
+      const savedBoard = await save(boardToUpdate);
+      const savedList = savedBoard.lists[listIdx];
+      const savedCard = savedList.cards[cardIdx];
+      return { savedBoard, savedList, savedCard };
+    } catch (err) {
+      console.log('cant save board', err);
+    }
+  } catch (err) {
+    console.log('cant save list' + listToUpdate, err);
   }
 }
 

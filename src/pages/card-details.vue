@@ -3,8 +3,13 @@
     <header>
       <button @click="closeModal">x</button>
       <div>
-        <input :value="card.title"/>
-        <h5>in list {{list.title}}</h5>
+        <div>
+          <span class="fa fa-newspaper"></span>
+        </div>
+        <div>
+          <input :value="card.title" />
+          <h5>in list {{list.title}}</h5>
+        </div>
       </div>
     </header>
     <div class="main-details">

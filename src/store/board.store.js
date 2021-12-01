@@ -133,14 +133,14 @@ export const boardStore = {
         console.log('cant add card', err);
       }
     },
-    async updateCard({ commit }, {boardId,list, card }) {
+    async updateCard({ commit }, { boardId, list, card }) {
       try {
         // console.log('card', card);
-        const data =await boardService.updateCard(card,list, boardId);
+        const data = await boardService.updateCard(card, list, boardId);
         // console.log(data);
-        commit({ type: 'setBoard', board : data.savedBoard });
+        commit({ type: 'setBoard', board: data.savedBoard });
         commit({ type: 'setList', list: data.savedList });
-        commit({ type: 'setCard', card : data.savedCard });
+        commit({ type: 'setCard', card: data.savedCard });
       } catch (err) {
         console.log('cant add card', err);
       }

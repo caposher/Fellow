@@ -19,6 +19,17 @@
             <!-- members -->
             <!-- date -->
           </div>
+          <div class="dueDate" v-show="card.dueDate">
+            <h4>Due date</h4>
+            <div>
+              <span>{{dateToShow}}</span>
+              <span
+                v-show="card.dueDate - Date.now() <= 86400000"
+                :class="timeLabelColor"
+                class="timeLabel"
+              >{{timeLabel}}</span>
+            </div>
+          </div>
         </div>
         <div class="description">
           <header>
@@ -49,19 +60,23 @@
         <!-- side menu renders cmp in click -->
         <button>Labels</button>
         <button>Members</button>
-        <button>Date</button>
+        <!-- <button @click="showDate=!showDate">Date</button> -->
         <button>Checklist</button>
+        <date @updateDate="updateDate" :cardDate="card.dueDate" class="date"></date>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import date from "../cmps/date.cmp.vue";
+
 export default {
   data() {
     return {
       lastCardDesc: null,
-      isEditDesc: false
+      isEditDesc: false,
+      showDate: false
     };
   },
   computed: {
@@ -73,6 +88,52 @@ export default {
     },
     boardId() {
       return this.$store.getters.boardId;
+    },
+    timeLabelColor() {
+      if (this.card.dueDate - Date.now() <= 0) {
+        return "red";
+      } else {
+        return "yellow";
+        // yellow due soon (today)
+      }
+    },
+    dateToShow() {
+      const timeStamp = this.card.dueDate;
+      console.log(timeStamp);
+      const dueDate = `${new Date(timeStamp)}`;
+      // return (dueDate);
+      const today = new Date();
+      const tomorrow = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() + 1,
+        0,
+        0,
+        0
+      );
+
+      const milisecsUntilTommorow = tomorrow.getTime() - today.getTime();
+      const milisecsPassedToday = 86400000 - milisecsUntilTommorow;
+
+      if (timeStamp - Date.now() <= milisecsUntilTommorow
+      && Date.now()-timeStamp <=milisecsPassedToday)
+        return "today at " + `${dueDate}`.substring(16, 21);
+      if (timeStamp - Date.now() >= milisecsUntilTommorow
+      &&timeStamp-Date.now() <=milisecsUntilTommorow+86400000)
+        return "tommorow at " + `${dueDate}`.substring(16, 21);
+      if ( Date.now()-timeStamp >= milisecsPassedToday
+      &&Date.now()-timeStamp <=milisecsPassedToday+86400000)
+        return "yesterday at " + `${dueDate}`.substring(16, 21);
+
+      return `${dueDate}`.substring(4,15);
+    },
+    timeLabel() {
+      if (this.card.dueDate - Date.now() <= 0) {
+        return "over due";
+      } else {
+        return "due soon";
+        // yellow due soon (today)
+      }
     }
   },
   methods: {
@@ -81,10 +142,6 @@ export default {
       this.$router.push("/b/" + boardId);
     },
     async updateCard() {
-      if (this.card.description === this.lastCardDesc) {
-        this.isEditDesc = false;
-        return;
-      }
       try {
         await this.$store.dispatch({
           type: "updateCard",
@@ -103,7 +160,7 @@ export default {
       this.isEditDesc = true;
     },
     async undoDesc() {
-         if (this.card.description === this.lastCardDesc) {
+      if (this.card.description === this.lastCardDesc) {
         this.isEditDesc = false;
         return;
       }
@@ -124,7 +181,14 @@ export default {
     setFocus() {
       this.isEditDesc = true;
       this.$refs.desc.focus();
+    },
+    async updateDate(date) {
+      this.card.dueDate = date;
+      await this.updateCard();
     }
+  },
+  components: {
+    date
   }
 };
 </script>

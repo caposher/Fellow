@@ -33,6 +33,17 @@
       font-size: 20px;
     }
   }
+  .icon-header {
+    .dueDate {
+      .timeLabel {
+        font-size: 12px;
+        line-height: 16px;
+        padding: 0 4px;
+        border-radius: 2px;
+        // background-color: chocolate;
+      }
+    }
+  }
   .card-body {
     display: flex;
     .main-details {
@@ -82,9 +93,12 @@
     .side-menu {
       display: flex;
       flex-direction: column;
+      .date {
+        position: relative;
+      }
     }
   }
-
+  
   @media (max-width: 784px) {
     margin: 0 7px;
     width: calc(100% - 14px);
@@ -93,4 +107,21 @@
     margin: 0 calc((100vw - 770px) / 2);
     min-width: 770px;
   }
+}
+
+.el-picker-panel.el-date-picker.el-popper {
+  top: 47px !important;
+  margin: 0;
+  .popper__arrow {
+    display: none;
+  }
+}
+
+.red {
+  background-color: #EB5A46;
+  color: #FFFFFF;
+}
+.yellow {
+  color: #172B4D;
+  background-color: #f2d600;
 }

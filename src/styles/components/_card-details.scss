@@ -1,0 +1,14 @@
+.card-details {
+  background-color: #f4f5f7;
+  position: absolute;
+  top: 5px;
+  @media (max-width: 784px) {
+    margin: 0 7px;
+    width: calc(100% - 14px);
+  }
+  @media (min-width: 784px) {
+    margin: 0 calc((100vw - 770px)/2);
+    min-width: 770px;
+  }
+  // 784
+}

@@ -1,5 +1,5 @@
 <template>
-  <section v-if="board">
+  <section v-if="board" :class="{'display-modal': selectedCardId}" class="board-app">
     <board-header />
     <ul class="board">
       <li class="list-wrapper" v-for="list in board.lists" :key="list.id">
@@ -16,8 +16,6 @@ import boardHeader from "../cmps/board-header.cmp.vue";
 import mainMenu from "../cmps/main-menu.cmp.vue";
 import boardMenu from "../cmps/board-menu.cmp.vue";
 import boardList from "../cmps/board-list.cmp.vue";
-// import cardDetails from "../cmps/card-details.cmp.vue";
-
 
 export default {
   data() {
@@ -30,8 +28,29 @@ export default {
       async handler() {
         // console.log(this.$route.params);
         const { cardId } = this.$route.params;
-        if (cardId){
-          this.selectedCardId=cardId
+        const { boardId } = this.$route.params;
+        if (cardId) {
+          try {
+            await this.$store.dispatch({
+              type: "setListAndCard",
+              boardId,
+              cardId
+            });
+            this.selectedCardId = cardId;
+          } catch (err) {
+            console.log("problem with getting board", err);
+          }
+        } else {
+          try {
+            await this.$store.dispatch({
+              type: "setListAndCard",
+              boardId: "",
+              cardId: ""
+            });
+            this.selectedCardId = null
+          } catch (err) {
+            console.log("problem with getting board", err);
+          }
         }
       },
       immediate: true
@@ -42,8 +61,6 @@ export default {
     console.log();
     try {
       await this.$store.dispatch({ type: "loadBoard", boardId });
-      // console.log('board', board);
-      // this.board = this.$store.getters.board
     } catch (err) {
       console.log("problem with getting board", err);
     }
@@ -73,8 +90,7 @@ export default {
     boardHeader,
     boardMenu,
     mainMenu,
-    boardList,
-    // cardDetails
+    boardList
   }
 };
 </script>

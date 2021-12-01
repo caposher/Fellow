@@ -31,16 +31,19 @@ export const boardStore = {
   mutations: {
     setBoard(state, { board }) {
       state.currBoard = board;
-      console.log('state.currBoard', state.currBoard);
+      // console.log('state.currBoard', state.currBoard);
     },
     setBoards(state, { boards }) {
       state.boards = boards;
     },
     setCard(state, { card }) {
       state.currCard = card;
+      // console.log(state.currCard);
     },
     setList(state, { list }) {
       state.currList = list;
+      ;
+      // console.log(state.currList);
     },
   },
 
@@ -64,15 +67,21 @@ export const boardStore = {
         console.log('cant load boards:', err);
       }
     },
-    async loadListAndCard({ commit }, {boardId, cardId}) {
+    async setListAndCard({ commit }, {boardId, cardId}) {
       try {
-        const data =await boardService.getListAndCardById(boardId, cardId)
-        const card = data.card
-        const list = data.list
-        // console.log(data.card);
-        commit({ type: 'setCard', card });
-        commit({ type: 'setList', list });
-        // return board;
+        if (cardId){
+          const data =await boardService.getListAndCardById(boardId, cardId)
+          const card = data.card
+          const list = data.list
+          // console.log('list', list);
+          // console.log('card', card);
+          commit({ type: 'setCard', card });
+          commit({ type: 'setList', list });
+        }
+        else{
+          commit({ type: 'setCard', card:null });
+          commit({ type: 'setList', list:null });
+        }
       } catch (err) {
         console.log('cant load card:', err);
       }

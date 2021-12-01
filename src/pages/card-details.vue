@@ -1,8 +1,11 @@
 <template>
   <section v-if="list&&card" class="card-details">
     <header>
-      <textarea :value="card.title"></textarea>
-      <h5>in list {{list.title}}</h5>
+      <button @click="closeModal">x</button>
+      <div>
+        <input :value="card.title"/>
+        <h5>in list {{list.title}}</h5>
+      </div>
     </header>
     <div class="main-details">
       <div class="icon-header">
@@ -48,6 +51,12 @@ export default {
     list() {
       console.log("list", this.$store.getters.list);
       return this.$store.getters.list;
+    }
+  },
+  methods: {
+    closeModal() {
+      const { boardId } = this.$route.params;
+      this.$router.push("/b/" + boardId);
     }
   }
 };

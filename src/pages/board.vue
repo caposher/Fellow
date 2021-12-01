@@ -1,5 +1,5 @@
 <template>
-  <section v-if="board">
+  <section v-if="board" :class="{'display-modal': selectedCardId}" class="board-app">
     <board-header />
     <ul class="board">
       <li class="list-wrapper" v-for="list in board.lists" :key="list.id">
@@ -47,6 +47,7 @@ export default {
               boardId: "",
               cardId: ""
             });
+            this.selectedCardId = null
           } catch (err) {
             console.log("problem with getting board", err);
           }

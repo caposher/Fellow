@@ -4,9 +4,13 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+
 }
+
+
 .board {
   display: flex;
+  position: relative;
   list-style: none;
   align-items: flex-start;
   > * {

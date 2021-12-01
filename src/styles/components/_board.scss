@@ -9,9 +9,8 @@ body {
   display: flex;
   list-style: none;
   align-items: flex-start;
-  margin: 10px 0;
   > * {
-    margin: 4px;
+    margin: 0 4px;
     border-radius: 3px;
     background-color: hsl(227, 14%, 93%);
   }
@@ -22,10 +21,8 @@ body {
 }
 
 .list {
-  max-height: 90vh;
   margin: 0 4px;
   padding: 0 4px;
-  position: relative;
   > * {
     width: 272px;
     font-weight: 600;
@@ -51,7 +48,8 @@ body {
 
   .card-list {
     list-style: none;
-    // overflow-y: scroll; //TODO:
+    max-height: 90vh;
+    overflow-y: auto; //TODO:
   }
 
   footer {

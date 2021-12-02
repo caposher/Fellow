@@ -1,13 +1,16 @@
 <template>
   <section class="checklist">
-    <div class="icon-container"></div>
+    <div class="icon-container">
+      <span class="icon-lg icon-checklist"></span>
+    </div>
     <form class="editor" v-if="editTitle" @submit.prevent="updateCL">
       <textarea
         placeholder="Add an item"
         v-model="CLtoUpdate.title"
         @blur="(editTitle = false), updateCL"
       />
-      <button>Save</button><button>X</button>
+      <button>Save</button>
+      <button>X</button>
     </form>
     <section v-else class="checklist-header">
       <h3 @click="editTitle = true">{{ checklist.title }}</h3>
@@ -15,7 +18,7 @@
     </section>
     <ul>
       <li v-for="(todo, idx) in checklist.todos" :key="idx">
-        <label for="">
+        <label for>
           <!-- <span class="check-box-container"> -->
           <input
             type="checkbox"
@@ -23,9 +26,9 @@
             @click="toggleTodo(todo.id)"
           />
           <!-- </span> -->
-          <span @click="editTodo(todo)" :class="{ done: todo.isDone }">{{
-            todo.title
-          }}</span>
+          <span @click="editTodo(todo)" :class="{ done: todo.isDone }"
+            >{{ todo.title }}
+          </span>
         </label>
         <span @click="removeTodo(todo.id)">X</span>
       </li>
@@ -37,7 +40,8 @@
             @blur="newTodo = false"
           />
           <br />
-          <button>Add</button><span @click="this.newTodo = false">X</span>
+          <button>Add</button>
+          <span @click="this.newTodo = false" class="icon-lg icon-close"></span>
         </form>
       </section>
       <span v-else @click="newTodo = true">Add an item</span>

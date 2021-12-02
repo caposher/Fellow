@@ -27,103 +27,103 @@ body {
   }
 }
 
-.list {
-  margin: 0 4px;
-  padding: 0 4px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  max-height: calc(100vh - 120px);
-  > * {
-    font-weight: 600;
-  }
+// .list {
+//   margin: 0 4px;
+//   padding: 0 4px;
+//   display: flex;
+//   flex-direction: column;
+//   position: relative;
+//   max-height: calc(100vh - 120px);
+//   > * {
+//     font-weight: 600;
+//   }
 
-  header {
-    display: flex;
-    line-height: 40px;
-    align-items: center;
+//   header {
+//     display: flex;
+//     line-height: 40px;
+//     align-items: center;
 
-    h4 {
-      width: 100%;
-      padding-inline-start: 10px;
-      cursor: pointer;
-    }
+//     h4 {
+//       width: 100%;
+//       padding-inline-start: 10px;
+//       cursor: pointer;
+//     }
 
-    button {
-      @include basic-selector;
-      @include icon-btn;
-    }
+//     button {
+//       @include basic-selector;
+//       @include icon-btn;
+//     }
 
-    textarea {
-      overflow: hidden;
-      overflow-wrap: break-word;
-      height: 30px;
-      resize: none;
-      background-color: white;
-      border-radius: 3px;
-      border-color: #0079bf;
-      border-width: 2px;
-      font-weight: 600;
-      max-height: 256px;
-      min-height: 20px;
-      padding: 3px 8px;
-      margin: 5px 0;
-      width: 230px;
-    }
-  }
+//     textarea {
+//       overflow: hidden;
+//       overflow-wrap: break-word;
+//       height: 30px;
+//       resize: none;
+//       background-color: white;
+//       border-radius: 3px;
+//       border-color: #0079bf;
+//       border-width: 2px;
+//       font-weight: 600;
+//       max-height: 256px;
+//       min-height: 20px;
+//       padding: 3px 8px;
+//       margin: 5px 0;
+//       width: 230px;
+//     }
+//   }
 
-  .card-list {
-    list-style: none;
-    max-height: 90vh;
-    overflow-y: auto; //TODO:
-  }
+//   .card-list {
+//     list-style: none;
+//     max-height: 90vh;
+//     overflow-y: auto; //TODO:
+//   }
 
-  footer {
-    button {
-      @include basic-selector;
-      margin: 2px 0 8px;
-      padding: 4px 8px;
-      width: 100%;
-      text-align: left;
-      border-radius: 3px;
+//   footer {
+//     button {
+//       @include basic-selector;
+//       margin: 2px 0 8px;
+//       padding: 4px 8px;
+//       width: 100%;
+//       text-align: left;
+//       border-radius: 3px;
 
-      span {
-        width: 20px;
-        height: 20px;
-        padding-inline-end: 2px;
-      }
-    }
-  }
+//       span {
+//         width: 20px;
+//         height: 20px;
+//         padding-inline-end: 2px;
+//       }
+//     }
+//   }
 
-  /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: #bfc4ce #d9dce2;
-  }
+//   /* ===== Scrollbar CSS ===== */
+//   /* Firefox */
+//   * {
+//     scrollbar-width: auto;
+//     scrollbar-color: #bfc4ce #d9dce2;
+//   }
 
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  ::-webkit-scrollbar-button {
-    width: 0px;
-    height: 0px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #bfc4ce;
-    border: 0px none #ffffff;
-    border-radius: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #d9dce2;
-    border: 0px none #ffffff;
-    border-radius: 8px;
-  }
-  ::-webkit-scrollbar-corner {
-    background: transparent;
-  }
-}
+//   ::-webkit-scrollbar {
+//     width: 8px;
+//     height: 8px;
+//   }
+//   ::-webkit-scrollbar-button {
+//     width: 0px;
+//     height: 0px;
+//   }
+//   ::-webkit-scrollbar-thumb {
+//     background: #bfc4ce;
+//     border: 0px none #ffffff;
+//     border-radius: 8px;
+//   }
+//   ::-webkit-scrollbar-track {
+//     background: #d9dce2;
+//     border: 0px none #ffffff;
+//     border-radius: 8px;
+//   }
+//   ::-webkit-scrollbar-corner {
+//     background: transparent;
+//   }
+// }
 
 .new-list {
   background-color: #ffffff3d;
@@ -143,21 +143,4 @@ body {
   }
 }
 
-.card {
-  background-color: #fff;
-  border-radius: 3px;
-  box-shadow: 0 1px 0 #091e4240;
-  max-width: 300px;
-  min-height: 20px;
-  margin-block-end: 8px;
-  padding: 6px 8px 2px;
 
-  &:hover {
-    background-color: hsl(219, 15%, 96%);
-    cursor: pointer;
-  }
-
-  p {
-    font-weight: 400;
-  }
-}

@@ -1,20 +1,33 @@
 <template>
-  <section>
+  <section class="checklist">
+    <div class="icon-container"><i class="far fa-check-square"></i></div>
     <form v-if="editTitle" @submit.prevent="updateCL">
-      <input
+      <textarea
         placeholder="Add an item"
         v-model="CLtoUpdate.title"
         @blur="(editTitle = false), updateCL"
       />
+      <button>Save</button><button>X</button>
     </form>
-    <section v-else>
+    <section v-else class="checklist-header">
       <h4 @click="editTitle = true">{{ checklist.title }}</h4>
       <button @click="deleteCL">Delete</button>
     </section>
     <ul>
       <li v-for="(todo, idx) in checklist.todos" :key="idx">
-        <span @click="editTodo(todo)">{{ todo.title }}</span
-        ><span @click="removeTodo(todo.id)">X</span>
+        <label for="">
+          <!-- <span class="check-box-container"> -->
+          <input
+            type="checkbox"
+            :checked="todo.isDone"
+            @click="toggleTodo(todo.id)"
+          />
+          <!-- </span> -->
+          <span @click="editTodo(todo)" :class="{ checked: todo.isDone }">{{
+            todo.title
+          }}</span>
+        </label>
+        <span @click="removeTodo(todo.id)">X</span>
       </li>
       <section v-if="newTodo">
         <form @submit.prevent="updateTodo">
@@ -60,14 +73,19 @@ export default {
       this.newTodo = true;
       this.todoToAdd = { ...todo };
     },
+    toggleTodo(todoId) {
+      const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
+      let currTodo = this.CLtoUpdate.todos[idx];
+      currTodo.isDone = !currTodo.isDone;
+      this.CLtoUpdate.todos.splice(idx, 1, currTodo);
+      this.updateCL();
+    },
     updateTodo(ev) {
       if (!ev.target[0].value) return;
       let todo = JSON.parse(JSON.stringify(this.todoToAdd));
       if (todo.id) {
-        const todoIdx = this.CLtoUpdate.todos.findIndex(
-          (td) => td.id === todo.id
-        );
-        this.CLtoUpdate.todos.splice(todoIdx, 1, todo);
+        const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todo.id);
+        this.CLtoUpdate.todos.splice(idx, 1, todo);
       } else {
         console.log("new");
         todo.id = "TD" + utilService.makeId();
@@ -85,8 +103,11 @@ export default {
     },
     updateCL() {
       this.$emit("updateCL", JSON.parse(JSON.stringify(this.CLtoUpdate)));
-      this.todoToAdd = {};
-      this.editTitle = false;
+      (this.todoToAdd = {
+        title: "",
+        isDone: false,
+      }),
+        (this.editTitle = false);
     },
     deleteCL() {
       if (confirm("Are you sure?")) {

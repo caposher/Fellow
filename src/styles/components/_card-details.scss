@@ -5,7 +5,7 @@
   display: flex;
   gap: 35px;
   flex-direction: column;
-  padding: 20px;
+  padding: 16px;
   min-height: 80vh;
   header {
     position: relative;
@@ -270,7 +270,7 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: '\e91a';
+    content: "\e91a";
   }
 }
 

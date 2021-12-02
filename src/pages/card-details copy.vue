@@ -1,5 +1,5 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details">
+  <section v-if="list && cardToEdit" class="card-details">
     <header>
       <button @click="closeModal" class="close">x</button>
       <div class="header">
@@ -17,10 +17,7 @@
             <div class="due-date" v-show="cardToEdit.dueDate">
               <h3>Due date</h3>
               <div class="due-date-body">
-                <span 
-                class="check-box-container"
-                :class="{'checked':cardToEdit.isComplete, 'unCheck':!cardToEdit.isComplete}"
-                >
+                <span class="check-box-container">
                   <!-- <span class="checkbox"> -->
                   <input
                     type="checkbox"
@@ -65,26 +62,24 @@
         <div class="description">
           <header>
             <span class="fa fa-align-left"></span>
-            <div class="content">
-              <h3>Description</h3>
-              <button
-                v-show="cardToEdit.description && !isEditDesc"
-                @click="setFocus"
-              >
-                Edit
-              </button>
-            </div>
+            <h4>Description</h4>
+            <button
+              v-show="cardToEdit.description && !isEditDesc"
+              @click="setFocus"
+            >
+              Edit
+            </button>
           </header>
-          <!-- @blur="updateCard" -->
           <textarea
             ref="desc"
             @focus="setEditDesc"
+            @blur="updateCard"
             placeholder="Add a more detailed description..."
             v-model="cardToEdit.description"
           ></textarea>
           <div class="buttons" v-show="isEditDesc">
-            <button class="save" @click="updateCard">save</button>
-            <button @click="undoDesc" ref="undo">X</button>
+            <button class="save">save</button>
+            <button @click.stop="undoDesc">X</button>
           </div>
         </div>
 
@@ -140,7 +135,7 @@
         </section>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -159,7 +154,6 @@ export default {
       openCheckList: false,
       newChecklist: {},
       cardToEdit: null,
-      isUndoDesc: false,
     };
   },
   created() {
@@ -229,7 +223,6 @@ export default {
       this.$router.push("/b/" + boardId);
     },
     async updateCard() {
-      this.isEditDesc = false;
       try {
         await this.$store.dispatch({
           type: "updateCard",
@@ -237,7 +230,8 @@ export default {
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.cardToEdit)),
         });
-        console.log("card updated with new desc");
+        this.isEditDesc = false;
+        console.log("card updated");
       } catch (err) {
         console.log("cant update card", err);
       }
@@ -251,11 +245,23 @@ export default {
       this.isEditDesc = true;
     },
     async undoDesc() {
-      this.cardToEdit.description = this.lastCardDesc;
-      this.isEditDesc = false;
-      // if (this.cardToEdit.description === this.lastCardDesc) return
-      //   await this.updateCard()
-      //   console.log("card updated with old desc");
+      if (this.cardToEdit.description === this.lastCardDesc) {
+        this.isEditDesc = false;
+        return;
+      }
+      var card = this.cardToEdit;
+      card.description = this.lastCardDesc;
+      try {
+        await this.$store.dispatch({
+          type: "updateCard",
+          boardId: this.boardId,
+          list: this.list,
+          card,
+        });
+        console.log("card desc undo");
+      } catch (err) {
+        console.log("cant update card", err);
+      }
     },
     setFocus() {
       this.isEditDesc = true;

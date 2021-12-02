@@ -13,17 +13,7 @@
   z-index: 20;
 }
 .card-details {
-  .icon {
-    &-sm {
-      color: #42526e;
-    }
-    &-md {
-      color: #42526e;
-    }
-    &-lg {
-      color: #42526e;
-    }
-  }
+  display: block;
   background-color: #f4f5f7;
   // position: absolute;
   // top: 48px;
@@ -90,48 +80,37 @@
         .check-box-container {
           flex-shrink: 0;
           height: 16px;
-          width: 16px;
-          // margin: auto 4px auto 0;
+          margin: auto 4px auto 0;
           display: flex;
           // white-space: nowrap;
           justify-content: center;
           align-items: center;
-          // background-color: #fafbfc;
-          // box-shadow: inset 0 0 0 2px #dfe1e6;
-          border-radius: 2px;
-
-          // // border-radius: 50%;
-          // // position: relative;
+          // position: relative;
           input {
-            opacity: 0;
-            // outline: 3px;
-            //   height: 16px;
-            //   width: 16px;
-            //   // flex-shrink: 0;
-            //   // height: 14px;
-            //   // margin: auto 4px auto 0;
-            //   // overflow: hidden;
-            // border:none;
-            //   // position: relative;
-            //   // transition: all 0.2s ease-in-out;
-            //   // white-space: nowrap;
-            //   // width: 16px;
-            //   cursor: pointer;
-            //   &:hover{
-            //     // background-color: inherit;
+            // opacity: 0;
+            height: 16px;
+            width: 16px;
+            background-color: #fafbfc;
+            box-shadow: inset 0 0 0 2px #dfe1e6;
+            flex-shrink: 0;
+            height: 16px;
+            margin: auto 4px auto 0;
+            overflow: hidden;
+            // position: relative;
+            transition: all 0.2s ease-in-out;
+            // white-space: nowrap;
+            width: 16px;
+            cursor: pointer;
+            &:checked {
+              height: 16px;
+              width: 16px;
+              background-color: #0079bf;
+              box-shadow: inset 0 0 0 2px #0079bf;
+              border-radius: 2px;
+              transition: all 0.2s ease-in-out;
+              white-space: nowrap;
+            }
           }
-          //   &:checked {
-          //     // opacity: 1;
-          //     // margin: 0;
-          //     // height: 10px;
-          //     // width: 10px;
-          //     // background-color: #0079bf;
-          //     // box-shadow: inset 0 0 0 2px #0079bf;
-          //     // border-radius: 2px;
-          //     // transition: all 0.2s ease-in-out;
-          //     // white-space: nowrap;
-          //   }
-          // }
         }
       }
     }
@@ -323,10 +302,10 @@
     margin: 0 7px;
     width: calc(100% - 14px);
   }
-  // @media (min-width: 784px) {
-  //   margin: 0 calc((100vw - 770px) / 2);
-  //   min-width: 770px;
-  // }
+  @media (min-width: 784px) {
+    margin: 0 calc((100vw - 770px) / 2);
+    min-width: 770px;
+  }
 }
 
 .el-picker-panel.el-date-picker.el-popper {
@@ -356,19 +335,4 @@
 .due-soon {
   color: #172b4d;
   background-color: #f2d600;
-}
-
-.unCheck {
-  background-color: #fafbfc;
-  box-shadow: inset 0 0 0 2px #dfe1e6;
-  transition: all 0.2s ease-in-out;
-}
-
-.checked {
-  background-color: #0079bf;
-  box-shadow: inset 0 0 0 2px #0079bf;
-  border-radius: 2px;
-  transition: all 0.2s ease-in-out;
-  white-space: nowrap;
-  transition: all 0.2s ease-in-out;
 }

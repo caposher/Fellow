@@ -21,12 +21,32 @@
   }
 }
 
+@mixin basic-selector {
+  color: #5e6c84;
+  &:hover {
+    background-color: #091e4214;
+    color: #172b4d;
+    cursor: pointer;
+  }
+}
+
+@mixin icon-btn {
+  position: absolute;
+  color: #5e6c84;
+  top: 4px;
+  right: 4px;
+  font-size: 13px;
+  line-height: 20px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+}
 
 @mixin to-icon($content) {
-  &::before{
+  &::before {
     content: $content;
   }
-  
 }
 
 /* Media queries Breakpoint mixins */

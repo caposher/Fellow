@@ -79,12 +79,11 @@ export default {
       const title = prompt('list title');
       if (!title) return;
       try {
-        const board = await this.$store.dispatch({
+        await this.$store.dispatch({
           type: 'addList',
           title,
           boardId: this.board._id,
         });
-        // this.board = board
       } catch (err) {
         console.log('cant add list', err);
       }
@@ -92,7 +91,7 @@ export default {
 
     async updateList(list) {
       try {
-        const board = await this.$store.dispatch({ type: 'updateList', list, boardId: this.board._id });
+        await this.$store.dispatch({ type: 'updateList', list, boardId: this.board._id });
       } catch (err) {
         console.log('cant update list', err);
       }

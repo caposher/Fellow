@@ -126,7 +126,7 @@ export default {
     };
   },
   created() {
-    this.updatedCard = this.card;
+    this.updatedCard = JSON.parse(JSON.stringify(this.card));
   },
   computed: {
     card() {
@@ -242,50 +242,27 @@ export default {
       await this.updateCard();
     },
 
-    async addCheckList() {
+    async addCheckList(ev) {
+      if (!ev.target[0].value) return;
       this.newChecklist.id = "CL" + utilService.makeId();
       this.updatedCard.checklists.push(this.newChecklist);
+      this.openCheckList = false;
       try {
-        await this.$store.dispatch({
-          type: "updateCard",
-          boardId: this.boardId,
-          list: this.list,
-          card: this.updatedCard,
-        });
-        this.openCheckList = false;
-        console.log("card", this.updatedCard);
-        console.log("card updated");
+        await this.updateCard();
+        this.newChecklist = {};
       } catch (err) {
         console.log("cant update card", err);
       }
     },
-    async updateCL(todo, checklistId, checklistTitle) {
-      const card = this.updatedCard;
-      const idx = card.checklists.findIndex(
-        (checklist) => checklist.id === checklistId
+    async updateCL(checklist) {
+      const idx = this.updatedCard.checklists.findIndex(
+        (cl) => cl.id === checklist.id
       );
-      const currChecklist = card.checklists[idx];
-      if (checklistTitle) {
-        currChecklist.title = checklistTitle;
-      }
-      if (todo.id) {
-        const todoIdx = currChecklist.todos.findIndex(
-          (td) => td.id === todo.id
-        );
-        currChecklist.todos.splice(todoIdx, 1, todo);
-      } else {
-        todo.id = "TD" + utilService.makeId();
-        if (card.checklists[idx].todos) {
-          card.checklists[idx].todos.push(todo);
-        } else card.checklists[idx].todos = [todo];
-      }
+      if (checklist.title)
+        this.updatedCard.checklists.splice(idx, 1, checklist);
+      else this.updatedCard.checklists.splice(idx, 1);
       try {
-        await this.$store.dispatch({
-          type: "updateCard",
-          boardId: this.boardId,
-          list: this.list,
-          card,
-        });
+        await this.updateCard();
       } catch (err) {
         console.log("cant save the todo", err);
       }

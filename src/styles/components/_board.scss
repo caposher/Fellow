@@ -4,12 +4,15 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  overflow-y: hidden;
 }
 
 .board {
   display: flex;
   list-style: none;
   align-items: flex-start;
+  height: 100vh;
+
   > * {
     margin: 0 4px;
     border-radius: 3px;
@@ -30,7 +33,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  max-height: 87vh;
+  max-height: calc(100vh - 120px);
   > * {
     font-weight: 600;
   }

@@ -3,12 +3,17 @@
     <img v-show="card.cover" :url="card.cover" class="card-cover" />
     <div>
       <section>
-        <span
-          v-for="label in getLabels"
-          :key="label.id"
-          :class="label.colorClass"
-          class="preview-label"
-        >{{ label.txt }}</span>
+        <span>
+          <span
+            v-for="label in getLabels"
+            :key="label.id"
+            :class="label.colorClass"
+            class="preview-label"
+          >{{ label.txt }}</span>
+        </span>
+        <span class="edit-wrapper">
+          <span class="icon-sm icon-edit"></span>
+        </span>
       </section>
       <p class="card-title">{{ card.title }}</p>
       <!-- <button>Quick edit</button> -->
@@ -52,18 +57,6 @@ export default {
       // todos: 0,
       // doneTodos: 0
     };
-  },
-  created() {
-    // var todos = 0;
-    // var doneTodos = 0;
-    // if (this.card.checklist && this.card.checklist.length) {
-    //   this.card.checklists.forEach(checklist => {
-    //     checklist.todos.forEach(todo => {
-    //       todos++;
-    //       if (todo.isDone) doneTodos++;
-    //     });
-    //   });
-    // }
   },
   methods: {
     showDetails() {

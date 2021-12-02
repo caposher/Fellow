@@ -14,21 +14,24 @@
       <div class="main-details">
         <div class="icon-header">
           <div class="detail-labels">
-            <!-- watch -->
-            <!-- <button>Labels</button> -->
-            <!-- <card-labels :cardLabels="cardToEdit.labelIds" @update="updateLabels" /> -->
-            <!-- members -->
-            <!-- date -->
-          </div>
-          <div class="dueDate" v-show="cardToEdit.dueDate">
-            <h4>Due date</h4>
-            <div>
-              <span>{{ dateToShow }}</span>
-              <span
-                v-show="cardToEdit.dueDate - Date.now() <= 86400000"
-                :class="timeLabelColor"
-                class="timeLabel"
-              >{{ timeLabel }}</span>
+            <div class="due-date" v-show="cardToEdit.dueDate">
+              <h3>Due date</h3>
+              <div class="due-date-body">
+                <span class="check-box-container">
+                  <!-- <span class="checkbox"> -->
+                    <input type="checkbox" v-model="cardToEdit.isComplete" @change="updateCard" />
+                  <!-- </span> -->
+                </span>
+                <div class="date-picker">
+                  <span>{{ dateToShow }}</span>
+                  <span v-show="cardToEdit.isComplete" class="time-label complete">complete</span>
+                  <span
+                    v-show="!cardToEdit.isComplete &&cardToEdit.dueDate - Date.now() <= 86400000"
+                    :class="timeLabelColor"
+                    class="time-label"
+                  >{{ timeLabel }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -66,8 +69,7 @@
         <button>Labels</button>
         <button>Members</button>
         <date @updateDate="updateDate" :cardDate="cardToEdit.dueDate" class="date"></date>
-        <!-- <button @click="showDate=!showDate">Date</button> -->
-        <button>Checklist</button>
+        <!-- <button>Checklist</button> -->
         <section class="checklist">
           <button @click="openCheckList = !openCheckList">
             <span>Checklist</span>
@@ -131,19 +133,20 @@ export default {
         : "due soon";
     },
     dateToShow() {
-      const timeStamp = this.cardToEdit.dueDate;
-      const dueDate = new Date(timeStamp);
-      console.log(' dueDate',  dueDate);
+      const timestamp = this.cardToEdit.dueDate;
+      const dueDate = new Date(timestamp);
       const time = this.formatAMPM(dueDate);
-      console.log('time', time);
-      if (new Date(timeStamp).getDate() === new Date().getDate())
-        return "today at " + time;
-      else if (new Date().getDate() + 1 === new Date(timeStamp).getDate())
-        return "tomorrow at " + time;
-      else if (new Date().getDate() - 1 === new Date(timeStamp).getDate())
-        return "yesterday at " + time;
+      if (new Date().getDate() === new Date(timestamp).getDate())
+        return "today" + time;
+      else if (new Date().getDate() + 1 === new Date(timestamp).getDate())
+        return "tomorrow" + time;
+      else if (new Date().getDate() - 1 === new Date(timestamp).getDate())
+        return "yesterday" + time;
+      else if (new Date().getYear() === new Date(timestamp).getYear()) {
+        return this.formatDate(dueDate) + time;
+      }
 
-      return `${dueDate}`.substring(4, 15);
+      return this.formatDate(dueDate) + ", " + dueDate.getFullYear() + time;
     }
   },
   methods: {
@@ -154,8 +157,14 @@ export default {
       hours = hours % 12;
       hours = hours ? hours : 12;
       minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
+      var strTime = " at " + hours + ":" + minutes + " " + ampm;
       return strTime;
+    },
+    formatDate(dueDate) {
+      var date = dueDate.getDate();
+      var month = `${dueDate}`.substring(4, 7);
+      const strDate = `${month} ${date}`;
+      return strDate;
     },
     closeModal() {
       const { boardId } = this.$route.params;
@@ -174,6 +183,10 @@ export default {
       } catch (err) {
         console.log("cant update card", err);
       }
+    },
+    async changeComplete() {
+      this.cardToEdit.isComplete = !this.cardToEdit.isComplete;
+      await this.updateCard();
     },
     setEditDesc() {
       this.lastCardDesc = this.cardToEdit.description;

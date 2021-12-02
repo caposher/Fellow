@@ -15,7 +15,16 @@
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
-      <card-list v-for="card in list.cards" :key="card.id" :card="card" :list="list"></card-list>
+      <draggable
+        v-model="listOnEdit.cards"
+        ghost-class="ghost"
+        group="list-group"
+        :move="detectMove"
+        @start="drag = true"
+        @end="drag = false"
+      >
+        <card-list v-for="card in listOnEdit.cards" :key="card.id" :card="card" :list="list"></card-list>
+      </draggable>
     </ul>
     <footer class="add-card">
       <button @click="addCard">
@@ -28,6 +37,7 @@
 <script>
 import cardList from './card-list.cmp.vue';
 import { focus } from 'vue-focus';
+import draggable from 'vuedraggable';
 
 // props- list
 export default {
@@ -39,6 +49,7 @@ export default {
   directives: { focus },
   data() {
     return {
+      listOnEdit: JSON.parse(JSON.stringify(this.list)),
       updatedList: JSON.parse(JSON.stringify(this.list)),
       editTitle: false,
     };
@@ -60,6 +71,9 @@ export default {
       this.editTitle = false;
       this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
     },
+    detectMove(ev) {
+      console.log(ev);
+    },
   },
   computed: {
     showTitle() {
@@ -67,7 +81,14 @@ export default {
     },
   },
   components: {
+    draggable,
     cardList,
   },
 };
 </script>
+
+<style scoped>
+.ghost {
+  background-color: aqua;
+}
+</style>

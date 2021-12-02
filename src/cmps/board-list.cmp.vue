@@ -17,9 +17,9 @@
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
       <card-list v-for="card in list.cards" :key="card.id" :card="card" :list="list"></card-list>
     </ul>
-    <footer>
+    <footer class="add-card">
       <button @click="addCard">
-        <span><i class="fas fa-plus"></i></span> Add a card
+        <span class="icon-sm icon-plus"></span>Add a card
       </button>
     </footer>
   </li>

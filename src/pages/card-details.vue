@@ -1,6 +1,11 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
-    <div class="card-details" @click.stop>
+  <div
+    v-if="list && cardToEdit"
+    class="card-details-container"
+    @click.stop.prevent="closeModal"
+  >
+    <div class="card-details" @click.stop="">
+      <button @click="closeModal" class="close">x</button>
       <header>
         <button @click="closeModal" class="close">x</button>
         <div class="header">
@@ -22,10 +27,17 @@
                 <div class="due-date-body">
                   <span
                     class="check-box-container"
-                    :class="{'checked': cardToEdit.isComplete, 'unCheck': !cardToEdit.isComplete}"
+                    :class="{
+                      checked: cardToEdit.isComplete,
+                      unCheck: !cardToEdit.isComplete,
+                    }"
                   >
                     <!-- <span class="checkbox"> -->
-                    <input type="checkbox" v-model="cardToEdit.isComplete" @change="updateCard" />
+                    <input
+                      type="checkbox"
+                      v-model="cardToEdit.isComplete"
+                      @change="updateCard"
+                    />
                     <!-- </span> -->
                   </span>
                   <div class="date-picker">
@@ -37,12 +49,13 @@
                       "
                       :class="timeLabelColor"
                       class="time-label"
-                    >{{ timeLabel }}</span>
+                      >{{ timeLabel }}</span
+                    >
                     <span
-                      v-show="
-                        cardToEdit.isComplete"
+                      v-show="cardToEdit.isComplete"
                       class="time-label complete"
-                    >complete</span>
+                      >complete</span
+                    >
                   </div>
                 </div>
               </div>
@@ -53,7 +66,9 @@
                   :key="label.id"
                   :class="label.colorClass"
                   class="label-tag white-text"
-                >{{ label.txt }}</button>
+                >
+                  {{ label.txt }}
+                </button>
                 <button class="label-tag">
                   <i class="fas fa-plus"></i>
                 </button>
@@ -66,7 +81,12 @@
               <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
-                <button v-show="cardToEdit.description && !isEditDesc" @click.stop="setFocus">Edit</button>
+                <button
+                  v-show="cardToEdit.description && !isEditDesc"
+                  @click.stop="setFocus"
+                >
+                  Edit
+                </button>
               </div>
             </header>
             <!-- @blur="updateCard" -->
@@ -82,7 +102,11 @@
             </div>
           </div>
 
-          <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
+          <div
+            class="check-list"
+            v-for="checklist in cardToEdit.checklists"
+            :key="checklist.id"
+          >
             <checklist :checklist="checklist" @updateCL="updateCL" />
           </div>
           <div class="activity-log">
@@ -118,7 +142,11 @@
               <span>Add checklist</span>
               <form @submit.prevent="addCheckList">
                 <label>Title</label>
-                <input type="text" value="Checklist" v-model="newChecklist.title" />
+                <input
+                  type="text"
+                  value="Checklist"
+                  v-model="newChecklist.title"
+                />
                 <label>Copy items from...</label>
                 <select name id>
                   <option value>(none)</option>
@@ -139,7 +167,6 @@
     </div>
   </div>
 </template>
-  
 
 <script>
 import cardLabels from "../cmps/labels.cmp.vue";
@@ -157,7 +184,7 @@ export default {
       openCheckList: false,
       newChecklist: {},
       cardToEdit: null,
-      isUndoDesc: false
+      isUndoDesc: false,
     };
   },
   created() {
@@ -202,8 +229,8 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map(lId => allLabels.find(label => label.id === lId));
-    }
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
+    },
   },
   methods: {
     formatAMPM(dueDate) {
@@ -233,7 +260,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          card: JSON.parse(JSON.stringify(this.cardToEdit))
+          card: JSON.parse(JSON.stringify(this.cardToEdit)),
         });
         console.log("card updated with new desc");
       } catch (err) {
@@ -278,7 +305,7 @@ export default {
     },
     async updateCL(checklist) {
       const idx = this.cardToEdit.checklists.findIndex(
-        cl => cl.id === checklist.id
+        (cl) => cl.id === checklist.id
       );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
@@ -294,13 +321,13 @@ export default {
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
-    }
+    },
   },
   components: {
     checklist,
     date,
-    cardLabels
-  }
+    cardLabels,
+  },
 };
 </script>
 

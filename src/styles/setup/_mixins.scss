@@ -21,6 +21,14 @@
   }
 }
 
+
+@mixin to-icon($content) {
+  &::before{
+    content: $content;
+  }
+  
+}
+
 /* Media queries Breakpoint mixins */
 
 // @mixin for-mobile-layout {

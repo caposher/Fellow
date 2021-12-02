@@ -64,7 +64,7 @@
         </div>
         <div class="description">
           <header>
-            <span class="fa fa-align-left"></span>
+            <span class="icon-lg icon-desc"></span>
             <div class="content">
               <h3>Description</h3>
               <button

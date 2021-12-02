@@ -48,6 +48,11 @@
                       class="time-label"
                       >{{ timeLabel }}</span
                     >
+                    <span
+                      v-show="cardToEdit.isComplete"
+                      class="time-label complete"
+                      >complete</span
+                    >
                   </div>
                 </div>
               </div>
@@ -63,7 +68,9 @@
                 >
                   {{ label.txt }}
                 </button>
-                <button class="label-tag"><i class="fas fa-plus"></i></button>
+                <button class="label-tag">
+                  <i class="fas fa-plus"></i>
+                </button>
               </div>
               <!-- members -->
               <!-- date -->
@@ -72,7 +79,8 @@
           </div>
           <div class="description">
             <header>
-              <span class="fa fa-align-left"></span>
+              <span class="icon-lg icon-desc"></span>
+              <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
                 <button
@@ -127,7 +135,8 @@
           ></date>
           <section class="checklist">
             <button @click="openCheckList = !openCheckList">
-              <span>Checklist </span><span class="test">!!!</span>
+              <span>Checklist</span>
+              <span class="test">!!!</span>
             </button>
             <section class="checklist-popup" v-show="openCheckList">
               <span>Add checklist</span>

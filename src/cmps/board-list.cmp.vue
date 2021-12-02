@@ -11,7 +11,7 @@
         placeholder="Enter title"
         @blur="updateList()"
       />
-      <button class="actions"><i class="fas fa-ellipsis-h"></i></button>
+      <button><i class="fas fa-ellipsis-h"></i></button>
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->

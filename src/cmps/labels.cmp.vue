@@ -10,7 +10,6 @@
       <span>{{ label.txt }}</span>
       <input type="checkbox" :checked="checkLabel(label.id)" @change="toggleCheck(label.id, idx)" />
     </label>
-
     <label class="label-purple"> </label>
     <button>Create a new label</button>
     <hr />

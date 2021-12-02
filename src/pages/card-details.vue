@@ -62,24 +62,26 @@
         <div class="description">
           <header>
             <span class="fa fa-align-left"></span>
-            <h4>Description</h4>
-            <button
-              v-show="cardToEdit.description && !isEditDesc"
-              @click="setFocus"
-            >
-              Edit
-            </button>
+            <div class="content">
+              <h3>Description</h3>
+              <button
+                v-show="cardToEdit.description && !isEditDesc"
+                @click="setFocus"
+              >
+                Edit
+              </button>
+            </div>
           </header>
+          <!-- @blur="updateCard" -->
           <textarea
             ref="desc"
             @focus="setEditDesc"
-            @blur="updateCard"
             placeholder="Add a more detailed description..."
             v-model="cardToEdit.description"
           ></textarea>
           <div class="buttons" v-show="isEditDesc">
-            <button class="save">save</button>
-            <button @click.stop="undoDesc">X</button>
+            <button class="save" @click="updateCard">save</button>
+            <button @click="undoDesc" ref="undo">X</button>
           </div>
         </div>
 
@@ -154,6 +156,7 @@ export default {
       openCheckList: false,
       newChecklist: {},
       cardToEdit: null,
+      isUndoDesc: false,
     };
   },
   created() {
@@ -223,6 +226,7 @@ export default {
       this.$router.push("/b/" + boardId);
     },
     async updateCard() {
+      this.isEditDesc = false;
       try {
         await this.$store.dispatch({
           type: "updateCard",
@@ -230,8 +234,7 @@ export default {
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.cardToEdit)),
         });
-        this.isEditDesc = false;
-        console.log("card updated");
+        console.log("card updated with new desc");
       } catch (err) {
         console.log("cant update card", err);
       }
@@ -245,23 +248,11 @@ export default {
       this.isEditDesc = true;
     },
     async undoDesc() {
-      if (this.cardToEdit.description === this.lastCardDesc) {
-        this.isEditDesc = false;
-        return;
-      }
-      var card = this.cardToEdit;
-      card.description = this.lastCardDesc;
-      try {
-        await this.$store.dispatch({
-          type: "updateCard",
-          boardId: this.boardId,
-          list: this.list,
-          card,
-        });
-        console.log("card desc undo");
-      } catch (err) {
-        console.log("cant update card", err);
-      }
+      this.cardToEdit.description = this.lastCardDesc;
+      this.isEditDesc = false;
+      // if (this.cardToEdit.description === this.lastCardDesc) return
+      //   await this.updateCard()
+      //   console.log("card updated with old desc");
     },
     setFocus() {
       this.isEditDesc = true;

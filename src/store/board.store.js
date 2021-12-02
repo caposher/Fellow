@@ -140,7 +140,7 @@ export const boardStore = {
       try {
         // console.log('card', card);
         const data = await boardService.updateCard(card, list, boardId);
-        console.log(data);
+        // console.log(data);
         commit({ type: 'setBoard', board: data.savedBoard });
         commit({ type: 'setList', list: data.savedList });
         commit({ type: 'setCard', card: data.savedCard });

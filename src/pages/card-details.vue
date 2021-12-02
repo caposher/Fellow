@@ -1,140 +1,146 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details">
-    <header>
-      <button @click="closeModal" class="close">x</button>
-      <div class="header">
-        <span class="fa fa-newspaper"></span>
-        <div class="header-text">
-          <input @blur="updateCard" v-model="cardToEdit.title" />
-          <h5>in list {{ list.title }}</h5>
+  <div
+    v-if="list && cardToEdit"
+    class="card-details-container"
+    @click.stop.prevent="closeModal"
+  >
+    <div class="card-details" @click.stop="">
+      <header>
+        <button @click="closeModal" class="close">x</button>
+        <div class="header">
+          <span class="fa fa-newspaper"></span>
+          <div class="header-text">
+            <input @blur="updateCard" v-model="cardToEdit.title" />
+            <h5>in list {{ list.title }}</h5>
+          </div>
         </div>
-      </div>
-    </header>
-    <div class="card-body">
-      <div class="main-details">
-        <div class="icon-header">
-          <div class="detail-labels">
-            <div class="due-date" v-show="cardToEdit.dueDate">
-              <h3>Due date</h3>
-              <div class="due-date-body">
-                <span class="check-box-container">
-                  <!-- <span class="checkbox"> -->
-                  <input
-                    type="checkbox"
-                    v-model="cardToEdit.isComplete"
-                    @change="updateCard"
-                  />
-                  <!-- </span> -->
-                </span>
-                <div class="date-picker">
-                  <span>{{ dateToShow }}</span>
-                  <span
-                    v-show="
-                      !cardToEdit.isComplete &&
-                      cardToEdit.dueDate - Date.now() <= 86400000
-                    "
-                    :class="timeLabelColor"
-                    class="time-label"
-                    >{{ timeLabel }}</span
-                  >
+      </header>
+      <div class="card-body">
+        <div class="main-details">
+          <div class="icon-header">
+            <div class="detail-labels">
+              <div class="due-date" v-show="cardToEdit.dueDate">
+                <h3>Due date</h3>
+                <div class="due-date-body">
+                  <span class="check-box-container">
+                    <!-- <span class="checkbox"> -->
+                    <input
+                      type="checkbox"
+                      v-model="cardToEdit.isComplete"
+                      @change="updateCard"
+                    />
+                    <!-- </span> -->
+                  </span>
+                  <div class="date-picker">
+                    <span>{{ dateToShow }}</span>
+                    <span
+                      v-show="
+                        !cardToEdit.isComplete &&
+                        cardToEdit.dueDate - Date.now() <= 86400000
+                      "
+                      :class="timeLabelColor"
+                      class="time-label"
+                      >{{ timeLabel }}</span
+                    >
+                  </div>
                 </div>
               </div>
+              <!-- watch -->
+              <!-- <button>Labels</button> -->
+              <div class="card-labels">
+                <h4>Labels</h4>
+                <button
+                  v-for="label in getLabels"
+                  :key="label.id"
+                  :class="label.colorClass"
+                  class="label-tag white-text"
+                >
+                  {{ label.txt }}
+                </button>
+                <button class="label-tag"><i class="fas fa-plus"></i></button>
+              </div>
+              <!-- members -->
+              <!-- date -->
+              <!-- </div> -->
             </div>
-            <!-- watch -->
-            <!-- <button>Labels</button> -->
-            <div class="card-labels">
-              <h4>Labels</h4>
-              <button
-                v-for="label in getLabels"
-                :key="label.id"
-                :class="label.colorClass"
-                class="label-tag white-text"
-              >
-                {{ label.txt }}
-              </button>
-              <button class="label-tag"><i class="fas fa-plus"></i></button>
-            </div>
-            <!-- members -->
-            <!-- date -->
-            <!-- </div> -->
           </div>
-        </div>
-        <div class="description">
-          <header>
-            <span class="fa fa-align-left"></span>
-            <div class="content">
-              <h3>Description</h3>
-              <button
-                v-show="cardToEdit.description && !isEditDesc"
-                @click="setFocus"
-              >
-                Edit
-              </button>
+          <div class="description">
+            <header>
+              <span class="fa fa-align-left"></span>
+              <div class="content">
+                <h3>Description</h3>
+                <button
+                  v-show="cardToEdit.description && !isEditDesc"
+                  @click.stop="setFocus"
+                >
+                  Edit
+                </button>
+              </div>
+            </header>
+            <!-- @blur="updateCard" -->
+            <textarea
+              ref="desc"
+              @focus="setEditDesc"
+              placeholder="Add a more detailed description..."
+              v-model="cardToEdit.description"
+            ></textarea>
+            <div class="buttons" v-show="isEditDesc">
+              <button class="save" @click="updateCard">save</button>
+              <button @click="undoDesc" ref="undo">X</button>
             </div>
-          </header>
-          <!-- @blur="updateCard" -->
-          <textarea
-            ref="desc"
-            @focus="setEditDesc"
-            placeholder="Add a more detailed description..."
-            v-model="cardToEdit.description"
-          ></textarea>
-          <div class="buttons" v-show="isEditDesc">
-            <button class="save" @click="updateCard">save</button>
-            <button @click="undoDesc" ref="undo">X</button>
           </div>
-        </div>
 
-        <div
-          class="check-list"
-          v-for="checklist in cardToEdit.checklists"
-          :key="checklist.id"
-        >
-          <checklist :checklist="checklist" @updateCL="updateCL" />
+          <div
+            class="check-list"
+            v-for="checklist in cardToEdit.checklists"
+            :key="checklist.id"
+          >
+            <checklist :checklist="checklist" @updateCL="updateCL" />
+          </div>
+          <div class="activity-log">
+            <span>icon</span>
+            <h4>activities</h4>
+            <input />
+            <button>save</button>
+          </div>
         </div>
-        <div class="activity-log">
-          <span>icon</span>
-          <h4>activities</h4>
-          <input />
-          <button>save</button>
-        </div>
-      </div>
-      <div class="side-menu">
-        <!-- side menu renders cmp in click -->
-        <button @click="toggleLabels">Labels</button>
-        <card-labels
-          v-show="showLabels"
-          @close="toggleLabels"
-          :cardLabels="cardToEdit.labelIds"
-          @update="updateLabels"
-        />
-        <button>Members</button>
-        <date
-          @updateDate="updateDate"
-          :cardDate="cardToEdit.dueDate"
-          class="date"
-        ></date>
-        <section class="checklist">
-          <button @click="openCheckList = !openCheckList">
-            <span>Checklist </span><span class="test">!!!</span>
-          </button>
-          <section class="checklist-popup" v-show="openCheckList">
-            <span>Add checklist</span>
-            <form @submit.prevent="addCheckList">
-              <label>Title</label>
-              <input
-                type="text"
-                value="Checklist"
-                v-model="newChecklist.title"
-              />
-              <label>Copy items from...</label>
-              <select name id>
-                <option value>(none)</option>
-              </select>
-              <button>Add</button>
-            </form>
+        <div class="side-menu">
+          <!-- side menu renders cmp in click -->
+          <button @click.stop="toggleLabels">Labels</button>
+          <card-labels
+            v-show="showLabels"
+            @close="toggleLabels"
+            :cardLabels="cardToEdit.labelIds"
+            @update="updateLabels"
+          />
+          <button>Members</button>
+          <date
+            @updateDate="updateDate"
+            :cardDate="cardToEdit.dueDate"
+            class="date"
+          ></date>
+          <section class="checklist">
+            <button @click="openCheckList = !openCheckList">
+              <span>Checklist </span><span class="test">!!!</span>
+            </button>
+            <section class="checklist-popup" v-show="openCheckList">
+              <span>Add checklist</span>
+              <form @submit.prevent="addCheckList">
+                <label>Title</label>
+                <input
+                  type="text"
+                  value="Checklist"
+                  v-model="newChecklist.title"
+                />
+                <label>Copy items from...</label>
+                <select name id>
+                  <option value>(none)</option>
+                </select>
+                <button>Add</button>
+              </form>
+            </section>
           </section>
-        </section>
+        </div>
       </div>
     </div>
   </div>

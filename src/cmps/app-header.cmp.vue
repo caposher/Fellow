@@ -1,7 +1,9 @@
 <template>
   <header class="main-header">
-    <div>
-      <router-link to="/" aria-label="Back to home">Fellow</router-link>
+    <div class="left-container">
+      <router-link class="logo" to="/" aria-label="Back to home"
+        ><span><logo /></span> Fellow</router-link
+      >
       <button>Workspaces <i class="fas fa-chevron-down"></i></button>
       <button>Recent <i class="fas fa-chevron-down"></i></button>
       <button>Starred <i class="fas fa-chevron-down"></i></button>
@@ -38,7 +40,12 @@
 </template>
 
 <script>
-export default {};
+import logo from "../cmps/logo.cmp.vue";
+export default {
+  components: {
+    logo,
+  },
+};
 </script>
 
 <style></style>

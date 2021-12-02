@@ -9,6 +9,9 @@ import './styles/style.scss';
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+import Element from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/en'
+Vue.use(Element, {locale})
 
 // library.add(faUserSecret)
 // Vue.component('font-awesome-icon', FontAwesomeIcon)

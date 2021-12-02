@@ -13,7 +13,7 @@
             @blur="newTodo = false"
           />
           <br />
-          <button>Add</button><span>X</span>
+          <button>Add</button><span @click="this.newTodo = false">X</span>
         </form>
       </section>
       <span v-else @click="newTodo = true">Add an item</span>

@@ -130,7 +130,7 @@ function getEmptyCard(title) {
     comments: [],
     checklists: [],
     members: [],
-    labelIds: [{ id: '1', txt: 'test1', colorClass: 'label-green' }],
+    labelIds: ['1'],
     createdAt: Date.now(),
     dueDate: '',
     style: null,

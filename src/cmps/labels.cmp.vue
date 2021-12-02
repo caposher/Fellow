@@ -13,33 +13,33 @@
     <label class="label-purple"> </label>
     <button>Create a new label</button>
     <hr />
-    <pre v-for="label in allLabels" :key="label.id">{{ label }} {{ selected }}</pre>
+    <pre v-for="label in allLabels" :key="label.id">{{ label }} {{ selectedIds }}</pre>
   </section>
 </template>
 
 <script>
 export default {
   props: {
-    cardLabel: {
+    cardLabels: {
       type: Array,
     },
   },
   data() {
     return {
-      selected: JSON.parse(JSON.stringify(this.cardLabel)),
+      selectedIds: JSON.parse(JSON.stringify(this.cardLabels)),
       allLabels: this.$store.getters.labels,
     };
   },
   methods: {
     checkLabel(labelId) {
-      var a = 0 <= this.selected.findIndex((label) => label.id === labelId);
+      var a = 0 <= this.selectedIds.findIndex((lId) => lId === labelId);
       console.log('label', a);
       return a;
     },
     toggleCheck(labelId) {
-      debugger;
-      const idx = this.selected.findIndex((label) => label.id === labelId);
-      0 <= idx ? this.selected.splice(idx, 1) : this.selected.push(labelId);
+      const idx = this.selectedIds.findIndex((lId) => lId === labelId);
+      0 <= idx ? this.selectedIds.splice(idx, 1) : this.selectedIds.push(labelId);
+      this.$emit('update', JSON.parse(JSON.stringify(this.selectedIds)));
     },
   },
 };

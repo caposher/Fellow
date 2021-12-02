@@ -161,10 +161,12 @@
         width: 75px;
         height: 32px;
         margin-top: 8px;
+        margin: 0 12px;
+
         cursor: pointer;
       }
     }
-    .popup form > * {
+    .popup form > *:not(button) {
       display: block;
       width: 280px;
       margin: 0 12px;
@@ -172,7 +174,7 @@
       border-bottom: 1px solid #091e4221;
     }
   }
-  
+
   @media (max-width: 784px) {
     margin: 0 7px;
     width: calc(100% - 14px);
@@ -198,4 +200,12 @@
 .due-soon {
   color: #172B4D;
   background-color: #f2d600;
+}
+
+.icon {
+  font-family: icomoon;
+  font-size: 20px;
+  &::after {
+    content: "\e91a";
+  }
 }

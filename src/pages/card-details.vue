@@ -8,9 +8,11 @@
       <button @click="closeModal" class="close">x</button>
       <header>
         <!-- <div class="header"> -->
-        <span class="card-details-icon"></span>
+        <span class="card-details-icon icon-lg"></span>
         <!-- <div class="header-text"> -->
-        <textarea @blur="updateCard" v-model="cardToEdit.title" />
+        <div class="card-header-container">
+          <textarea @blur="updateCard" v-model="cardToEdit.title" />
+        </div>
         <h5>in list {{ list.title }}</h5>
         <!-- </div> -->
         <!-- </div> -->
@@ -78,8 +80,9 @@
             </div>
           </div>
           <div class="description">
-            <header>
-              <span class="icon-lg icon-desc"></span>
+            <span class="card-details-icon icon-lg"></span>
+            <div>
+              <!-- <span class="icon-lg icon-desc"></span> -->
               <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
@@ -90,7 +93,7 @@
                   Edit
                 </button>
               </div>
-            </header>
+            </div>
             <!-- @blur="updateCard" -->
             <textarea
               ref="desc"
@@ -109,6 +112,8 @@
             v-for="checklist in cardToEdit.checklists"
             :key="checklist.id"
           >
+            <span class="card-details-icon icon-lg"></span>
+
             <checklist :checklist="checklist" @updateCL="updateCL" />
           </div>
           <div class="activity-log">
@@ -120,23 +125,24 @@
         </div>
         <div class="side-menu">
           <!-- side menu renders cmp in click -->
-          <button @click.stop="toggleLabels">Labels</button>
+          <span>Add to card</span>
+          <button class="action-btn">Members</button>
+
+          <button @click.stop="toggleLabels" class="action-btn">Labels</button>
           <card-labels
             v-show="showLabels"
             @close="toggleLabels"
             :cardLabels="cardToEdit.labelIds"
             @update="updateLabels"
           />
-          <button>Members</button>
           <date
             @updateDate="updateDate"
             :cardDate="cardToEdit.dueDate"
             class="date"
           ></date>
-          <section class="checklist">
+          <section class="checklist-btn">
             <button @click="openCheckList = !openCheckList">
-              <span>Checklist</span>
-              <span class="test">!!!</span>
+              <span class="action-btn">Checklist</span>
             </button>
             <section class="checklist-popup" v-show="openCheckList">
               <span>Add checklist</span>

@@ -1,6 +1,6 @@
 <template>
   <section class="checklist">
-    <div class="icon-container"><i class="far fa-check-square"></i></div>
+    <div class="icon-container"></div>
     <form class="editor" v-if="editTitle" @submit.prevent="updateCL">
       <textarea
         placeholder="Add an item"
@@ -10,7 +10,7 @@
       <button>Save</button><button>X</button>
     </form>
     <section v-else class="checklist-header">
-      <h4 @click="editTitle = true">{{ checklist.title }}</h4>
+      <h3 @click="editTitle = true">{{ checklist.title }}</h3>
       <button @click="deleteCL">Delete</button>
     </section>
     <ul>
@@ -23,7 +23,7 @@
             @click="toggleTodo(todo.id)"
           />
           <!-- </span> -->
-          <span @click="editTodo(todo)" :class="{ checked: todo.isDone }">{{
+          <span @click="editTodo(todo)" :class="{ done: todo.isDone }">{{
             todo.title
           }}</span>
         </label>

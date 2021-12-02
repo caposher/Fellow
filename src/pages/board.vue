@@ -5,15 +5,18 @@
     class="board-app"
   >
     <board-header />
-    <ul class="board" @click="scroll">
-      <li class="list-wrapper" v-for="list in board.lists" :key="list.id">
+    <ul class="board" @mouseenter.stop.prevent="scroll">
+      <li
+        class="list-wrapper"
+        v-for="list in board.lists"
+        :key="list.id"
+        @mousedown.stop="unscroll"
+      >
         <board-list :list="list" @update="updateList"></board-list>
       </li>
       <li class="list-wrapper new-list" @click="addList">
         <p>
-          <span>
-            <i class="fas fa-plus"></i> </span
-          >Add another list
+          <span> <i class="fas fa-plus"></i> </span>Add another list
         </p>
       </li>
     </ul>
@@ -31,6 +34,7 @@ export default {
   data() {
     return {
       selectedCardId: null,
+      slider: null,
     };
   },
   watch: {
@@ -118,31 +122,37 @@ export default {
 
     scroll(ev) {
       const slider = ev.target;
+      this.slider = slider;
       let isDown = false;
       let startX;
       let scrollLeft;
 
-      slider.addEventListener("mousedown", (e) => {
+      slider.addEventListener("mousedown", function down(e) {
         isDown = true;
         slider.classList.add("active");
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
       });
-      slider.addEventListener("mouseleave", () => {
+      slider.addEventListener("mouseleave", function leave() {
         isDown = false;
         slider.classList.remove("active");
       });
-      slider.addEventListener("mouseup", () => {
+      slider.addEventListener("mouseup", function up() {
         isDown = false;
         slider.classList.remove("active");
       });
-      slider.addEventListener("mousemove", (e) => {
+      slider.addEventListener("mousemove", function move(e) {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
         const walk = (x - startX) * 2; //scroll-fast
         slider.scrollLeft = scrollLeft - walk;
       });
+    },
+    unscroll() {
+      if (!this.slider) return;
+      this.slider.classList.remove("active");
+      console.log("unscroll");
     },
   },
   components: {

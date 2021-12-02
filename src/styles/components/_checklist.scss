@@ -8,11 +8,11 @@
   & .checklist-header {
     display: flex;
     justify-content: space-between;
-    margin: 0 0 4px 40px;
+    // margin: 0 0 4px 40px;
     padding: 8px 0px;
   }
   & form.editor {
-    margin: 0 0 4px 40px;
+    // margin: 0 0 4px 40px;
     & textarea {
       width: 512px;
       overflow: hidden;
@@ -33,7 +33,7 @@
     padding: 6px 0px;
   }
 
-  & .checked {
+  & .done {
     text-decoration: line-through;
   }
 }

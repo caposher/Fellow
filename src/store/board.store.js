@@ -101,7 +101,7 @@ export const boardStore = {
         commit({ type: 'setBoard', board: savedBoard });
         return savedBoard;
       } catch (err) {
-        console.log('cant creat board', err);
+        console.log('can\'t create board', err);
       }
     },
     async addList({ commit }, { boardId, title }) {

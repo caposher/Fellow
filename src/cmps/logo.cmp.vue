@@ -14,13 +14,13 @@ export default {};
 <style>
 @keyframes up {
   0% {
-    width: 16;
+    width: 16px;
   }
   50% {
     width: 8px;
   }
   100% {
-    width: 16;
+    width: 16px;
   }
 }
 @keyframes down {
@@ -41,7 +41,7 @@ export default {};
   background-color: #fff;
   padding: 2px;
   margin-right: 4px;
-  border-radius: 3px;
+  border-radius: 2px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -51,15 +51,14 @@ export default {};
   width: 16px;
   height: 5px;
   background-color: black;
-  border-radius: 2px;
-
+  border-radius: 1px;
   transition: 0.3s;
 }
 .down {
   width: 8px;
   height: 5px;
   background-color: black;
-  border-radius: 2px;
+  border-radius: 1px;
   transition: 0.3s;
 }
 

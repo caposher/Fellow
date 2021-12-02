@@ -12,6 +12,15 @@ body {
   list-style: none;
   align-items: flex-start;
   height: 100vh;
+  position: relative;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  transition: all 0.2s;
+  transform: scale(0.98);
+  will-change: transform;
+  user-select: none;
 
   > * {
     margin: 0 4px;
@@ -142,5 +151,3 @@ body {
     padding-inline-end: 6px;
   }
 }
-
-

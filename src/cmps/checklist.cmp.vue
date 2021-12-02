@@ -1,13 +1,16 @@
 <template>
   <section class="checklist">
-    <div class="icon-container"><i class="far fa-check-square"></i></div>
+    <div class="icon-container">
+      <span class="icon-lg icon-checklist"></span>
+    </div>
     <form class="editor" v-if="editTitle" @submit.prevent="updateCL">
       <textarea
         placeholder="Add an item"
         v-model="CLtoUpdate.title"
         @blur="(editTitle = false), updateCL"
       />
-      <button>Save</button><button>X</button>
+      <button>Save</button>
+      <button>X</button>
     </form>
     <section v-else class="checklist-header">
       <h4 @click="editTitle = true">{{ checklist.title }}</h4>
@@ -15,29 +18,24 @@
     </section>
     <ul>
       <li v-for="(todo, idx) in checklist.todos" :key="idx">
-        <label for="">
+        <label for>
           <!-- <span class="check-box-container"> -->
-          <input
-            type="checkbox"
-            :checked="todo.isDone"
-            @click="toggleTodo(todo.id)"
-          />
+          <input type="checkbox" :checked="todo.isDone" @click="toggleTodo(todo.id)" />
           <!-- </span> -->
-          <span @click="editTodo(todo)" :class="{ checked: todo.isDone }">{{
+          <span @click="editTodo(todo)" :class="{ checked: todo.isDone }">
+            {{
             todo.title
-          }}</span>
+            }}
+          </span>
         </label>
         <span @click="removeTodo(todo.id)">X</span>
       </li>
       <section v-if="newTodo">
         <form @submit.prevent="updateTodo">
-          <input
-            placeholder="Add an item"
-            v-model="todoToAdd.title"
-            @blur="newTodo = false"
-          />
+          <input placeholder="Add an item" v-model="todoToAdd.title" @blur="newTodo = false" />
           <br />
-          <button>Add</button><span @click="this.newTodo = false">X</span>
+          <button>Add</button>
+          <span @click="this.newTodo = false" class="icon-lg icon-close"></span>
         </form>
       </section>
       <span v-else @click="newTodo = true">Add an item</span>
@@ -51,18 +49,18 @@ import { utilService } from "../services/util.service.js";
 export default {
   props: {
     checklist: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
       CLtoUpdate: JSON.parse(JSON.stringify(this.checklist)),
       todoToAdd: {
         title: "",
-        isDone: false,
+        isDone: false
       },
       newTodo: false,
-      editTitle: false,
+      editTitle: false
     };
   },
   methods: {
@@ -74,7 +72,7 @@ export default {
       this.todoToAdd = { ...todo };
     },
     toggleTodo(todoId) {
-      const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
+      const idx = this.CLtoUpdate.todos.findIndex(td => td.id === todoId);
       let currTodo = this.CLtoUpdate.todos[idx];
       currTodo.isDone = !currTodo.isDone;
       this.CLtoUpdate.todos.splice(idx, 1, currTodo);
@@ -84,7 +82,7 @@ export default {
       if (!ev.target[0].value) return;
       let todo = JSON.parse(JSON.stringify(this.todoToAdd));
       if (todo.id) {
-        const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todo.id);
+        const idx = this.CLtoUpdate.todos.findIndex(td => td.id === todo.id);
         this.CLtoUpdate.todos.splice(idx, 1, todo);
       } else {
         console.log("new");
@@ -97,7 +95,7 @@ export default {
     },
     removeTodo(todoId) {
       console.log("removing", todoId);
-      const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
+      const idx = this.CLtoUpdate.todos.findIndex(td => td.id === todoId);
       this.CLtoUpdate.todos.splice(idx, 1);
       this.updateCL();
     },
@@ -105,7 +103,7 @@ export default {
       this.$emit("updateCL", JSON.parse(JSON.stringify(this.CLtoUpdate)));
       (this.todoToAdd = {
         title: "",
-        isDone: false,
+        isDone: false
       }),
         (this.editTitle = false);
     },
@@ -114,8 +112,8 @@ export default {
         delete this.CLtoUpdate.title;
         this.$emit("updateCL", this.CLtoUpdate);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

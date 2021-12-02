@@ -1,9 +1,10 @@
 <template>
   <section class="labels-popup">
-    <h4>Labels</h4>
-    <button @click="$emit('close')">X</button>
-    <hr />
-    <input type="text" placeholder="Search labels..." />
+    <header>
+      <h4>Labels</h4>
+      <button class="close-label-popup" @click="$emit('close')">X</button>
+      <input type="text" placeholder="Search labels..." />
+    </header>
     <p>Labels</p>
     <label v-for="(label, idx) in allLabels" :key="label.id" :class="label.colorClass">
       <span>{{ label.txt }}</span>

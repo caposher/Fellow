@@ -22,7 +22,10 @@
               <div class="due-date" v-show="cardToEdit.dueDate">
                 <h3>Due date</h3>
                 <div class="due-date-body">
-                  <span class="check-box-container">
+                  <span 
+                  class="check-box-container"
+                  :class="{'checked': cardToEdit.isComplete, 'unCheck': !cardToEdit.isComplete}"
+                  >
                     <!-- <span class="checkbox"> -->
                     <input
                       type="checkbox"
@@ -145,6 +148,7 @@
     </div>
   </div>
 </template>
+  
 
 <script>
 import cardLabels from "../cmps/labels.cmp.vue";

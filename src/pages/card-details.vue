@@ -16,7 +16,7 @@
           <div class="detail-labels">
             <!-- watch -->
             <!-- <button>Labels</button> -->
-            <!-- <card-labels :cardLabels="updatedCard.labelIds" @update="updateLabels" /> -->
+            <card-labels :cardLabels="updatedCard.labelIds" @update="updateLabels" />
             <!-- members -->
             <!-- date -->
           </div>
@@ -24,12 +24,9 @@
             <h4>Due date</h4>
             <div>
               <span>{{ dateToShow }}</span>
-              <span
-                v-show="updatedCard.dueDate - Date.now() <= 86400000"
-                :class="timeLabelColor"
-                class="timeLabel"
-                >{{ timeLabel }}</span
-              >
+              <span v-show="updatedCard.dueDate - Date.now() <= 86400000" :class="timeLabelColor" class="timeLabel">{{
+                timeLabel
+              }}</span>
             </div>
           </div>
         </div>
@@ -37,12 +34,7 @@
           <header>
             <span class="fa fa-align-left"></span>
             <h4>Description</h4>
-            <button
-              v-show="updatedCard.description && !isEditDesc"
-              @click="setFocus"
-            >
-              Edit
-            </button>
+            <button v-show="updatedCard.description && !isEditDesc" @click="setFocus">Edit</button>
           </header>
           <textarea
             ref="desc"
@@ -57,11 +49,7 @@
           </div>
         </div>
 
-        <div
-          class="check-list"
-          v-for="checklist in updatedCard.checklists"
-          :key="checklist.id"
-        >
+        <div class="check-list" v-for="checklist in updatedCard.checklists" :key="checklist.id">
           <checklist :checklist="checklist" @updateCL="updateCL" />
         </div>
         <div class="activity-log">
@@ -75,11 +63,7 @@
         <!-- side menu renders cmp in click -->
         <button>Labels</button>
         <button>Members</button>
-        <date
-          @updateDate="updateDate"
-          :cardDate="updatedCard.dueDate"
-          class="date"
-        ></date>
+        <date @updateDate="updateDate" :cardDate="updatedCard.dueDate" class="date"></date>
         <!-- <button @click="showDate=!showDate">Date</button> -->
         <button>Checklist</button>
         <section class="checklist">
@@ -90,11 +74,7 @@
             <span>Add checklist</span>
             <form @submit.prevent="addCheckList">
               <label>Title</label>
-              <input
-                type="text"
-                value="Checklist"
-                v-model="newChecklist.title"
-              />
+              <input type="text" value="Checklist" v-model="newChecklist.title" />
               <label>Copy items from...</label>
               <select name id>
                 <option value>(none)</option>
@@ -109,11 +89,11 @@
 </template>
 
 <script>
-import cardLabels from "../cmps/labels.cmp.vue";
-import date from "../cmps/date.cmp.vue";
+import cardLabels from '../cmps/labels.cmp.vue';
+import date from '../cmps/date.cmp.vue';
 
-import { utilService } from "../services/util.service.js";
-import checklist from "../cmps/checklist.cmp.vue";
+import { utilService } from '../services/util.service.js';
+import checklist from '../cmps/checklist.cmp.vue';
 export default {
   data() {
     return {
@@ -140,55 +120,52 @@ export default {
     },
     timeLabelColor() {
       if (this.updateCard.dueDate - Date.now() <= 0) {
-        return "over-due";
+        return 'over-due';
       } else {
-        return "due-soon";
+        return 'due-soon';
       }
     },
     dateToShow() {
       const timeStamp = this.updateCard.dueDate;
       const dueDate = new Date(timeStamp);
       const time = this.formatAMPM(dueDate);
-      if (new Date(timeStamp).getDate() === new Date().getDate())
-        return "today at " + time;
-      else if (new Date().getDate() + 1 === new Date(timeStamp).getDate())
-        return "tomorrow at " + time;
-      else if (new Date().getDate() - 1 === new Date(timeStamp).getDate())
-        return "yesterday at " + time;
+      if (new Date(timeStamp).getDate() === new Date().getDate()) return 'today at ' + time;
+      else if (new Date().getDate() + 1 === new Date(timeStamp).getDate()) return 'tomorrow at ' + time;
+      else if (new Date().getDate() - 1 === new Date(timeStamp).getDate()) return 'yesterday at ' + time;
 
       return `${dueDate}`.substring(4, 15);
     },
     timeLabel() {
-      return this.updateCard.dueDate - Date.now() <= 0 ? "over due" : "due soon";
-    }
+      return this.updateCard.dueDate - Date.now() <= 0 ? 'over due' : 'due soon';
+    },
   },
   methods: {
     formatAMPM(dueDate) {
       var hours = dueDate.getHours();
       var minutes = dueDate.getMinutes();
-      var ampm = hours >= 12 ? "PM" : "AM";
+      var ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
       hours = hours ? hours : 12;
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = hours + ":" + minutes + " " + ampm;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
       return strTime;
     },
     closeModal() {
       const { boardId } = this.$route.params;
-      this.$router.push("/b/" + boardId);
+      this.$router.push('/b/' + boardId);
     },
     async updateCard() {
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: this.list,
           card: JSON.parse(JSON.stringify(this.updatedCard)),
         });
         this.isEditDesc = false;
-        console.log("card updated");
+        console.log('card updated');
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     setEditDesc() {
@@ -204,14 +181,14 @@ export default {
       card.description = this.lastCardDesc;
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: this.list,
-          card
+          card,
         });
-        console.log("card desc undo");
+        console.log('card desc undo');
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     setFocus() {
@@ -224,63 +201,59 @@ export default {
     },
 
     async addCheckList() {
-      this.newChecklist.id = "CL" + utilService.makeId();
+      this.newChecklist.id = 'CL' + utilService.makeId();
       this.updatedCard.checklists.push(this.newChecklist);
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: this.list,
           card: this.updatedCard,
         });
         this.openCheckList = false;
-        console.log("card", this.updatedCard);
-        console.log("card updated");
+        console.log('card', this.updatedCard);
+        console.log('card updated');
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     async updateCL(todo, checklistId, checklistTitle) {
       const card = this.updatedCard;
-      const idx = card.checklists.findIndex(
-        (checklist) => checklist.id === checklistId
-      );
+      const idx = card.checklists.findIndex((checklist) => checklist.id === checklistId);
       const currChecklist = card.checklists[idx];
       if (checklistTitle) {
         currChecklist.title = checklistTitle;
       }
       if (todo.id) {
-        const todoIdx = currChecklist.todos.findIndex(
-          (td) => td.id === todo.id
-        );
+        const todoIdx = currChecklist.todos.findIndex((td) => td.id === todo.id);
         currChecklist.todos.splice(todoIdx, 1, todo);
       } else {
-        todo.id = "TD" + utilService.makeId();
+        todo.id = 'TD' + utilService.makeId();
         if (card.checklists[idx].todos) {
           card.checklists[idx].todos.push(todo);
         } else card.checklists[idx].todos = [todo];
       }
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: this.list,
-          card
+          card,
         });
       } catch (err) {
-        console.log("cant save the todo", err);
+        console.log('cant save the todo', err);
       }
     },
     async updateLabels(labelsIds) {
-      this.updatedCard.labelsIds = labelsIds;
+      this.updatedCard.labelIds = labelsIds;
       await this.updateCard();
     },
   },
   components: {
     checklist,
     date,
-    cardLabels
-  }
+    cardLabels,
+  },
 };
 </script>
 

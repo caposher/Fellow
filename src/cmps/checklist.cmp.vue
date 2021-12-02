@@ -1,7 +1,7 @@
 <template>
   <section class="checklist">
     <div class="icon-container"><i class="far fa-check-square"></i></div>
-    <form v-if="editTitle" @submit.prevent="updateCL">
+    <form class="editor" v-if="editTitle" @submit.prevent="updateCL">
       <textarea
         placeholder="Add an item"
         v-model="CLtoUpdate.title"

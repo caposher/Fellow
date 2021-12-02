@@ -7,6 +7,10 @@
 //   src: url(~@/assets/fonts/Icomoon/icomoon.ttf);
 // }
 @font-face {
+  font-family: Icomoon;
+  src: url(~@/assets/fonts/Icomoon/trellicons.ttf);
+}
+@font-face {
   font-family: paytone;
   src: url(~@/assets/fonts/Paytone_One/PaytoneOne-Regular.ttf);
 }
@@ -17,6 +21,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 // @font-face {
 //   font-family: "icomoon";
 //   src: url("~@/assets/font/icomoon.ttf?wg6z27") format("truetype");

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details">
+  <section v-if="list && cardToEdit" class="card-details">
     <header>
       <button @click="closeModal" class="close">x</button>
       <div class="header">
@@ -135,7 +135,7 @@
         </section>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

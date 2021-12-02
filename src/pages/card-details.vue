@@ -45,17 +45,6 @@
             <!-- date -->
             <!-- </div> -->
           </div>
-          <div class="dueDate" v-show="cardToEdit.dueDate">
-            <h4>Due date</h4>
-            <div>
-              <span>{{ dateToShow }}</span>
-              <span
-                v-show="cardToEdit.dueDate - Date.now() <= 86400000"
-                :class="timeLabelColor"
-                class="timeLabel"
-              >{{ timeLabel }}</span>
-            </div>
-          </div>
         </div>
         <div class="description">
           <header>
@@ -134,7 +123,7 @@ export default {
       showLabels: false,
       openCheckList: false,
       newChecklist: {},
-      cardToEdit: null,
+      cardToEdit: null
     };
   },
   created() {
@@ -204,7 +193,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          card: JSON.parse(JSON.stringify(this.cardToEdit)),
+          card: JSON.parse(JSON.stringify(this.cardToEdit))
         });
         this.isEditDesc = false;
         console.log("card updated");
@@ -232,7 +221,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: this.list,
-          card,
+          card
         });
         console.log("card desc undo");
       } catch (err) {
@@ -262,7 +251,7 @@ export default {
     },
     async updateCL(checklist) {
       const idx = this.cardToEdit.checklists.findIndex(
-        (cl) => cl.id === checklist.id
+        cl => cl.id === checklist.id
       );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
@@ -278,13 +267,13 @@ export default {
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
-    },
+    }
   },
   components: {
     checklist,
     date,
-    cardLabels,
-  },
+    cardLabels
+  }
 };
 </script>
 

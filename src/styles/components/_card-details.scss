@@ -101,7 +101,7 @@
       position: relative;
     }
 
-    .popup {
+    .checklist-popup {
       background: #fff;
       border-radius: 3px;
       box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
@@ -166,7 +166,7 @@
         cursor: pointer;
       }
     }
-    .popup form > *:not(button) {
+    .checklist-popup form > *:not(button) {
       display: block;
       width: 280px;
       margin: 0 12px;
@@ -194,11 +194,11 @@
 }
 
 .over-due {
-  background-color: #EB5A46;
-  color: #FFFFFF;
+  background-color: #eb5a46;
+  color: #ffffff;
 }
 .due-soon {
-  color: #172B4D;
+  color: #172b4d;
   background-color: #f2d600;
 }
 
@@ -206,6 +206,6 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: "\e91a";
+    content: '\e91a';
   }
 }

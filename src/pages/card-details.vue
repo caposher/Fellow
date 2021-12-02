@@ -16,7 +16,9 @@
           <div class="detail-labels">
             <!-- watch -->
             <!-- <button>Labels</button> -->
-            <!-- <card-labels :cardLabels="cardToEdit.labelIds" @update="updateLabels" /> -->
+            <button v-for="label in getLabels" :key="label.id" :class="label.colorClass" class="label-tag">
+              {{ label.txt }}
+            </button>
             <!-- members -->
             <!-- date -->
           </div>
@@ -61,7 +63,13 @@
       </div>
       <div class="side-menu">
         <!-- side menu renders cmp in click -->
-        <button>Labels</button>
+        <button @click="toggleLabels">Labels</button>
+        <card-labels
+          v-show="showLabels"
+          @close="toggleLabels"
+          :cardLabels="cardToEdit.labelIds"
+          @update="updateLabels"
+        />
         <button>Members</button>
         <date @updateDate="updateDate" :cardDate="cardToEdit.dueDate" class="date"></date>
         <!-- <button @click="showDate=!showDate">Date</button> -->
@@ -70,7 +78,7 @@
           <button @click="openCheckList = !openCheckList">
             <span>Checklist</span>
           </button>
-          <section class="popup" v-show="openCheckList">
+          <section class="checklist-popup" v-show="openCheckList">
             <span>Add checklist</span>
             <form @submit.prevent="addCheckList">
               <label>Title</label>
@@ -100,6 +108,7 @@ export default {
       lastCardDesc: null,
       isEditDesc: false,
       showDate: false,
+      showLabels: false,
       openCheckList: false,
       newChecklist: {},
       cardToEdit: null,
@@ -136,6 +145,11 @@ export default {
 
       return `${dueDate}`.substring(4, 15);
     },
+    getLabels() {
+      const allLabels = this.$store.getters.labels;
+      const labelIds = this.cardToEdit.labelIds;
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
+    },
   },
   methods: {
     formatAMPM(dueDate) {
@@ -157,7 +171,7 @@ export default {
         await this.$store.dispatch({
           type: 'updateCard',
           boardId: this.boardId,
-          list: this.list,
+          list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.cardToEdit)),
         });
         this.isEditDesc = false;
@@ -242,9 +256,12 @@ export default {
         console.log('cant save the todo', err);
       }
     },
-    async updateLabels(labelsIds) {
-      this.cardToEdit.labelsIds = labelsIds;
+    async updateLabels(labelIds) {
+      this.cardToEdit.labelIds = labelIds;
       await this.updateCard();
+    },
+    toggleLabels() {
+      this.showLabels = !this.showLabels;
     },
   },
   components: {

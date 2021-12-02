@@ -20,3 +20,24 @@
 .labels {
   background-color: rgb(225, 238, 200);
 }
+
+.labels-popup {
+  position: absolute;
+  background-color: moccasin;
+  z-index: 10;
+}
+
+.label-tag {
+  width: 50px;
+  height: 50px;
+}
+
+.preview-label {
+  height: 16px;
+  line-height: 16px;
+  max-width: 198px;
+  padding: 0 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 700;
+}

@@ -41,12 +41,12 @@
   width: 32px;
   height: 32px;
   border-radius: 3px;
+}
 
 @mixin to-icon($content) {
-  &::before{
+  &::before {
     content: $content;
   }
-  
 }
 
 /* Media queries Breakpoint mixins */

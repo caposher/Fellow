@@ -24,6 +24,9 @@ export const boardStore = {
     list(state) {
       return JSON.parse(JSON.stringify(state.currList));
     },
+    labels(state) {
+      return JSON.parse(JSON.stringify(state.currBoard.labels));
+    },
   },
 
   mutations: {

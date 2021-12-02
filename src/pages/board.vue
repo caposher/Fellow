@@ -5,7 +5,11 @@
       <li class="list-wrapper" v-for="list in board.lists" :key="list.id">
         <board-list :list="list" @update="updateList"></board-list>
       </li>
-      <li @click="addList">Add list</li>
+      <li class="list-wrapper new-list" @click="addList">
+        <p>
+          <span><i class="fas fa-plus"></i></span>Add another list
+        </p>
+      </li>
     </ul>
     <router-view v-if="selectedCardId"></router-view>
   </section>

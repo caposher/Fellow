@@ -1,16 +1,26 @@
 <template>
   <li class="list">
     <header>
-      <h4 v-if="!editTitle" @click="editTitle = true">{{ list.title }}</h4>
-      <input type="text" v-else v-model="updatedList.title" v-focus="editTitle" @blur="updateList()" />
-      <button class="actions">...</button>
+      <h4 v-if="!editTitle" @click="editTitle = true">{{ showTitle }}</h4>
+      <textarea
+        type="text"
+        v-else
+        v-model="updatedList.title"
+        v-focus="editTitle"
+        @focus="$event.target.select()"
+        placeholder="Enter title"
+        @blur="updateList()"
+      />
+      <button class="actions"><i class="fas fa-ellipsis-h"></i></button>
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
       <card-list v-for="card in list.cards" :key="card.id" :card="card" :list="list"></card-list>
     </ul>
     <footer>
-      <button @click="addCard">+Add card</button>
+      <button @click="addCard">
+        <span><i class="fas fa-plus"></i></span> Add a card
+      </button>
     </footer>
   </li>
 </template>
@@ -49,6 +59,11 @@ export default {
     updateList() {
       this.editTitle = false;
       this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
+    },
+  },
+  computed: {
+    showTitle() {
+      return this.list.title ? this.list.title : 'Enter title';
     },
   },
   components: {

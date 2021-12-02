@@ -4,7 +4,7 @@
     <div>
       <!-- v-for labels -->
       <small>labels</small>
-      <h4>{{ card.title }}</h4>
+      <p>{{ card.title }}</p>
       <button>Quick edit</button>
     </div>
     <div class="card-icons"></div>
@@ -35,8 +35,7 @@ export default {
       console.log(this.$route.path);
     },
   },
-  components: {
-  },
+  components: {},
 };
 </script>
 

@@ -14,6 +14,7 @@ export const boardService = {
   saveList,
   getListAndCardById,
   updateCard,
+  getEmptyLabel,
 };
 
 _createBoards();
@@ -103,7 +104,11 @@ function getEmptyBoard(title) {
     createdAt: '',
     createdBy: 'user',
     style: null,
-    labels: ['label1', 'label2', 'label3'],
+    labels: [
+      { id: '1', txt: 'test1', colorClass: 'label-green' },
+      { id: '2', txt: 'test2', colorClass: 'label-red' },
+      { id: '3', txt: 'test3', colorClass: 'label-yellow' },
+    ],
     members: [],
     lists: [],
   };
@@ -125,7 +130,7 @@ function getEmptyCard(title) {
     comments: [],
     checklists: [],
     members: [],
-    labelIds: [],
+    labelIds: [{ id: '1', txt: 'test1', colorClass: 'label-green' }],
     createdAt: Date.now(),
     dueDate: '',
     style: null,
@@ -136,6 +141,14 @@ function getEmptyCard(title) {
       imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
     },
     activities: [],
+  };
+}
+
+function getEmptyLabel(txt = '', colorClass = '.label-green') {
+  return {
+    id: '',
+    txt,
+    colorClass,
   };
 }
 

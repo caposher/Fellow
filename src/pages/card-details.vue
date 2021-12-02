@@ -1,21 +1,22 @@
 <template>
-  <section v-if="list&&card" class="card-details">
+  <section v-if="list && card" class="card-details">
     <header>
       <button @click="closeModal" class="close">x</button>
       <div class="header">
         <span class="fa fa-newspaper"></span>
         <div class="header-text">
           <input @blur="updateCard" v-model="card.title" />
-          <h5>in list {{list.title}}</h5>
+          <h5>in list {{ list.title }}</h5>
         </div>
       </div>
     </header>
     <div class="card-body">
       <div class="main-details">
         <div class="icon-header">
-          <div class="labels">
+          <div class="detail-labels">
             <!-- watch -->
             <!-- <button>Labels</button> -->
+            <!-- <card-labels :cardLabel="card.labelIds" /> -->
             <!-- members -->
             <!-- date -->
           </div>
@@ -24,7 +25,7 @@
           <header>
             <span class="fa fa-align-left"></span>
             <h4>Description</h4>
-            <button v-show="card.description&&!isEditDesc" @click="setFocus">Edit</button>
+            <button v-show="card.description && !isEditDesc" @click="setFocus">Edit</button>
           </header>
           <textarea
             ref="desc"
@@ -57,11 +58,12 @@
 </template>
 
 <script>
+import cardLabels from '../cmps/labels.cmp.vue';
 export default {
   data() {
     return {
       lastCardDesc: null,
-      isEditDesc: false
+      isEditDesc: false,
     };
   },
   computed: {
@@ -73,12 +75,12 @@ export default {
     },
     boardId() {
       return this.$store.getters.boardId;
-    }
+    },
   },
   methods: {
     closeModal() {
       const { boardId } = this.$route.params;
-      this.$router.push("/b/" + boardId);
+      this.$router.push('/b/' + boardId);
     },
     async updateCard() {
       if (this.card.description === this.lastCardDesc) {
@@ -87,15 +89,15 @@ export default {
       }
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: this.list,
-          card: this.card
+          card: this.card,
         });
         this.isEditDesc = false;
-        console.log("card updated");
+        console.log('card updated');
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     setEditDesc() {
@@ -103,7 +105,7 @@ export default {
       this.isEditDesc = true;
     },
     async undoDesc() {
-         if (this.card.description === this.lastCardDesc) {
+      if (this.card.description === this.lastCardDesc) {
         this.isEditDesc = false;
         return;
       }
@@ -111,23 +113,23 @@ export default {
       card.description = this.lastCardDesc;
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: this.list,
-          card
+          card,
         });
-        console.log("card desc undo");
+        console.log('card desc undo');
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     setFocus() {
       this.isEditDesc = true;
       this.$refs.desc.focus();
-    }
-  }
+    },
+  },
+  components: {
+    cardLabels,
+  },
 };
 </script>
-
-<style>
-</style>

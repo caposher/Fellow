@@ -37,6 +37,10 @@ button {
   background-color: unset;
 }
 
+textarea {
+  outline: none;
+}
+
 h1,
 h2,
 h3,
@@ -51,7 +55,7 @@ img {
 }
 
 p {
-  //   margin: 0 0 1rem;
+  margin: 0 0;
   //   max-width: 60ch;
 }
 

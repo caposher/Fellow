@@ -46,7 +46,6 @@ export default {
     },
     handleChange() {
       if (!this.clickOutsideFlag) {
-        // console.log(this.newDate);
         this.$emit("updateDate", this.newDate);
       } else {
         this.clickOutsideFlag = false;

@@ -14,38 +14,38 @@
             <h5>in list {{ list.title }}</h5>
           </div>
         </div>
-    </header>
-      </div>
-    <div class="card-body">
-      <div class="main-details">
-        <div class="icon-header">
-          <div class="detail-labels">
-            <div class="due-date" v-show="cardToEdit.dueDate">
-              <h3>Due date</h3>
-              <div class="due-date-body">
-                <span 
-                class="check-box-container"
-                :class="{'checked':cardToEdit.isComplete, 'unCheck':!cardToEdit.isComplete}"
-                >
-                  <!-- <span class="checkbox"> -->
-                  <input
-                    type="checkbox"
-                    v-model="cardToEdit.isComplete"
-                    @change="updateCard"
-                  />
-                  <!-- </span> -->
-                </span>
-                <div class="date-picker">
-                  <span>{{ dateToShow }}</span>
-                  <span
-                    v-show="
-                      !cardToEdit.isComplete &&
-                      cardToEdit.dueDate - Date.now() <= 86400000
-                    "
-                    :class="timeLabelColor"
-                    class="time-label"
-                    >{{ timeLabel }}</span
+      </header>
+      <div class="card-body">
+        <div class="main-details">
+          <div class="icon-header">
+            <div class="detail-labels">
+              <div class="due-date" v-show="cardToEdit.dueDate">
+                <h3>Due date</h3>
+                <div class="due-date-body">
+                  <span 
+                  class="check-box-container"
+                  :class="{'checked': cardToEdit.isComplete, 'unCheck': !cardToEdit.isComplete}"
                   >
+                    <!-- <span class="checkbox"> -->
+                    <input
+                      type="checkbox"
+                      v-model="cardToEdit.isComplete"
+                      @change="updateCard"
+                    />
+                    <!-- </span> -->
+                  </span>
+                  <div class="date-picker">
+                    <span>{{ dateToShow }}</span>
+                    <span
+                      v-show="
+                        !cardToEdit.isComplete &&
+                        cardToEdit.dueDate - Date.now() <= 86400000
+                      "
+                      :class="timeLabelColor"
+                      class="time-label"
+                      >{{ timeLabel }}</span
+                    >
+                  </div>
                 </div>
               </div>
               <!-- watch -->
@@ -67,19 +67,17 @@
               <!-- </div> -->
             </div>
           </div>
-        </div>
-        <div class="description">
-          <header>
-            <span class="icon-lg icon-desc"></span>
-            <div class="content">
-              <h3>Description</h3>
-              <button
-                v-show="cardToEdit.description && !isEditDesc"
-                @click="setFocus"
-              >
-                Edit
-              </button>
-          
+          <div class="description">
+            <header>
+              <span class="fa fa-align-left"></span>
+              <div class="content">
+                <h3>Description</h3>
+                <button
+                  v-show="cardToEdit.description && !isEditDesc"
+                  @click.stop="setFocus"
+                >
+                  Edit
+                </button>
               </div>
             </header>
             <!-- @blur="updateCard" -->
@@ -149,8 +147,8 @@
       </div>
     </div>
   </div>
-  </div>
 </template>
+  
 
 <script>
 import cardLabels from "../cmps/labels.cmp.vue";

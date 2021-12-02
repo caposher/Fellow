@@ -8,7 +8,8 @@
       <header>
         <button @click="closeModal" class="close">x</button>
         <div class="header">
-          <span class="fa fa-newspaper"></span>
+          <span class="icon-card icon-lg"></span>
+          <!-- <span class="fa fa-newspaper"></span> -->
           <div class="header-text">
             <input @blur="updateCard" v-model="cardToEdit.title" />
             <h5>in list {{ list.title }}</h5>
@@ -69,7 +70,8 @@
           </div>
           <div class="description">
             <header>
-              <span class="fa fa-align-left"></span>
+              <span class="icon-lg icon-desc"></span>
+              <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
                 <button

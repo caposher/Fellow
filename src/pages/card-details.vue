@@ -29,11 +29,6 @@
                 <div class="date-picker">
                   <span>{{ dateToShow }}</span>
                   <span
-                    v-show="cardToEdit.isComplete"
-                    class="time-label complete"
-                    >complete</span
-                  >
-                  <span
                     v-show="
                       !cardToEdit.isComplete &&
                       cardToEdit.dueDate - Date.now() <= 86400000
@@ -47,12 +42,18 @@
             </div>
             <!-- watch -->
             <!-- <button>Labels</button> -->
-            <!-- <button
-              v-for="label in getLabels"
-              :key="label.id"
-              :class="label.colorClass"
-              class="label-tag"
-            >{{ label.txt }}</button> -->
+            <div class="card-labels">
+              <h4>Labels</h4>
+              <button
+                v-for="label in getLabels"
+                :key="label.id"
+                :class="label.colorClass"
+                class="label-tag white-text"
+              >
+                {{ label.txt }}
+              </button>
+              <button class="label-tag"><i class="fas fa-plus"></i></button>
+            </div>
             <!-- members -->
             <!-- date -->
             <!-- </div> -->
@@ -193,6 +194,11 @@ export default {
       }
 
       return this.formatDate(dueDate) + ", " + dueDate.getFullYear() + time;
+    },
+    getLabels() {
+      const allLabels = this.$store.getters.labels;
+      const labelIds = this.card.labelIds;
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
   },
   methods: {

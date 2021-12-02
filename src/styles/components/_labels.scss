@@ -16,28 +16,67 @@
 .label-blue {
   background-color: #0079bf;
 }
-
-.labels {
-  background-color: rgb(225, 238, 200);
-}
-
-.labels-popup {
-  position: absolute;
-  background-color: moccasin;
-  z-index: 10;
-}
-
-.label-tag {
-  width: 50px;
-  height: 50px;
+.white-text {
+  color: white;
 }
 
 .preview-label {
   height: 16px;
   line-height: 16px;
   max-width: 198px;
-  padding: 0 8px;
+  margin: 0 4px 4px 0;
+  padding: 3px 20px 0px 8px;
   border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
   color: #fff;
-  font-weight: 700;
+}
+
+//TODO: temporary until have detail card button style
+.label-tag {
+  min-width: 50px;
+  height: 32px;
+  border-radius: 3px;
+  margin-inline-end: 4px;
+  margin-block-end: 4px;
+  font-weight: bold;
+}
+
+.card-labels {
+  h4 {
+    font-size: 12px;
+    color: #68768b;
+  }
+}
+
+.labels-popup {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+  overflow: hidden;
+  position: absolute;
+  z-index: 10;
+  width: 304px;
+  right: 60px;
+  padding: 0 12px;
+  header {
+    position: flex;
+    flex-direction: column;
+
+    h4 {
+      line-height: 40px;
+      text-align: center;
+      border-bottom: 1px solid #091e4221;
+    }
+  }
+
+  .close-label-popup {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  input {
+    @include popup-input;
+  }
 }

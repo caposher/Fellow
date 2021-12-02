@@ -3,11 +3,11 @@
     <!-- <img :url="" class="card-cover" /> -->
     <div>
       <!-- v-for labels -->
-      <small>
+      <section>
         <span v-for="label in getLabels" :key="label.id" :class="label.colorClass" class="preview-label">
           {{ label.txt }}
         </span>
-      </small>
+      </section>
       <p>{{ card.title }}</p>
       <button>Quick edit</button>
     </div>

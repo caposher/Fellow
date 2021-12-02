@@ -5,15 +5,15 @@
     @click.stop.prevent="closeModal"
   >
     <div class="card-details" @click.stop="">
+      <button @click="closeModal" class="close">x</button>
       <header>
-        <button @click="closeModal" class="close">x</button>
-        <div class="header">
-          <span class="fa fa-newspaper"></span>
-          <div class="header-text">
-            <input @blur="updateCard" v-model="cardToEdit.title" />
-            <h5>in list {{ list.title }}</h5>
-          </div>
-        </div>
+        <!-- <div class="header"> -->
+        <span class="card-details-icon"></span>
+        <!-- <div class="header-text"> -->
+        <textarea @blur="updateCard" v-model="cardToEdit.title" />
+        <h5>in list {{ list.title }}</h5>
+        <!-- </div> -->
+        <!-- </div> -->
       </header>
       <div class="card-body">
         <div class="main-details">
@@ -22,9 +22,12 @@
               <div class="due-date" v-show="cardToEdit.dueDate">
                 <h3>Due date</h3>
                 <div class="due-date-body">
-                  <span 
-                  class="check-box-container"
-                  :class="{'checked': cardToEdit.isComplete, 'unCheck': !cardToEdit.isComplete}"
+                  <span
+                    class="check-box-container"
+                    :class="{
+                      checked: cardToEdit.isComplete,
+                      unCheck: !cardToEdit.isComplete,
+                    }"
                   >
                     <!-- <span class="checkbox"> -->
                     <input
@@ -148,7 +151,6 @@
     </div>
   </div>
 </template>
-  
 
 <script>
 import cardLabels from "../cmps/labels.cmp.vue";

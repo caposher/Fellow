@@ -1,15 +1,17 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details">
-    <header>
-      <button @click="closeModal" class="close">x</button>
-      <div class="header">
-        <span class="fa fa-newspaper"></span>
-        <div class="header-text">
-          <input @blur="updateCard" v-model="cardToEdit.title" />
-          <h5>in list {{ list.title }}</h5>
+  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
+    <div class="card-details" @click.stop>
+      <header>
+        <button @click="closeModal" class="close">x</button>
+        <div class="header">
+          <span class="fa fa-newspaper"></span>
+          <div class="header-text">
+            <input @blur="updateCard" v-model="cardToEdit.title" />
+            <h5>in list {{ list.title }}</h5>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </div>
     <div class="card-body">
       <div class="main-details">
         <div class="icon-header">
@@ -17,16 +19,12 @@
             <div class="due-date" v-show="cardToEdit.dueDate">
               <h3>Due date</h3>
               <div class="due-date-body">
-                <span 
-                class="check-box-container"
-                :class="{'checked':cardToEdit.isComplete, 'unCheck':!cardToEdit.isComplete}"
+                <span
+                  class="check-box-container"
+                  :class="{'checked':cardToEdit.isComplete, 'unCheck':!cardToEdit.isComplete}"
                 >
                   <!-- <span class="checkbox"> -->
-                  <input
-                    type="checkbox"
-                    v-model="cardToEdit.isComplete"
-                    @change="updateCard"
-                  />
+                  <input type="checkbox" v-model="cardToEdit.isComplete" @change="updateCard" />
                   <!-- </span> -->
                 </span>
                 <div class="date-picker">
@@ -38,28 +36,27 @@
                     "
                     :class="timeLabelColor"
                     class="time-label"
-                    >{{ timeLabel }}</span
-                  >
+                  >{{ timeLabel }}</span>
                 </div>
               </div>
+              <!-- watch -->
+              <!-- <button>Labels</button> -->
+              <div class="card-labels">
+                <h4>Labels</h4>
+                <button
+                  v-for="label in getLabels"
+                  :key="label.id"
+                  :class="label.colorClass"
+                  class="label-tag white-text"
+                >{{ label.txt }}</button>
+                <button class="label-tag">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <!-- members -->
+              <!-- date -->
+              <!-- </div> -->
             </div>
-            <!-- watch -->
-            <!-- <button>Labels</button> -->
-            <div class="card-labels">
-              <h4>Labels</h4>
-              <button
-                v-for="label in getLabels"
-                :key="label.id"
-                :class="label.colorClass"
-                class="label-tag white-text"
-              >
-                {{ label.txt }}
-              </button>
-              <button class="label-tag"><i class="fas fa-plus"></i></button>
-            </div>
-            <!-- members -->
-            <!-- date -->
-            <!-- </div> -->
           </div>
         </div>
         <div class="description">
@@ -67,12 +64,7 @@
             <span class="icon-lg icon-desc"></span>
             <div class="content">
               <h3>Description</h3>
-              <button
-                v-show="cardToEdit.description && !isEditDesc"
-                @click="setFocus"
-              >
-                Edit
-              </button>
+              <button v-show="cardToEdit.description && !isEditDesc" @click="setFocus">Edit</button>
             </div>
           </header>
           <!-- @blur="updateCard" -->
@@ -88,11 +80,7 @@
           </div>
         </div>
 
-        <div
-          class="check-list"
-          v-for="checklist in cardToEdit.checklists"
-          :key="checklist.id"
-        >
+        <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
           <checklist :checklist="checklist" @updateCL="updateCL" />
         </div>
         <div class="activity-log">
@@ -104,7 +92,7 @@
       </div>
       <div class="side-menu">
         <!-- side menu renders cmp in click -->
-        <button @click="toggleLabels">Labels</button>
+        <button @click.stop="toggleLabels">Labels</button>
         <card-labels
           v-show="showLabels"
           @close="toggleLabels"
@@ -112,24 +100,17 @@
           @update="updateLabels"
         />
         <button>Members</button>
-        <date
-          @updateDate="updateDate"
-          :cardDate="cardToEdit.dueDate"
-          class="date"
-        ></date>
+        <date @updateDate="updateDate" :cardDate="cardToEdit.dueDate" class="date"></date>
         <section class="checklist">
           <button @click="openCheckList = !openCheckList">
-            <span>Checklist </span><span class="test">!!!</span>
+            <span>Checklist</span>
+            <span class="test">!!!</span>
           </button>
           <section class="checklist-popup" v-show="openCheckList">
             <span>Add checklist</span>
             <form @submit.prevent="addCheckList">
               <label>Title</label>
-              <input
-                type="text"
-                value="Checklist"
-                v-model="newChecklist.title"
-              />
+              <input type="text" value="Checklist" v-model="newChecklist.title" />
               <label>Copy items from...</label>
               <select name id>
                 <option value>(none)</option>
@@ -141,6 +122,7 @@
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -159,7 +141,7 @@ export default {
       openCheckList: false,
       newChecklist: {},
       cardToEdit: null,
-      isUndoDesc: false,
+      isUndoDesc: false
     };
   },
   created() {
@@ -204,8 +186,8 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
-    },
+      return labelIds.map(lId => allLabels.find(label => label.id === lId));
+    }
   },
   methods: {
     formatAMPM(dueDate) {
@@ -235,7 +217,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          card: JSON.parse(JSON.stringify(this.cardToEdit)),
+          card: JSON.parse(JSON.stringify(this.cardToEdit))
         });
         console.log("card updated with new desc");
       } catch (err) {
@@ -280,7 +262,7 @@ export default {
     },
     async updateCL(checklist) {
       const idx = this.cardToEdit.checklists.findIndex(
-        (cl) => cl.id === checklist.id
+        cl => cl.id === checklist.id
       );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
@@ -296,13 +278,13 @@ export default {
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
-    },
+    }
   },
   components: {
     checklist,
     date,
-    cardLabels,
-  },
+    cardLabels
+  }
 };
 </script>
 

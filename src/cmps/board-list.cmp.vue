@@ -35,9 +35,9 @@
         ></card-list>
       </draggable>
     </ul>
-    <footer>
+    <footer class="add-card">
       <button @click="addCard">
-        <span><i class="fas fa-plus"></i></span> Add a card
+        <span class="icon-sm icon-plus"></span>Add a card
       </button>
     </footer>
   </li>

@@ -1,0 +1,53 @@
+.card {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 #091e4240;
+  max-width: 300px;
+  min-height: 20px;
+  margin-block-end: 8px;
+  padding: 6px 8px 2px;
+  .card-title {
+    word-wrap: break-word;
+    clear: both;
+    color: #172b4d;
+    display: block;
+    margin: 0 0 4px;
+    overflow: hidden;
+    text-decoration: none;
+    font-weight: 400;
+  }
+  .preview-label {
+    margin: 0 4px 4px 0;
+  }
+
+  &:hover {
+    background-color: hsl(219, 15%, 96%);
+    cursor: pointer;
+  }
+  .card-icons {
+    .icon-wrapper {
+      color: #5e6c84;
+      display: inline-block;
+      margin: 0 4px 4px 0;
+      max-width: 100%;
+      min-height: 20px;
+      overflow: hidden;
+      padding: 2px;
+      position: relative;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      vertical-align: top;
+      .badge {
+        color: #6b778c;
+        vertical-align: top;
+      }
+      .icon-text {
+        font-size: 12px;
+        padding: 0 4px 0 2px;
+        font-weight: 200;
+        vertical-align: top;
+        white-space: nowrap;
+      }
+    }
+  }
+}

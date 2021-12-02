@@ -7,11 +7,10 @@
     <div class="card-details" @click.stop="">
       <button @click="closeModal" class="close">x</button>
       <header>
-        <button @click="closeModal" class="close">x</button>
         <div class="header">
           <span class="icon-card icon-lg"></span>
           <!-- <span class="fa fa-newspaper"></span> -->
-          <div class="header-text">
+          <div class="card-header-container">
             <input @blur="updateCard" v-model="cardToEdit.title" />
             <h5>in list {{ list.title }}</h5>
             <span v-show="card.isWatch" class="icon-sm icon-watch"></span>
@@ -76,8 +75,9 @@
             </div>
           </div>
           <div class="description">
-            <header>
-              <span class="icon-lg icon-desc"></span>
+            <span class="card-details-icon icon-lg"></span>
+            <div>
+              <!-- <span class="icon-lg icon-desc"></span> -->
               <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
@@ -88,7 +88,7 @@
                   Edit
                 </button>
               </div>
-            </header>
+            </div>
             <!-- @blur="updateCard" -->
             <textarea
               ref="desc"
@@ -107,6 +107,8 @@
             v-for="checklist in cardToEdit.checklists"
             :key="checklist.id"
           >
+            <span class="card-details-icon icon-lg"></span>
+
             <checklist :checklist="checklist" @updateCL="updateCL" />
           </div>
           <div class="activity-log">
@@ -119,10 +121,10 @@
         <div class="side-menu">
           <h3>Add to card</h3>
           <!-- side menu renders cmp in click -->
-          <button>
+          <button class="action-btn">
             <span class="icon-sm icon-member"></span>Members
           </button>
-          <button @click.stop="toggleLabels">
+          <button @click.stop="toggleLabels" class="action-btn">
             <span class="icon-sm icon-label"></span>
             Labels
           </button>
@@ -132,11 +134,10 @@
             :cardLabels="cardToEdit.labelIds"
             @update="updateLabels"
           />
-          <section class="checklist">
+          <section class="checklist-btn">
             <button @click="openCheckList = !openCheckList">
               <span class="icon-sm icon-checklist"></span>
-
-              <span>Checklist</span>
+              <span class="action-btn">Checklist</span>
             </button>
             <section class="checklist-popup" v-show="openCheckList">
               <span>Add checklist</span>
@@ -155,7 +156,11 @@
               </form>
             </section>
           </section>
-          <date @updateDate="updateDate" :cardDate="cardToEdit.dueDate" class="date"></date>
+          <date
+            @updateDate="updateDate"
+            :cardDate="cardToEdit.dueDate"
+            class="date"
+          ></date>
           <section class="attachment">
             <span class="icon-sm icon-attach"></span>Attachments
           </section>

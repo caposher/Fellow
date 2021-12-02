@@ -1,6 +1,8 @@
 <template>
   <li class="list">
     <header>
+      <p>{{ oldIndex }}</p>
+      <p>{{ newIndex }}</p>
       <h4 v-if="!editTitle" @click="editTitle = true">{{ showTitle }}</h4>
       <textarea
         type="text"
@@ -17,13 +19,20 @@
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
       <draggable
         v-model="listOnEdit.cards"
-        ghost-class="ghost"
         group="list-group"
+        ghost-class="ghost"
+        :animation="200"
         :move="detectMove"
         @start="drag = true"
         @end="drag = false"
       >
-        <card-list v-for="card in listOnEdit.cards" :key="card.id" :card="card" :list="list"></card-list>
+        <card-list
+          v-for="(card, idx) in listOnEdit.cards"
+          :class="oldIndex === idx ? 'ghost' : ''"
+          :key="card.id"
+          :card="card"
+          :list="list"
+        ></card-list>
       </draggable>
     </ul>
     <footer class="add-card">
@@ -50,6 +59,8 @@ export default {
   data() {
     return {
       listOnEdit: JSON.parse(JSON.stringify(this.list)),
+      oldIndex: '',
+      newIndex: '',
       updatedList: JSON.parse(JSON.stringify(this.list)),
       editTitle: false,
     };
@@ -73,6 +84,12 @@ export default {
     },
     detectMove(ev) {
       console.log(ev);
+      this.oldIndex = ev.draggedContext.index;
+      this.newIndex = ev.draggedContext.futureIndex;
+      // debugger;
+    },
+    osher(idx) {
+      return;
     },
   },
   computed: {
@@ -87,8 +104,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .ghost {
-  background-color: aqua;
+  opacity: 0.5;
+  background: #f7fafc;
+}
+
+.ghost::after {
+  content: '';
 }
 </style>

@@ -11,7 +11,9 @@
       </li>
       <li class="list-wrapper new-list" @click="addList">
         <p>
-          <span><i class="fas fa-plus"></i></span>Add another list
+          <span>
+            <i class="fas fa-plus"></i> </span
+          >Add another list
         </p>
       </li>
     </ul>
@@ -55,6 +57,14 @@ export default {
               boardId: "",
               cardId: "",
             });
+            // location.reload();
+            // try {
+            //   await this.$store.dispatch({ type: "loadBoard", boardId });
+
+            //   console.log("loaded board");
+            // } catch (err) {
+            //   console.log("problem with getting board", err);
+            // }
             this.selectedCardId = null;
           } catch (err) {
             console.log("problem with getting board", err);

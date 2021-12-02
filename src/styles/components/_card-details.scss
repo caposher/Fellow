@@ -174,7 +174,7 @@
       position: relative;
     }
 
-    .popup {
+    .checklist-popup {
       background: #fff;
       border-radius: 3px;
       box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
@@ -239,7 +239,7 @@
         cursor: pointer;
       }
     }
-    .popup form > *:not(button) {
+    .checklist-popup form > *:not(button) {
       display: block;
       width: 280px;
       margin: 0 12px;

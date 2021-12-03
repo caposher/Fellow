@@ -148,7 +148,9 @@
             </button>
             <section class="checklist-popup" v-show="openCheckList">
               <section class="popup-header">
-                <button class="close-popup">x</button>
+                <button class="close-popup" @click.stop="openCheckList = false">
+                  x
+                </button>
                 <span>Add checklist</span>
               </section>
               <form @submit.prevent="addCheckList">
@@ -305,7 +307,7 @@ export default {
       this.$refs.desc.focus();
     },
     async updateDate(date) {
-      console.log('date', date);
+      console.log("date", date);
       this.cardToEdit.dueDate = date;
       await this.updateCard();
     },

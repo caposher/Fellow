@@ -19,7 +19,7 @@
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
       <draggable
-        v-model="listOnEdit.cards"
+        v-model="updatedList.cards"
         group="list-group"
         ghost-class="ghost"
         drag-class="drag"
@@ -27,7 +27,7 @@
         @start="isdrag = true"
         @end="ondragEnd()"
       >
-        <card-list @drag="ondrag" v-for="card in listOnEdit.cards" :key="card.id" :card="card" :list="list"></card-list>
+        <card-list @drag="ondrag" v-for="card in list.cards" :key="card.id" :card="card" :list="list"></card-list>
       </draggable>
     </ul>
     <footer class="add-card">
@@ -54,13 +54,16 @@ export default {
   directives: { focus },
   data() {
     return {
-      listOnEdit: JSON.parse(JSON.stringify(this.list)),
+      // listOnEdit: JSON.parse(JSON.stringify(this.list)),
       oldIndex: '',
       newIndex: '',
       isdrag: false,
-      updatedList: JSON.parse(JSON.stringify(this.list)),
+      updatedList: null,
       editTitle: false,
     };
+  },
+  created() {
+    this.updatedList = JSON.parse(JSON.stringify(this.list));
   },
   methods: {
     async addCard() {
@@ -102,8 +105,20 @@ export default {
     },
   },
   computed: {
+    getList() {
+      return JSON.parse(JSON.stringify(this.list));
+    },
     showTitle() {
       return this.list.title ? this.list.title : 'Enter title';
+    },
+  },
+  watch: {
+    list: {
+      handler() {
+        this.updatedList = JSON.parse(JSON.stringify(this.list));
+        console.log(this.list);
+        console.log('watch ala params');
+      },
     },
   },
   components: {

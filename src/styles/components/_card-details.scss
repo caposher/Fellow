@@ -92,9 +92,27 @@
     //   }
   }
   .close {
-    right: 0;
+    border-radius: 50%;
+    color: #42526e;
+    height: 40px;
+    margin: 4px;
+    overflow: hidden;
+    padding: 4px;
     position: absolute;
+    right: 0;
+    top: 0;
+    transition: background-color 85ms, color 85ms;
+    width: 40px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     font-size: 20px;
+    &:hover {
+      background-color: #091e4214;
+      color: #42526e;
+    }
   }
   .icon {
     &-sm {
@@ -209,7 +227,7 @@
     overflow-y: auto;
     padding: 0 8px 8px 16px;
     position: relative;
-    width: 552px;
+    width: 576px;
     z-index: 0;
 
     & > * {
@@ -221,46 +239,52 @@
       & .card-details-icon {
         left: -40px;
         position: absolute;
-        top: -5px;
+        top: -2px;
         font-family: icomoon;
         &::after {
           content: "\e922";
         }
       }
 
-      header {
-        color: #172b4d;
-        display: flex;
+      // header {
+      //   color: #172b4d;
+      //   display: flex;
+      //   align-items: center;
+      //   gap: 15px;
+      //   margin-bottom: 24px;
+      //   position: relative;
+      // > * {
+      //   color: #172b4d;
+
+      //   font-size: 16px;
+      //   //   margin: 0 0 4px 40px;
+      //   //   padding: 8px 0;
+      //   //   position: relative;
+      // }
+      & .content {
         align-items: center;
-        gap: 15px;
-        margin-bottom: 24px;
-        position: relative;
-        > * {
-          color: #172b4d;
+        display: flex;
+        min-height: 32px;
 
+        h3 {
+          display: inline-block;
+          margin: 0;
+          margin-left: 10px;
+          min-height: 18px;
+          min-width: 40px;
+          width: auto;
           font-size: 16px;
-          //   margin: 0 0 4px 40px;
-          //   padding: 8px 0;
-          //   position: relative;
+          line-height: 20px;
+          font-weight: 600;
         }
-        .content {
-          align-items: center;
-          display: flex;
-          min-height: 32px;
 
-          h3 {
-            display: inline-block;
-            margin: 0;
-            min-height: 18px;
-            min-width: 40px;
-            width: auto;
-            font-size: 16px;
-            line-height: 20px;
-            font-weight: 600;
-          }
+        & .action-btn {
+          margin-top: 0;
+          margin-left: 8px;
         }
       }
-      & textarea {
+
+      & textarea.desc {
         &:focus-visible {
           background-color: #fff;
           box-shadow: inset 0 0 0 2px #0079bf;
@@ -269,81 +293,91 @@
         overflow: hidden;
         overflow-wrap: break-word;
         resize: none;
-        height: 108px;
+        height: 100%;
         width: 100%;
+        // color: #172b4d;
         border-radius: 3px;
         border: none;
         transition-duration: 85ms;
         transition-property: background-color, border-color, box-shadow;
         transition-timing-function: ease;
-      }
-      .buttons {
-        display: flex;
-        gap: 10px;
-        // align-items: center;
-        > * {
-          &:hover {
-            cursor: pointer;
-          }
-          justify-content: center;
-          align-items: center;
-          display: flex;
-        }
-        .save {
-          background-color: #0079bf;
-          border: none;
-          color: #fff;
-          border-radius: 3px;
-          padding: 6px 12px;
-          font-size: 14px;
-          font-weight: 400;
-          justify-content: center;
-          line-height: 20px;
+        max-width: 100%;
+        &::placeholder {
+          color: inherit;
         }
       }
     }
-  }
-  .side-menu {
-    float: right;
-    // overflow: hidden;
-    padding: 0 16px 8px 8px;
-    width: calc(100% - 578px);
-    z-index: 10;
-    // display: flex;
-    // flex-direction: column;
-    .date {
-      position: relative;
+    .buttons {
+      display: flex;
+      gap: 10px;
       margin-top: 8px;
-    }
-  }
-  .checklist-btn {
-    position: relative;
-  }
-
-  .check-list {
-    & .card-details-icon {
-      left: -40px;
-      position: absolute;
-      top: 1px;
-      font-family: icomoon;
-      &::after {
-        content: "\e91a";
+      // align-items: center;
+      > * {
+        &:hover {
+          cursor: pointer;
+        }
+        justify-content: center;
+        align-items: center;
+        display: flex;
       }
     }
   }
+}
+.side-menu {
+  float: right;
+  // overflow: hidden;
+  padding: 0 16px 8px 8px;
+  width: calc(100% - 578px);
+  z-index: 10;
+  // display: flex;
+  // flex-direction: column;
+  .date {
+    position: relative;
+    margin-top: 8px;
+  }
+}
+.checklist-btn {
+  position: relative;
+}
 
-  .checklist-popup {
-    background: #fff;
-    border-radius: 3px;
-    box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+.check-list {
+  & .card-details-icon {
+    left: -40px;
     position: absolute;
-    top: 45px;
-    right: -12px;
-    width: 304px;
-    padding-bottom: 12px;
-    z-index: 70;
+    top: 6px;
+    font-family: icomoon;
+    &::after {
+      content: "\e91a";
+    }
+  }
+}
 
-    span:first-child {
+.checklist-popup {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+  position: absolute;
+  top: 45px;
+  right: -12px;
+  width: 304px;
+  padding-bottom: 12px;
+  z-index: 70;
+  & .popup-header {
+    position: relative;
+    .close-popup {
+      color: #6b778c;
+      padding: 10px 12px 10px 8px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 2;
+      &:hover {
+        color: #172b4d;
+        cursor: pointer;
+      }
+    }
+
+    & span {
       text-align: center;
       line-height: 42px;
       // font-family: Icomoon;
@@ -353,56 +387,72 @@
       color: #5e6c84;
       border-bottom: 1px solid #091e4221;
     }
-    label {
-      font-size: 12px;
-      margin-top: 4px;
-      font-weight: bold;
-    }
-    input {
-      @include popup-input;
-    }
-    input:focus {
-      outline-color: #0079bf;
-      box-shadow: inset 0 0 0 2px #0079bf;
-    }
-    select {
-      margin-bottom: 14px;
-    }
-    button {
-      background-color: #0079bf;
-      border: none;
-      color: #fff;
-      border-radius: 3px;
-      padding: 6px 12px;
-      font-size: 14px;
-      font-weight: 400;
-      justify-content: center;
-      line-height: 20px;
-      width: 75px;
-      height: 32px;
-      margin-top: 8px;
-      margin: 0 12px;
-
-      cursor: pointer;
-    }
   }
-  .checklist-popup form > *:not(button) {
-    display: block;
-    width: 280px;
+
+  label {
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: bold;
+  }
+  input {
+    @include popup-input;
+  }
+  input:focus {
+    outline-color: #0079bf;
+    box-shadow: inset 0 0 0 2px #0079bf;
+  }
+  select {
+    margin-bottom: 14px;
+  }
+  button.submit {
+    background-color: #0079bf;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    justify-content: center;
+    line-height: 20px;
+    width: 75px;
+    height: 32px;
     margin: 0 12px;
-    color: #5e6c84;
-    border-bottom: 1px solid #091e4221;
+    margin-top: 8px;
+
+    cursor: pointer;
   }
 }
+.checklist-popup form > *:not(button) {
+  display: block;
+  width: 280px;
+  // margin: 0 12px;
+  margin-left: 12px;
+  margin-right: 12px;
+  color: #5e6c84;
+  border-bottom: 1px solid #091e4221;
+}
 
-// @media (max-width: 784px) {
-//   margin: 0 7px;
-//   width: calc(100% - 14px);
-// }
-// @media (min-width: 784px) {
-//   margin: 0 calc((100vw - 770px) / 2);
-//   min-width: 770px;
-// }
+@media (max-width: 784px) {
+  .card-details {
+    margin: 48px 7px 80px 7px;
+    width: calc(100vw - 14px);
+  }
+  .main-details {
+    width: 100% !important;
+    float: none !important;
+    padding: 0 16px 8px 16px !important;
+  }
+  .side-menu {
+    float: none !important;
+    width: 100% !important;
+  }
+}
+@media (min-width: 784px) {
+  .card-details {
+    margin: 48px calc((100vw - 770px) / 2) 80px calc((100vw - 770px) / 2);
+    min-width: 770px;
+  }
+}
 
 .el-picker-panel.el-date-picker.el-popper {
   top: 47px !important;
@@ -493,6 +543,19 @@
     outline: 0;
   }
 }
+
+.submit-btn {
+  background-color: #0079bf;
+  border: none;
+  color: #fff;
+  border-radius: 3px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  justify-content: center;
+  line-height: 20px;
+}
+
 .activity-log {
   position: relative;
   font-family: icomoon;

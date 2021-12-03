@@ -8,8 +8,21 @@
   & .checklist-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     // margin: 0 0 4px 40px;
     padding: 8px 0px;
+
+    .checklist-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+
+      & > * {
+        margin-right: 5px;
+        margin-top: 0;
+      }
+    }
   }
   & form.editor {
     // margin: 0 0 4px 40px;

@@ -119,9 +119,17 @@
           <div class="activity-log">
             <span class="icon-lg icon-activity"></span>
             <h3>Activity</h3>
-            <div class="comment-box">
-              <textarea rows="1" placeholder="Write a comment..." />
-              <button>save</button>
+            <div
+              class="comment-box"
+              :class="{ onComment: isComment }"
+              @click="isComment = true"
+            >
+              <textarea
+                rows="1"
+                placeholder="Write a comment..."
+                @blur="isComment = false"
+              />
+              <button class="submit-btn">save</button>
             </div>
           </div>
         </div>
@@ -235,6 +243,7 @@ export default {
       newChecklist: { title: "Checklist" },
       cardToEdit: null,
       isUndoDesc: false,
+      isComment: false,
     };
   },
   created() {

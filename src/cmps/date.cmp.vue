@@ -2,18 +2,28 @@
   <section class="date-cmp action-btn">
     <!-- <section class="date-lib"> -->
 
-    <date-picker 
-    placeholder="Dates"
-    locale="en" 
-    type="datetime"
-    label-class="icon-sm icon-clock" 
-    format="YYYY-MM-DD HH:mm:ss"
-    ref="date"
-    v-model="value"
-    @input="hi"></date-picker>
+    <date-picker
+      placeholder="Dates"
+      locale="en"
+      type="datetime"
+      label-class="icon-sm icon-clock"
+      ref="date"
+      v-model="newDate"
+      @input="updateDate"
+      format="YYYY-MM-DD HH:mm:ss"
+      color="#0079bf"
+      value=""
+    ></date-picker>
+      <!-- initial-value="cardDate" -->
+      
+      <!-- name="my_date"
+      input-class="form-control form-control-lg"
+      v-model="value" -->
     <!-- </section> -->
-
-<!-- <span class="icon-sm icon-clock"></span> -->
+    <!-- value="cardDate || Date.now()" -->
+    <!-- <span class="vpd-input-group">
+   </span> --> 
+    <!-- <span class="icon-sm icon-clock"></span> -->
 
     <!-- <el-date-picker
       ref="date"
@@ -32,35 +42,24 @@
 export default {
   props: {
     cardDate: {
-      type: [String, Number]
+      type: [String, Date]
     }
   },
   data() {
     return {
-      // clickOutsideFlag: false,
-      // childHandleClose: null,
-      // newDate: ""
-      value:''
+      newDate: ""
     };
   },
-  watch: {
-    // newDate(val) {
-    //   if (val === null) {
-    //     this.newDate = "";
-    //   }
-    // }
-  },
-  created() {
-    // this.$nextTick(() => {
-    //   this.childHandleClose = this.$refs.date.handleClose;
-    //   this.$refs.date.handleClose = this.handleClose;
-    // });
-  },
   methods: {
-    hi(){
-      console.log(this.value);
-      this.$emit("updateDate", this.value);
-      this.value= null
+    async updateDate() {
+      // console.log(this.$refs.date)
+      try{
+        await this.$emit("updateDate", this.newDate);
+      this.newDate = '';
+      console.log(this. newDate);
+      }catch(err){
+        console.log('update date in date err', err);
+      }
     }
     //   setVal() {
     //     this.newDate = this.cardDate;
@@ -82,6 +81,9 @@ export default {
     //       this.newDate = null;
     //       this.value = null;
     //   }
+  },
+  computed:{
+
   }
 };
 </script>

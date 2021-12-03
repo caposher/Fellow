@@ -84,7 +84,7 @@ export default {
           }
         });
       }
-      console.log(todos);
+      // console.log(todos);
       return todos;
     },
     doneTodos() {

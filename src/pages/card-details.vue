@@ -262,6 +262,7 @@ export default {
     },
     async updateCard() {
       this.isEditDesc = false;
+      console.log(this.$route.matched[0].path);
       try {
         await this.$store.dispatch({
           type: "updateCard",
@@ -269,6 +270,8 @@ export default {
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.cardToEdit)),
         });
+        // this.$emit('reload')
+        // this.$router.matched[0].path.reload()
         console.log("card updated with new desc");
       } catch (err) {
         console.log("cant update card", err);

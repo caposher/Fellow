@@ -27,7 +27,13 @@
         @start="isdrag = true"
         @end="ondragEnd()"
       >
-        <card-list @drag="ondrag" v-for="card in list.cards" :key="card.id" :card="card" :list="list"></card-list>
+        <card-list
+          @drag="ondrag"
+          v-for="card in updatedList.cards"
+          :key="card.id"
+          :card="card"
+          :list="list"
+        ></card-list>
       </draggable>
     </ul>
     <footer class="add-card">
@@ -91,12 +97,13 @@ export default {
       debugger;
     },
     ondragEnd() {
-      // if (this.oldIndex !== null && this.newIndex !== null) {
-      //   const card = this.updatedList.cards[this.oldIndex];
-      //   this.updatedList.cards.splice(this.oldIndex, 1, this.updatedList.cards[this.newIndex]);
-      //   this.updatedList.cards.splice(this.newIndex, 1, card);
-      //   this.updateList();
-      // }
+      if (this.oldIndex !== null && this.newIndex !== null) {
+        console.log('change location');
+        const card = this.updatedList.cards[this.oldIndex];
+        this.updatedList.cards.splice(this.oldIndex, 1, this.updatedList.cards[this.newIndex]);
+        this.updatedList.cards.splice(this.newIndex, 1, card);
+        //   this.updateList();
+      }
     },
   },
   computed: {
@@ -112,7 +119,7 @@ export default {
       handler() {
         this.updatedList = JSON.parse(JSON.stringify(this.list));
         console.log(this.list);
-        console.log('watch ala params');
+        console.log('watcha la params');
       },
     },
   },

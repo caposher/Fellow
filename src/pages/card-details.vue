@@ -11,7 +11,7 @@
           <span class="icon-card icon-lg"></span>
           <!-- <span class="fa fa-newspaper"></span> -->
           <div class="card-header-container">
-            <input @blur="updateCard" v-model="cardToEdit.title" />
+            <textarea @blur="updateCard" v-model="cardToEdit.title" />
             <h5>in list {{ list.title }}</h5>
             <span v-show="card.isWatch" class="icon-sm icon-watch"></span>
           </div>
@@ -136,8 +136,10 @@
           />
           <section class="checklist-btn">
             <button @click="openCheckList = !openCheckList">
-              <span class="icon-sm icon-checklist"></span>
-              <span class="action-btn">Checklist</span>
+              <span class="action-btn">
+                <span class="icon-sm icon-checklist"></span>
+                Checklist</span
+              >
             </button>
             <section class="checklist-popup" v-show="openCheckList">
               <span>Add checklist</span>
@@ -161,12 +163,12 @@
             :cardDate="cardToEdit.dueDate"
             class="date"
           ></date>
-          <section class="attachment">
+          <button class="attachment action-btn">
             <span class="icon-sm icon-attach"></span>Attachments
-          </section>
-          <section class="cover">
+          </button>
+          <button class="cover action-btn">
             <span class="icon-sm icon-cover"></span>Cover
-          </section>
+          </button>
         </div>
       </div>
     </div>

@@ -1,20 +1,22 @@
 <template>
   <section class="checklist">
-    <div class="icon-container">
-      <span class="icon-lg icon-checklist"></span>
-    </div>
     <form class="editor" v-if="editTitle" @submit.prevent="updateCL">
       <textarea
         placeholder="Add an item"
         v-model="CLtoUpdate.title"
         @blur="(editTitle = false), updateCL"
       />
-      <button>Save</button>
+      <button @click="updateCL">Save</button>
       <button>X</button>
     </form>
     <section v-else class="checklist-header">
       <h3 @click="editTitle = true">{{ checklist.title }}</h3>
-      <button @click="deleteCL">Delete</button>
+      <span>
+        <button class="action-btn checklist-btn" @click.stop="">
+          Hide checked items
+        </button>
+        <button class="action-btn" @click="deleteCL">Delete</button>
+      </span>
     </section>
     <ul>
       <li v-for="(todo, idx) in checklist.todos" :key="idx">
@@ -44,8 +46,13 @@
           <span @click="this.newTodo = false" class="icon-lg icon-close"></span>
         </form>
       </section>
-      <span v-else @click="newTodo = true">Add an item</span>
     </ul>
+    <span
+      v-show="!newTodo"
+      @click="newTodo = true"
+      class="action-btn checklist-btn"
+      >Add an item</span
+    >
   </section>
 </template>
 

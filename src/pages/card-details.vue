@@ -262,7 +262,7 @@ export default {
     },
     async updateCard() {
       this.isEditDesc = false;
-      console.log(this.$route.matched[0].path);
+      // console.log(this.$route.matched[0].path);
       try {
         await this.$store.dispatch({
           type: "updateCard",
@@ -272,7 +272,7 @@ export default {
         });
         // this.$emit('reload')
         // this.$router.matched[0].path.reload()
-        console.log("card updated with new desc");
+        // console.log("card updated with new desc");
       } catch (err) {
         console.log("cant update card", err);
       }
@@ -297,6 +297,7 @@ export default {
       this.$refs.desc.focus();
     },
     async updateDate(date) {
+      console.log('date', date);
       this.cardToEdit.dueDate = date;
       await this.updateCard();
     },

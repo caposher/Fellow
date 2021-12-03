@@ -7,20 +7,21 @@ import './styles/style.scss';
 // import { library } from '@fortawesome/fontawesome-svg-core'
 // import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
-import Element from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
-Vue.use(Element, {locale})
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
+import Element from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en';
+Vue.use(Element, { locale });
+import VuePersianDatetimePicker from 'vue-persian-datetime-picker';
+Vue.component('date-picker', VuePersianDatetimePicker);
 
 // library.add(faUserSecret)
 // Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-
 Vue.config.productionTip = false;
-
+// Vue.config.configureWebpack = false;
 new Vue({
-    router,
-    store,
-    render: (h) => h(App),
+  router,
+  store,
+  render: (h) => h(App),
 }).$mount('#app');

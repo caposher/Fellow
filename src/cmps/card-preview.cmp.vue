@@ -1,24 +1,26 @@
 <template>
   <section class="card" @click="showDetails">
     <img v-show="card.cover" :url="card.cover" class="card-cover" />
-    <div>
-      <section>
-        <span>
-          <span
-            v-for="label in getLabels"
-            :key="label.id"
-            :class="label.colorClass"
-            class="preview-label"
-          >{{ label.txt }}</span>
-        </span>
-        <span class="edit-wrapper">
-          <span class="icon-sm icon-edit"></span>
-        </span>
-      </section>
-      <p class="card-title">{{ card.title }}</p>
-      <!-- <button>Quick edit</button> -->
-    </div>
-    <div class="card-icons">
+    <!-- <div> -->
+    <section class="label-and-q-edit">
+      <span>
+        <span
+          v-for="label in getLabels"
+          :key="label.id"
+          :class="label.colorClass"
+          class="preview-label"
+        >{{ label.txt }}</span>
+      </span>
+      <span class="edit-wrapper">
+        <span class="icon-sm icon-edit q-edit"></span>
+      </span>
+    </section>
+    <!-- <button>Quick edit</button> -->
+    <!-- </div> -->
+    <section class="card-title">
+      <p>{{ card.title }}</p>
+    </section>
+    <section class="card-icons">
       <div class="icon-wrapper" v-if="card.isWatch">
         <span class="icon-sm icon-watch badge"></span>
       </div>
@@ -33,11 +35,11 @@
         <span class="icon-sm icon-attach badge"></span>
         <span class="icon-text">{{card.attachments.length}}</span>
       </div>
-      <div class="icon-wrapper" v-if="card.checklists&& card.checklists.length >1 && todos">
+      <div class="icon-wrapper" v-if="card.checklists&& card.checklists.length && todos">
         <span class="icon-sm icon-checklist badge"></span>
         <span class="icon-text">{{doneTodos}}/{{todos}}</span>
       </div>
-    </div>
+    </section>
     <div class="card-members"></div>
   </section>
 </template>
@@ -61,7 +63,7 @@ export default {
   methods: {
     showDetails() {
       this.$router.push(this.$route.path + "/c/" + this.card.id);
-      console.log(this.$route.path);
+      // console.log(this.$route.path);
     },
     formatDate(dueDate) {
       var date = dueDate.getDate();
@@ -73,7 +75,7 @@ export default {
   computed: {
     todos() {
       var todos = 0;
-      console.log(this.card.checklists);
+      // console.log(this.card.checklists);
       if (this.card.checklists && this.card.checklists.length) {
         this.card.checklists.forEach(checklist => {
           if (checklist.todos && checklist.todos.length) {

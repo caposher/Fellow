@@ -71,7 +71,7 @@ export default {
       if (!title) return;
       try {
        await this.$store.dispatch({ type: 'addCard', boardId: this.$store.getters.boardId, list: this.list, title });
-       console.log('card added', this.listOnEdit);
+      //  console.log('card added', this.listOnEdit);
        
       } catch (err) {
         console.log('cant add card', err);
@@ -116,8 +116,8 @@ export default {
     list: {
       handler() {
         this.updatedList = JSON.parse(JSON.stringify(this.list));
-        console.log(this.list);
-        console.log('watch ala params');
+        // console.log(this.list);
+        // console.log('watch ala params');
       },
     },
   },

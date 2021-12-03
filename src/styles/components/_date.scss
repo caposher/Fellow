@@ -1,0 +1,45 @@
+.date-cmp {
+  display: flex;
+  align-items: center;
+  .vpd-main {
+    position: relative;
+    max-width: 100%;
+
+    .vpd-input-group {
+      input {
+        border: none;
+        background-color: rgba(64, 224, 208, 0);
+        max-width: 100%;
+        padding: 2px;
+      }
+      .icon-sm {
+        color: #172b4d;
+        position: relative;
+      }
+      ::placeholder {
+        color: #172b4d;
+      }
+    }
+    .vpd-icon-btn {
+      background-color: rgb(65 125 244 / 0%) !important;
+      font-family: icomoon;
+
+        padding: 0;
+      svg{
+        display: none;
+
+      }
+      &::before {
+        color: #172b4d;
+        font-weight: 400;
+        -webkit-font-smoothing: antialiased;
+        font-style: normal;
+        text-align: center;
+        content: ('\e91b');
+      }
+      &::after{
+        display: none;
+      }
+    }
+  }
+}

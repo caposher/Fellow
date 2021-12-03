@@ -16,13 +16,46 @@
     text-decoration: none;
     font-weight: 400;
   }
-  .preview-label {
-    margin: 0 4px 4px 0;
-  }
+  .label-and-q-edit {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    .preview-label {
+      margin: 0 4px 4px 0;
+    }
+    .edit-wrapper {
+      position: absolute;
+      border-radius: 2px;
+      right: -6px;
+      top: -3px;
+      padding: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        background-color: rgb(235, 236, 240);
+        .q-edit {
+          // color: #6b778c;
+    color: #172b4d;
 
+        }
+      }
+      .q-edit {
+        opacity: 0;
+      }
+    }
+  }
+  
   &:hover {
-    background-color: hsl(219, 15%, 96%);
     cursor: pointer;
+    .edit-wrapper{
+      background-color: rgba(235, 236, 240, 0);
+      & .q-edit {
+        color: #5e6c84;
+        opacity: 1;
+        
+      }
+    }
   }
   .card-icons {
     .icon-wrapper {

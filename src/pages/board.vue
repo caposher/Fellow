@@ -3,8 +3,9 @@
     v-if="board"
     :class="{ 'display-modal': selectedCardId }"
     class="board-app"
+   
   >
-    <board-header />
+    <board-header  @deleteBoard="deleteBoard" />
     <ul class="board" @mouseenter="scroll">
       <li
         class="list-wrapper"
@@ -12,7 +13,7 @@
         :key="list.id"
         @mousedown.stop="unscroll"
       >
-        <board-list :list="list" :idx="idx" @update="updateList"></board-list>
+        <board-list :list="list" :idx="idx" @update="updateList" @deleteList="deleteList"></board-list>
       </li>
       <!--  @click="addList" -->
       <!-- v-if="!isAddList" -->

@@ -11,7 +11,8 @@
         placeholder="Enter title"
         @blur="updateList()"
       />
-      <button><span class="icon-sm icon-dots"></span></button>
+      <!-- <button><span class="icon-sm icon-dots"></span></button> -->
+      <button @click="deleteList">x</button>
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
@@ -50,9 +51,7 @@ export default {
     list: {
       type: Object,
     },
-    idx: {
-      type: Number,
-    },
+   
   },
   directives: { focus },
   data() {
@@ -85,6 +84,9 @@ export default {
       this.dragCard = false;
       this.updateList();
     },
+    deleteList(){
+      this.$emit("delete", JSON.parse(JSON.stringify(this.updatedList)));
+    }
   },
   computed: {
     getList() {

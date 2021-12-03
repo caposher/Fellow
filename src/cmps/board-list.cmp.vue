@@ -21,7 +21,8 @@
         group="list-group"
         ghost-class="ghost"
         @add="updateList"
-        @end="updateList"
+        @start="dragCard = true"
+        @end="ondragEnd"
       >
         <card-list
           @change="updatedList"
@@ -29,21 +30,20 @@
           :key="card.id"
           :card="card"
           :list="list"
+          :do-drag="dragCard"
         ></card-list>
       </draggable>
     </ul>
     <footer class="add-card">
-      <button @click="addCard">
-        <span class="icon-sm icon-plus"></span>Add a card
-      </button>
+      <button @click="addCard"><span class="icon-sm icon-plus"></span>Add a card</button>
     </footer>
   </li>
 </template>
 
 <script>
-import cardList from "./card-list.cmp.vue";
-import { focus } from "vue-focus";
-import draggable from "vuedraggable";
+import cardList from './card-list.cmp.vue';
+import { focus } from 'vue-focus';
+import draggable from 'vuedraggable';
 
 // props- list
 export default {
@@ -56,6 +56,7 @@ export default {
   directives: { focus },
   data() {
     return {
+      dragCard: false,
       updatedList: null,
       editTitle: false,
     };
@@ -65,23 +66,23 @@ export default {
   },
   methods: {
     async addCard() {
-      const title = prompt("card title");
+      const title = prompt('card title');
       if (!title) return;
       try {
-        await this.$store.dispatch({
-          type: "addCard",
-          board: this.$store.getters.board,
-          list: this.list,
-          title,
-        });
+        await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
         //  console.log('card added', this.listOnEdit);
       } catch (err) {
-        console.log("cant add card", err);
+        console.log('cant add card', err);
       }
     },
+
     updateList() {
       this.editTitle = false;
-      this.$emit("update", JSON.parse(JSON.stringify(this.updatedList)));
+      this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
+    },
+    ondragEnd() {
+      this.dragCard = false;
+      this.updateList();
     },
     deleteList(){
       this.$emit("delete", JSON.parse(JSON.stringify(this.updatedList)));
@@ -92,7 +93,7 @@ export default {
       return JSON.parse(JSON.stringify(this.list));
     },
     showTitle() {
-      return this.list.title ? this.list.title : "Enter title";
+      return this.list.title ? this.list.title : 'Enter title';
     },
   },
   watch: {

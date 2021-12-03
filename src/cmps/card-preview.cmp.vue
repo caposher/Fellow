@@ -4,13 +4,9 @@
     <!-- <div> -->
     <section class="label-and-q-edit">
       <span>
-        <span
-          v-for="label in getLabels"
-          :key="label.id"
-          :class="label.colorClass"
-          class="preview-label"
-          >{{ label.txt }}</span
-        >
+        <span v-for="label in getLabels" :key="label.id" :class="label.colorClass" class="preview-label">{{
+          label.txt
+        }}</span>
       </span>
       <span class="edit-wrapper">
         <span class="icon-sm icon-edit q-edit"></span>
@@ -32,17 +28,11 @@
       <div class="icon-wrapper" v-if="card.description">
         <span class="icon-sm icon-desc badge"></span>
       </div>
-      <div
-        class="icon-wrapper"
-        v-if="card.attachments && card.attachments.length"
-      >
+      <div class="icon-wrapper" v-if="card.attachments && card.attachments.length">
         <span class="icon-sm icon-attach badge"></span>
         <span class="icon-text">{{ card.attachments.length }}</span>
       </div>
-      <div
-        class="icon-wrapper"
-        v-if="card.checklists && card.checklists.length && todos"
-      >
+      <div class="icon-wrapper" v-if="card.checklists && card.checklists.length && todos">
         <span class="icon-sm icon-checklist badge"></span>
         <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
@@ -69,7 +59,7 @@ export default {
   },
   methods: {
     showDetails() {
-      this.$router.push(this.$route.path + "/c/" + this.card.id);
+      this.$router.push(this.$route.path + '/c/' + this.card.id);
     },
     formatDate(dueDate) {
       var date = dueDate.getDate();
@@ -118,7 +108,7 @@ export default {
         return this.formatDate(dueDate);
       }
 
-      return this.formatDate(dueDate) + ", " + dueDate.getFullYear();
+      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear();
     },
     ChecklistNum() {
       var doneTodos = 0;

@@ -155,7 +155,7 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 function _createBoards() {
   var boards = JSON.parse(localStorage.getItem(KEY));
   if (!boards || !boards.length) {
-    boards = [_createBoard('New Board')];
+    boards = [_createBoard('My First Board')];
     localStorage.setItem(KEY, JSON.stringify(boards));
   }
   return boards;
@@ -163,6 +163,6 @@ function _createBoards() {
 
 function _createBoard(title) {
   const board = getEmptyBoard(title);
-  // board._id = utilService.makeId()
+  board._id = utilService.makeId()
   return board;
 }

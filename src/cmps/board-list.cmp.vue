@@ -12,7 +12,7 @@
         @blur="updateList()"
       />
       <!-- <button><span class="icon-sm icon-dots"></span></button> -->
-      <!-- <button @click="deleteList">x</button> -->
+      <button @click="deleteList">x</button>
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->

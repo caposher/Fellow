@@ -1,5 +1,5 @@
 <template>
-  <section class="home">
+  <section class="home" v-if="boards">
     <ul style="background-color: white">
       <li v-for="board in boards" :key="board._id" @click="setBoard(board._id)">
         {{ board.title }}
@@ -23,7 +23,6 @@ export default {
   },
   computed: {
     boards() {
-      console.log( this.$store.getters.boards);
       return this.$store.getters.boards;
     },
   },

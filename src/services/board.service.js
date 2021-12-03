@@ -15,7 +15,7 @@ export const boardService = {
   getListAndCardById,
   updateCard,
   getEmptyLabel,
-  removeCard
+  removeCard,
 };
 
 _createBoards();
@@ -186,6 +186,6 @@ function _createBoards() {
 
 function _createBoard(title) {
   const board = getEmptyBoard(title);
-  board._id = utilService.makeId()
+  board._id = utilService.makeId();
   return board;
 }

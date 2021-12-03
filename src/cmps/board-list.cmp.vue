@@ -35,7 +35,25 @@
       </draggable>
     </ul>
     <footer class="add-card">
-      <button @click="addCard"><span class="icon-sm icon-plus"></span>Add a card</button>
+      <!-- @click="addCard" -->
+      <button class="add-card" @click="isAddCard = true" v-if="!isAddCard">
+        <span class="icon-sm icon-plus"></span>
+        <p>Add a card</p>
+      </button>
+      <div v-else class="add-card-actions">
+        <input type="text" v-model="newCardTitle" />
+        <div class="add-card-btns">
+          <div class="submit-btns">
+            <button class="submit-btn submit-card" @click="addCard">Add Card</button>
+            <button>
+              <span @click="closeAddCard" class="icon-close icon-lg close-add-btn"></span>
+            </button>
+          </div>
+          <button class="dots">
+            <span class="icon-dots icon-lg"></span>
+          </button>
+        </div>
+      </div>
     </footer>
   </li>
 </template>
@@ -51,7 +69,6 @@ export default {
     list: {
       type: Object,
     },
-   
   },
   directives: { focus },
   data() {
@@ -59,6 +76,8 @@ export default {
       dragCard: false,
       updatedList: null,
       editTitle: false,
+      isAddCard: false,
+      newCardTitle: '',
     };
   },
   created() {
@@ -66,14 +85,21 @@ export default {
   },
   methods: {
     async addCard() {
-      const title = prompt('card title');
+      // const title = prompt('card title');
+      const title = this.newCardTitle;
       if (!title) return;
       try {
         await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
-         console.log('card added', this.list);
+        console.log('card added', this.list);
+        this.newCardTitle = '';
+        this.isAddCard = false;
       } catch (err) {
         console.log('cant add card', err);
       }
+    },
+    closeAddCard() {
+      this.newCardTitle = '';
+      this.isAddCard = false;
     },
 
     updateList() {
@@ -84,9 +110,9 @@ export default {
       this.dragCard = false;
       this.updateList();
     },
-    deleteList(){
-      this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
-    }
+    deleteList() {
+      this.$emit('deleteList', JSON.parse(JSON.stringify(this.updatedList)));
+    },
   },
   computed: {
     getList() {

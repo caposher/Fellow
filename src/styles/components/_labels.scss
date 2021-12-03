@@ -1,42 +1,42 @@
 .label-green {
   background-color: #61bd4f;
 
-  &:hover {
+  &-lg:hover {
     box-shadow: -8px 0 #519839;
     margin-left: 4px;
   }
 }
 .label-yellow {
   background-color: #f2d600;
-  &:hover {
+  &-lg:hover {
     box-shadow: -8px 0 #d9b51c;
     margin-left: 4px;
   }
 }
 .label-orange {
   background-color: #ff9f1a;
-  &:hover {
+  &-lg:hover {
     box-shadow: -8px 0 #cd8313;
     margin-left: 4px;
   }
 }
 .label-red {
   background-color: #eb5a46;
-  &:hover {
+  &-lg:hover {
     box-shadow: -8px 0 #b04632;
     margin-left: 4px;
   }
 }
 .label-purple {
   background-color: #c377e0;
-  &:hover {
+  &-lg:hover {
     box-shadow: -8px 0 #89609e;
     margin-left: 4px;
   }
 }
 .label-blue {
   background-color: #0079bf;
-  &:hover {
+  &-lg:hover {
     box-shadow: -8px 0 #055a8c;
     margin-left: 4px;
   }
@@ -57,7 +57,6 @@
   color: #fff;
 }
 
-//TODO: temporary until have detail card button style
 .label-tag {
   min-width: 50px;
   height: 32px;
@@ -68,9 +67,13 @@
 }
 
 .card-labels {
+  // display: flex;
   h4 {
+    display: block;
+    width: 100%;
     font-size: 12px;
     color: #68768b;
+    margin-block-end: 4px;
   }
 }
 

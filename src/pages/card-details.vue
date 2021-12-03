@@ -4,7 +4,7 @@
     class="card-details-container"
     @click.stop.prevent="closeModal"
   >
-    <div class="card-details" @click.stop="">
+    <div class="card-details" @click.stop>
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
       </button>
@@ -46,7 +46,7 @@
                     <span
                       v-show="
                         !cardToEdit.isComplete &&
-                        cardToEdit.dueDate - Date.now() <= 86400000
+                        +new Date(cardToEdit.dueDate) - Date.now() <= 86400000
                       "
                       :class="timeLabelColor"
                       class="time-label"
@@ -143,12 +143,14 @@
             <button @click.stop="openCheckList = !openCheckList">
               <span class="action-btn">
                 <span class="icon-sm icon-checklist"></span>
-                Checklist</span
-              >
+                Checklist
+              </span>
             </button>
             <section class="checklist-popup" v-show="openCheckList">
               <section class="popup-header">
-                <button class="close-popup">x</button>
+                <button class="close-popup" @click.stop="openCheckList = false">
+                  x
+                </button>
                 <span>Add checklist</span>
               </section>
               <form @submit.prevent="addCheckList">
@@ -204,6 +206,9 @@ export default {
   },
   created() {
     this.cardToEdit = this.card;
+    // this.cardToEdit.dueDate = JSON.parse(this.cardToEdit.dueDate)
+    console.log(this.cardToEdit.dueDate);
+    console.log(typeof this.cardToEdit.dueDate);
   },
   computed: {
     card() {
@@ -216,26 +221,26 @@ export default {
       return this.$store.getters.boardId;
     },
     timeLabelColor() {
-      return this.cardToEdit.dueDate - Date.now() <= 0
+      return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0
         ? "over-due"
         : "due-soon";
     },
     timeLabel() {
-      return this.cardToEdit.dueDate - Date.now() <= 0
+      return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0
         ? "over due"
         : "due soon";
     },
     dateToShow() {
-      const timestamp = this.cardToEdit.dueDate;
-      const dueDate = new Date(timestamp);
+      const dateString = this.cardToEdit.dueDate;
+      const dueDate = new Date(dateString);
       const time = this.formatAMPM(dueDate);
-      if (new Date().getDate() === new Date(timestamp).getDate())
+      if (new Date().getDate() === new Date(dateString).getDate())
         return "today" + time;
-      else if (new Date().getDate() + 1 === new Date(timestamp).getDate())
+      else if (new Date().getDate() + 1 === new Date(dateString).getDate())
         return "tomorrow" + time;
-      else if (new Date().getDate() - 1 === new Date(timestamp).getDate())
+      else if (new Date().getDate() - 1 === new Date(dateString).getDate())
         return "yesterday" + time;
-      else if (new Date().getYear() === new Date(timestamp).getYear()) {
+      else if (new Date().getYear() === new Date(dateString).getYear()) {
         return this.formatDate(dueDate) + time;
       }
 
@@ -305,7 +310,7 @@ export default {
       this.$refs.desc.focus();
     },
     async updateDate(date) {
-      console.log('date', date);
+      // console.log('date', date);
       this.cardToEdit.dueDate = date;
       await this.updateCard();
     },

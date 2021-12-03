@@ -1,15 +1,15 @@
 <template>
   <section class="checklist">
-    <form class="editor" v-if="editTitle" @submit.prevent="updateCL">
+    <form class="editor" v-show="editTitle" @submit.prevent="updateCL">
       <textarea
         placeholder="Add an item"
         v-model="CLtoUpdate.title"
-        @blur="(editTitle = false), updateCL"
+        @blur="updateCL"
       />
-      <button @click="updateCL">Save</button>
-      <button>X</button>
+      <button class="submit-btn">Save</button>
+      <!-- <button>X</button> -->
     </form>
-    <section v-else class="checklist-header">
+    <section v-show="!editTitle" class="checklist-header">
       <h3 @click="editTitle = true">{{ checklist.title }}</h3>
       <span class="checklist-actions">
         <button
@@ -27,8 +27,8 @@
       </span>
     </section>
     <ul>
-      <li v-for="(todo, idx) in todosToShow" :key="idx">
-        <label for>
+      <li v-for="todo in todosToShow" :key="todo.id">
+        <label>
           <!-- <span class="check-box-container"> -->
           <input
             type="checkbox"
@@ -50,7 +50,7 @@
             @blur="newTodo = false"
           />
           <br />
-          <button>Add</button>
+          <button class="submit-btn">Add</button>
           <span @click="this.newTodo = false" class="icon-lg icon-close"></span>
         </form>
       </section>
@@ -90,7 +90,6 @@ export default {
       this.newTodo = true;
     },
     editTodo(todo) {
-      console.log(this.doneTodosPer);
       this.newTodo = true;
       this.todoToAdd = { ...todo };
     },
@@ -122,13 +121,23 @@ export default {
       this.CLtoUpdate.todos.splice(idx, 1);
       this.updateCL();
     },
-    updateCL() {
-      this.$emit("updateCL", JSON.parse(JSON.stringify(this.CLtoUpdate)));
-      (this.todoToAdd = {
-        title: "",
-        isDone: false,
-      }),
-        (this.editTitle = false);
+    async updateCL() {
+      console.log("update cl");
+      console.log("this.CLtoUpdate", this.CLtoUpdate);
+      try {
+        await this.$emit(
+          "updateCL",
+          JSON.parse(JSON.stringify(this.CLtoUpdate))
+        );
+        (this.todoToAdd = {
+          title: "",
+          isDone: false,
+        }),
+          (this.editTitle = false);
+        this.CLtoUpdate = JSON.parse(JSON.stringify(this.checklist));
+      } catch (err) {
+        console.log("err", err);
+      }
     },
     deleteCL() {
       if (confirm("Are you sure?")) {

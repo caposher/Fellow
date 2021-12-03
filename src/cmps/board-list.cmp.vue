@@ -3,6 +3,7 @@
     <header>
       <p>{{ oldIndex }}</p>
       <p>{{ newIndex }}</p>
+      <p>{{ isdrag }}</p>
       <h4 v-if="!editTitle" @click="editTitle = true">{{ showTitle }}</h4>
       <textarea
         type="text"
@@ -21,24 +22,16 @@
         v-model="listOnEdit.cards"
         group="list-group"
         ghost-class="ghost"
-        :animation="200"
+        drag-class="drag"
         :move="detectMove"
-        @start="drag = true"
-        @end="drag = false"
+        @start="isdrag = true"
+        @end="ondragEnd()"
       >
-        <card-list
-          v-for="(card, idx) in listOnEdit.cards"
-          :class="oldIndex === idx ? 'ghost' : ''"
-          :key="card.id"
-          :card="card"
-          :list="list"
-        ></card-list>
+        <card-list @drag="ondrag" v-for="card in listOnEdit.cards" :key="card.id" :card="card" :list="list"></card-list>
       </draggable>
     </ul>
     <footer class="add-card">
-      <button @click="addCard">
-        <span class="icon-sm icon-plus"></span>Add a card
-      </button>
+      <button @click="addCard"><span class="icon-sm icon-plus"></span>Add a card</button>
     </footer>
   </li>
 </template>
@@ -64,6 +57,7 @@ export default {
       listOnEdit: JSON.parse(JSON.stringify(this.list)),
       oldIndex: '',
       newIndex: '',
+      isdrag: false,
       updatedList: JSON.parse(JSON.stringify(this.list)),
       editTitle: false,
     };
@@ -85,16 +79,26 @@ export default {
     },
     updateList() {
       this.editTitle = false;
+      console.log(this.updatedList);
       this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
     },
     detectMove(ev) {
       console.log(ev);
       this.oldIndex = ev.draggedContext.index;
       this.newIndex = ev.draggedContext.futureIndex;
+      ev.draggedContext.element.style = 'backgroundColor="red"';
       // debugger;
     },
-    osher(idx) {
-      return;
+    ondrag(ev) {
+      debugger;
+    },
+    ondragEnd() {
+      // if (this.oldIndex !== null && this.newIndex !== null) {
+      //   const card = this.updatedList.cards[this.oldIndex];
+      //   this.updatedList.cards.splice(this.oldIndex, 1, this.updatedList.cards[this.newIndex]);
+      //   this.updatedList.cards.splice(this.newIndex, 1, card);
+      //   this.updateList();
+      // }
     },
   },
   computed: {
@@ -110,12 +114,17 @@ export default {
 </script>
 
 <style>
-.ghost {
-  opacity: 0.5;
-  background: #f7fafc;
+.shadow {
+  /* background-color: saddlebrown; */
 }
 
-.ghost::after {
-  content: '';
+.ghost {
+  /* opacity: 0.5; */
+  background: rgb(226, 228, 234);
+  border-radius: 3px;
+}
+
+.ghost > * {
+  opacity: 0;
 }
 </style>

@@ -81,12 +81,13 @@ body {
   &:hover {
     background-color: #ffffff52;
   }
-
+  p {
+    display: flex;
+    line-height: 24px;
+    padding-block-start: 4px;
+    padding-inline-start: 5px;
+  }
   span {
-    width: 16px;
-    height: 16px;
-    padding-inline-start: 8px;
-    padding-inline-end: 6px;
   }
 }
 

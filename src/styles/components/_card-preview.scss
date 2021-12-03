@@ -15,6 +15,10 @@
     overflow: hidden;
     text-decoration: none;
     font-weight: 400;
+
+    p {
+      padding-block-start: 3px;
+    }
   }
   .label-and-q-edit {
     display: flex;

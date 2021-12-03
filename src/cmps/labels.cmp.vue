@@ -10,20 +10,21 @@
     <input type="text" placeholder="Search labels..." />
     <form @submit.prevent="addCheckList">
       <h5>Labels</h5>
+
       <section
         class="label-picker"
         v-for="(label, idx) in allLabels"
         :key="label.id"
         @change="toggleCheck(label.id, idx)"
       >
-        <div :class="label.colorClass">
+        <div :class="setColor(label.colorClass)">
           <span>{{ label.txt }}</span>
           <input type="checkbox" :checked="checkLabel(label.id)" />
           <span v-show="checkLabel(label.id)" class="close-popup icon-sm icon-check"></span>
         </div>
         <span class="close-popup icon-sm icon-edit"></span>
       </section>
-      <button>Create a new label</button>
+      <button class="action-btn">Create a new label</button>
     </form>
   </section>
 </template>
@@ -49,6 +50,9 @@ export default {
       const idx = this.selectedIds.findIndex((lId) => lId === labelId);
       0 <= idx ? this.selectedIds.splice(idx, 1) : this.selectedIds.splice(posIdx, 0, labelId);
       this.$emit('update', JSON.parse(JSON.stringify(this.selectedIds)));
+    },
+    setColor(colorClass) {
+      return `${colorClass} ${colorClass}-lg`;
     },
   },
 };

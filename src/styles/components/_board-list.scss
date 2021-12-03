@@ -52,6 +52,8 @@
   footer {
     .add-card {
       @include basic-selector;
+      display: flex;
+      align-items: center;
       margin: 2px 0 8px;
       padding: 4px 8px;
       width: 100%;
@@ -59,9 +61,8 @@
       border-radius: 3px;
 
       span {
-        width: 20px;
-        height: 20px;
-        padding-inline-end: 2px;
+        margin-block-end: 2px;
+        margin-right: 2px;
       }
     }
     .add-card-actions {
@@ -103,7 +104,7 @@
           display: flex;
           justify-content: center;
           // position: relative;
-          span{
+          span {
             // position: absolute;
             height: 100%;
             margin: 0;

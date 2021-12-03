@@ -87,12 +87,21 @@
     width: 32px;
     padding: 0 5px 0 11px;
   }
+  .action-btn {
+    text-align: center;
+    margin-block-start: 15px;
+    min-width: 100%;
+  }
+  h5 {
+    margin-block-end: 4px;
+  }
 
   .label-picker {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-block-end: 4px;
+
     input {
       opacity: 0;
     }

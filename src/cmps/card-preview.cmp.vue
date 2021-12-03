@@ -26,18 +26,18 @@
       </div>
       <div class="icon-wrapper" v-if="card.dueDate">
         <span class="icon-sm icon-clock badge"></span>
-        <span class="icon-text">{{dateToShow}}</span>
+        <span class="icon-text">{{ dateToShow }}</span>
       </div>
       <div class="icon-wrapper" v-if="card.description">
         <span class="icon-sm icon-desc badge"></span>
       </div>
       <div class="icon-wrapper" v-if="card.attachments && card.attachments.length">
         <span class="icon-sm icon-attach badge"></span>
-        <span class="icon-text">{{card.attachments.length}}</span>
+        <span class="icon-text">{{ card.attachments.length }}</span>
       </div>
       <div class="icon-wrapper" v-if="card.checklists&& card.checklists.length && todos">
         <span class="icon-sm icon-checklist badge"></span>
-        <span class="icon-text">{{doneTodos}}/{{todos}}</span>
+        <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
     </section>
     <div class="card-members"></div>
@@ -48,11 +48,11 @@
 export default {
   props: {
     card: {
-      type: Object
+      type: Object,
     },
     list: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
@@ -62,24 +62,23 @@ export default {
   },
   methods: {
     showDetails() {
-      this.$router.push(this.$route.path + "/c/" + this.card.id);
-      // console.log(this.$route.path);
+      this.$router.push(this.$route.path + '/c/' + this.card.id);
     },
     formatDate(dueDate) {
       var date = dueDate.getDate();
       var month = `${dueDate}`.substring(4, 7);
       const strDate = `${month} ${date}`;
       return strDate;
-    }
+    },
   },
   computed: {
     todos() {
       var todos = 0;
       // console.log(this.card.checklists);
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach(checklist => {
+        this.card.checklists.forEach((checklist) => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach(todo => {
+            checklist.todos.forEach((todo) => {
               todos++;
             });
           }
@@ -91,9 +90,9 @@ export default {
     doneTodos() {
       var doneTodos = 0;
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach(checklist => {
+        this.card.checklists.forEach((checklist) => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach(todo => {
+            checklist.todos.forEach((todo) => {
               if (todo.isDone) doneTodos++;
             });
           }
@@ -104,7 +103,7 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map(lId => allLabels.find(label => label.id === lId));
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
     dateToShow() {
       const dueDate = new Date(this.card.dueDate);
@@ -112,20 +111,20 @@ export default {
         return this.formatDate(dueDate);
       }
 
-      return this.formatDate(dueDate) + ", " + dueDate.getFullYear();
+      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear();
     },
     ChecklistNum() {
       var doneTodos = 0;
-      this.card.checklists.forEach(checklist => {
-        checklist.todos.forEach(todo => {
+      this.card.checklists.forEach((checklist) => {
+        checklist.todos.forEach((todo) => {
           if (todo.isDone) doneTodos++;
           else undoneTodos++;
         });
       });
       return `${undoneTodos}/${doneTodos}`;
-    }
+    },
   },
-  components: {}
+  components: {},
 };
 </script>
 

@@ -11,15 +11,23 @@
     </form>
     <section v-else class="checklist-header">
       <h3 @click="editTitle = true">{{ checklist.title }}</h3>
-      <span>
-        <button class="action-btn checklist-btn" @click.stop="">
-          Hide checked items
+      <span class="checklist-actions">
+        <button
+          v-if="doneTodos > 0"
+          class="action-btn checklist-btn"
+          @click.stop="hideDone = !hideDone"
+        >
+          {{
+            !hideDone
+              ? "Hide checked items"
+              : `Show checked items (${doneTodos})`
+          }}
         </button>
         <button class="action-btn" @click="deleteCL">Delete</button>
       </span>
     </section>
     <ul>
-      <li v-for="(todo, idx) in checklist.todos" :key="idx">
+      <li v-for="(todo, idx) in todosToShow" :key="idx">
         <label for>
           <!-- <span class="check-box-container"> -->
           <input
@@ -74,6 +82,7 @@ export default {
       },
       newTodo: false,
       editTitle: false,
+      hideDone: false,
     };
   },
   methods: {
@@ -81,6 +90,7 @@ export default {
       this.newTodo = true;
     },
     editTodo(todo) {
+      console.log(this.doneTodosPer);
       this.newTodo = true;
       this.todoToAdd = { ...todo };
     },
@@ -124,6 +134,19 @@ export default {
       if (confirm("Are you sure?")) {
         delete this.CLtoUpdate.title;
         this.$emit("updateCL", this.CLtoUpdate);
+      }
+    },
+  },
+  computed: {
+    doneTodos() {
+      if (!this.CLtoUpdate.todos) return;
+      return this.CLtoUpdate.todos.filter((td) => td.isDone).length;
+    },
+    todosToShow() {
+      if (this.hideDone) {
+        return this.CLtoUpdate.todos.filter((td) => !td.isDone);
+      } else {
+        return this.CLtoUpdate.todos;
       }
     },
   },

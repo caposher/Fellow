@@ -5,7 +5,9 @@
     @click.stop.prevent="closeModal"
   >
     <div class="card-details" @click.stop="">
-      <button @click="closeModal" class="close">x</button>
+      <button @click.stop="closeModal" class="close">
+        <span class="icon-md icon-close"></span>
+      </button>
       <header>
         <div class="header">
           <span class="icon-card icon-lg"></span>
@@ -84,6 +86,7 @@
                 <button
                   v-show="cardToEdit.description && !isEditDesc"
                   @click.stop="setFocus"
+                  class="action-btn"
                 >
                   Edit
                 </button>
@@ -91,14 +94,16 @@
             </div>
             <!-- @blur="updateCard" -->
             <textarea
+              rows="2"
               ref="desc"
+              class="action-btn desc"
               @focus="setEditDesc"
               placeholder="Add a more detailed description..."
               v-model="cardToEdit.description"
             ></textarea>
             <div class="buttons" v-show="isEditDesc">
-              <button class="save" @click="updateCard">save</button>
-              <span @click="undoDesc" class="icon-lg icon-close"></span>
+              <button class="submit-btn" @click.stop="updateCard">save</button>
+              <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
             </div>
           </div>
 
@@ -135,14 +140,17 @@
             @update="updateLabels"
           />
           <section class="checklist-btn">
-            <button @click="openCheckList = !openCheckList">
+            <button @click.stop="openCheckList = !openCheckList">
               <span class="action-btn">
                 <span class="icon-sm icon-checklist"></span>
                 Checklist</span
               >
             </button>
             <section class="checklist-popup" v-show="openCheckList">
-              <span>Add checklist</span>
+              <section class="popup-header">
+                <button class="close-popup">x</button>
+                <span>Add checklist</span>
+              </section>
               <form @submit.prevent="addCheckList">
                 <label>Title</label>
                 <input
@@ -154,7 +162,7 @@
                 <select name id>
                   <option value>(none)</option>
                 </select>
-                <button>Add</button>
+                <button class="submit">Add</button>
               </form>
             </section>
           </section>
@@ -189,7 +197,7 @@ export default {
       showDate: false,
       showLabels: false,
       openCheckList: false,
-      newChecklist: {},
+      newChecklist: { title: "Checklist" },
       cardToEdit: null,
       isUndoDesc: false,
     };

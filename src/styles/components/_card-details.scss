@@ -40,14 +40,11 @@
     min-height: 32px;
     position: relative;
     z-index: 1;
-    & .card-details-icon {
+    & .icon-card {
       left: -40px;
       position: absolute;
       top: 4px;
       font-family: icomoon;
-      &::after {
-        content: "\e912";
-      }
     }
     .card-header-container {
       margin: 4px 0 0;
@@ -327,7 +324,7 @@
     & .card-details-icon {
       left: -40px;
       position: absolute;
-      top: 0px;
+      top: 1px;
       font-family: icomoon;
       &::after {
         content: "\e91a";
@@ -472,9 +469,15 @@
   -webkit-user-select: none;
   user-select: none;
   white-space: nowrap;
+  text-align: left;
 
   .side-menu & {
     width: 168px;
+  }
+  &.checklist-btn {
+    max-width: fit-content;
+    display: inline;
+    // margin: 0;
   }
 
   &:hover {
@@ -488,5 +491,14 @@
     box-shadow: none;
     color: #0079bf;
     outline: 0;
+  }
+}
+.activity-log {
+  position: relative;
+  font-family: icomoon;
+  & .icon-activity {
+    left: -40px;
+    position: absolute;
+    top: 0px;
   }
 }

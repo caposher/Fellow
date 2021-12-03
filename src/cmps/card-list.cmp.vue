@@ -1,7 +1,7 @@
 <template>
   <li>
     <!-- card preview gats card and mini-list-->
-    <card-preview :card="card" :list="list"></card-preview>
+    <card-preview :card="card" :list="list" ></card-preview>
   </li>
 </template>
 
@@ -16,6 +16,9 @@ export default {
     list: {
       type: Object,
     },
+  },
+  methods:{
+
   },
   // props- card
   // props mini-list

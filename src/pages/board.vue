@@ -8,11 +8,11 @@
     <ul class="board" @mouseenter.stop.prevent="scroll">
       <li
         class="list-wrapper"
-        v-for="list in board.lists"
+        v-for="(list,idx) in board.lists"
         :key="list.id"
         @mousedown.stop="unscroll"
       >
-        <board-list :list="list" @update="updateList"></board-list>
+        <board-list :list="list" :idx="idx" @update="updateList"></board-list>
       </li>
       <li class="list-wrapper new-list" @click="addList">
         <p>
@@ -61,14 +61,6 @@ export default {
               boardId: "",
               cardId: "",
             });
-            // location.reload();
-            // try {
-            //   await this.$store.dispatch({ type: "loadBoard", boardId });
-
-            //   console.log("loaded board");
-            // } catch (err) {
-            //   console.log("problem with getting board", err);
-            // }
             this.selectedCardId = null;
           } catch (err) {
             console.log("problem with getting board", err);

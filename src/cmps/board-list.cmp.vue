@@ -14,7 +14,7 @@
         placeholder="Enter title"
         @blur="updateList()"
       />
-      <button><i class="fas fa-ellipsis-h"></i></button>
+      <button><span class="icon-sm icon-dots"></span></button>
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
@@ -53,6 +53,9 @@ export default {
     list: {
       type: Object,
     },
+    idx: {
+      type: Number,
+    },
   },
   directives: { focus },
   data() {
@@ -73,7 +76,9 @@ export default {
       const title = prompt('card title');
       if (!title) return;
       try {
-        this.$store.dispatch({ type: 'addCard', boardId: this.$store.getters.boardId, list: this.list, title });
+       await this.$store.dispatch({ type: 'addCard', boardId: this.$store.getters.boardId, list: this.list, title });
+       console.log('card added', this.listOnEdit);
+       
       } catch (err) {
         console.log('cant add card', err);
       }

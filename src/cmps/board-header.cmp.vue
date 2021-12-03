@@ -1,9 +1,11 @@
 <template>
-  <header class="board-header">
+  <header class="board-header" v-if="board">
     <section>
-      <span class="board-title">Trello proj</span
-      ><span><i class="far fa-star"></i></span><span>Members</span>
+      <span class="board-title">{{board.title}}</span>
+      <span><i class="icon-sm icon-star"></i></span>
+      <span>Members</span>
       <button>Invite</button>|
+      <button @click="deleteBoard">Delete Board</button>|
     </section>
     <section>
       <button>Filter</button>
@@ -13,5 +15,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods:{
+    deleteBoard(){
+      this.$emit("deleteBoard");
+    }
+  },
+  computed:{
+    board(){
+      console.log(this.$store.getters.board);
+      return this.$store.getters.board
+    }
+  }
+};
 </script>

@@ -51,7 +51,7 @@ export const boardStore = {
     async loadBoards({ commit }) {
       try {
         const boards = await boardService.query();
-        console.log('boards', boards);
+        // console.log('boards', boards);
         commit({ type: 'setBoards', boards });
         // return boards;
       } catch (err) {
@@ -65,6 +65,17 @@ export const boardStore = {
         // return board;
       } catch (err) {
         console.log('cant load boards:', err);
+      }
+    },
+    async deleteBoard({ commit }, { boardId }) {
+      try {
+        await boardService.remove(boardId);
+      const boards = await boardService.query();
+        console.log('boards',boards);
+        commit({ type: 'setBoards', boards });
+        commit({ type: 'setBoard', board: null });
+      } catch (err) {
+        console.log('cant delete Board', err);
       }
     },
     async setListAndCard({ commit }, { boardId, cardId }) {
@@ -135,13 +146,14 @@ export const boardStore = {
         console.log('cant delete list', err);
       }
     },
+
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
       console.log('card', card);
       list.cards.push(card);
       console.log('updatedList', list);
       try {
-        const updatedBoard = await boardService.save(list, board);
+        const updatedBoard = await boardService.saveList(list, board);
         commit({ type: 'setBoard', board: updatedBoard });
         return updatedBoard;
       } catch (err) {

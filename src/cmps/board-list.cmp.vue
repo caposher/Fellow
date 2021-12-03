@@ -12,7 +12,7 @@
         @blur="updateList()"
       />
       <!-- <button><span class="icon-sm icon-dots"></span></button> -->
-      <button @click="deleteList">x</button>
+      <!-- <button @click="deleteList">x</button> -->
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
@@ -70,7 +70,7 @@ export default {
       if (!title) return;
       try {
         await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
-        //  console.log('card added', this.listOnEdit);
+         console.log('card added', this.list);
       } catch (err) {
         console.log('cant add card', err);
       }
@@ -85,7 +85,7 @@ export default {
       this.updateList();
     },
     deleteList(){
-      this.$emit("delete", JSON.parse(JSON.stringify(this.updatedList)));
+      this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
     }
   },
   computed: {

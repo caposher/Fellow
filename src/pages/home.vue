@@ -23,6 +23,7 @@ export default {
   },
   computed: {
     boards() {
+      console.log( this.$store.getters.boards);
       return this.$store.getters.boards;
     },
   },

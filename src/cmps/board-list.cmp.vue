@@ -15,13 +15,21 @@
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
-      <draggable v-model="updatedList.cards" group="list-group" ghost-class="ghost" @add="updateList" @end="updateList">
+      <draggable
+        v-model="updatedList.cards"
+        group="list-group"
+        ghost-class="ghost"
+        @add="updateList"
+        @start="dragCard = true"
+        @end="ondragEnd"
+      >
         <card-list
           @change="updatedList"
           v-for="card in updatedList.cards"
           :key="card.id"
           :card="card"
           :list="list"
+          :do-drag="dragCard"
         ></card-list>
       </draggable>
     </ul>
@@ -49,6 +57,7 @@ export default {
   directives: { focus },
   data() {
     return {
+      dragCard: false,
       updatedList: null,
       editTitle: false,
     };
@@ -61,16 +70,20 @@ export default {
       const title = prompt('card title');
       if (!title) return;
       try {
-       await this.$store.dispatch({ type: 'addCard', boardId: this.$store.getters.boardId, list: this.list, title });
-      //  console.log('card added', this.listOnEdit);
-       
+        await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
+        //  console.log('card added', this.listOnEdit);
       } catch (err) {
         console.log('cant add card', err);
       }
     },
+
     updateList() {
       this.editTitle = false;
       this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
+    },
+    ondragEnd() {
+      this.dragCard = false;
+      this.updateList();
     },
   },
   computed: {

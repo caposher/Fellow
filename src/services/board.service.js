@@ -125,8 +125,11 @@ function getEmptyBoard(title) {
     style: null,
     labels: [
       { id: utilService.makeId(), txt: 'test1', colorClass: 'label-green' },
-      { id: utilService.makeId(), txt: 'test2', colorClass: 'label-red' },
-      { id: utilService.makeId(), txt: 'test3', colorClass: 'label-yellow' },
+      { id: utilService.makeId(), txt: 'test2', colorClass: 'label-yellow' },
+      { id: utilService.makeId(), txt: 'test3', colorClass: 'label-orange' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-red' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-purple' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-blue' },
     ],
     members: [],
     lists: [],

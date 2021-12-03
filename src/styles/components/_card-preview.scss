@@ -36,8 +36,7 @@
         background-color: rgb(235, 236, 240);
         .q-edit {
           // color: #6b778c;
-    color: #172b4d;
-
+          color: #172b4d;
         }
       }
       .q-edit {
@@ -45,15 +44,14 @@
       }
     }
   }
-  
+
   &:hover {
     cursor: pointer;
-    .edit-wrapper{
+    .edit-wrapper {
       background-color: rgba(235, 236, 240, 0);
       & .q-edit {
         color: #5e6c84;
         opacity: 1;
-        
       }
     }
   }
@@ -83,4 +81,11 @@
       }
     }
   }
+}
+
+.card-drag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1000;
 }

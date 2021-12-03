@@ -36,6 +36,7 @@
             >{{ todo.title }}
           </span>
         </label>
+
         <span @click="removeTodo(todo.id)">X</span>
       </li>
       <section v-if="newTodo">

@@ -1,20 +1,45 @@
 .label-green {
   background-color: #61bd4f;
+
+  &:hover {
+    box-shadow: -8px 0 #519839;
+    margin-left: 4px;
+  }
 }
 .label-yellow {
   background-color: #f2d600;
+  &:hover {
+    box-shadow: -8px 0 #d9b51c;
+    margin-left: 4px;
+  }
 }
 .label-orange {
   background-color: #ff9f1a;
+  &:hover {
+    box-shadow: -8px 0 #cd8313;
+    margin-left: 4px;
+  }
 }
 .label-red {
   background-color: #eb5a46;
+  &:hover {
+    box-shadow: -8px 0 #b04632;
+    margin-left: 4px;
+  }
 }
 .label-purple {
   background-color: #c377e0;
+  &:hover {
+    box-shadow: -8px 0 #89609e;
+    margin-left: 4px;
+  }
 }
 .label-blue {
   background-color: #0079bf;
+  &:hover {
+    box-shadow: -8px 0 #055a8c;
+    margin-left: 4px;
+  }
 }
 .white-text {
   color: white;
@@ -49,36 +74,36 @@
   }
 }
 
-.labels-popup {
-  background: #fff;
-  border-radius: 3px;
-  box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
-  overflow: hidden;
-  position: absolute;
-  z-index: 10;
-  width: 304px;
-  right: 60px;
-  padding: 0 12px;
+// .labels-popup {
+//   background: #fff;
+//   border-radius: 3px;
+//   box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+//   overflow: hidden;
+//   position: absolute;
+//   z-index: 10;
+//   width: 304px;
+//   right: 60px;
+//   padding: 0 12px;
 
-  header {
-    position: flex;
-    flex-direction: column;
+//   header {
+//     position: flex;
+//     flex-direction: column;
 
-    h4 {
-      font-weight: 400;
-      line-height: 40px;
-      text-align: center;
-      border-bottom: 1px solid #091e4221;
-    }
-    input {
-      margin-block-start: 12px;
-      @include popup-input;
-    }
-  }
+//     h4 {
+//       font-weight: 400;
+//       line-height: 40px;
+//       text-align: center;
+//       border-bottom: 1px solid #091e4221;
+//     }
+//     input {
+//       margin-block-start: 12px;
+//       @include popup-input;
+//     }
+//   }
 
-  .close-label-popup {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-}
+//   .close-label-popup {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//   }
+// }

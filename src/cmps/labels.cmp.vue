@@ -1,18 +1,30 @@
 <template>
-  <section class="labels-popup">
-    <header>
+  <section class="card-popup label-popup">
+    <header class="popup-header">
       <h4>Labels</h4>
-      <button class="close-label-popup" @click="$emit('close')">X</button>
-      <input type="text" placeholder="Search labels..." />
+      <div @click="$emit('close')">
+        <span class="close-popup icon-md icon-close"></span>
+      </div>
+      <!-- <button class="close-label-popup" @click="$emit('close')">X</button> -->
     </header>
-    <p>Labels</p>
-    <label v-for="(label, idx) in allLabels" :key="label.id" :class="label.colorClass">
-      <span>{{ label.txt }}</span>
-      <input type="checkbox" :checked="checkLabel(label.id)" @change="toggleCheck(label.id, idx)" />
-    </label>
-    <label class="label-purple"> </label>
-    <button>Create a new label</button>
-    <hr />
+    <input type="text" placeholder="Search labels..." />
+    <form @submit.prevent="addCheckList">
+      <h5>Labels</h5>
+      <section
+        class="label-picker"
+        v-for="(label, idx) in allLabels"
+        :key="label.id"
+        @change="toggleCheck(label.id, idx)"
+      >
+        <div :class="label.colorClass">
+          <span>{{ label.txt }}</span>
+          <input type="checkbox" :checked="checkLabel(label.id)" />
+          <span v-show="checkLabel(label.id)" class="close-popup icon-sm icon-check"></span>
+        </div>
+        <span class="close-popup icon-sm icon-edit"></span>
+      </section>
+      <button>Create a new label</button>
+    </form>
   </section>
 </template>
 

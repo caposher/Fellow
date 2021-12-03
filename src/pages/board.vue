@@ -2,8 +2,8 @@
   <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
     <board-header />
     <ul class="board" @mouseEnter.stop.prevent="scroll">
-      <li class="list-wrapper" v-for="(list, idx) in board.lists" :key="list.id" @mousedown.stop="unscroll">
-        <board-list :list="list" :idx="idx" @update="updateList"></board-list>
+      <li class="list-wrapper" v-for="list in board.lists" :key="list.id" @mousedown.stop="unscroll">
+        <board-list :list="list" @update="updateList" @delete="deleteList"></board-list>
       </li>
       <li class="list-wrapper new-list" @click="addList">
         <p>
@@ -97,6 +97,18 @@ export default {
           list,
           board: this.board,
         });
+      } catch (err) {
+        console.log('cant update list', err);
+      }
+    },
+    async deleteList(list) {
+      try {
+        await this.$store.dispatch({
+          type: 'deleteList',
+          list,
+          board: this.board,
+        });
+        console.log('delete list');
       } catch (err) {
         console.log('cant update list', err);
       }

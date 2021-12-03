@@ -123,13 +123,25 @@ export const boardStore = {
         console.log('cant update list', err);
       }
     },
+    async deleteList({ commit }, { board, list }) {
+      const listIdx = board.lists.findIndex(currList=> currList.id===list.id)
+      console.log(listIdx);
+      board.lists.splice(listIdx,1)
+      try {
+        const updatedBoard = await boardService.save(board);
+        commit({ type: 'setBoard', board: updatedBoard });
+        return updatedBoard;
+      } catch (err) {
+        console.log('cant delete list', err);
+      }
+    },
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
       console.log('card', card);
       list.cards.push(card);
       console.log('updatedList', list);
       try {
-        const updatedBoard = await boardService.saveList(list, board);
+        const updatedBoard = await boardService.save(list, board);
         commit({ type: 'setBoard', board: updatedBoard });
         return updatedBoard;
       } catch (err) {

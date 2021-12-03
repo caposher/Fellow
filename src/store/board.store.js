@@ -104,32 +104,32 @@ export const boardStore = {
         console.log("can't create board", err);
       }
     },
-    async addList({ commit }, { boardId, title }) {
+    async addList({ commit }, { board, title }) {
       const list = boardService.getEmptyList(title);
       try {
-        const updatedBoard = await boardService.saveList(list, boardId);
+        const updatedBoard = await boardService.saveList(list, board);
         commit({ type: 'setBoard', board: updatedBoard });
         return updatedBoard;
       } catch (err) {
         console.log('cant addList', err);
       }
     },
-    async updateList({ commit }, { boardId, list }) {
+    async updateList({ commit }, { board, list }) {
       try {
-        const updatedBoard = await boardService.saveList(list, boardId);
+        const updatedBoard = await boardService.saveList(list, board);
         commit({ type: 'setBoard', board: updatedBoard });
         return updatedBoard;
       } catch (err) {
         console.log('cant update list', err);
       }
     },
-    async addCard({ commit }, { boardId, list, title }) {
+    async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
       console.log('card', card);
       list.cards.push(card);
       console.log('updatedList', list);
       try {
-        const updatedBoard = await boardService.saveList(list, boardId);
+        const updatedBoard = await boardService.saveList(list, board);
         commit({ type: 'setBoard', board: updatedBoard });
         return updatedBoard;
       } catch (err) {

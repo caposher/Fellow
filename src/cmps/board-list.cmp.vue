@@ -1,9 +1,6 @@
 <template>
   <li class="list">
     <header>
-      <p>{{ oldIndex }}</p>
-      <p>{{ newIndex }}</p>
-      <p>{{ isdrag }}</p>
       <h4 v-if="!editTitle" @click="editTitle = true">{{ showTitle }}</h4>
       <textarea
         type="text"
@@ -18,17 +15,9 @@
     </header>
     <ul class="card-list">
       <!-- v-for cards in list.cards  :mini-list="mini-list"-->
-      <draggable
-        v-model="updatedList.cards"
-        group="list-group"
-        ghost-class="ghost"
-        drag-class="drag"
-        :move="detectMove"
-        @start="isdrag = true"
-        @end="ondragEnd()"
-      >
+      <draggable v-model="updatedList.cards" group="list-group" ghost-class="ghost" @add="updateList" @end="updateList">
         <card-list
-          @drag="ondrag"
+          @change="updatedList"
           v-for="card in updatedList.cards"
           :key="card.id"
           :card="card"
@@ -60,10 +49,6 @@ export default {
   directives: { focus },
   data() {
     return {
-      // listOnEdit: JSON.parse(JSON.stringify(this.list)),
-      oldIndex: '',
-      newIndex: '',
-      isdrag: false,
       updatedList: null,
       editTitle: false,
     };
@@ -76,39 +61,15 @@ export default {
       const title = prompt('card title');
       if (!title) return;
       try {
-       await this.$store.dispatch({ type: 'addCard', boardId: this.$store.getters.boardId, list: this.list, title });
-       console.log('card added', this.listOnEdit);
-       
+        await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
+        console.log('card added', this.listOnEdit);
       } catch (err) {
         console.log('cant add card', err);
       }
     },
-    selectCard(card) {
-      console.log(card);
-    },
     updateList() {
       this.editTitle = false;
-      console.log(this.updatedList);
       this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
-    },
-    detectMove(ev) {
-      console.log(ev);
-      this.oldIndex = ev.draggedContext.index;
-      this.newIndex = ev.draggedContext.futureIndex;
-      ev.draggedContext.element.style = 'backgroundColor="red"';
-      // debugger;
-    },
-    ondrag(ev) {
-      debugger;
-    },
-    ondragEnd() {
-      if (this.oldIndex !== null && this.newIndex !== null) {
-        console.log('change location');
-        const card = this.updatedList.cards[this.oldIndex];
-        this.updatedList.cards.splice(this.oldIndex, 1, this.updatedList.cards[this.newIndex]);
-        this.updatedList.cards.splice(this.newIndex, 1, card);
-        //   this.updateList();
-      }
     },
   },
   computed: {
@@ -123,8 +84,6 @@ export default {
     list: {
       handler() {
         this.updatedList = JSON.parse(JSON.stringify(this.list));
-        console.log(this.list);
-        console.log('watcha la params');
       },
     },
   },
@@ -136,14 +95,18 @@ export default {
 </script>
 
 <style>
-.shadow {
-  /* background-color: saddlebrown; */
-}
-
 .ghost {
-  /* opacity: 0.5; */
   background: rgb(226, 228, 234);
   border-radius: 3px;
+}
+
+.sortable-chosen {
+  opacity: 1;
+}
+
+.sortable-chosen > * {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 100%);
 }
 
 .ghost > * {

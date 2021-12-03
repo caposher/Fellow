@@ -47,9 +47,8 @@ function save(board) {
   return savedBoard;
 }
 
-async function saveList(list, boardId) {
+async function saveList(list, board) {
   try {
-    var board = await getById(boardId);
     if (list.id) {
       const idx = board.lists.findIndex((currList) => currList.id === list.id);
       board.lists.splice(idx, 1, list);

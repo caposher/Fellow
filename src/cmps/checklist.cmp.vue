@@ -1,11 +1,7 @@
 <template>
   <section class="checklist">
     <form class="editor" v-show="editTitle" @submit.prevent="updateCL">
-      <textarea
-        placeholder="Add an item"
-        v-model="CLtoUpdate.title"
-        @blur="updateCL"
-      />
+      <textarea v-model="CLtoUpdate.title" @blur="updateCL" />
       <button class="submit-btn">Save</button>
       <!-- <button>X</button> -->
     </form>
@@ -44,14 +40,21 @@
       </li>
       <section v-if="newTodo">
         <form @submit.prevent="updateTodo">
-          <input
+          <textarea
+            rows="1"
+            class="add-item"
             placeholder="Add an item"
             v-model="todoToAdd.title"
             @blur="newTodo = false"
           />
           <br />
-          <button class="submit-btn">Add</button>
-          <span @click="this.newTodo = false" class="icon-lg icon-close"></span>
+          <div class="buttons">
+            <button class="submit-btn" @click.stop="updateCard">Add</button>
+            <span
+              @click="this.newTodo = false"
+              class="icon-lg icon-close"
+            ></span>
+          </div>
         </form>
       </section>
     </ul>

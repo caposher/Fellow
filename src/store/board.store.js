@@ -148,5 +148,17 @@ export const boardStore = {
         console.log('cant add card', err);
       }
     },
+    async removeCard({ commit }, { boardId, list, cardId }) {
+      try {
+        // console.log('card', card);
+        const data = await boardService.removeCard(cardId, list, boardId);
+        // console.log(data);
+        commit({ type: 'setBoard', board: data.savedBoard });
+        commit({ type: 'setList', list: data.savedList });
+        commit({ type: 'setCard', card: data.savedCard });
+      } catch (err) {
+        console.log('cant remove card', err);
+      }
+    },
   },
 };

@@ -26,11 +26,11 @@
     .vpd-icon-btn {
       background-color: rgb(65 125 244 / 0%) !important;
       font-family: icomoon;
+      margin-right: 6px;
 
-        padding: 0;
-      svg{
+      padding: 0;
+      svg {
         display: none;
-
       }
       &::before {
         color: #172b4d;
@@ -38,9 +38,9 @@
         -webkit-font-smoothing: antialiased;
         font-style: normal;
         text-align: center;
-        content: ('\e91b');
+        content: ("\e91b");
       }
-      &::after{
+      &::after {
         display: none;
       }
     }

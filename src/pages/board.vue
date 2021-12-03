@@ -1,14 +1,18 @@
 <template>
-  <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
-    <board-header @deleteBoard="deleteBoard" />
-    <ul class="board" @mouseEnter.stop.prevent="scroll">
+  <section
+    v-if="board"
+    :class="{ 'display-modal': selectedCardId }"
+    class="board-app"
+  >
+    <board-header />
+    <ul class="board" @mouseenter="scroll">
       <li
         class="list-wrapper"
-        v-for="list in board.lists"
+        v-for="(list, idx) in board.lists"
         :key="list.id"
         @mousedown.stop="unscroll"
       >
-        <board-list :list="list" @update="updateList" @deleteList="deleteList"></board-list>
+        <board-list :list="list" :idx="idx" @update="updateList"></board-list>
       </li>
       <!--  @click="addList" -->
       <!-- v-if="!isAddList" -->
@@ -168,7 +172,6 @@ export default {
         console.log("cant delete board", err);
       }
     },
-
     scroll(ev) {
       const slider = ev.target;
       this.slider = slider;
@@ -176,21 +179,21 @@ export default {
       let startX;
       let scrollLeft;
 
-      slider.addEventListener("mousedown", function down(e) {
+      slider.addEventListener("mousedown", (e) => {
         isDown = true;
         slider.classList.add("active");
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
       });
-      slider.addEventListener("mouseleave", function leave() {
+      slider.addEventListener("mouseleave", () => {
         isDown = false;
         slider.classList.remove("active");
       });
-      slider.addEventListener("mouseup", function up() {
+      slider.addEventListener("mouseup", () => {
         isDown = false;
         slider.classList.remove("active");
       });
-      slider.addEventListener("mousemove", function move(e) {
+      slider.addEventListener("mousemove", (e) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
@@ -201,8 +204,7 @@ export default {
     unscroll() {
       if (!this.slider) return;
       this.slider.classList.remove("active");
-      console.log("unscroll");
-    }
+    },
   },
   components: {
     boardHeader,

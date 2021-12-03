@@ -15,6 +15,7 @@ export const boardService = {
   getListAndCardById,
   updateCard,
   getEmptyLabel,
+  removeCard
 };
 
 _createBoards();
@@ -86,6 +87,25 @@ async function updateCard(cardToUpdate, listToUpdate, boardId) {
     console.log('cant save list' + listToUpdate, err);
   }
 }
+async function removeCard(cardId, listToUpdate, boardId) {
+  try {
+    var boardToUpdate = await getById(boardId);
+    const listIdx = boardToUpdate.lists.findIndex((currList) => listToUpdate.id === currList.id);
+    const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardId);
+    listToUpdate.cards.splice(cardIdx, 1);
+    boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
+    try {
+      const savedBoard = await save(boardToUpdate);
+      const savedList = savedBoard.lists[listIdx];
+      const savedCard = savedList.cards[cardIdx];
+      return { savedBoard, savedList, savedCard };
+    } catch (err) {
+      console.log('cant save board', err);
+    }
+  } catch (err) {
+    console.log('cant save list' + listToUpdate, err);
+  }
+}
 
 // async function updateList(list, boardId) {
 //   try {
@@ -105,8 +125,11 @@ function getEmptyBoard(title) {
     style: null,
     labels: [
       { id: utilService.makeId(), txt: 'test1', colorClass: 'label-green' },
-      { id: utilService.makeId(), txt: 'test2', colorClass: 'label-red' },
-      { id: utilService.makeId(), txt: 'test3', colorClass: 'label-yellow' },
+      { id: utilService.makeId(), txt: 'test2', colorClass: 'label-yellow' },
+      { id: utilService.makeId(), txt: 'test3', colorClass: 'label-orange' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-red' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-purple' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-blue' },
     ],
     members: [],
     lists: [],

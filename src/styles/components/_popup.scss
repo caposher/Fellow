@@ -1,0 +1,115 @@
+.card-popup {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px #091e4240, 0 0 0 1px #091e4214;
+  position: absolute;
+  top: 45px;
+  right: -12px;
+  width: 304px;
+  padding: 0 12px;
+  padding-bottom: 12px; //TODO:remove
+  z-index: 20;
+
+  & > * {
+  }
+
+  & .popup-header {
+    position: relative;
+    margin: 0;
+    .close-popup {
+      text-align: center;
+      line-height: 32px;
+      position: absolute;
+      color: #5e6c84;
+      top: 4px;
+      right: -5px;
+      font-size: 16px;
+      line-height: 32px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 3px;
+    }
+
+    h4 {
+      text-align: center;
+      line-height: 40px;
+      font-weight: 400;
+      display: block;
+      width: 280px;
+      color: #5e6c84;
+      border-bottom: 1px solid #091e4221;
+    }
+  }
+
+  label {
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  form > *:not(button) {
+    width: 100%;
+    display: block;
+    color: #5e6c84;
+  }
+
+  input {
+    width: 100%;
+    @include popup-input;
+  }
+
+  select {
+    margin-top: 2px;
+    margin-bottom: 22px;
+  }
+  button.submit {
+    background-color: #0079bf;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    padding: 6px 24px;
+    cursor: pointer;
+  }
+}
+
+.label-popup {
+  top: 180px;
+  right: 4px;
+
+  input {
+    margin-block-start: 10px;
+  }
+
+  span {
+    justify-content: center;
+    align-items: 32px;
+    width: 32px;
+    padding: 0 5px 0 11px;
+  }
+
+  .label-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block-end: 4px;
+    input {
+      opacity: 0;
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border-radius: 3px;
+      height: 32px;
+      padding: 0 10px;
+      font-weight: bold;
+      color: white;
+
+      span {
+        color: white;
+      }
+    }
+  }
+}

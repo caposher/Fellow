@@ -102,7 +102,7 @@
               v-model="cardToEdit.description"
             ></textarea>
             <div class="buttons" v-show="isEditDesc">
-              <button class="submit-btn" @click.stop="updateCard">save</button>
+              <button class="submit-btn" @click.stop="updateCard">Save</button>
               <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
             </div>
           </div>
@@ -118,20 +118,25 @@
           </div>
           <div class="activity-log">
             <span class="icon-lg icon-activity"></span>
-            <h4>activities</h4>
-            <input />
-            <button>save</button>
+            <h3>Activity</h3>
+            <div class="comment-box">
+              <textarea rows="1" placeholder="Write a comment..." />
+              <button>save</button>
+            </div>
           </div>
         </div>
         <div class="side-menu">
+          <button class="action-btn not-yet" title="Not yet developed">
+            <span class="icon-sm icon-member"></span>Join
+          </button>
           <h3>Add to card</h3>
           <!-- side menu renders cmp in click -->
-          <button class="action-btn">
+          <button class="action-btn not-yet" title="Not yet developed">
             <span class="icon-sm icon-member"></span>Members
           </button>
           <button @click.stop="toggleLabels" class="action-btn">
             <span class="icon-sm icon-label"></span>
-            Labels
+            <span>Labels</span>
           </button>
           <card-labels
             v-show="showLabels"
@@ -143,15 +148,18 @@
             <button @click.stop="openCheckList = !openCheckList">
               <span class="action-btn">
                 <span class="icon-sm icon-checklist"></span>
-                Checklist
+                <span>Checklist</span>
               </span>
             </button>
-            <section class="checklist-popup" v-show="openCheckList">
+            <section class="card-popup" v-show="openCheckList">
               <section class="popup-header">
-                <button class="close-popup" @click.stop="openCheckList = false">
+                <div @click.stop="openCheckList = false">
+                  <span class="close-popup icon-md icon-close"></span>
+                </div>
+                <!-- <button class="close-popup" @click.stop="openCheckList = false">
                   x
-                </button>
-                <span>Add checklist</span>
+                </button> -->
+                <h4>Add checklist</h4>
               </section>
               <form @submit.prevent="addCheckList">
                 <label>Title</label>
@@ -161,7 +169,7 @@
                   v-model="newChecklist.title"
                 />
                 <label>Copy items from...</label>
-                <select name id>
+                <select name id class="not-yet">
                   <option value>(none)</option>
                 </select>
                 <button class="submit">Add</button>
@@ -173,12 +181,37 @@
             :cardDate="cardToEdit.dueDate"
             class="date"
           ></date>
-          <button class="attachment action-btn">
+          <button
+            class="attachment action-btn not-yet"
+            title="Not yet developed"
+          >
             <span class="icon-sm icon-attach"></span>Attachments
           </button>
-          <button class="cover action-btn">
+          <button class="cover action-btn not-yet" title="Not yet developed">
             <span class="icon-sm icon-cover"></span>Cover
           </button>
+          <section class="actions">
+            <h3>Actions</h3>
+            <button class="cover action-btn not-yet" title="Not yet developed">
+              <span class="icon-sm icon-move"></span>Move
+            </button>
+            <button class="cover action-btn not-yet" title="Not yet developed">
+              <span class="icon-sm icon-copy"></span>Copy
+            </button>
+            <button class="cover action-btn not-yet" title="Not yet developed">
+              <span class="icon-sm icon-template"></span>Make template
+            </button>
+            <button class="cover action-btn not-yet" title="Not yet developed">
+              <span class="icon-sm icon-watch"></span>Watch
+            </button>
+            <hr />
+            <button class="cover action-btn" @click="removeCard">
+              <span class="icon-sm icon-archive"></span>Archive
+            </button>
+            <button class="cover action-btn not-yet" title="Not yet developed">
+              <span class="icon-sm icon-share"></span>Share
+            </button>
+          </section>
         </div>
       </div>
     </div>
@@ -288,6 +321,21 @@ export default {
         // console.log("card updated with new desc");
       } catch (err) {
         console.log("cant update card", err);
+      }
+    },
+    async removeCard() {
+      console.log("remove");
+      if (!confirm("this action will delete the card! continue?")) return;
+      try {
+        await this.$store.dispatch({
+          type: "removeCard",
+          boardId: this.boardId,
+          list: JSON.parse(JSON.stringify(this.list)),
+          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id)),
+        });
+        this.closeModal();
+      } catch (err) {
+        console.log("cant remove card", err);
       }
     },
     async changeComplete() {

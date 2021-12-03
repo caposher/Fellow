@@ -1,27 +1,15 @@
 <template>
   <section class="checklist">
     <form class="editor" v-show="editTitle" @submit.prevent="updateCL">
-      <textarea
-        placeholder="Add an item"
-        v-model="CLtoUpdate.title"
-        @blur="updateCL"
-      />
+      <textarea placeholder="Add an item" v-model="CLtoUpdate.title" @blur="updateCL" />
       <button class="submit-btn">Save</button>
       <!-- <button>X</button> -->
     </form>
     <section v-show="!editTitle" class="checklist-header">
       <h3 @click="editTitle = true">{{ checklist.title }}</h3>
       <span class="checklist-actions">
-        <button
-          v-if="doneTodos > 0"
-          class="action-btn checklist-btn"
-          @click.stop="hideDone = !hideDone"
-        >
-          {{
-            !hideDone
-              ? "Hide checked items"
-              : `Show checked items (${doneTodos})`
-          }}
+        <button v-if="doneTodos > 0" class="action-btn checklist-btn" @click.stop="hideDone = !hideDone">
+          {{ !hideDone ? 'Hide checked items' : `Show checked items (${doneTodos})` }}
         </button>
         <button class="action-btn" @click="deleteCL">Delete</button>
       </span>
@@ -30,42 +18,28 @@
       <li v-for="todo in todosToShow" :key="todo.id">
         <label>
           <!-- <span class="check-box-container"> -->
-          <input
-            type="checkbox"
-            :checked="todo.isDone"
-            @click="toggleTodo(todo.id)"
-          />
+          <input type="checkbox" :checked="todo.isDone" @click="toggleTodo(todo.id)" />
           <!-- </span> -->
-          <span @click="editTodo(todo)" :class="{ done: todo.isDone }"
-            >{{ todo.title }}
-          </span>
+          <span @click="editTodo(todo)" :class="{ done: todo.isDone }">{{ todo.title }} </span>
         </label>
+
         <span @click="removeTodo(todo.id)">X</span>
       </li>
       <section v-if="newTodo">
         <form @submit.prevent="updateTodo">
-          <input
-            placeholder="Add an item"
-            v-model="todoToAdd.title"
-            @blur="newTodo = false"
-          />
+          <input placeholder="Add an item" v-model="todoToAdd.title" @blur="newTodo = false" />
           <br />
           <button class="submit-btn">Add</button>
           <span @click="this.newTodo = false" class="icon-lg icon-close"></span>
         </form>
       </section>
     </ul>
-    <span
-      v-show="!newTodo"
-      @click="newTodo = true"
-      class="action-btn checklist-btn"
-      >Add an item</span
-    >
+    <span v-show="!newTodo" @click="newTodo = true" class="action-btn checklist-btn">Add an item</span>
   </section>
 </template>
 
 <script>
-import { utilService } from "../services/util.service.js";
+import { utilService } from '../services/util.service.js';
 
 export default {
   props: {
@@ -77,7 +51,7 @@ export default {
     return {
       CLtoUpdate: JSON.parse(JSON.stringify(this.checklist)),
       todoToAdd: {
-        title: "",
+        title: '',
         isDone: false,
       },
       newTodo: false,
@@ -107,8 +81,8 @@ export default {
         const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todo.id);
         this.CLtoUpdate.todos.splice(idx, 1, todo);
       } else {
-        console.log("new");
-        todo.id = "TD" + utilService.makeId();
+        console.log('new');
+        todo.id = 'TD' + utilService.makeId();
         if (this.CLtoUpdate.todos) {
           this.CLtoUpdate.todos.push(todo);
         } else this.CLtoUpdate.todos = [todo];
@@ -116,33 +90,30 @@ export default {
       this.updateCL();
     },
     removeTodo(todoId) {
-      console.log("removing", todoId);
+      console.log('removing', todoId);
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       this.CLtoUpdate.todos.splice(idx, 1);
       this.updateCL();
     },
     async updateCL() {
-      console.log("update cl");
-      console.log("this.CLtoUpdate", this.CLtoUpdate);
+      console.log('update cl');
+      console.log('this.CLtoUpdate', this.CLtoUpdate);
       try {
-        await this.$emit(
-          "updateCL",
-          JSON.parse(JSON.stringify(this.CLtoUpdate))
-        );
+        await this.$emit('updateCL', JSON.parse(JSON.stringify(this.CLtoUpdate)));
         (this.todoToAdd = {
-          title: "",
+          title: '',
           isDone: false,
         }),
           (this.editTitle = false);
         this.CLtoUpdate = JSON.parse(JSON.stringify(this.checklist));
       } catch (err) {
-        console.log("err", err);
+        console.log('err', err);
       }
     },
     deleteCL() {
-      if (confirm("Are you sure?")) {
+      if (confirm('Are you sure?')) {
         delete this.CLtoUpdate.title;
-        this.$emit("updateCL", this.CLtoUpdate);
+        this.$emit('updateCL', this.CLtoUpdate);
       }
     },
   },

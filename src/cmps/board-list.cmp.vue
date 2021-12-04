@@ -41,14 +41,10 @@
         <p>Add a card</p>
       </button>
       <div v-else class="add-card-actions">
-<<<<<<< HEAD
         <input type="text" 
         v-focus="isAddCard" 
         v-model="newCardTitle"
         />
-=======
-        <input type="text" v-focus="isAddCard" v-model="newCardTitle" />
->>>>>>> 5435b237873ea680fba28bb857c3c8f6da90d83a
         <div class="add-card-btns">
           <div class="submit-btns">
             <button class="submit-btn submit-card"
@@ -114,19 +110,8 @@ export default {
         this.isAddCard = false;
          return};
       try {
-<<<<<<< HEAD
-        await this.$store.dispatch({
-          type: "addCard",
-          board: this.$store.getters.board,
-          list: this.list,
-          title
-        });
-        console.log("card added", this.list);
-        this.newCardTitle = "";
-=======
         await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
         this.newCardTitle = '';
->>>>>>> 5435b237873ea680fba28bb857c3c8f6da90d83a
         this.isAddCard = false;
       } catch (err) {
         console.log("cant add card", err);

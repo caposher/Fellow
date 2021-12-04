@@ -106,20 +106,11 @@ export default {
       this.updateCL();
     },
     removeTodo(todoId) {
-<<<<<<< HEAD
-      // console.log("removing", todoId);
-=======
->>>>>>> 5435b237873ea680fba28bb857c3c8f6da90d83a
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       this.CLtoUpdate.todos.splice(idx, 1);
       this.updateCL();
     },
     async updateCL() {
-<<<<<<< HEAD
-      // console.log("update cl");
-      // console.log("this.CLtoUpdate", this.CLtoUpdate);
-=======
->>>>>>> 5435b237873ea680fba28bb857c3c8f6da90d83a
       try {
         await this.$emit('updateCL', JSON.parse(JSON.stringify(this.CLtoUpdate)));
         (this.todoToAdd = {

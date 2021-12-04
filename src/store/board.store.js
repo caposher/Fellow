@@ -143,10 +143,6 @@ export const boardStore = {
 
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
-<<<<<<< HEAD
-      // console.log('card', card);
-=======
->>>>>>> 5435b237873ea680fba28bb857c3c8f6da90d83a
       list.cards.push(card);
       try {
         const updatedBoard = await boardService.saveList(list, board);

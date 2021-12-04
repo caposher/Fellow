@@ -18,7 +18,7 @@
             <input type="checkbox" :checked="checkLabel(label.id)" />
             <span v-show="checkLabel(label.id)" class="close-popup icon-sm icon-check"></span>
           </div>
-          <span class="close-popup icon-sm icon-edit"></span>
+          <span class="icon-sm icon-edit"></span>
         </label>
       </section>
 

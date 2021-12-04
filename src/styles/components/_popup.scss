@@ -10,7 +10,7 @@
   padding-bottom: 12px;
   z-index: 20;
 
-  & .popup-header {
+  .popup-header {
     position: relative;
     margin: 0;
     .close-popup {
@@ -26,6 +26,10 @@
       width: 32px;
       height: 32px;
       border-radius: 3px;
+
+      &:hover {
+        color: #172b4d;
+      }
     }
 
     h4 {
@@ -99,6 +103,17 @@
     justify-content: center;
     margin: 0;
     margin-block-end: 4px;
+
+    span {
+      line-height: 0px;
+      padding: 15px 8px;
+      border-radius: 3px;
+      margin-left: 4px;
+      margin-right: 0;
+      &:hover {
+        background-color: rgb(236, 237, 240);
+      }
+    }
 
     input {
       opacity: 0;

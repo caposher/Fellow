@@ -32,18 +32,15 @@ export const boardStore = {
   mutations: {
     setBoard(state, { board }) {
       state.currBoard = board;
-      // console.log('state.currBoard', state.currBoard);
     },
     setBoards(state, { boards }) {
       state.boards = boards;
     },
     setCard(state, { card }) {
       state.currCard = card;
-      // console.log(state.currCard);
     },
     setList(state, { list }) {
       state.currList = list;
-      // console.log(state.currList);
     },
   },
 
@@ -51,7 +48,6 @@ export const boardStore = {
     async loadBoards({ commit }) {
       try {
         const boards = await boardService.query();
-        // console.log('boards', boards);
         commit({ type: 'setBoards', boards });
         // return boards;
       } catch (err) {
@@ -70,8 +66,8 @@ export const boardStore = {
     async deleteBoard({ commit }, { boardId }) {
       try {
         await boardService.remove(boardId);
-      const boards = await boardService.query();
-        console.log('boards',boards);
+        const boards = await boardService.query();
+        console.log('boards', boards);
         commit({ type: 'setBoards', boards });
         commit({ type: 'setBoard', board: null });
       } catch (err) {
@@ -135,9 +131,9 @@ export const boardStore = {
       }
     },
     async deleteList({ commit }, { board, list }) {
-      const listIdx = board.lists.findIndex(currList=> currList.id===list.id)
+      const listIdx = board.lists.findIndex(currList => currList.id === list.id)
       console.log(listIdx);
-      board.lists.splice(listIdx,1)
+      board.lists.splice(listIdx, 1)
       try {
         const updatedBoard = await boardService.save(board);
         commit({ type: 'setBoard', board: updatedBoard });

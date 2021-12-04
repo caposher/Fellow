@@ -9,6 +9,9 @@
 import appHeader from "@/cmps/app-header.cmp.vue";
 
 export default {
+  async created() {
+    await this.$store.dispatch({ type: "loadBoards" });
+  },
   components: {
     appHeader,
   },

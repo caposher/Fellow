@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
       user: null,
@@ -19,7 +19,7 @@ export default {
   },
   async created() {
     // get userId
-    await this.$store.dispatch({ type: 'loadBoards' });
+    await this.$store.dispatch({ type: "loadBoards" });
   },
   computed: {
     boards() {
@@ -28,25 +28,25 @@ export default {
   },
   methods: {
     async createBoard() {
-      const title = prompt('add title');
+      const title = prompt("add title");
       if (!title) return;
 
       try {
         const board = await this.$store.dispatch({
-          type: 'createBoard',
+          type: "createBoard",
           title,
         });
-        this.$router.push('/b/' + board._id);
+        this.$router.push("/b/" + board._id);
       } catch (err) {
-        console.log('cant get new board', err);
+        console.log("cant get new board", err);
       }
     },
     async setBoard(boardId) {
       try {
-        await this.$store.dispatch({ type: 'loadAndWatchBoard', boardId });
-        this.$router.push('/b/' + boardId);
+        await this.$store.dispatch({ type: "loadAndWatchBoard", boardId });
+        this.$router.push("/b/" + boardId);
       } catch (err) {
-        console.log('cant get board' + boardId, err);
+        console.log("cant get board" + boardId, err);
       }
     },
   },

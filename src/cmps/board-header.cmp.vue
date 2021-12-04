@@ -2,7 +2,7 @@
   <header class="board-header" v-if="board">
     <section>
       <span class="board-title">{{ board.title }}</span>
-      <span><i class="icon-sm icon-star"></i></span>
+      <span class="board-star"><i class="icon-sm icon-star"></i></span>
       <span>Members</span>
       <button>Invite</button><button @click="deleteBoard">Delete Board</button>
     </section>
@@ -17,8 +17,7 @@
 export default {
   methods: {
     deleteBoard() {
-      if (confirm("This action will delete the board! continue?"))
-        this.$emit("deleteBoard");
+      if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
     },
   },
   computed: {

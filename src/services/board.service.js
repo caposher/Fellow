@@ -178,6 +178,7 @@ function getEmptyCard(title) {
     activities: [],
     imgUrl: '',
     attachments: [],
+    isComplete:false
   };
 }
 
@@ -360,6 +361,7 @@ function travelBoard() {
   });
   check.cards[1].checklists[0].todos[0].isDone = true;
   check.cards[1].dueDate = new Date()
+  check.cards[1].isComplete = true
 
   board.lists.push(check);
 

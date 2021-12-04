@@ -23,6 +23,10 @@
     button {
       @include basic-selector;
       @include icon-btn;
+      span {
+        margin: 0;
+        line-height: 13px;
+      }
     }
 
     textarea {

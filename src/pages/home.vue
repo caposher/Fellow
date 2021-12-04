@@ -108,9 +108,9 @@
               <span>{{ board.title }}</span>
             </li>
             <div class="add" @click="createBoard">
-              <div> Create new board </div>  
-              <div> {{10-boards.length}} remaining </div> 
-                </div>
+              <div>Create new board</div>
+              <div>{{ 10 - boards.length }} remaining</div>
+            </div>
           </ul>
         </div>
       </div>
@@ -123,7 +123,7 @@ export default {
   name: "Home",
   data() {
     return {
-      user: null
+      user: null,
     };
   },
   async created() {
@@ -139,16 +139,17 @@ export default {
       //   });
       // }
       return boards;
-    }
+    },
   },
   methods: {
     bgImage(board) {
       console.log("board", board);
       if (board) {
-        let bgImage = require("@/assets" + (board.imgUrl ? board.imgUrl: '/img/background1.jpg'));
+        let bgImage = require("@/assets" +
+          (board.imgUrl ? board.imgUrl : "/img/background1.jpg"));
         console.log("bgImage", bgImage);
         return {
-          backgroundImage: `url("${bgImage}")`
+          backgroundImage: `url("${bgImage}")`,
         };
       }
     },
@@ -159,7 +160,7 @@ export default {
       try {
         const board = await this.$store.dispatch({
           type: "createBoard",
-          title
+          title,
         });
         this.$router.push("/b/" + board._id);
       } catch (err) {
@@ -173,8 +174,8 @@ export default {
       } catch (err) {
         console.log("cant get board" + boardId, err);
       }
-    }
+    },
   },
-  components: {}
+  components: {},
 };
 </script>

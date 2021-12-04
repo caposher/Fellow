@@ -54,7 +54,7 @@ export const boardStore = {
       }
     },
     async loadBoard({ commit }, { boardId }) {
-      if (!boardId){
+      if (!boardId) {
         commit({ type: 'setBoard', board: null });
         return
       }

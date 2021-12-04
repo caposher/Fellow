@@ -181,7 +181,7 @@
             }
           }
           &::before {
-            content: '';
+            content: "";
             flex: auto;
           }
         }
@@ -265,6 +265,7 @@
       > * {
         background-size: cover;
         background-repeat: no-repeat;
+        background-position: center center;
         display: flex;
         border-radius: 3px;
         color: white;

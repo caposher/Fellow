@@ -49,12 +49,12 @@ export default {
       return board;
     },
     bgImage() {
-      console.log("board", this.board);
+      // console.log("board", this.board);
       if (this.board) {
         let bgImage = require("@/assets" +
           (this.board.imgUrl ? this.board.imgUrl : "/img/background1.jpg"));
         // let bgImage = require("@/assets" + this.board.imgUrl);
-        console.log("bgImage", bgImage);
+        // console.log("bgImage", bgImage);
         return {
           backgroundImage: `url("${bgImage}")`,
         };

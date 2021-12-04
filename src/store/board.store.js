@@ -6,6 +6,7 @@ export const boardStore = {
     boards: null,
     currCard: null,
     currList: null,
+    labelsState: false,
   },
 
   getters: {
@@ -27,6 +28,9 @@ export const boardStore = {
     labels(state) {
       return JSON.parse(JSON.stringify(state.currBoard.labels));
     },
+    labelsState(state) {
+      return JSON.parse(JSON.stringify(state.labelsState));
+    },
   },
 
   mutations: {
@@ -42,6 +46,9 @@ export const boardStore = {
     setList(state, { list }) {
       state.currList = list;
     },
+    toggleLabel(state, { labelsState }) {
+      state.labelsState = !labelsState; //switch state
+    },
   },
 
   actions: {
@@ -56,7 +63,7 @@ export const boardStore = {
     async loadBoard({ commit }, { boardId }) {
       if (!boardId) {
         commit({ type: 'setBoard', board: null });
-        return
+        return;
       }
       try {
         const board = await boardService.getById(boardId);

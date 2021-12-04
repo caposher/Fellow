@@ -47,7 +47,7 @@
               </div>
               <div class="card-labels">
                 <h4>Labels</h4>
-                <span class="label-warper" @click="showLabels = true">
+                <span class="label-wrapper" @click="showLabels = true">
                   <button
                     v-for="label in getLabels"
                     :key="label.id"
@@ -56,7 +56,7 @@
                   >
                     {{ label.txt }}
                   </button>
-                  <button class="action-btn">
+                  <button v-show="getLabels.length > 0" class="action-btn">
                     <span class="icon-sm icon-plus"></span>
                   </button>
                 </span>

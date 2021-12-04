@@ -9,7 +9,7 @@
         :key="label.id"
         :class="[label.colorClass, setLabelClass]"
         class="open-label"
-        @click="islabelClick = !islabelClick"
+        @click="onLabelClick"
         @mouseover="islabelHover = true"
         @mouseleave="islabelHover = false"
         ><span class="text-label">{{ label.txt }}</span></span
@@ -57,11 +57,13 @@ export default {
     list: {
       type: Object,
     },
+    labelsState: {
+      type: Boolean,
+    },
   },
   data() {
     return {
       islabelHover: false,
-      islabelClick: true,
       // todos: 0,
       // doneTodos: 0
     };
@@ -75,6 +77,9 @@ export default {
       var month = `${dueDate}`.substring(4, 7);
       const strDate = `${month} ${date}`;
       return strDate;
+    },
+    onLabelClick() {
+      this.$store.commit({ type: 'toggleLabel', labelsState: this.labelsState });
     },
   },
   computed: {
@@ -110,7 +115,7 @@ export default {
       return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
     setLabelClass() {
-      let classes = `preview-label${this.islabelClick ? '' : '-close'}`;
+      let classes = `preview-label${this.labelsState ? '' : '-close'}`;
       return classes;
     },
 

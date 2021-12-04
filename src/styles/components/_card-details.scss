@@ -32,6 +32,14 @@
     .card-header-container {
       margin: 4px 0 0;
       padding: 8px 0 0;
+      h5{
+        font-weight: 400;
+        letter-spacing: 0.2px;
+        color: #5e6c84;
+        span{
+          text-decoration: underline;
+        }
+      }
     }
 
     & textarea {
@@ -110,36 +118,14 @@
       white-space: nowrap;
     }
     .due-date-body {
+      width: fit-content;
       align-items: center;
       display: flex;
       flex-direction: row;
       margin: 0 8px 8px 0;
-      .check-box-container {
-        flex-shrink: 0;
-        height: 16px;
-        width: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 2px;
-      }
     }
   }
   .date-picker {
-    display: flex;
-    color: #172b4d;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 400;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    cursor: pointer;
-    padding: 6px 12px;
-    text-decoration: none;
-    background-color: rgba(9, 30, 66, 0.04);
     .time-label {
       font-size: 12px;
       line-height: 16px;
@@ -175,7 +161,7 @@
         top: -2px;
         font-family: icomoon;
         &::after {
-          content: "\e922";
+          content: '\e922';
         }
       }
       & .content {
@@ -285,7 +271,7 @@
     top: 6px;
     font-family: icomoon;
     &::after {
-      content: "\e91a";
+      content: '\e91a';
     }
   }
 }
@@ -324,7 +310,7 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: "\e912";
+    content: '\e912';
   }
 }
 
@@ -341,13 +327,33 @@
   background-color: #f2d600;
 }
 
-.unCheck {
-  background-color: #fafbfc;
+input[id='cb'] + label {
+  display: inline-block;
+  flex-shrink: 0;
+  height: 16px;
+  width: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
   box-shadow: inset 0 0 0 2px #dfe1e6;
-  transition: all 0.2s ease-in-out;
+  margin:  8px 6px 0 0;
+  border-radius: 2px;
+  cursor: pointer;
 }
-
-.checked {
+input[id='cb']:checked + label:after {
+  position: relative;
+  box-sizing: border-box;
+  color: white;
+  padding: 2px;
+  font-family: icomoon;
+  content: '\e916';
+  height: 16px;
+  width: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
   background-color: #0079bf;
   box-shadow: inset 0 0 0 2px #0079bf;
   border-radius: 2px;
@@ -355,6 +361,10 @@
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
 }
+input[id='cb'] {
+  display: none;
+}
+
 .action-btn {
   background-color: #091e420a;
   border: none;

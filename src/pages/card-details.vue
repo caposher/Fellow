@@ -18,7 +18,8 @@
               v-model="cardToEdit.title"
               @keydown.enter.prevent="updateCard"
             />
-            <h5>in list {{ list.title }}</h5>
+            <h5>in list
+              <span> {{ list.title }}</span> </h5>
             <span v-show="card.isWatch" class="icon-sm icon-watch"></span>
           </div>
         </div>
@@ -30,22 +31,24 @@
               <div class="due-date" v-show="cardToEdit.dueDate">
                 <h3>Due date</h3>
                 <div class="due-date-body">
-                  <span
+                  <!-- <span
                     class="check-box-container"
                     :class="{
                       checked: cardToEdit.isComplete,
                       unCheck: !cardToEdit.isComplete,
                     }"
-                  >
+                  > -->
                     <!-- <span class="checkbox"> -->
                     <input
+                    id="cb"
                       type="checkbox"
                       v-model="cardToEdit.isComplete"
                       @change="updateCard"
                     />
+                    <label for="cb" ></label>
                     <!-- </span> -->
-                  </span>
-                  <div class="date-picker">
+                  <!-- </span> -->
+                  <div class="date-picker  action-btn">
                     <span>{{ dateToShow }}</span>
                     <span
                       v-show="

@@ -17,7 +17,7 @@
           </p>
         </li>
         <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add list-wrapper">
-          <input type="text" ref="input" v-model="newListTitle" />
+          <input type="text" ref="input" v-focus="isAddList" @blur="addList" v-model="newListTitle" />
           <div class="list-add-controls">
             <button class="submit-btn add-list-btn" @click="addList">Add List</button>
             <button>
@@ -36,8 +36,10 @@ import boardHeader from '../cmps/board-header.cmp.vue';
 import mainMenu from '../cmps/main-menu.cmp.vue';
 import boardMenu from '../cmps/board-menu.cmp.vue';
 import boardList from '../cmps/board-list.cmp.vue';
+import { focus } from 'vue-focus';
 
 export default {
+  directives: { focus: focus },
   data() {
     return {
       selectedCardId: null,
@@ -195,6 +197,7 @@ export default {
     boardMenu,
     mainMenu,
     boardList,
+    focus,
   },
 };
 </script>

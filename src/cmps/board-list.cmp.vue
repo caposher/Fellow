@@ -41,7 +41,7 @@
         <p>Add a card</p>
       </button>
       <div v-else class="add-card-actions">
-        <input type="text" v-model="newCardTitle" />
+        <input type="text" v-focus="!editTitle" v-model="newCardTitle" />
         <div class="add-card-btns">
           <div class="submit-btns">
             <button class="submit-btn submit-card" @click="addCard">Add Card</button>
@@ -65,12 +65,12 @@ import draggable from 'vuedraggable';
 
 // props- list
 export default {
+  directives: { focus },
   props: {
     list: {
       type: Object,
     },
   },
-  directives: { focus },
   data() {
     return {
       dragCard: false,

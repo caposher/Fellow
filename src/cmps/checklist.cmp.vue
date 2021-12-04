@@ -10,24 +10,14 @@
     <section v-show="!editTitle" class="checklist-header">
       <h3 @click="editTitle = true">{{ checklist.title }}</h3>
       <span class="checklist-actions">
-        <button
-          v-if="doneTodos > 0"
-          class="action-btn checklist-btn"
-          @click.stop="hideDone = !hideDone"
-        >
-          {{
-            !hideDone
-              ? "Hide checked items"
-              : `Show checked items (${doneTodos})`
-          }}
+        <button v-if="doneTodos > 0" class="action-btn checklist-btn" @click.stop="hideDone = !hideDone">
+          {{ !hideDone ? 'Hide checked items' : `Show checked items (${doneTodos})` }}
         </button>
         <button class="action-btn" @click="deleteCL">Delete</button>
       </span>
     </section>
     <div class="checklist-progress">
-      <span class="checklist-progress-percentage">{{
-        progressPercentage
-      }}</span>
+      <span class="checklist-progress-percentage">{{ progressPercentage }}</span>
       <div class="checklist-progress-bar">
         <div
           class="checklist-progress-bar-current"
@@ -35,15 +25,8 @@
           :class="{ finished: progressPercentage === '100%' }"
         ></div>
       </div>
-      <div
-        v-if="!CLtoUpdate.todos || !CLtoUpdate.todos.length"
-        class="checklist-progress-bar dummy"
-      ></div>
-      <span
-        v-if="
-          progressPercentage === '100%' && !todosToShow && !todosToShow.length
-        "
-        class="checklist-completed-text"
+      <div v-if="!CLtoUpdate.todos || !CLtoUpdate.todos.length" class="checklist-progress-bar dummy"></div>
+      <span v-if="progressPercentage === '100%' && !todosToShow && !todosToShow.length" class="checklist-completed-text"
         >Everything in this checklist is complete!</span
       >
     </div>
@@ -51,26 +34,15 @@
     <ul>
       <li v-for="todo in todosToShow" :key="todo.id">
         <span class="c-b-container">
-          <input
-            class="c-b-btn"
-            type="checkbox"
-            :checked="todo.isDone"
-            @click.stop="toggleTodo(todo.id)"
-          />
+          <input class="c-b-btn" type="checkbox" :checked="todo.isDone" @click.stop="toggleTodo(todo.id)" />
           <!-- </span> -->
-          <span @click.stop="editTodo(todo)" :class="{ done: todo.isDone }"
-            >{{ todo.title }}
-          </span>
+          <span @click.stop="editTodo(todo)" :class="{ done: todo.isDone }">{{ todo.title }} </span>
         </span>
         <span @click="removeTodo(todo.id)">X</span>
       </li>
       <section v-if="newTodo">
         <form @submit.prevent="updateTodo">
-          <input
-            class="add-item"
-            placeholder="Add an item"
-            v-model="todoToAdd.title"
-          />
+          <input class="add-item" placeholder="Add an item" v-model="todoToAdd.title" />
           <br />
           <div class="buttons">
             <button class="submit-btn" @click.stop="updateTodo">Add</button>
@@ -79,17 +51,12 @@
         </form>
       </section>
     </ul>
-    <span
-      v-show="!newTodo"
-      @click="newTodo = true"
-      class="action-btn checklist-btn"
-      >Add an item</span
-    >
+    <span v-show="!newTodo" @click="newTodo = true" class="action-btn checklist-btn">Add an item</span>
   </section>
 </template>
 
 <script>
-import { utilService } from "../services/util.service.js";
+import { utilService } from '../services/util.service.js';
 
 export default {
   props: {
@@ -101,7 +68,7 @@ export default {
     return {
       CLtoUpdate: JSON.parse(JSON.stringify(this.checklist)),
       todoToAdd: {
-        title: "",
+        title: '',
         isDone: false,
       },
       newTodo: false,
@@ -118,7 +85,6 @@ export default {
       this.todoToAdd.title = todo.title;
     },
     toggleTodo(todoId) {
-      console.log("toggle");
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       let currTodo = this.CLtoUpdate.todos[idx];
       currTodo.isDone = !currTodo.isDone;
@@ -126,15 +92,13 @@ export default {
       this.updateCL();
     },
     updateTodo(ev) {
-      // console.log(ev.target[0].value);
       if (!ev.target[0] || !ev.target[0].value) return;
       let todo = JSON.parse(JSON.stringify(this.todoToAdd));
       if (todo.id) {
         const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todo.id);
         this.CLtoUpdate.todos.splice(idx, 1, todo);
       } else {
-        console.log("new");
-        todo.id = "TD" + utilService.makeId();
+        todo.id = 'TD' + utilService.makeId();
         if (this.CLtoUpdate.todos) {
           this.CLtoUpdate.todos.push(todo);
         } else this.CLtoUpdate.todos = [todo];
@@ -142,33 +106,27 @@ export default {
       this.updateCL();
     },
     removeTodo(todoId) {
-      console.log("removing", todoId);
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       this.CLtoUpdate.todos.splice(idx, 1);
       this.updateCL();
     },
     async updateCL() {
-      console.log("update cl");
-      console.log("this.CLtoUpdate", this.CLtoUpdate);
       try {
-        await this.$emit(
-          "updateCL",
-          JSON.parse(JSON.stringify(this.CLtoUpdate))
-        );
+        await this.$emit('updateCL', JSON.parse(JSON.stringify(this.CLtoUpdate)));
         (this.todoToAdd = {
-          title: "",
+          title: '',
           isDone: false,
         }),
           (this.editTitle = false);
         this.CLtoUpdate = JSON.parse(JSON.stringify(this.checklist));
       } catch (err) {
-        console.log("err", err);
+        console.log('err', err);
       }
     },
     deleteCL() {
-      if (confirm("Are you sure?")) {
+      if (confirm('Are you sure?')) {
         delete this.CLtoUpdate.title;
-        this.$emit("updateCL", this.CLtoUpdate);
+        this.$emit('updateCL', this.CLtoUpdate);
       }
     },
   },
@@ -186,7 +144,7 @@ export default {
     },
     progressPercentage() {
       if (!this.CLtoUpdate.todos) return;
-      return (this.doneTodos / this.CLtoUpdate.todos.length || 0) * 100 + "%";
+      return (this.doneTodos / this.CLtoUpdate.todos.length || 0) * 100 + '%';
     },
   },
 };

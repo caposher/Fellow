@@ -11,6 +11,7 @@
     <form @submit.prevent="addCheckList">
       <h5>Labels</h5>
 
+      <!-- <label> -->
       <section
         class="label-picker"
         v-for="(label, idx) in allLabels"
@@ -24,6 +25,8 @@
         </div>
         <span class="close-popup icon-sm icon-edit"></span>
       </section>
+      <!-- </label> -->
+
       <button class="action-btn">Create a new label</button>
     </form>
   </section>

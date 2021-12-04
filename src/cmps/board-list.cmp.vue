@@ -41,7 +41,7 @@
         <p>Add a card</p>
       </button>
       <div v-else class="add-card-actions">
-        <input type="text" v-focus="!editTitle" v-model="newCardTitle" />
+        <input type="text" v-focus="isAddCard" v-model="newCardTitle" />
         <div class="add-card-btns">
           <div class="submit-btns">
             <button class="submit-btn submit-card" @click="addCard">Add Card</button>
@@ -90,7 +90,6 @@ export default {
       if (!title) return;
       try {
         await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
-        console.log('card added', this.list);
         this.newCardTitle = '';
         this.isAddCard = false;
       } catch (err) {

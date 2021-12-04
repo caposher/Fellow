@@ -83,7 +83,6 @@ export default {
   async created() {
     // this.scroll();
     const { boardId } = this.$route.params;
-    console.log();
     try {
       await this.$store.dispatch({ type: 'loadBoard', boardId });
     } catch (err) {
@@ -101,13 +100,11 @@ export default {
   methods: {
     setAddList() {
       this.isAddList = true;
-      console.log(this.$refs);
 
       // this.$refs.titleInput.focus()
     },
     async addList() {
       const title = this.newListTitle;
-      console.log(title);
       if (!title) return;
       try {
         await this.$store.dispatch({
@@ -129,7 +126,6 @@ export default {
           list,
           board: this.board,
         });
-        console.log('list upated');
       } catch (err) {
         console.log('cant update list', err);
       }
@@ -141,7 +137,6 @@ export default {
           list,
           board: this.board,
         });
-        // console.log('delete list');
       } catch (err) {
         console.log('cant delete list', err);
       }
@@ -153,7 +148,6 @@ export default {
           boardId: this.board._id,
         });
         this.$router.push('/');
-        console.log('delete Board');
       } catch (err) {
         console.log('cant delete board', err);
       }

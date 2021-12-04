@@ -25,7 +25,7 @@
         <div class="bottom-menu">
           <div class="workspaces action-btn">
             <div class="add">
-              <span>Workspaces</span>
+              <span class="text">Workspaces</span>
               <span class="icon-wrapper">
                 <span class="icon-sm icon-plus"></span>
               </span>
@@ -123,7 +123,7 @@ export default {
   name: "Home",
   data() {
     return {
-      user: null,
+      user: null
     };
   },
   async created() {
@@ -133,34 +133,29 @@ export default {
   computed: {
     boards() {
       var boards = this.$store.getters.boards;
-      // if (boards) {
-      //   boards.forEach(board => {
-      //     board.imgUrl = "/img/background1.jpg";
-      //   });
-      // }
       return boards;
-    },
+    }
   },
   methods: {
     bgImage(board) {
       console.log("board", board);
       if (board) {
-        let bgImage = require("@/assets" +
-          (board.imgUrl ? board.imgUrl : "/img/background1.jpg"));
+        let bgImage = require("@/assets" + board.style.imgUrl);
         console.log("bgImage", bgImage);
         return {
-          backgroundImage: `url("${bgImage}")`,
+          backgroundImage: `url("${bgImage}")`
         };
       }
     },
     async createBoard() {
+      if (this.boards.length === 10) return;
       const title = prompt("add title");
       if (!title) return;
 
       try {
         const board = await this.$store.dispatch({
           type: "createBoard",
-          title,
+          title
         });
         this.$router.push("/b/" + board._id);
       } catch (err) {
@@ -174,8 +169,8 @@ export default {
       } catch (err) {
         console.log("cant get board" + boardId, err);
       }
-    },
+    }
   },
-  components: {},
+  components: {}
 };
 </script>

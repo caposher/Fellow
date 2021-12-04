@@ -11,7 +11,7 @@ import appHeader from "@/cmps/app-header.cmp.vue";
 export default {
   data() {
     return {
-      onBoard: false,
+      onBoard: false
     };
   },
   watch: {
@@ -35,8 +35,8 @@ export default {
         }
         console.log(this.onBoard);
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {},
   computed: {
@@ -50,18 +50,17 @@ export default {
     bgImage() {
       // console.log("board", this.board);
       if (this.board) {
-        let bgImage = require("@/assets" +
-          (this.board.imgUrl ? this.board.imgUrl : "/img/background1.jpg"));
+        let bgImage = require("@/assets" + this.board.style.imgUrl);
         // let bgImage = require("@/assets" + this.board.imgUrl);
         // console.log("bgImage", bgImage);
         return {
-          backgroundImage: `url("${bgImage}")`,
+          backgroundImage: `url("${bgImage}")`
         };
       }
-    },
+    }
   },
   components: {
-    appHeader,
-  },
+    appHeader
+  }
 };
 </script>

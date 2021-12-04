@@ -1,11 +1,120 @@
 <template>
   <section class="home" v-if="boards">
-    <ul style="background-color: white">
-      <li v-for="board in boards" :key="board._id" @click="setBoard(board._id)">
-        {{ board.title }}
-      </li>
-      <li @click="createBoard">Add board</li>
-    </ul>
+    <div class="menu">
+      <nav>
+        <div class="top-menu">
+          <button class="action-btn">
+            <span class="icon-wrapper">
+              <span class="icon-sm icon-board"></span>
+            </span>
+            <span class="text">Boards</span>
+          </button>
+          <button class="action-btn">
+            <span class="icon-wrapper">
+              <span class="icon-sm icon-template-board"></span>
+            </span>
+            <span class="text">Templates</span>
+          </button>
+          <button class="action-btn">
+            <span class="icon-wrapper">
+              <span class="icon-sm icon-home"></span>
+            </span>
+            <span class="text">Home</span>
+          </button>
+        </div>
+        <div class="bottom-menu">
+          <div class="workspaces action-btn">
+            <div class="add">
+              <span>Workspaces</span>
+              <span class="icon-wrapper">
+                <span class="icon-sm icon-plus"></span>
+              </span>
+            </div>
+          </div>
+          <div class="fellow">
+            <div class="action-btn">
+              <div>
+                <span class="F-wrapper">
+                  <span class="F">F</span>
+                  <span>Fellow Workspaces</span>
+                </span>
+              </div>
+              <span class="arrow icon-wrapper">
+                <span class="fas fa-chevron-down"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="boards">
+      <!-- <div class="templates">
+        <ul class="templates-boards">
+          <li
+            v-for="board in boards"
+            :key="board._id"
+            @click="setBoard(board._id)"
+          >{{ board.title }}</li>
+          <li @click="createBoard">Add board</li>
+        </ul>
+      </div>
+      <div class="recent">
+        <ul class="recent-boards">
+          <li
+            v-for="board in boards"
+            :key="board._id"
+            @click="setBoard(board._id)"
+          >{{ board.title }}</li>
+          <li @click="createBoard">Add board</li>
+        </ul>
+      </div>-->
+      <div class="workspaces">
+        <header>
+          <span>YOUR WORKSPACES</span>
+        </header>
+        <div class="main">
+          <div class="nav">
+            <span class="F-wrapper">
+              <span class="F">F</span>
+            </span>
+            <div class="btns">
+              <button class="action-btn">
+                <span class="icon-wrapper">
+                  <span class="icon-sm icon-board"></span>
+                </span>
+                <span class="text">Boards</span>
+              </button>
+              <button class="action-btn">
+                <span class="icon-wrapper">
+                  <span class="icon-sm icon-member"></span>
+                </span>
+                <span class="text">Members</span>
+              </button>
+              <button class="action-btn">
+                <span class="icon-wrapper">
+                  <span class="icon-sm icon-gear"></span>
+                </span>
+                <span class="text">Settings</span>
+              </button>
+            </div>
+          </div>
+          <ul class="workspaces-boards">
+            <li
+              v-for="board in boards"
+              :key="board._id"
+              :style="bgImage(board)"
+              @click="setBoard(board._id)"
+            >
+              <span>{{ board.title }}</span>
+            </li>
+            <div class="add" @click="createBoard">
+              <div>Create new board</div>
+              <div>{{ 10 - boards.length }} remaining</div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -23,10 +132,27 @@ export default {
   },
   computed: {
     boards() {
-      return this.$store.getters.boards;
+      var boards = this.$store.getters.boards;
+      // if (boards) {
+      //   boards.forEach(board => {
+      //     board.imgUrl = "/img/background1.jpg";
+      //   });
+      // }
+      return boards;
     },
   },
   methods: {
+    bgImage(board) {
+      console.log("board", board);
+      if (board) {
+        let bgImage = require("@/assets" +
+          (board.imgUrl ? board.imgUrl : "/img/background1.jpg"));
+        console.log("bgImage", bgImage);
+        return {
+          backgroundImage: `url("${bgImage}")`,
+        };
+      }
+    },
     async createBoard() {
       const title = prompt("add title");
       if (!title) return;

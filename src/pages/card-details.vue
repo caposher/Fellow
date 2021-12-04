@@ -250,9 +250,6 @@ export default {
   },
   created() {
     this.cardToEdit = this.card;
-    // this.cardToEdit.dueDate = JSON.parse(this.cardToEdit.dueDate)
-    console.log(this.cardToEdit.dueDate);
-    console.log(typeof this.cardToEdit.dueDate);
   },
   computed: {
     card() {
@@ -319,7 +316,6 @@ export default {
     },
     async updateCard() {
       this.isEditDesc = false;
-      // console.log(this.$route.matched[0].path);
       try {
         await this.$store.dispatch({
           type: "updateCard",
@@ -329,13 +325,11 @@ export default {
         });
         // this.$emit('reload')
         // this.$router.matched[0].path.reload()
-        // console.log("card updated with new desc");
       } catch (err) {
         console.log("cant update card", err);
       }
     },
     async removeCard() {
-      console.log("remove");
       if (!confirm("this action will delete the card! continue?")) return;
       try {
         await this.$store.dispatch({
@@ -362,14 +356,12 @@ export default {
       this.isEditDesc = false;
       // if (this.cardToEdit.description === this.lastCardDesc) return
       //   await this.updateCard()
-      //   console.log("card updated with old desc");
     },
     setFocus() {
       this.isEditDesc = true;
       this.$refs.desc.focus();
     },
     async updateDate(date) {
-      // console.log('date', date);
       this.cardToEdit.dueDate = date;
       await this.updateCard();
     },

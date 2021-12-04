@@ -71,7 +71,6 @@ export default {
   computed: {
     todos() {
       var todos = 0;
-      // console.log(this.card.checklists);
       if (this.card.checklists && this.card.checklists.length) {
         this.card.checklists.forEach((checklist) => {
           if (checklist.todos && checklist.todos.length) {
@@ -81,7 +80,6 @@ export default {
           }
         });
       }
-      // console.log(todos);
       return todos;
     },
     doneTodos() {

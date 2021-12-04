@@ -14,15 +14,15 @@
       color="#0079bf"
       value=""
     ></date-picker>
-      <!-- initial-value="cardDate" -->
-      
-      <!-- name="my_date"
+    <!-- initial-value="cardDate" -->
+
+    <!-- name="my_date"
       input-class="form-control form-control-lg"
       v-model="value" -->
     <!-- </section> -->
     <!-- value="cardDate || Date.now()" -->
     <!-- <span class="vpd-input-group">
-   </span> --> 
+   </span> -->
     <!-- <span class="icon-sm icon-clock"></span> -->
 
     <!-- <el-date-picker
@@ -42,25 +42,23 @@
 export default {
   props: {
     cardDate: {
-      type: [String, Date]
-    }
+      type: [String, Date],
+    },
   },
   data() {
     return {
-      newDate: ""
+      newDate: '',
     };
   },
   methods: {
     async updateDate() {
-      // console.log(this.$refs.date)
-      try{
-        await this.$emit("updateDate", this.newDate);
-      this.newDate = '';
-      console.log(this. newDate);
-      }catch(err){
+      try {
+        await this.$emit('updateDate', this.newDate);
+        this.newDate = '';
+      } catch (err) {
         console.log('update date in date err', err);
       }
-    }
+    },
     //   setVal() {
     //     this.newDate = this.cardDate;
     //   },
@@ -82,8 +80,6 @@ export default {
     //       this.value = null;
     //   }
   },
-  computed:{
-
-  }
+  computed: {},
 };
 </script>

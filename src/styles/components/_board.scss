@@ -1,10 +1,19 @@
-body {
-  background-image: url(../assets/img/background1.jpg);
+// body {
+.on-board {
+  // background-image: url('../assets/img/background1.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   overflow-y: hidden;
+}
+
+body{
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-y: hidden;
+  background-attachment: fixed;
+
 }
 
 .board {

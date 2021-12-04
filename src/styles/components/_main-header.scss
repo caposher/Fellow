@@ -9,7 +9,9 @@ header.main-header {
   padding: 6px 4px;
   top: 0;
   width: 100%;
-
+  &.blue-header{
+    background-color:#026aa7 ;
+  }
   & .left-container {
     display: flex;
     align-items: center;

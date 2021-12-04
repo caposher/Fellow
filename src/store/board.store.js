@@ -49,16 +49,18 @@ export const boardStore = {
       try {
         const boards = await boardService.query();
         commit({ type: 'setBoards', boards });
-        // return boards;
       } catch (err) {
         console.log('cant load boards:', err);
       }
     },
     async loadBoard({ commit }, { boardId }) {
+      if (!boardId) {
+        commit({ type: 'setBoard', board: null });
+        return
+      }
       try {
         const board = await boardService.getById(boardId);
         commit({ type: 'setBoard', board });
-        // return board;
       } catch (err) {
         console.log('cant load boards:', err);
       }
@@ -67,7 +69,6 @@ export const boardStore = {
       try {
         await boardService.remove(boardId);
         const boards = await boardService.query();
-        console.log('boards', boards);
         commit({ type: 'setBoards', boards });
         commit({ type: 'setBoard', board: null });
       } catch (err) {
@@ -80,8 +81,6 @@ export const boardStore = {
           const data = await boardService.getListAndCardById(boardId, cardId);
           const card = data.card;
           const list = data.list;
-          // console.log('list', list);
-          // console.log('card', card);
           commit({ type: 'setCard', card });
           commit({ type: 'setList', list });
         } else {
@@ -131,9 +130,8 @@ export const boardStore = {
       }
     },
     async deleteList({ commit }, { board, list }) {
-      const listIdx = board.lists.findIndex(currList => currList.id === list.id)
-      console.log(listIdx);
-      board.lists.splice(listIdx, 1)
+      const listIdx = board.lists.findIndex((currList) => currList.id === list.id);
+      board.lists.splice(listIdx, 1);
       try {
         const updatedBoard = await boardService.save(board);
         commit({ type: 'setBoard', board: updatedBoard });
@@ -145,9 +143,7 @@ export const boardStore = {
 
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
-      console.log('card', card);
       list.cards.push(card);
-      console.log('updatedList', list);
       try {
         const updatedBoard = await boardService.saveList(list, board);
         commit({ type: 'setBoard', board: updatedBoard });
@@ -158,9 +154,7 @@ export const boardStore = {
     },
     async updateCard({ commit }, { boardId, list, card }) {
       try {
-        // console.log('card', card);
         const data = await boardService.updateCard(card, list, boardId);
-        // console.log(data);
         commit({ type: 'setBoard', board: data.savedBoard });
         commit({ type: 'setList', list: data.savedList });
         commit({ type: 'setCard', card: data.savedCard });
@@ -170,9 +164,7 @@ export const boardStore = {
     },
     async removeCard({ commit }, { boardId, list, cardId }) {
       try {
-        // console.log('card', card);
         const data = await boardService.removeCard(cardId, list, boardId);
-        // console.log(data);
         commit({ type: 'setBoard', board: data.savedBoard });
         commit({ type: 'setList', list: data.savedList });
         commit({ type: 'setCard', card: data.savedCard });

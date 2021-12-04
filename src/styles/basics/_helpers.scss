@@ -142,6 +142,18 @@
 .icon-template {
   @include to-icon('\e96e');
 }
+.icon-template-board {
+  @include to-icon('\e96d');
+}
 .icon-card {
   @include to-icon('\e912');
+}
+.icon-board{
+  @include to-icon('\e90b');
+}
+.icon-home{
+  @include to-icon('\e938');
+}
+.icon-gear{
+  @include to-icon('\e932');
 }

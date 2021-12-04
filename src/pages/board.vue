@@ -39,7 +39,13 @@
           :class="{ 'height-0': !isAddList, 'add-list': isAddList }"
           class="list-add list-wrapper"
         >
-          <input type="text" ref="input" v-model="newListTitle" />
+          <input
+            type="text"
+            ref="input"
+            v-focus="isAddList"
+            @blur="addList"
+            v-model="newListTitle"
+          />
           <div class="list-add-controls">
             <button class="submit-btn add-list-btn" @click="addList">
               Add List
@@ -64,8 +70,10 @@ import mainMenu from "../cmps/main-menu.cmp.vue";
 import boardMenu from "../cmps/board-menu.cmp.vue";
 import boardList from "../cmps/board-list.cmp.vue";
 import workspaceNav from "../cmps/workspace-nav.cmp.vue";
+import { focus } from "vue-focus";
 
 export default {
+  directives: { focus: focus },
   data() {
     return {
       selectedCardId: null,
@@ -144,13 +152,11 @@ export default {
   methods: {
     setAddList() {
       this.isAddList = true;
-      console.log(this.$refs);
 
       // this.$refs.titleInput.focus()
     },
     async addList() {
       const title = this.newListTitle;
-      console.log(title);
       if (!title) return;
       try {
         await this.$store.dispatch({
@@ -172,7 +178,6 @@ export default {
           list,
           board: this.board,
         });
-        console.log("list upated");
       } catch (err) {
         console.log("cant update list", err);
       }
@@ -184,7 +189,6 @@ export default {
           list,
           board: this.board,
         });
-        // console.log('delete list');
       } catch (err) {
         console.log("cant delete list", err);
       }
@@ -196,7 +200,6 @@ export default {
           boardId: this.board._id,
         });
         this.$router.push("/");
-        console.log("delete Board");
       } catch (err) {
         console.log("cant delete board", err);
       }
@@ -241,6 +244,7 @@ export default {
     mainMenu,
     boardList,
     workspaceNav,
+    focus,
   },
 };
 </script>

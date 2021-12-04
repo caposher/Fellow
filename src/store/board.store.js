@@ -54,6 +54,10 @@ export const boardStore = {
       }
     },
     async loadBoard({ commit }, { boardId }) {
+      if (!boardId){
+        commit({ type: 'setBoard', board: null });
+        return
+      }
       try {
         const board = await boardService.getById(boardId);
         commit({ type: 'setBoard', board });

@@ -25,5 +25,11 @@ export default {
       return this.$store.getters.board;
     },
   },
+  computed:{
+    board(){
+      // console.log(this.$store.getters.board);
+      return this.$store.getters.board
+    }
+  }
 };
 </script>

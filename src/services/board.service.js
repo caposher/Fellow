@@ -163,6 +163,7 @@ function getEmptyCard(title) {
       imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
     },
     activities: [],
+    imgUrl
   };
 }
 
@@ -178,14 +179,20 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 function _createBoards() {
   var boards = JSON.parse(localStorage.getItem(KEY));
   if (!boards || !boards.length) {
-    boards = [_createBoard('My First Board')];
+    boards = [
+      _createBoard('My First Board' ,'/img/background1.jpg'),
+      _createBoard('Work' ,'/img/background2.jpg'),
+      _createBoard('Personal' ,'/img/background3.jpg'),
+      _createBoard('Tinto' ,'/img/background4.jpg'),
+    ];
     localStorage.setItem(KEY, JSON.stringify(boards));
   }
   return boards;
 }
 
-function _createBoard(title) {
-  const board = getEmptyBoard(title);
+function _createBoard(title,url) {
+  var board = getEmptyBoard(title);
+  board.imgUrl = url
   board._id = utilService.makeId();
   return board;
 }

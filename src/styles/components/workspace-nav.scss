@@ -40,7 +40,7 @@
     color: white;
     height: 24px;
     width: 24px;
-    margin: 10px 0 0 16px;
+    margin: 10px 0 0 14px;
     display: flex;
     background-color: rgba(250, 251, 252, 0.3);
     justify-content: center;
@@ -121,16 +121,30 @@
     color: inherit;
     text-decoration: none;
     padding: 0 12px;
+    flex-direction: row;
+    align-items: center;
+    height: 32px;
+    cursor: pointer;
+  }
+
+  .star {
+    opacity: 0;
+    font-family: icomoon;
+    z-index: 20;
+    &:hover {
+      color: #f2d600;
+      // font-size: 20px;
+      transform: scale(1.3);
+    }
   }
 }
 
 .body-main li:hover {
-  // background-color: #e4f0f6;
   background-color: rgba(9, 30, 66, 0.08);
 
-  // &.router-link-exact-active {
-  //   background-color: #e4f0f6;
-  // }
+  .star {
+    opacity: 1;
+  }
 }
 .body-main li p {
   flex: 1;
@@ -139,6 +153,7 @@
 
 .body-main img {
   width: 24px;
+  height: 20px;
   border-radius: 3px;
 }
 .close-nav {

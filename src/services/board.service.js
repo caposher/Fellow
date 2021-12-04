@@ -185,13 +185,13 @@ function _createBoards() {
   if (!boards || !boards.length) {
 
     boards = [
-      _createBoard('My First Board', '/img/background1.jpg'),
+      travelBoard(),
+      mealPlanner(),
+      companyBoard(),
       _createBoard('Work', '/img/background2.jpg'),
       _createBoard('Personal', '/img/background3.jpg'),
       _createBoard('Tinto', '/img/background4.jpg'),
-      travelBoard(),
-      companyBoard(),
-      mealPlanner(),
+      _createBoard('My First Board', '/img/background1.jpg'),
     ];
     localStorage.setItem(KEY, JSON.stringify(boards));
   }

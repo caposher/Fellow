@@ -1,5 +1,9 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
+  <div
+    v-if="list && cardToEdit"
+    class="card-details-container"
+    @click.stop.prevent="closeModal"
+  >
     <div class="card-details" @click.stop>
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
@@ -78,7 +82,9 @@
                     :key="label.id"
                     :class="label.colorClass"
                     class="label-tag white-text"
-                  >{{ label.txt }}</button>
+                  >
+                    {{ label.txt }}
+                  </button>
                   <button v-show="getLabels.length > 0" class="action-btn">
                     <span class="icon-sm icon-plus"></span>
                   </button>
@@ -97,7 +103,9 @@
                   v-show="cardToEdit.description && !isEditDesc"
                   @click.stop="setFocus"
                   class="action-btn"
-                >Edit</button>
+                >
+                  Edit
+                </button>
               </div>
             </div>
             <!-- @blur="updateCard" -->
@@ -115,7 +123,11 @@
             </div>
           </div>
 
-          <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
+          <div
+            class="check-list"
+            v-for="checklist in cardToEdit.checklists"
+            :key="checklist.id"
+          >
             <span class="card-details-icon icon-lg"></span>
 
             <checklist :checklist="checklist" @updateCL="updateCL" />
@@ -123,8 +135,18 @@
           <div class="activity-log">
             <span class="icon-lg icon-activity"></span>
             <h3>Activity</h3>
-            <div class="comment-box" :class="{ onComment: isComment }" @click="isComment = true">
-              <textarea rows="1" placeholder="Write a comment..." @blur="isComment = false" />
+            <div class="comment-box" @click="isComment = true">
+              <!-- <div
+              class="comment-box"
+              :class="{ onComment: isComment }"
+              @click="isComment = true"
+            > -->
+              <!-- <textarea rows="1" placeholder="Write a comment..." @blur="isComment = false" /> -->
+              <textarea
+                rows="1"
+                placeholder="not yet developed..."
+                @blur="isComment = false"
+              />
               <button class="submit-btn">save</button>
             </div>
           </div>
@@ -168,7 +190,11 @@
               </section>
               <form @submit.prevent="addCheckList">
                 <label>Title</label>
-                <input type="text" value="Checklist" v-model="newChecklist.title" />
+                <input
+                  type="text"
+                  value="Checklist"
+                  v-model="newChecklist.title"
+                />
                 <label>Copy items from...</label>
                 <select name id class="not-yet">
                   <option value>(none)</option>
@@ -183,7 +209,10 @@
             class="date"
             :datePlaceholder="'Dates'"
           ></date>
-          <button class="attachment action-btn not-yet" title="Not yet developed">
+          <button
+            class="attachment action-btn not-yet"
+            title="Not yet developed"
+          >
             <span class="icon-sm icon-attach"></span>Attachments
           </button>
           <button class="cover action-btn not-yet" title="Not yet developed">
@@ -234,7 +263,7 @@ export default {
       newChecklist: { title: "Checklist" },
       cardToEdit: null,
       isUndoDesc: false,
-      isComment: false
+      isComment: false,
     };
   },
   created() {
@@ -286,8 +315,8 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map(lId => allLabels.find(label => label.id === lId));
-    }
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
+    },
   },
   methods: {
     formatAMPM(dueDate) {
@@ -317,7 +346,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          card: JSON.parse(JSON.stringify(this.cardToEdit))
+          card: JSON.parse(JSON.stringify(this.cardToEdit)),
         });
         if (ev) ev.target.blur();
         // this.$emit('reload')
@@ -333,7 +362,7 @@ export default {
           type: "removeCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id))
+          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id)),
         });
         this.closeModal();
       } catch (err) {
@@ -377,7 +406,7 @@ export default {
     },
     async updateCL(checklist) {
       const idx = this.cardToEdit.checklists.findIndex(
-        cl => cl.id === checklist.id
+        (cl) => cl.id === checklist.id
       );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
@@ -393,13 +422,13 @@ export default {
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
-    }
+    },
   },
   components: {
     checklist,
     date,
-    cardLabels
-  }
+    cardLabels,
+  },
 };
 </script>
 

@@ -266,12 +266,8 @@
       }
       > * {
         background-size: cover;
-<<<<<<< HEAD
-        // background-repeat: no-repeat;
-=======
         background-repeat: no-repeat;
         background-position: center center;
->>>>>>> c25ec6b48c0d81fcd4556e14d2bb3453d96624aa
         display: flex;
         border-radius: 3px;
         color: white;
@@ -279,7 +275,7 @@
         justify-content: flex-start;
         background-repeat: no-repeat;
         // background-attachment: fixed;
-        background-position: center;
+        // background-position: center;
         padding: 0;
         // width: 32%;
         min-height: 96px;

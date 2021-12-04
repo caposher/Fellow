@@ -1,9 +1,9 @@
 <template>
-  <section class="card" @click="showDetails">
+  <section class="card" @click="showDetails" v-if="card">
     <img v-show="card.cover" :url="card.cover" class="card-cover" />
     <!-- <div> -->
     <!-- <section class="label-and-q-edit"> -->
-    <span class="card-wrapper" @click.stop.prevent="">
+    <span class="card-wrapper" @click.stop.prevent>
       <span
         v-for="label in getLabels"
         :key="label.id"
@@ -12,8 +12,9 @@
         @click="onLabelClick"
         @mouseover="islabelHover = true"
         @mouseleave="islabelHover = false"
-        ><span class="text-label">{{ label.txt }}</span></span
       >
+        <span class="text-label">{{ label.txt }}</span>
+      </span>
     </span>
     <span class="edit-wrapper">
       <span class="icon-sm icon-edit q-edit"></span>

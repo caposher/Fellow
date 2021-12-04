@@ -1,7 +1,7 @@
 <template>
   <section class="checklist">
     <form class="editor" v-show="editTitle" @submit.prevent="updateCL">
-      <textarea v-model="CLtoUpdate.title" />
+      <textarea v-model="CLtoUpdate.title" @keydown.enter.prevent="updateCL" />
       <div class="buttons">
         <button class="submit-btn">Save</button>
         <span @click="editTitle = false" class="icon-lg icon-close"></span>
@@ -40,9 +40,7 @@
         class="checklist-progress-bar dummy"
       ></div>
       <span
-        v-if="
-          progressPercentage === '100%' && !todosToShow && !todosToShow.length
-        "
+        v-if="progressPercentage === '100%' && !todosToShow.length"
         class="checklist-completed-text"
         >Everything in this checklist is complete!</span
       >
@@ -70,6 +68,7 @@
             class="add-item"
             placeholder="Add an item"
             v-model="todoToAdd.title"
+            @keydown.enter="updateTodo"
           />
           <br />
           <div class="buttons">
@@ -180,7 +179,10 @@ export default {
     },
     progressPercentage() {
       if (!this.CLtoUpdate.todos) return;
-      return (this.doneTodos / this.CLtoUpdate.todos.length || 0) * 100 + "%";
+      return (
+        Math.ceil((this.doneTodos / this.CLtoUpdate.todos.length || 0) * 100) +
+        "%"
+      );
     },
   },
 };

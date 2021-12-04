@@ -10,6 +10,7 @@
         @focus="$event.target.select()"
         placeholder="Enter title"
         @blur="updateList()"
+        @keydown.enter="updateList()"
       />
       <!-- <button><span class="icon-sm icon-dots"></span></button> -->
       <button @click="deleteList">x</button>
@@ -41,20 +42,24 @@
         <p>Add a card</p>
       </button>
       <div v-else class="add-card-actions">
-        <input type="text" 
-        v-focus="isAddCard" 
-        v-model="newCardTitle"
+        <input
+          type="text"
+          v-focus="isAddCard"
+          v-model="newCardTitle"
+          @keydown.enter="addCard"
         />
         <div class="add-card-btns">
           <div class="submit-btns">
-            <button class="submit-btn submit-card"
-            @click="addCard">Add Card</button>
+            <button class="submit-btn submit-card" @click="addCard">
+              Add Card
+            </button>
             <button>
-              <span id="close"
-              name="close"
-               @click.stop.prevent="closeAddCard"
-              class="icon-close icon-lg close-add-btn"
-             ></span>
+              <span
+                id="close"
+                name="close"
+                @click.stop.prevent="closeAddCard"
+                class="icon-close icon-lg close-add-btn"
+              ></span>
             </button>
           </div>
           <button class="dots">
@@ -76,8 +81,8 @@ export default {
   directives: { focus },
   props: {
     list: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
@@ -85,7 +90,7 @@ export default {
       updatedList: null,
       editTitle: false,
       isAddCard: false,
-      newCardTitle: ""
+      newCardTitle: "",
     };
   },
   created() {
@@ -94,24 +99,30 @@ export default {
   methods: {
     handleBlur(e) {
       console.log(e);
-       if (!this.isAddCard) return
-       else this.addCard()
+      if (!this.isAddCard) return;
+      else this.addCard();
       // function(e) {
-        // const name = e.target;
-        // console.log(name);
+      // const name = e.target;
+      // console.log(name);
       // }
     },
     async addCard() {
       // if (!this.isAddCard) return
-      console.log('adding card');
+      console.log("adding card");
       // const title = prompt('card title');
       const title = this.newCardTitle;
-      if (!title){
+      if (!title) {
         this.isAddCard = false;
-         return};
+        return;
+      }
       try {
-        await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
-        this.newCardTitle = '';
+        await this.$store.dispatch({
+          type: "addCard",
+          board: this.$store.getters.board,
+          list: this.list,
+          title,
+        });
+        this.newCardTitle = "";
         this.isAddCard = false;
       } catch (err) {
         console.log("cant add card", err);
@@ -121,7 +132,7 @@ export default {
       this.newCardTitle = "";
       this.isAddCard = false;
       event.target.blur();
-      console.log('end of close');
+      console.log("end of close");
     },
 
     updateList() {
@@ -133,8 +144,10 @@ export default {
       this.updateList();
     },
     deleteList() {
-      this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
-    }
+      if (confirm("This action will delete the list! continue?")) {
+        this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
+      }
+    },
   },
   computed: {
     getList() {
@@ -142,19 +155,19 @@ export default {
     },
     showTitle() {
       return this.list.title ? this.list.title : "Enter title";
-    }
+    },
   },
   watch: {
     list: {
       handler() {
         this.updatedList = JSON.parse(JSON.stringify(this.list));
-      }
-    }
+      },
+    },
   },
   components: {
     draggable,
-    cardList
-  }
+    cardList,
+  },
 };
 </script>
 

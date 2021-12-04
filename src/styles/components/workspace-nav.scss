@@ -112,21 +112,25 @@
   margin-top: 6px;
 }
 .body-main {
-  padding: 0 12px;
-}
-.body-main a {
-  display: flex;
-  justify-content: space-between;
-  color: inherit;
-  text-decoration: none;
-  & :hover {
+  & .router-link-exact-active {
     background-color: #e4f0f6;
   }
-}
-.body-main li {
-  &.router-link-exact-active {
-    background-color: #e4f0f6;
+  & a {
+    display: flex;
+    justify-content: space-between;
+    color: inherit;
+    text-decoration: none;
+    padding: 0 12px;
   }
+}
+
+.body-main li:hover {
+  // background-color: #e4f0f6;
+  background-color: rgba(9, 30, 66, 0.08);
+
+  // &.router-link-exact-active {
+  //   background-color: #e4f0f6;
+  // }
 }
 .body-main li p {
   flex: 1;

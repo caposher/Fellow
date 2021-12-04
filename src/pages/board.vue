@@ -44,6 +44,7 @@
             ref="input"
             v-focus="isAddList"
             v-model="newListTitle"
+            @keydown.enter="addList"
           />
           <div class="list-add-controls">
             <button class="submit-btn add-list-btn" @click="addList">
@@ -131,6 +132,7 @@ export default {
     const { boardId } = this.$route.params;
     try {
       await this.$store.dispatch({ type: "loadBoard", boardId });
+      await this.$store.dispatch({ type: "loadBoards" });
     } catch (err) {
       console.log("problem with getting board", err);
     }

@@ -17,7 +17,8 @@
 export default {
   methods: {
     deleteBoard() {
-      this.$emit("deleteBoard");
+      if (confirm("This action will delete the board! continue?"))
+        this.$emit("deleteBoard");
     },
   },
   computed: {

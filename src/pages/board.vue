@@ -154,6 +154,7 @@ export default {
   methods: {
     setAddList() {
       this.isAddList = true;
+      console.log("board", this.board);
 
       // this.$refs.titleInput.focus()
     },

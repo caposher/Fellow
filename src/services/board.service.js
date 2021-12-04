@@ -44,9 +44,7 @@ function remove(id) {
 }
 
 function save(board) {
-  const savedBoard = board._id
-    ? storageService.put(KEY, board)
-    : storageService.post(KEY, board);
+  const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
   return savedBoard;
 }
 
@@ -73,12 +71,8 @@ async function saveList(list, board) {
 async function updateCard(cardToUpdate, listToUpdate, boardId) {
   try {
     var boardToUpdate = await getById(boardId);
-    const listIdx = boardToUpdate.lists.findIndex(
-      (currList) => listToUpdate.id === currList.id
-    );
-    const cardIdx = listToUpdate.cards.findIndex(
-      (currCard) => currCard.id === cardToUpdate.id
-    );
+    const listIdx = boardToUpdate.lists.findIndex((currList) => listToUpdate.id === currList.id);
+    const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardToUpdate.id);
     listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
     boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
     try {
@@ -96,12 +90,8 @@ async function updateCard(cardToUpdate, listToUpdate, boardId) {
 async function removeCard(cardId, listToUpdate, boardId) {
   try {
     var boardToUpdate = await getById(boardId);
-    const listIdx = boardToUpdate.lists.findIndex(
-      (currList) => listToUpdate.id === currList.id
-    );
-    const cardIdx = listToUpdate.cards.findIndex(
-      (currCard) => currCard.id === cardId
-    );
+    const listIdx = boardToUpdate.lists.findIndex((currList) => listToUpdate.id === currList.id);
+    const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardId);
     listToUpdate.cards.splice(cardIdx, 1);
     boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
     try {
@@ -172,13 +162,12 @@ function getEmptyCard(title) {
       id: 'u101',
       username: 'Tal',
       fullname: 'Tal Tarablus',
-      imgUrl:
-        'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+      imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
     },
     activities: [],
     imgUrl: '',
     attachments: [],
-    isComplete: false
+    isComplete: false,
   };
 }
 
@@ -201,7 +190,8 @@ function _createBoards() {
       _createBoard('Personal', '/img/background3.jpg'),
       _createBoard('Tinto', '/img/background4.jpg'),
       travelBoard(),
-      companyBoard()
+      companyBoard(),
+      mealPlanner(),
     ];
     localStorage.setItem(KEY, JSON.stringify(boards));
   }
@@ -297,19 +287,13 @@ function travelBoard() {
     cards: [],
   };
   // cards
-  think.cards[0] = getEmptyCard(
-    'Want to travel? Where to start? Here’s everything you need to get going.'
-  );
+  think.cards[0] = getEmptyCard('Want to travel? Where to start? Here’s everything you need to get going.');
 
   think.cards[1] = getEmptyCard('Travel Needs');
   think.cards[1].checklists.push({
     id: 'CL' + utilService.makeId(),
     title: 'Travel Needs Checklist',
-    todos: [
-      _getEmptyTodo('Adapter'),
-      _getEmptyTodo('International Phone Plan'),
-      _getEmptyTodo('Passport'),
-    ],
+    todos: [_getEmptyTodo('Adapter'), _getEmptyTodo('International Phone Plan'), _getEmptyTodo('Passport')],
   });
 
   think.cards[2] = getEmptyCard('When To Travel');
@@ -332,13 +316,12 @@ function travelBoard() {
   think.cards[5].description = 'How much can we fit into one day? Have we taken travel times into account?';
 
   think.cards[6] = getEmptyCard('Accommodations');
-  think.cards[6].labelIds.push(board.labels[2].id)
+  think.cards[6].labelIds.push(board.labels[2].id);
 
   think.cards[5] = getEmptyCard('Local Currency');
   think.cards[5].description = 'Euro (1 USD = .90 EUR)';
 
   board.lists.push(think);
-
 
   // list 2
   var check = {
@@ -351,10 +334,10 @@ function travelBoard() {
     'A goal without a plan is just a wish. Wish you were there? Start planning here. Add your restaurant and hotel reservations, attraction bookings and other big-ticket items below.'
   );
 
-  check.cards[1] = getEmptyCard('Must-Do\'s Before Booking');
+  check.cards[1] = getEmptyCard("Must-Do's Before Booking");
   check.cards[1].checklists.push({
     id: 'CL' + utilService.makeId(),
-    title: 'Must-Do\'s Before Booking',
+    title: "Must-Do's Before Booking",
     todos: [
       _getEmptyTodo('Determine Travel Dates'),
       _getEmptyTodo('Estimate Total Budget'),
@@ -362,8 +345,8 @@ function travelBoard() {
     ],
   });
   check.cards[1].checklists[0].todos[0].isDone = true;
-  check.cards[1].dueDate = new Date()
-  check.cards[1].isComplete = true
+  check.cards[1].dueDate = new Date();
+  check.cards[1].isComplete = true;
 
   board.lists.push(check);
 
@@ -374,13 +357,11 @@ function travelBoard() {
     cards: [],
   };
   // cards
-  go.cards[0] = getEmptyCard(
-    'Things you’ll need to be thinking about weeks, days and hours before you head off.'
-  );
+  go.cards[0] = getEmptyCard('Things you’ll need to be thinking about weeks, days and hours before you head off.');
   const today = new Date();
   var tomorrow = new Date();
   tomorrow.setDate(today.getHours() + 5);
-  go.cards[0].dueDate = tomorrow
+  go.cards[0].dueDate = tomorrow;
 
   board.lists.push(go);
 
@@ -391,10 +372,7 @@ function travelBoard() {
     cards: [],
   };
   // cards
-  done.cards[0] = getEmptyCard(
-    'As you complete your checklist, move cards into this list to keep track of them.'
-  );
-
+  done.cards[0] = getEmptyCard('As you complete your checklist, move cards into this list to keep track of them.');
 
   board.lists.push(done);
 
@@ -404,6 +382,1130 @@ function travelBoard() {
   });
   console.log(board);
   return board;
+}
+
+function mealPlanner() {
+  var proj = {
+    _id: 'i9n9w',
+    title: 'Meal Planning',
+    createdAt: '',
+    createdBy: 'user',
+    style: { imgUrl: '/img/meal-plan.jpg' },
+    labels: [
+      { id: 'b0JnY', txt: 'Vegetarian', colorClass: 'label-green' },
+      { id: '1b2ET', txt: 'Vegan', colorClass: 'label-yellow' },
+      { id: 'cVgzD', txt: 'Gluten Free', colorClass: 'label-orange' },
+      { id: 'S1UkR', txt: 'Nut Free', colorClass: 'label-red' },
+      { id: 'thr5F', txt: 'Egg Free', colorClass: 'label-purple' },
+      { id: 'VvivO', txt: 'Dairy Free', colorClass: 'label-blue' },
+    ],
+    members: [],
+    lists: [
+      {
+        id: 'LnRD7u',
+        title: 'Shopping Lists',
+        cards: [
+          {
+            id: 'CXmjOC',
+            title: 'Kroger',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Produce',
+                id: 'CLUGLFl',
+                todos: [
+                  { title: 'New Potatoes', isDone: false, id: 'TDn2XSK' },
+                  { title: 'Onions', isDone: false, id: 'TDIrLgz' },
+                  { title: 'Strawberries', isDone: false, id: 'TD7omqq' },
+                  { title: 'Blueberries', isDone: false, id: 'TDXFEMi' },
+                  { title: 'Raspberries', isDone: false, id: 'TDauT9B' },
+                  { title: 'Black berries', isDone: false, id: 'TDIHwNK' },
+                  { title: 'Shallots', isDone: false, id: 'TDo5Zn6' },
+                  { title: 'Avocado', isDone: false, id: 'TDn9qVA' },
+                  { title: 'Bananas', isDone: false, id: 'TDEPenM' },
+                ],
+              },
+              {
+                title: 'ChecklistMeat & SeaFood',
+                id: 'CLz30Qz',
+                todos: [
+                  { title: 'Hot dogs', isDone: false, id: 'TDDsEAN' },
+                  { title: 'Brats', isDone: false, id: 'TDvhuvd' },
+                  { title: 'Sausage x2', isDone: false, id: 'TD4HrfI' },
+                  { title: 'Chuck x 1.5', isDone: false, id: 'TDXi4G0' },
+                  { title: 'Chicken thighs x4', isDone: false, id: 'TDYw5Nx' },
+                  { title: 'Lunchables', isDone: false, id: 'TDikw3j' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: [],
+            createdAt: 1638653800702,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'Cl85fm',
+            title: "Sam's",
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Office Supplies',
+                id: 'CLtkjOr',
+                todos: [
+                  { title: 'AA batteries', isDone: false, id: 'TDJTfiU' },
+                  { title: 'AAA batteries', isDone: false, id: 'TDEZAtw' },
+                ],
+              },
+              {
+                title: 'Refrigerated Food',
+                id: 'CLgruMf',
+                todos: [
+                  { title: 'Mushrooms', isDone: false, id: 'TDwiuYa' },
+                  { title: 'Mozzarella', isDone: false, id: 'TDzkVgT' },
+                  { title: 'Ball mozzarella', isDone: false, id: 'TDYEMTy' },
+                  { title: 'Prosciutto', isDone: false, id: 'TDLoHdL' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654521558,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CRCmUx',
+            title: 'Target',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Checklist',
+                id: 'CLnFUoZ',
+                todos: [
+                  { title: 'IPA', isDone: false, id: 'TDCi0eP' },
+                  { title: 'Hot pads', isDone: false, id: 'TDrxFss' },
+                  { title: 'Dish towels', isDone: false, id: 'TDAyxhH' },
+                  { title: 'Tissues', isDone: false, id: 'TDTli2M' },
+                  { title: 'Composition books x3', isDone: false, id: 'TDtX22B' },
+                  { title: 'Colored pencils', isDone: false, id: 'TDz4XD3' },
+                  { title: 'Markers', isDone: false, id: 'TDro7pQ' },
+                  { title: 'Expo markers (thin)', isDone: false, id: 'TDaYVyn' },
+                  { title: 'Cups', isDone: false, id: 'TDKxM8y' },
+                  { title: 'Toilet paper', isDone: false, id: 'TDVoNiZ' },
+                  { title: 'Tissues', isDone: false, id: 'TDV1fKI' },
+                  { title: 'Paper Leotard (lg)towels', isDone: false, id: 'TDaKEJu' },
+                  { title: 'Leotard (lg)', isDone: false, id: 'TDiFJIM' },
+                  { title: 'Footless tights', isDone: false, id: 'TDE3q4s' },
+                  { title: 'Ballet slippers (1)', isDone: false, id: 'TDpHJZM' },
+                  { title: 'Mouth wash', isDone: false, id: 'TD5YSv7' },
+                  { title: 'Hydro bandaids', isDone: false, id: 'TDLms1x' },
+                  { title: 'Oxy clean', isDone: false, id: 'TDDDbjp' },
+                  { title: 'Plastic drawer', isDone: false, id: 'TDaYl4x' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654661052,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CMsio8',
+            title: 'Walmart',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654785550,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+        ],
+      },
+      {
+        id: 'L67yAR',
+        title: '10/26-11/1 Meal Plan',
+        cards: [
+          {
+            id: 'CKTTzF',
+            title: 'Sunday:',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654873494,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CfWKcM',
+            title: 'Monday:',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654833145,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CxYn2t',
+            title: 'Tuesday:',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654846282,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CWG3OC',
+            title: 'Wednesday:',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654849769,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'Cbushk',
+            title: 'Thursday:',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654856358,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CyZe5g',
+            title: 'Friday:',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654861787,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'Ci1P9x',
+            title: 'Saturday:',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: [],
+            createdAt: 1638654867034,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+        ],
+      },
+      {
+        id: 'Lepmn6',
+        title: 'Freezes Well',
+        cards: [
+          {
+            id: 'CpfARK',
+            title: 'Vietnamese Style Meatball Lettuce Wraps',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLEwltl',
+                todos: [
+                  { title: '1.5 lbs ground chuck', isDone: false, id: 'TDIC8uM' },
+                  { title: 'garlic', isDone: false, id: 'TDvxj9M' },
+                  { title: 'ginger', isDone: false, id: 'TDSIr66' },
+                  { title: 'lettuce', isDone: false, id: 'TDJm5Wj' },
+                  { title: 'scallions', isDone: false, id: 'TDJuZyK' },
+                  { title: 'shredded carrots', isDone: false, id: 'TDbrw8E' },
+                  { title: 'soy sauce or tamari', isDone: false, id: 'TDS5TyN' },
+                  { title: 'hoisin sauce', isDone: false, id: 'TDdHTKP' },
+                  { title: 'sesame oil', isDone: false, id: 'TDZftKq' },
+                  { title: 'apricot jam', isDone: false, id: 'TDefRqy' },
+                  { title: 'ramen noodles or rice noodles', isDone: false, id: 'TDRKGzb' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638654890198,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CHIjIa',
+            title: 'Spaghetti Casserole',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLt4l1v',
+                todos: [
+                  { title: '1 lb pasta', isDone: false, id: 'TDCkynj' },
+                  { title: '1 jar tomato sauce', isDone: false, id: 'TDmtimh' },
+                  { title: '8 oz cream cheese', isDone: false, id: 'TD4j7wu' },
+                  { title: '8 oz sour cream', isDone: false, id: 'TDgFvpB' },
+                  { title: '16 oz shredded mozzarella cheese', isDone: false, id: 'TDVUvaZ' },
+                  { title: '6 oz pepperoni', isDone: false, id: 'TD1ZPla' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F'],
+            createdAt: 1638655370923,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CFlY1Y',
+            title: 'Pulled Pork',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLHrH1Y',
+                todos: [
+                  { title: 'Pork shoulder/Boston Butt', isDone: false, id: 'TDkPsDJ' },
+                  { title: '2 large onions', isDone: false, id: 'TDBlsez' },
+                  { title: 'kosher salt', isDone: false, id: 'TDnJxBW' },
+                  { title: 'pepper', isDone: false, id: 'TDxrD2q' },
+                  { title: 'vegetable oil', isDone: false, id: 'TD5CxBs' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638655460332,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CtQiX4',
+            title: "Alton Brown's Baby Back Ribs",
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLSZDvm',
+                todos: [
+                  { title: '3 racks of pork baby back ribs', isDone: false, id: 'TDCK9yt' },
+                  { title: 'light brown sugar', isDone: false, id: 'TDkLOiF' },
+                  { title: 'kosher salt', isDone: false, id: 'TDkaMsh' },
+                  { title: 'chili powder', isDone: false, id: 'TDRvfYu' },
+                  { title: 'ground black pepper', isDone: false, id: 'TD4y51k' },
+                  { title: 'cayenne pepper', isDone: false, id: 'TDX3AZm' },
+                  { title: 'jalapeno seasoning', isDone: false, id: 'TD7VtOr' },
+                  { title: 'Old Bay seasoning', isDone: false, id: 'TDscIoz' },
+                  { title: 'thyme', isDone: false, id: 'TDIvj7k' },
+                  { title: 'onion powder', isDone: false, id: 'TDAumlY' },
+                  { title: 'white wine', isDone: false, id: 'TDe91w4' },
+                  { title: 'white wine vinegar', isDone: false, id: 'TDMlKBJ' },
+                  { title: 'Worchestershire sauce', isDone: false, id: 'TD4p6CS' },
+                  { title: 'honey', isDone: false, id: 'TDepWZ8' },
+                  { title: 'garlic', isDone: false, id: 'TDyyHCX' },
+                  { title: 'extra-wide heavy-duty aluminium foil', isDone: false, id: 'TDixpUA' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638655509198,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CtQsOJ',
+            title: 'Meatloaf Burgers',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLyQDaV',
+                todos: [
+                  { title: '1 lb ground chuck', isDone: false, id: 'TDF8XLE' },
+                  { title: '1 onion', isDone: false, id: 'TDuWhr4' },
+                  { title: 'eggs', isDone: false, id: 'TDvBNeT' },
+                  { title: 'French onion soup mix', isDone: false, id: 'TDcYOP7' },
+                  { title: 'Worchestershire sauce', isDone: false, id: 'TDq2bBl' },
+                  { title: 'plain bread crumbs', isDone: false, id: 'TD7QvBt' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['S1UkR'],
+            createdAt: 1638655606164,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CxVmOE',
+            title: 'Chicken Enchiladas',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLoTPkX',
+                todos: [
+                  { title: 'avocado oil or olive oil', isDone: false, id: 'TDXkQTt' },
+                  { title: 'onion', isDone: false, id: 'TDJySIM' },
+                  { title: '1.5 lb boneless, skinless chicken breasts', isDone: false, id: 'TDHsxI7' },
+                  { title: '4 oz can green chiles', isDone: false, id: 'TDr7oi1' },
+                  { title: '15 oz can black beans', isDone: false, id: 'TDZQTbr' },
+                  { title: 'large flour tortillas', isDone: false, id: 'TDa6A7k' },
+                  { title: '3 c Mexican blend shredded cheese', isDone: false, id: 'TDgvXeg' },
+                  { title: 'red enchilada sauce (if not making your own)', isDone: false, id: 'TD7GsGx' },
+                  { title: 'all purpose flour (for homemade enchilada sauce)', isDone: false, id: 'TDw67II' },
+                  { title: 'chili powder (for homemade enchilada sauce)', isDone: false, id: 'TDNXYmv' },
+                  { title: 'garlic powder (for homemade enchilada sauce', isDone: false, id: 'TDFcauP' },
+                  { title: 'ground cumin (for homemade enchilada sauce', isDone: false, id: 'TDbaDKX' },
+                  { title: 'oregano (for homemade enchilada sauce)', isDone: false, id: 'TDeJEno' },
+                  {
+                    title: '16 oz chicken or vegetable stock (for homemade enchilada sauce)',
+                    isDone: false,
+                    id: 'TDc3kjU',
+                  },
+                  { title: 'cilantro (optional)', isDone: false, id: 'TDzfsjp' },
+                  { title: 'red onion (optional)', isDone: false, id: 'TDUOtq0' },
+                  { title: 'avocado (optional)', isDone: false, id: 'TDrIyvA' },
+                  { title: 'sour cream (optional)', isDone: false, id: 'TD7V75C' },
+                  { title: 'cotija cheese (optional)', isDone: false, id: 'TDM9hyA' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['S1UkR', 'thr5F'],
+            createdAt: 1638655668992,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+        ],
+      },
+      {
+        id: 'LeA20O',
+        title: 'Quick And Easy ',
+        cards: [
+          {
+            id: 'CHECUA',
+            title: 'Customized Frozen Pizza',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLX7fnI',
+                todos: [
+                  { title: 'Frozen cheese pizza', isDone: false, id: 'TDXyZH1' },
+                  { title: 'Shredded mozzarella', isDone: false, id: 'TDPpeTL' },
+                  { title: 'Sausage', isDone: false, id: 'TD2f7xz' },
+                  { title: 'Pepperoni', isDone: false, id: 'TDEvcTE' },
+                  { title: 'Shallots', isDone: false, id: 'TDLKOU8' },
+                  { title: 'Canned mushrooms', isDone: false, id: 'TDBGqXV' },
+                  { title: 'Black olives', isDone: false, id: 'TDaSkdY' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['b0JnY', '1b2ET', 'cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638655805444,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'C9JsAY',
+            title: 'Marinated Chicken (Grilled or Sheet Pan)',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLiShzQ',
+                todos: [
+                  { title: '1 lb chicken', isDone: false, id: 'TDKLu5g' },
+                  { title: 'Marinade', isDone: false, id: 'TDjap5L' },
+                  { title: 'Oil', isDone: false, id: 'TDIBIUr' },
+                  { title: 'Vinegar or lemon juice', isDone: false, id: 'TDc22Ic' },
+                  {
+                    title: 'Salt, boullion cubes, soy sauce, or Worchestershire sauce',
+                    isDone: false,
+                    id: 'TDR3jJ2',
+                  },
+                  { title: 'Sugar', isDone: false, id: 'TDUx3m4' },
+                  { title: 'Herbs, spices and seasonings', isDone: false, id: 'TDaa7IK' },
+                  { title: 'Gallon zip-top bags', isDone: false, id: 'TDuftbt' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638655854854,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'C5TThO',
+            title: 'Easy Creamy Pasta with Sausage and Tomatoes',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CL3RVQb',
+                todos: [
+                  { title: 'Pasta', isDone: false, id: 'TDw4Z55' },
+                  { title: 'Onion', isDone: false, id: 'TDj3nVH' },
+                  { title: '1 pound sweet Italian sausage', isDone: false, id: 'TDwqZi5' },
+                  { title: '14.5 oz can diced tomatoes', isDone: false, id: 'TDYyjAE' },
+                  { title: 'Heavy cream', isDone: false, id: 'TDLcpWT' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F'],
+            createdAt: 1638655933523,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+        ],
+      },
+      {
+        id: 'LJik8O',
+        title: 'Slow Cooker',
+        cards: [
+          {
+            id: 'CqthQf',
+            title: 'Sherried Beef',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLk57OF',
+                todos: [
+                  { title: '3 lb chuck roast', isDone: false, id: 'TDHmFFU' },
+                  { title: 'French onion soup mix', isDone: false, id: 'TDdIrwJ' },
+                  { title: 'cream of mushroom soup', isDone: false, id: 'TDjN74Y' },
+                  { title: 'Dry sherry', isDone: false, id: 'TDSoNkf' },
+                  { title: 'Rice (optional)', isDone: false, id: 'TDjVf3w' },
+                  { title: 'Egg noodles (optional)', isDone: false, id: 'TD7NPww' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['S1UkR', 'thr5F'],
+            createdAt: 1638655982910,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CKF9Z0',
+            title: 'Versatile Mexican Crockpot',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLhipqW',
+                todos: [
+                  { title: '3 lb chuck roast or 3 lbs chicken breast or thighs', isDone: false, id: 'TDbOD6r' },
+                  { title: 'Salsa', isDone: false, id: 'TDY0qIi' },
+                  { title: 'Chopped green chiles (4 oz can)', isDone: false, id: 'TDLBrfo' },
+                  { title: 'Tomato paste (6 oz can)', isDone: false, id: 'TDlqvPK' },
+                  { title: 'Taco seasoning packet', isDone: false, id: 'TDn3yAW' },
+                  { title: 'Shredded cheese (optional)', isDone: false, id: 'TDEt5cV' },
+                  { title: 'Sour cream (optional)', isDone: false, id: 'TDUiCeX' },
+                  { title: 'Tortillas or taco shells (optional)', isDone: false, id: 'TDQ5Q4I' },
+                  { title: 'Rice (optional)', isDone: false, id: 'TD2LyM9' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638656035926,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+        ],
+      },
+      {
+        id: 'La87h8',
+        title: 'Instant Pot',
+        cards: [
+          {
+            id: 'Ck61qv',
+            title: 'Chicken Tikka Masala',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLk9vOh',
+                todos: [
+                  { title: '1.5 lbs boneless skinless chicken thighs', isDone: false, id: 'TD72Eyu' },
+                  { title: 'ghee, butter or cocunut oil', isDone: false, id: 'TDBQF7k' },
+                  { title: 'kosher salt', isDone: false, id: 'TDlo9k1' },
+                  { title: 'garlic', isDone: false, id: 'TDpti8F' },
+                  { title: 'gingner', isDone: false, id: 'TD4kwPC' },
+                  { title: 'coriander', isDone: false, id: 'TDUW4YJ' },
+                  { title: 'turmeric', isDone: false, id: 'TD7qb5I' },
+                  { title: 'garam masala', isDone: false, id: 'TDYhWb4' },
+                  { title: 'cayenne pepper', isDone: false, id: 'TDCUq6j' },
+                  { title: 'cardamom', isDone: false, id: 'TD21eCQ' },
+                  { title: '14 oz can diced tomatoes', isDone: false, id: 'TDzwjFP' },
+                  { title: 'cauliflower', isDone: false, id: 'TDLiSxG' },
+                  { title: 'frozen peas', isDone: false, id: 'TDlecFQ' },
+                  { title: 'full fat canned coconut milk', isDone: false, id: 'TDVMbcz' },
+                  { title: 'cilantro', isDone: false, id: 'TDctvlZ' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638656116443,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+        ],
+      },
+      {
+        id: 'LLoaLJ',
+        title: 'Family Favorites',
+        cards: [
+          {
+            id: 'CrobxA',
+            title: 'Curry Pork Burgers',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLLV96D',
+                todos: [
+                  { title: '1 lb ground pork', isDone: false, id: 'TDsNZA6' },
+                  { title: 'curry powder', isDone: false, id: 'TD0upoL' },
+                  { title: 'ground coriander', isDone: false, id: 'TDUHorE' },
+                  { title: 'ground cardamom', isDone: false, id: 'TDQC0HW' },
+                  { title: 'Worchestershire sauce', isDone: false, id: 'TDxQp7G' },
+                  { title: 'green onions', isDone: false, id: 'TDNlzXI' },
+                  { title: 'garlic', isDone: false, id: 'TDUn8CO' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638656253750,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CgIOHC',
+            title: 'Rosemary Pork Burgers',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLX215D',
+                todos: [
+                  { title: '1 lb ground pork', isDone: false, id: 'TD6lUiB' },
+                  { title: 'onion', isDone: false, id: 'TDeDnZU' },
+                  { title: 'garlic', isDone: false, id: 'TDu4F9A' },
+                  { title: 'fresh rosemary or dried rosemary', isDone: false, id: 'TDd3HIr' },
+                  { title: 'Worchestershire sauce', isDone: false, id: 'TDG0Kl6' },
+                  { title: 'Dijon mustard', isDone: false, id: 'TDDSk5K' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638656302417,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'C9dQ9D',
+            title: 'Chicken Salad',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLckZfo',
+                todos: [
+                  { title: '1 lb chicken', isDone: false, id: 'TDTaUjL' },
+                  { title: 'Mayonnaise', isDone: false, id: 'TD81Oww' },
+                  { title: 'Dijon mustard', isDone: false, id: 'TDL1jt0' },
+                  { title: 'Dried dill', isDone: false, id: 'TDOxFFE' },
+                  { title: 'onion powder', isDone: false, id: 'TDDy2gW' },
+                  { title: 'garlic powder', isDone: false, id: 'TDPpqcV' },
+                  { title: '1 cucumber', isDone: false, id: 'TDEKHeA' },
+                  { title: 'eggs', isDone: false, id: 'TD01LYE' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD'],
+            createdAt: 1638656349532,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'Cr2c1N',
+            title: 'Meatloaf',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLiSWQz',
+                todos: [
+                  { title: '3 lbs ground chuck', isDone: false, id: 'TDWsHEy' },
+                  { title: '1 onion', isDone: false, id: 'TDkX0Uo' },
+                  { title: 'eggs', isDone: false, id: 'TDI7RYJ' },
+                  { title: 'French onion soup mix', isDone: false, id: 'TDQ3XIP' },
+                  { title: 'Worchestershire sauce', isDone: false, id: 'TDoEDZ9' },
+                  { title: 'plain bread crumbs', isDone: false, id: 'TD6p8SJ' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['S1UkR'],
+            createdAt: 1638656401126,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CeRxk0',
+            title: 'Meatloaf Burgers',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLumh8t',
+                todos: [
+                  { title: '1 lb ground chuck', isDone: false, id: 'TDzBJP7' },
+                  { title: '1 onion', isDone: false, id: 'TDDWr9s' },
+                  { title: 'eggs', isDone: false, id: 'TD82XjP' },
+                  { title: 'French onion soup mix', isDone: false, id: 'TD1Lt0A' },
+                  { title: 'Worchestershire sauce', isDone: false, id: 'TDkNxBr' },
+                  { title: 'plain bread crumbs', isDone: false, id: 'TDTN15h' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['S1UkR'],
+            createdAt: 1638656447176,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CiRjX4',
+            title: 'Low Country Nachos',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: ['b0JnY', '1b2ET', 'cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638656485672,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CkZffd',
+            title: 'Chicken Enchiladas',
+            description: '',
+            comments: [],
+            checklists: [],
+            members: [],
+            labelIds: ['S1UkR', 'thr5F'],
+            createdAt: 1638657192802,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+            isComplete: false,
+          },
+        ],
+      },
+      {
+        id: 'LLWrTZ',
+        title: 'Crowd Pleasers',
+        cards: [
+          {
+            id: 'CMPWy5',
+            title: "Alton Brown's Baby Back Ribs",
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLmn4Nl',
+                todos: [
+                  { title: '3 racks of pork baby back ribs', isDone: false, id: 'TDMLntE' },
+                  { title: 'light brown sugar', isDone: false, id: 'TDYkC4I' },
+                  { title: 'kosher salt', isDone: false, id: 'TDQn8iq' },
+                  { title: 'chili powder', isDone: false, id: 'TDsSzcC' },
+                  { title: 'ground black pepper', isDone: false, id: 'TD3yMSR' },
+                  { title: 'cayenne pepper', isDone: false, id: 'TDfZRAp' },
+                  { title: 'jalapeno seasoning', isDone: false, id: 'TDTsEtF' },
+                  { title: 'Old Bay seasoning', isDone: false, id: 'TDnnIrJ' },
+                  { title: 'thyme', isDone: false, id: 'TDQk73V' },
+                  { title: 'onion powder', isDone: false, id: 'TDAeNXc' },
+                  { title: 'white wine', isDone: false, id: 'TDIFkTo' },
+                  { title: 'white wine vinegar', isDone: false, id: 'TDVKyk8' },
+                  { title: 'Worchestershire sauce', isDone: false, id: 'TDisj2n' },
+                  { title: 'honey', isDone: false, id: 'TDxDFva' },
+                  { title: 'garlic', isDone: false, id: 'TD9oHKd' },
+                  { title: 'extra-wide heavy-duty aluminium foil', isDone: false, id: 'TD4IsJB' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['cVgzD', 'S1UkR', 'thr5F', 'VvivO'],
+            createdAt: 1638656516115,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+          {
+            id: 'CIVY7j',
+            title: 'Pulled Pork',
+            description: '',
+            comments: [],
+            checklists: [
+              {
+                title: 'Shopping List',
+                id: 'CLK4UdB',
+                todos: [
+                  { title: 'Pork shoulder/Boston Butt', isDone: false, id: 'TDDPTTr' },
+                  { title: '2 large onions', isDone: false, id: 'TD25nmR' },
+                  { title: 'kosher salt', isDone: false, id: 'TDXKQaH' },
+                  { title: 'pepper', isDone: false, id: 'TDcyXig' },
+                  { title: 'vegetable oil', isDone: false, id: 'TDPMGah' },
+                ],
+              },
+            ],
+            members: [],
+            labelIds: ['S1UkR', 'cVgzD', 'VvivO', 'thr5F'],
+            createdAt: 1638656588883,
+            dueDate: '',
+            style: null,
+            byMember: {
+              id: 'u101',
+              username: 'Tal',
+              fullname: 'Tal Tarablus',
+              imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
+            },
+            activities: [],
+            imgUrl: '',
+            attachments: [],
+          },
+        ],
+      },
+    ],
+  };
+  return proj;
 }
 
 function _getEmptyTodo(title) {

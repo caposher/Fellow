@@ -103,13 +103,15 @@
     justify-content: center;
     margin: 0;
     margin-block-end: 4px;
+    cursor: pointer;
 
-    span {
+    .edit-btn {
       line-height: 0px;
       padding: 15px 8px;
       border-radius: 3px;
       margin-left: 4px;
       margin-right: 0;
+      cursor: pointer;
       &:hover {
         background-color: rgb(236, 237, 240);
       }

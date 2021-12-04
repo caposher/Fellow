@@ -26,6 +26,7 @@
   }
   & form.editor {
     // margin: 0 0 4px 40px;
+    margin-bottom: 10px;
     & textarea {
       width: 512px;
       overflow: hidden;
@@ -61,4 +62,72 @@
   &::placeholder {
     color: inherit;
   }
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.c-b-container {
+  position: relative;
+}
+.c-b-btn {
+  position: absolute;
+  top: 1px;
+  left: -38px;
+  &:checkbox {
+    border: none;
+    outline: none;
+    text-shadow: none;
+    width: 50px;
+  }
+}
+.checklist-progress {
+  margin-bottom: 6px;
+  position: relative;
+  width: 100%;
+}
+.checklist-progress-percentage {
+  color: #5e6c84;
+  font-size: 11px;
+  left: 0;
+  line-height: 10px;
+  position: absolute;
+  text-align: center;
+  top: -1px;
+  left: -43px;
+  width: 32px;
+}
+.checklist-progress-bar {
+  background: #091e4214;
+  border-radius: 4px;
+  clear: both;
+  height: 8px;
+  margin: 0 0 0 0px;
+  overflow: hidden;
+  position: relative;
+
+  &.dummy {
+    opacity: 0;
+    margin-bottom: 10px;
+  }
+}
+.checklist-progress-bar-current {
+  background: #5ba4cf;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition-duration: 0.14s;
+  transition-property: width, background;
+  transition-timing-function: ease-in;
+  transition-delay: 0.2s;
+}
+
+.finished {
+  background: #61bd4f;
+}
+.checklist-completed-text {
+  display: block;
+  margin: 8px 0 15px 0px;
+  color: #5e6c84;
 }

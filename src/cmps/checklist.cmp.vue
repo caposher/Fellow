@@ -1,9 +1,11 @@
 <template>
   <section class="checklist">
     <form class="editor" v-show="editTitle" @submit.prevent="updateCL">
-      <textarea v-model="CLtoUpdate.title" @blur="updateCL" />
-      <button class="submit-btn">Save</button>
-      <!-- <button>X</button> -->
+      <textarea v-model="CLtoUpdate.title" />
+      <div class="buttons">
+        <button class="submit-btn">Save</button>
+        <span @click="editTitle = false" class="icon-lg icon-close"></span>
+      </div>
     </form>
     <section v-show="!editTitle" class="checklist-header">
       <h3 @click="editTitle = true">{{ checklist.title }}</h3>
@@ -22,39 +24,57 @@
         <button class="action-btn" @click="deleteCL">Delete</button>
       </span>
     </section>
+    <div class="checklist-progress">
+      <span class="checklist-progress-percentage">{{
+        progressPercentage
+      }}</span>
+      <div class="checklist-progress-bar">
+        <div
+          class="checklist-progress-bar-current"
+          :style="{ width: progressPercentage }"
+          :class="{ finished: progressPercentage === '100%' }"
+        ></div>
+      </div>
+      <div
+        v-if="!CLtoUpdate.todos || !CLtoUpdate.todos.length"
+        class="checklist-progress-bar dummy"
+      ></div>
+      <span
+        v-if="
+          progressPercentage === '100%' && !todosToShow && !todosToShow.length
+        "
+        class="checklist-completed-text"
+        >Everything in this checklist is complete!</span
+      >
+    </div>
+
     <ul>
       <li v-for="todo in todosToShow" :key="todo.id">
-        <label>
-          <!-- <span class="check-box-container"> -->
+        <span class="c-b-container">
           <input
+            class="c-b-btn"
             type="checkbox"
             :checked="todo.isDone"
-            @click="toggleTodo(todo.id)"
+            @click.stop="toggleTodo(todo.id)"
           />
           <!-- </span> -->
-          <span @click="editTodo(todo)" :class="{ done: todo.isDone }"
+          <span @click.stop="editTodo(todo)" :class="{ done: todo.isDone }"
             >{{ todo.title }}
           </span>
-        </label>
-
+        </span>
         <span @click="removeTodo(todo.id)">X</span>
       </li>
       <section v-if="newTodo">
         <form @submit.prevent="updateTodo">
-          <textarea
-            rows="1"
+          <input
             class="add-item"
             placeholder="Add an item"
             v-model="todoToAdd.title"
-            @blur="newTodo = false"
           />
           <br />
           <div class="buttons">
-            <button class="submit-btn" @click.stop="updateCard">Add</button>
-            <span
-              @click="this.newTodo = false"
-              class="icon-lg icon-close"
-            ></span>
+            <button class="submit-btn" @click.stop="updateTodo">Add</button>
+            <span @click="newTodo = false" class="icon-lg icon-close"></span>
           </div>
         </form>
       </section>
@@ -95,9 +115,10 @@ export default {
     },
     editTodo(todo) {
       this.newTodo = true;
-      this.todoToAdd = { ...todo };
+      this.todoToAdd.title = todo.title;
     },
     toggleTodo(todoId) {
+      console.log("toggle");
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       let currTodo = this.CLtoUpdate.todos[idx];
       currTodo.isDone = !currTodo.isDone;
@@ -105,7 +126,8 @@ export default {
       this.updateCL();
     },
     updateTodo(ev) {
-      if (!ev.target[0].value) return;
+      // console.log(ev.target[0].value);
+      if (!ev.target[0] || !ev.target[0].value) return;
       let todo = JSON.parse(JSON.stringify(this.todoToAdd));
       if (todo.id) {
         const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todo.id);
@@ -161,6 +183,10 @@ export default {
       } else {
         return this.CLtoUpdate.todos;
       }
+    },
+    progressPercentage() {
+      if (!this.CLtoUpdate.todos) return;
+      return (this.doneTodos / this.CLtoUpdate.todos.length || 0) * 100 + "%";
     },
   },
 };

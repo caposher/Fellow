@@ -62,17 +62,19 @@
               </div>
               <div class="card-labels">
                 <h4>Labels</h4>
-                <button
-                  v-for="label in getLabels"
-                  :key="label.id"
-                  :class="label.colorClass"
-                  class="label-tag white-text"
-                >
-                  {{ label.txt }}
-                </button>
-                <button class="label-tag">
-                  <i class="fas fa-plus"></i>
-                </button>
+                <span class="label-warper">
+                  <button
+                    v-for="label in getLabels"
+                    :key="label.id"
+                    :class="label.colorClass"
+                    class="label-tag white-text"
+                  >
+                    {{ label.txt }}
+                  </button>
+                  <button class="label-tag">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </span>
               </div>
             </div>
           </div>

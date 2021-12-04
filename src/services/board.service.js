@@ -124,12 +124,12 @@ function getEmptyBoard(title) {
     createdBy: 'user',
     style: null,
     labels: [
-      { id: utilService.makeId(), txt: 'test1 test test ', colorClass: 'label-green' },
-      { id: utilService.makeId(), txt: 'test2 test test', colorClass: 'label-yellow' },
+      { id: utilService.makeId(), txt: 'test1', colorClass: 'label-green' },
+      { id: utilService.makeId(), txt: 'test2', colorClass: 'label-yellow' },
       { id: utilService.makeId(), txt: 'test3', colorClass: 'label-orange' },
-      { id: utilService.makeId(), txt: '', colorClass: 'label-red' },
-      { id: utilService.makeId(), txt: 'test5 test test', colorClass: 'label-purple' },
-      { id: utilService.makeId(), txt: 'test6 test test', colorClass: 'label-blue' },
+      { id: utilService.makeId(), txt: 'test4', colorClass: 'label-red' },
+      { id: utilService.makeId(), txt: 'test5', colorClass: 'label-purple' },
+      { id: utilService.makeId(), txt: 'test6', colorClass: 'label-blue' },
     ],
     members: [],
     lists: [],
@@ -163,7 +163,7 @@ function getEmptyCard(title) {
       imgUrl: 'http://res.cloudinary.com/shaishar9/image/upload/v1590850482/j1glw3c9jsoz2py0miol.jpg',
     },
     activities: [],
-    imgUrl
+    imgUrl,
   };
 }
 
@@ -180,19 +180,19 @@ function _createBoards() {
   var boards = JSON.parse(localStorage.getItem(KEY));
   if (!boards || !boards.length) {
     boards = [
-      _createBoard('My First Board' ,'/img/background1.jpg'),
-      _createBoard('Work' ,'/img/background2.jpg'),
-      _createBoard('Personal' ,'/img/background3.jpg'),
-      _createBoard('Tinto' ,'/img/background4.jpg'),
+      _createBoard('My First Board', '/img/background1.jpg'),
+      _createBoard('Work', '/img/background2.jpg'),
+      _createBoard('Personal', '/img/background3.jpg'),
+      _createBoard('Tinto', '/img/background4.jpg'),
     ];
     localStorage.setItem(KEY, JSON.stringify(boards));
   }
   return boards;
 }
 
-function _createBoard(title,url) {
+function _createBoard(title, url) {
   var board = getEmptyBoard(title);
-  board.imgUrl = url
+  board.imgUrl = url;
   board._id = utilService.makeId();
   return board;
 }

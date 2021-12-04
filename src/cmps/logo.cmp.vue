@@ -14,32 +14,33 @@ export default {};
 <style>
 @keyframes up {
   0% {
-    width: 16px;
+    width: 11px;
   }
   50% {
-    width: 8px;
+    width: 6px;
   }
   100% {
-    width: 16px;
+    width: 11px;
   }
 }
 @keyframes down {
   0% {
-    width: 8px;
+    width: 6px;
   }
   50% {
-    width: 16px;
+    width: 11px;
   }
   100% {
-    width: 8px;
+    width: 6px;
   }
 }
 
 .con {
-  width: 21px;
-  height: 21px;
+  width: 16px;
+  height: 15px;
   background-color: #fff;
   padding: 2px;
+  margin-top: 3px;
   margin-right: 4px;
   border-radius: 2px;
   display: flex;
@@ -48,16 +49,16 @@ export default {};
 }
 
 .up {
-  width: 16px;
-  height: 5px;
-  background-color: black;
+  width: 11px;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 1px;
   transition: 0.3s;
 }
 .down {
-  width: 8px;
-  height: 5px;
-  background-color: black;
+  width: 6px;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 1px;
   transition: 0.3s;
 }

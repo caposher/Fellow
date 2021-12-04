@@ -41,12 +41,20 @@
         <p>Add a card</p>
       </button>
       <div v-else class="add-card-actions">
-        <input type="text" v-focus="!editTitle" v-model="newCardTitle" />
+        <input type="text" 
+        v-focus="isAddCard" 
+        v-model="newCardTitle"
+        />
         <div class="add-card-btns">
           <div class="submit-btns">
-            <button class="submit-btn submit-card" @click="addCard">Add Card</button>
+            <button class="submit-btn submit-card"
+            @click="addCard">Add Card</button>
             <button>
-              <span @click="closeAddCard" class="icon-close icon-lg close-add-btn"></span>
+              <span id="close"
+              name="close"
+               @click.stop.prevent="closeAddCard"
+              class="icon-close icon-lg close-add-btn"
+             ></span>
             </button>
           </div>
           <button class="dots">
@@ -59,17 +67,17 @@
 </template>
 
 <script>
-import cardList from './card-list.cmp.vue';
-import { focus } from 'vue-focus';
-import draggable from 'vuedraggable';
+import cardList from "./card-list.cmp.vue";
+import { focus } from "vue-focus";
+import draggable from "vuedraggable";
 
 // props- list
 export default {
   directives: { focus },
   props: {
     list: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
@@ -77,62 +85,82 @@ export default {
       updatedList: null,
       editTitle: false,
       isAddCard: false,
-      newCardTitle: '',
+      newCardTitle: ""
     };
   },
   created() {
     this.updatedList = JSON.parse(JSON.stringify(this.list));
   },
   methods: {
+    handleBlur(e) {
+      console.log(e);
+       if (!this.isAddCard) return
+       else this.addCard()
+      // function(e) {
+        // const name = e.target;
+        // console.log(name);
+      // }
+    },
     async addCard() {
+      // if (!this.isAddCard) return
+      console.log('adding card');
       // const title = prompt('card title');
       const title = this.newCardTitle;
-      if (!title) return;
+      if (!title){
+        this.isAddCard = false;
+         return};
       try {
-        await this.$store.dispatch({ type: 'addCard', board: this.$store.getters.board, list: this.list, title });
-        console.log('card added', this.list);
-        this.newCardTitle = '';
+        await this.$store.dispatch({
+          type: "addCard",
+          board: this.$store.getters.board,
+          list: this.list,
+          title
+        });
+        console.log("card added", this.list);
+        this.newCardTitle = "";
         this.isAddCard = false;
       } catch (err) {
-        console.log('cant add card', err);
+        console.log("cant add card", err);
       }
     },
-    closeAddCard() {
-      this.newCardTitle = '';
+    closeAddCard(event) {
+      this.newCardTitle = "";
       this.isAddCard = false;
+      event.target.blur();
+      console.log('end of close');
     },
 
     updateList() {
       this.editTitle = false;
-      this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
+      this.$emit("update", JSON.parse(JSON.stringify(this.updatedList)));
     },
     ondragEnd() {
       this.dragCard = false;
       this.updateList();
     },
     deleteList() {
-      this.$emit('deleteList', JSON.parse(JSON.stringify(this.updatedList)));
-    },
+      this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
+    }
   },
   computed: {
     getList() {
       return JSON.parse(JSON.stringify(this.list));
     },
     showTitle() {
-      return this.list.title ? this.list.title : 'Enter title';
-    },
+      return this.list.title ? this.list.title : "Enter title";
+    }
   },
   watch: {
     list: {
       handler() {
         this.updatedList = JSON.parse(JSON.stringify(this.list));
-      },
-    },
+      }
+    }
   },
   components: {
     draggable,
-    cardList,
-  },
+    cardList
+  }
 };
 </script>
 

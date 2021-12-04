@@ -59,6 +59,10 @@ export const boardStore = {
       }
     },
     async loadBoard({ commit }, { boardId }) {
+      if (!boardId){
+        commit({ type: 'setBoard', board: null });
+        return
+      }
       try {
         const board = await boardService.getById(boardId);
         commit({ type: 'setBoard', board });
@@ -149,7 +153,7 @@ export const boardStore = {
 
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
-      console.log('card', card);
+      // console.log('card', card);
       list.cards.push(card);
       console.log('updatedList', list);
       try {

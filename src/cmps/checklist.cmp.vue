@@ -142,14 +142,14 @@ export default {
       this.updateCL();
     },
     removeTodo(todoId) {
-      console.log("removing", todoId);
+      // console.log("removing", todoId);
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       this.CLtoUpdate.todos.splice(idx, 1);
       this.updateCL();
     },
     async updateCL() {
-      console.log("update cl");
-      console.log("this.CLtoUpdate", this.CLtoUpdate);
+      // console.log("update cl");
+      // console.log("this.CLtoUpdate", this.CLtoUpdate);
       try {
         await this.$emit(
           "updateCL",

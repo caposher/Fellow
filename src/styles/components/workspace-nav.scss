@@ -1,10 +1,11 @@
 .nav-container {
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 5;
   left: 0;
   top: 44px;
-  transition: transform 100ms ease-in;
+  // transition: transform 500ms ease-in;
+  transition: transform 0.5s;
 }
 
 .collapsed {
@@ -13,7 +14,8 @@
 .collapsed-main {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 100px);
+  height: 100%;
+  // height: calc(100% - 100px);
   width: 100%;
   margin: 0;
   background-color: rgba(193, 199, 208, 0.2);

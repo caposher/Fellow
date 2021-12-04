@@ -4,9 +4,9 @@
     :class="{ 'display-modal': selectedCardId }"
     class="board-app"
   >
-    <workspace-nav :boards="boards" />
-    <board-header @deleteBoard="deleteBoard" />
-    <ul class="board" @mouseenter="scroll">
+    <workspace-nav :boards="boards" @openBar="onOpenBar" />
+    <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar }" />
+    <ul class="board" :class="{ 'nav-open': openBar }" @mouseenter="scroll">
       <li
         class="list-wrapper"
         v-for="(list, idx) in board.lists"
@@ -80,6 +80,7 @@ export default {
       slider: null,
       isAddList: false,
       newListTitle: "",
+      openBar: false,
     };
   },
   watch: {
@@ -237,6 +238,10 @@ export default {
     unscroll() {
       if (!this.slider) return;
       this.slider.classList.remove("active");
+    },
+    onOpenBar(val) {
+      console.log("val", val);
+      this.openBar = val;
     },
   },
   components: {

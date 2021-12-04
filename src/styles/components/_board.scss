@@ -7,13 +7,12 @@
   overflow-y: hidden;
 }
 
-body{
+body {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   overflow-y: hidden;
   background-attachment: fixed;
-
 }
 
 .board {
@@ -24,7 +23,9 @@ body{
   position: relative;
   width: 100%;
   overflow-x: scroll;
-
+  padding-left: 16px;
+  margin: 0;
+  transition: margin 0.5s;
   > * {
     margin: 0 4px;
     border-radius: 3px;
@@ -35,6 +36,15 @@ body{
     min-width: 272px;
     max-width: 272px;
   }
+
+  // &.nav-open {
+  //   margin-left: 250px;
+  // }
+}
+
+.nav-open {
+  margin-left: 250px;
+  padding-inline-start: 15px;
 }
 
 .add-list-wrapper {

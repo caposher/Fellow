@@ -45,7 +45,6 @@ export default {
       // if (board) {
       //   board.imgUrl = "/img/background1.jpg";
       // }
-      console.log("board", board);
       return board;
     },
     bgImage() {

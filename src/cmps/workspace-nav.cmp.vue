@@ -3,7 +3,7 @@
     <div
       class="nav-container collapsed"
       :class="openBar ? 'hidden' : 'shown'"
-      @click="openBar = true"
+      @click="onOpenBar(true)"
     >
       <div class="collapsed-main">
         <button><i class="fas fa-chevron-right"></i></button>
@@ -16,7 +16,7 @@
             <div class="workspace-logo">F</div>
           </div>
           <span>Fellow Workspace</span
-          ><button class="close-nav" @click="openBar = false">
+          ><button class="close-nav" @click="onOpenBar(false)">
             <i class="fas fa-chevron-left"></i>
           </button>
         </div>
@@ -28,12 +28,10 @@
                 <router-link
                   :to="{ name: 'board', params: { boardId: board._id } }"
                 >
-                  <span
-                    ><img src="../assets/img/background1.jpg" alt=""
-                  /></span>
+                  <img :src="bgImage(board)" />
                   <p>{{ board.title }}</p>
-                  <span>Star</span></router-link
-                >
+                  <span class="star icon-star" @click.stop.prevent=""></span
+                ></router-link>
               </li>
             </ul>
           </div>
@@ -57,6 +55,16 @@ export default {
   },
   methods: {
     showNavBar() {},
+    bgImage(board) {
+      if (board) {
+        let bgImage = require("@/assets" + board.style.imgUrl);
+        return bgImage;
+      }
+    },
+    onOpenBar(val) {
+      this.openBar = val;
+      this.$emit("openBar", val);
+    },
   },
 };
 </script>

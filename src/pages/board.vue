@@ -43,7 +43,6 @@
             type="text"
             ref="input"
             v-focus="isAddList"
-            @blur="addList"
             v-model="newListTitle"
           />
           <div class="list-add-controls">

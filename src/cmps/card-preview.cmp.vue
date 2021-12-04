@@ -2,16 +2,23 @@
   <section class="card" @click="showDetails">
     <img v-show="card.cover" :url="card.cover" class="card-cover" />
     <!-- <div> -->
-    <section class="label-and-q-edit">
-      <span>
-        <span v-for="label in getLabels" :key="label.id" :class="label.colorClass" class="preview-label">{{
-          label.txt
-        }}</span>
-      </span>
-      <span class="edit-wrapper">
-        <span class="icon-sm icon-edit q-edit"></span>
-      </span>
-    </section>
+    <!-- <section class="label-and-q-edit"> -->
+    <span class="card-wrapper" @click.stop.prevent="">
+      <span
+        v-for="label in getLabels"
+        :key="label.id"
+        :class="[label.colorClass, setLabelClass]"
+        class="open-label"
+        @click="islabelClick = !islabelClick"
+        @mouseover="islabelHover = true"
+        @mouseleave="islabelHover = false"
+        ><span class="text-label">{{ label.txt }}</span></span
+      >
+    </span>
+    <span class="edit-wrapper">
+      <span class="icon-sm icon-edit q-edit"></span>
+    </span>
+    <!-- </section> -->
     <!-- <button>Quick edit</button> -->
     <!-- </div> -->
     <section class="card-title">
@@ -53,6 +60,8 @@ export default {
   },
   data() {
     return {
+      islabelHover: false,
+      islabelClick: true,
       // todos: 0,
       // doneTodos: 0
     };
@@ -100,6 +109,11 @@ export default {
       const labelIds = this.card.labelIds;
       return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
+    setLabelClass() {
+      let classes = `preview-label${this.islabelClick ? '' : '-close'}`;
+      return classes;
+    },
+
     dateToShow() {
       const dueDate = new Date(this.card.dueDate);
       if (new Date().getYear() === new Date(this.card.dueDate).getYear()) {

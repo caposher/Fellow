@@ -6,6 +6,8 @@
   min-height: 20px;
   margin-block-end: 8px;
   padding: 6px 8px 2px;
+  position: relative;
+
   .card-title {
     word-wrap: break-word;
     clear: both;
@@ -20,45 +22,42 @@
       padding-block-start: 3px;
     }
   }
-  .label-and-q-edit {
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    .preview-label {
-      margin: 0 4px 4px 0;
-    }
-    .edit-wrapper {
-      position: absolute;
-      border-radius: 2px;
-      right: -6px;
-      top: -3px;
-      padding: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      &:hover {
-        background-color: rgb(235, 236, 240);
-        .q-edit {
-          // color: #6b778c;
-          color: #172b4d;
-        }
-      }
-      .q-edit {
-        opacity: 0;
-      }
-    }
-  }
 
   &:hover {
     cursor: pointer;
+    background-color: rgb(244, 245, 247);
     .edit-wrapper {
-      background-color: rgba(235, 236, 240, 0);
-      & .q-edit {
-        color: #5e6c84;
+      display: block;
+    }
+  }
+
+  .edit-wrapper {
+    display: none;
+    position: absolute;
+    border-radius: 2px;
+    right: 2px;
+    top: 2px;
+    padding: 3px;
+    span {
+      margin: 0;
+      padding: 3px;
+    }
+    &:hover {
+      background-color: rgb(235, 236, 240);
+      .q-edit {
+        color: #172b4d;
         opacity: 1;
       }
     }
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    .q-edit {
+      color: #5e6c84;
+      opacity: 1;
+    }
   }
+
   .card-icons {
     .icon-wrapper {
       color: #5e6c84;

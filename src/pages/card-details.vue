@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="list && cardToEdit"
-    class="card-details-container"
-    @click.stop.prevent="closeModal"
-  >
+  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
     <div class="card-details" @click.stop>
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
@@ -34,35 +30,24 @@
                     }"
                   >
                     <!-- <span class="checkbox"> -->
-                    <input
-                      type="checkbox"
-                      v-model="cardToEdit.isComplete"
-                      @change="updateCard"
-                    />
+                    <input type="checkbox" v-model="cardToEdit.isComplete" @change="updateCard" />
                     <!-- </span> -->
                   </span>
                   <div class="date-picker">
                     <span>{{ dateToShow }}</span>
                     <span
-                      v-show="
-                        !cardToEdit.isComplete &&
-                        +new Date(cardToEdit.dueDate) - Date.now() <= 86400000
-                      "
+                      v-show="!cardToEdit.isComplete && +new Date(cardToEdit.dueDate) - Date.now() <= 86400000"
                       :class="timeLabelColor"
                       class="time-label"
                       >{{ timeLabel }}</span
                     >
-                    <span
-                      v-show="cardToEdit.isComplete"
-                      class="time-label complete"
-                      >complete</span
-                    >
+                    <span v-show="cardToEdit.isComplete" class="time-label complete">complete</span>
                   </div>
                 </div>
               </div>
               <div class="card-labels">
                 <h4>Labels</h4>
-                <span class="label-warper">
+                <span class="label-warper" @click="showLabels = true">
                   <button
                     v-for="label in getLabels"
                     :key="label.id"
@@ -71,8 +56,8 @@
                   >
                     {{ label.txt }}
                   </button>
-                  <button class="label-tag">
-                    <i class="fas fa-plus"></i>
+                  <button class="action-btn">
+                    <span class="icon-sm icon-plus"></span>
                   </button>
                 </span>
               </div>
@@ -85,11 +70,7 @@
               <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
-                <button
-                  v-show="cardToEdit.description && !isEditDesc"
-                  @click.stop="setFocus"
-                  class="action-btn"
-                >
+                <button v-show="cardToEdit.description && !isEditDesc" @click.stop="setFocus" class="action-btn">
                   Edit
                 </button>
               </div>
@@ -109,11 +90,7 @@
             </div>
           </div>
 
-          <div
-            class="check-list"
-            v-for="checklist in cardToEdit.checklists"
-            :key="checklist.id"
-          >
+          <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
             <span class="card-details-icon icon-lg"></span>
 
             <checklist :checklist="checklist" @updateCL="updateCL" />
@@ -121,20 +98,13 @@
           <div class="activity-log">
             <span class="icon-lg icon-activity"></span>
             <h3>Activity</h3>
-            <div
-              class="comment-box"
-              :class="{ onComment: isComment }"
-              @click="isComment = true"
-            >
-              <textarea
-                rows="1"
-                placeholder="Write a comment..."
-                @blur="isComment = false"
-              />
+            <div class="comment-box" :class="{ onComment: isComment }" @click="isComment = true">
+              <textarea rows="1" placeholder="Write a comment..." @blur="isComment = false" />
               <button class="submit-btn">save</button>
             </div>
           </div>
         </div>
+        <!--     SIDE MENU      -->
         <div class="side-menu">
           <button class="action-btn not-yet" title="Not yet developed">
             <span class="icon-sm icon-member"></span>Join
@@ -173,11 +143,7 @@
               </section>
               <form @submit.prevent="addCheckList">
                 <label>Title</label>
-                <input
-                  type="text"
-                  value="Checklist"
-                  v-model="newChecklist.title"
-                />
+                <input type="text" value="Checklist" v-model="newChecklist.title" />
                 <label>Copy items from...</label>
                 <select name id class="not-yet">
                   <option value>(none)</option>
@@ -186,15 +152,8 @@
               </form>
             </section>
           </section>
-          <date
-            @updateDate="updateDate"
-            :cardDate="cardToEdit.dueDate"
-            class="date"
-          ></date>
-          <button
-            class="attachment action-btn not-yet"
-            title="Not yet developed"
-          >
+          <date @updateDate="updateDate" :cardDate="cardToEdit.dueDate" class="date"></date>
+          <button class="attachment action-btn not-yet" title="Not yet developed">
             <span class="icon-sm icon-attach"></span>Attachments
           </button>
           <button class="cover action-btn not-yet" title="Not yet developed">
@@ -229,11 +188,11 @@
 </template>
 
 <script>
-import cardLabels from "../cmps/labels.cmp.vue";
-import date from "../cmps/date.cmp.vue";
+import cardLabels from '../cmps/labels.cmp.vue';
+import date from '../cmps/date.cmp.vue';
 
-import { utilService } from "../services/util.service.js";
-import checklist from "../cmps/checklist.cmp.vue";
+import { utilService } from '../services/util.service.js';
+import checklist from '../cmps/checklist.cmp.vue';
 export default {
   data() {
     return {
@@ -242,7 +201,7 @@ export default {
       showDate: false,
       showLabels: false,
       openCheckList: false,
-      newChecklist: { title: "Checklist" },
+      newChecklist: { title: 'Checklist' },
       cardToEdit: null,
       isUndoDesc: false,
       isComment: false,
@@ -262,30 +221,23 @@ export default {
       return this.$store.getters.boardId;
     },
     timeLabelColor() {
-      return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0
-        ? "over-due"
-        : "due-soon";
+      return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0 ? 'over-due' : 'due-soon';
     },
     timeLabel() {
-      return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0
-        ? "over due"
-        : "due soon";
+      return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0 ? 'over due' : 'due soon';
     },
     dateToShow() {
       const dateString = this.cardToEdit.dueDate;
       const dueDate = new Date(dateString);
       const time = this.formatAMPM(dueDate);
-      if (new Date().getDate() === new Date(dateString).getDate())
-        return "today" + time;
-      else if (new Date().getDate() + 1 === new Date(dateString).getDate())
-        return "tomorrow" + time;
-      else if (new Date().getDate() - 1 === new Date(dateString).getDate())
-        return "yesterday" + time;
+      if (new Date().getDate() === new Date(dateString).getDate()) return 'today' + time;
+      else if (new Date().getDate() + 1 === new Date(dateString).getDate()) return 'tomorrow' + time;
+      else if (new Date().getDate() - 1 === new Date(dateString).getDate()) return 'yesterday' + time;
       else if (new Date().getYear() === new Date(dateString).getYear()) {
         return this.formatDate(dueDate) + time;
       }
 
-      return this.formatDate(dueDate) + ", " + dueDate.getFullYear() + time;
+      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear() + time;
     },
     getLabels() {
       const allLabels = this.$store.getters.labels;
@@ -297,11 +249,11 @@ export default {
     formatAMPM(dueDate) {
       var hours = dueDate.getHours();
       var minutes = dueDate.getMinutes();
-      var ampm = hours >= 12 ? "PM" : "AM";
+      var ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
       hours = hours ? hours : 12;
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      var strTime = " at " + hours + ":" + minutes + " " + ampm;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = ' at ' + hours + ':' + minutes + ' ' + ampm;
       return strTime;
     },
     formatDate(dueDate) {
@@ -312,13 +264,13 @@ export default {
     },
     closeModal() {
       const { boardId } = this.$route.params;
-      this.$router.push("/b/" + boardId);
+      this.$router.push('/b/' + boardId);
     },
     async updateCard() {
       this.isEditDesc = false;
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.cardToEdit)),
@@ -326,21 +278,21 @@ export default {
         // this.$emit('reload')
         // this.$router.matched[0].path.reload()
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     async removeCard() {
-      if (!confirm("this action will delete the card! continue?")) return;
+      if (!confirm('this action will delete the card! continue?')) return;
       try {
         await this.$store.dispatch({
-          type: "removeCard",
+          type: 'removeCard',
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
           cardId: JSON.parse(JSON.stringify(this.cardToEdit.id)),
         });
         this.closeModal();
       } catch (err) {
-        console.log("cant remove card", err);
+        console.log('cant remove card', err);
       }
     },
     async changeComplete() {
@@ -368,26 +320,24 @@ export default {
 
     async addCheckList(ev) {
       if (!ev.target[0].value) return;
-      this.newChecklist.id = "CL" + utilService.makeId();
+      this.newChecklist.id = 'CL' + utilService.makeId();
       this.cardToEdit.checklists.push(this.newChecklist);
       this.openCheckList = false;
       try {
         await this.updateCard();
         this.newChecklist = {};
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     async updateCL(checklist) {
-      const idx = this.cardToEdit.checklists.findIndex(
-        (cl) => cl.id === checklist.id
-      );
+      const idx = this.cardToEdit.checklists.findIndex((cl) => cl.id === checklist.id);
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
       try {
         await this.updateCard();
       } catch (err) {
-        console.log("cant save the todo", err);
+        console.log('cant save the todo', err);
       }
     },
     async updateLabels(labelIds) {

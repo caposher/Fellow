@@ -47,6 +47,13 @@
     list-style: none;
     max-height: 90vh;
     overflow-y: auto; //TODO:
+
+    .card-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      overflow-wrap: break-word;
+    }
   }
 
   footer {

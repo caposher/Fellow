@@ -11,21 +11,16 @@
     <form @submit.prevent="addCheckList">
       <h5>Labels</h5>
 
-      <!-- <label> -->
-      <section
-        class="label-picker"
-        v-for="(label, idx) in allLabels"
-        :key="label.id"
-        @change="toggleCheck(label.id, idx)"
-      >
-        <div :class="setColor(label.colorClass)">
-          <span>{{ label.txt }}</span>
-          <input type="checkbox" :checked="checkLabel(label.id)" />
-          <span v-show="checkLabel(label.id)" class="close-popup icon-sm icon-check"></span>
-        </div>
-        <span class="close-popup icon-sm icon-edit"></span>
+      <section v-for="(label, idx) in allLabels" :key="label.id" @change="toggleCheck(label.id, idx)">
+        <label class="label-picker">
+          <div :class="setColor(label.colorClass)">
+            <span class="label-name">{{ label.txt }}</span>
+            <input type="checkbox" :checked="checkLabel(label.id)" />
+            <span v-show="checkLabel(label.id)" class="close-popup icon-sm icon-check"></span>
+          </div>
+          <span class="close-popup icon-sm icon-edit"></span>
+        </label>
       </section>
-      <!-- </label> -->
 
       <button class="action-btn">Create a new label</button>
     </form>

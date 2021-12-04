@@ -1,6 +1,7 @@
 .date-cmp {
   display: flex;
   align-items: center;
+  // position: relative;
   .vpd-main {
     position: relative;
     max-width: 100%;
@@ -9,7 +10,8 @@
       input {
         border: none;
         background-color: rgba(64, 224, 208, 0);
-        max-width: 100%;
+        max-width: 125px;
+        
         padding: 2px;
         // &.input{
         //   display: none;
@@ -45,4 +47,21 @@
       }
     }
   }
+}
+// .relative-date{
+//   position: relative;
+// }
+.time-label {
+  // position: absolute;
+  font-size: 12px;
+      line-height: 16px;
+      padding: 0 4px;
+      border-radius: 2px;
+      margin: auto 0 auto 8px;
+  // z-index: 0;
+}
+
+.long{
+  width: fit-content;
+  // width: 200px;
 }

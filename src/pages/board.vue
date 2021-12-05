@@ -218,6 +218,7 @@ export default {
     boardList,
     workspaceNav,
     focus,
+    appHeader,
   },
 };
 </script>

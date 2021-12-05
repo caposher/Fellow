@@ -1,19 +1,18 @@
 <template>
-  <div
-    v-if="list && cardToEdit"
-    class="card-details-container"
-    @click.stop.prevent="closeModal"
-  >
+  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
     <div class="card-details" @click.stop>
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
       </button>
+      <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverUrl"></div>
       <header>
         <div class="header">
           <span class="icon-card icon-lg"></span>
           <!-- <span class="fa fa-newspaper"></span> -->
           <div class="card-header-container">
             <textarea
+              rows
+              contenteditable="true"
               @blur="updateCard"
               v-model="cardToEdit.title"
               @keydown.enter.prevent="updateCard"
@@ -48,8 +47,6 @@
                     @change="updateCard"
                   />
                   <label for="cb"></label>
-                  <!-- </span> -->
-                  <!-- </span> -->
                   <div class="relative-date">
                     <date
                       @updateDate="updateDate"
@@ -57,20 +54,7 @@
                       :cardToEdit="cardToEdit"
                       class="date"
                       :datePlaceholder="dateToShow"
-                    >
-                      <!-- <div class="date-picker action-btn"> -->
-                      <!-- <span>{{ dateToShow }}</span> -->
-                      <!-- </div> -->
-                    </date>
-                    <!-- <span
-                      v-show="
-                        !cardToEdit.isComplete &&
-                        +new Date(cardToEdit.dueDate) - Date.now() <= 86400000
-                      "
-                      :class="timeLabelColor"
-                      class="time-label"
-                    >{{ timeLabel }}</span>
-                    <span v-show="cardToEdit.isComplete" class="time-label complete">complete</span> -->
+                    ></date>
                   </div>
                 </div>
               </div>
@@ -82,9 +66,7 @@
                     :key="label.id"
                     :class="label.colorClass"
                     class="label-tag white-text"
-                  >
-                    {{ label.txt }}
-                  </button>
+                  >{{ label.txt }}</button>
                   <button v-show="getLabels.length > 0" class="action-btn">
                     <span class="icon-sm icon-plus"></span>
                   </button>
@@ -103,31 +85,66 @@
                   v-show="cardToEdit.description && !isEditDesc"
                   @click.stop="setFocus"
                   class="action-btn"
-                >
-                  Edit
-                </button>
+                >Edit</button>
               </div>
             </div>
             <!-- @blur="updateCard" -->
-            <textarea
+            <form @submit.prevent="updateDesc">
+              <div
+                contenteditable="true"
+                ref="desc"
+                class="desc action-btn"
+                @focus="setEditDesc"
+                placeholder="Add a more detailed description..."
+              ></div>
+              <!-- <textarea
               rows="2"
               ref="desc"
               class="action-btn desc"
               @focus="setEditDesc"
               placeholder="Add a more detailed description..."
               v-model="cardToEdit.description"
-            />
-            <div class="buttons" v-show="isEditDesc">
-              <button class="submit-btn" @click.stop="updateCard">Save</button>
-              <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
-            </div>
+              />-->
+              <div class="buttons" v-show="isEditDesc">
+                <!-- <button class="submit-btn" @click.stop="updateCard">Save</button> -->
+                <button class="submit-btn" @click.stop.prevent="updateDesc">Save</button>
+                <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
+              </div>
+            </form>
           </div>
 
-          <div
-            class="check-list"
-            v-for="checklist in cardToEdit.checklists"
-            :key="checklist.id"
-          >
+          <div class="attachments" v-show="cardToEdit.attachments && cardToEdit.attachments.length">
+            <section class="attach-header">
+              <span class="icon-attach icon-lg"></span>
+              <h3>Attachments</h3>
+            </section>
+
+            <div v-for="attachment in cardToEdit.attachments" :key="attachment.id">
+              <attachment
+                :attachment="attachment"
+                @makeCover="makeCover"
+                @removeCover="removeCover"
+                @deleteAttach="deleteAttach"
+                @openEdit="openEdit"
+                :cardToEdit="cardToEdit"
+              ></attachment>
+            </div>
+            <section class="card-popup" v-show="openEditAttach">
+              <section class="popup-header">
+                <div>
+                  <span @click.stop="openEditAttach=false" class="close-popup icon-md icon-close"></span>
+                </div>
+                <h4>Edit attachment</h4>
+              </section>
+              <form @submit.stop.prevent="updateAttach">
+                <label>Link name</label>
+                <input @focus="$event.target.select()" type="text" v-model="attachToEdit.name" />
+                <button class="submit">Update</button>
+              </form>
+            </section>
+          </div>
+
+          <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
             <span class="card-details-icon icon-lg"></span>
 
             <checklist :checklist="checklist" @updateCL="updateCL" />
@@ -140,13 +157,9 @@
               class="comment-box"
               :class="{ onComment: isComment }"
               @click="isComment = true"
-            > -->
+              >-->
               <!-- <textarea rows="1" placeholder="Write a comment..." @blur="isComment = false" /> -->
-              <textarea
-                rows="1"
-                placeholder="not yet developed..."
-                @blur="isComment = false"
-              />
+              <textarea rows="1" placeholder="not yet developed..." @blur="isComment = false" />
               <button class="submit-btn">save</button>
             </div>
           </div>
@@ -171,8 +184,9 @@
             :cardLabels="cardToEdit.labelIds"
             @update="updateLabels"
           />
+
           <section class="checklist-btn">
-            <button @click.stop="openCheckList = !openCheckList">
+            <button @click.stop="openCheckList = !openCheckList" @focus="$event.target.select()">
               <span class="action-btn">
                 <span class="icon-sm icon-checklist"></span>
                 <span>Checklist</span>
@@ -191,6 +205,7 @@
               <form @submit.prevent="addCheckList">
                 <label>Title</label>
                 <input
+                  @focus="$event.target.select()"
                   type="text"
                   value="Checklist"
                   v-model="newChecklist.title"
@@ -209,12 +224,23 @@
             class="date"
             :datePlaceholder="'Dates'"
           ></date>
-          <button
-            class="attachment action-btn not-yet"
-            title="Not yet developed"
-          >
-            <span class="icon-sm icon-attach"></span>Attachments
-          </button>
+          <section class="attachment-btn">
+            <button @click.stop="openAddAttach=!openAddAttach">
+              <span class="action-btn">
+                <span class="icon-sm icon-attach"></span>
+                Attachments
+              </span>
+            </button>
+            <section class="card-popup" v-show="openAddAttach">
+              <section class="popup-header">
+                <div @click.stop="openAddAttach=false">
+                  <span class="close-popup icon-md icon-close"></span>
+                </div>
+                <h4>Attach from...</h4>
+              </section>
+              <add-attachment @addNewAttach="addNewAttach"></add-attachment>
+            </section>
+          </section>
           <button class="cover action-btn not-yet" title="Not yet developed">
             <span class="icon-sm icon-cover"></span>Cover
           </button>
@@ -249,6 +275,8 @@
 <script>
 import cardLabels from "../cmps/labels.cmp.vue";
 import date from "../cmps/date.cmp.vue";
+import addAttachment from "../cmps/add-attachment.cmp.vue";
+import attachment from "../cmps/attachment.cmp.vue";
 
 import { utilService } from "../services/util.service.js";
 import checklist from "../cmps/checklist.cmp.vue";
@@ -264,10 +292,18 @@ export default {
       cardToEdit: null,
       isUndoDesc: false,
       isComment: false,
+      openAddAttach: false,
+      openEditAttach: false,
+      attachToEdit: {
+        name: ""
+      }
     };
   },
   created() {
     this.cardToEdit = this.card;
+  },
+  mounted() {
+    this.$refs.desc.innerText = this.cardToEdit.description;
   },
   computed: {
     card() {
@@ -279,16 +315,9 @@ export default {
     boardId() {
       return this.$store.getters.boardId;
     },
-    // timeLabelColor() {
-    //   return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0
-    //     ? "over-due"
-    //     : "due-soon";
-    // },
-    // timeLabel() {
-    //   return +new Date(this.cardToEdit.dueDate) - Date.now() <= 0
-    //     ? "over due"
-    //     : "due soon";
-    // },
+    coverUrl() {
+      return { backgroundImage: `url("${this.cardToEdit.cover}")` };
+    },
     dateToShow() {
       const dateString = this.cardToEdit.dueDate;
       const dueDate = new Date(dateString);
@@ -302,23 +331,62 @@ export default {
       else if (new Date().getYear() === new Date(dateString).getYear()) {
         return this.formatDate(dueDate) + time;
       }
-      //  if (!cardToEdit.isComplete &&
-      //                   +new Date(cardToEdit.dueDate) - Date.now() <= 86400000)
-
-      //                   :class="timeLabelColor"
-      //                   class="time-label"
-      //                 >{{ timeLabel }}</span>
-      //                 <span v-show="cardToEdit.isComplete" class="time-label complete">complete</span>
-
       return this.formatDate(dueDate) + ", " + dueDate.getFullYear() + time;
     },
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
-    },
+      return labelIds.map(lId => allLabels.find(label => label.id === lId));
+    }
   },
   methods: {
+    async removeCover() {
+      this.cardToEdit.cover = "";
+      try {
+        await this.updateCard();
+      } catch (err) {
+        console.log("cant remove cover", err);
+      }
+    },
+    async makeCover(url) {
+      console.log(url);
+      this.cardToEdit.cover = url;
+      try {
+        await this.updateCard();
+      } catch (err) {
+        console.log("cant make cover", err);
+      }
+    },
+    async updateAttach() {
+      const idx = this.cardToEdit.attachments.findIndex(
+        currAttach => currAttach.id === this.attachToEdit.id
+      );
+      this.cardToEdit.attachments.splice(idx, 1, this.attachToEdit);
+      try {
+        await this.updateCard();
+        this.openEditAttach = false;
+        this.attachToEdit = {
+          name: ""
+        };
+      } catch (err) {
+        console.log("cant update attachment", err);
+      }
+    },
+    openEdit(attach) {
+      this.attachToEdit = JSON.parse(JSON.stringify(attach));
+      this.openEditAttach = true;
+    },
+    deleteAttach(attach) {
+      const idx = this.cardToEdit.attachments.findIndex(
+        attachment => attachment.id === attach.id
+      );
+      this.cardToEdit.attachments.splice(idx, 1);
+      this.updateCard();
+    },
+    updateDesc() {
+      this.cardToEdit.description = this.$refs.desc.innerText;
+      this.updateCard();
+    },
     formatAMPM(dueDate) {
       var hours = dueDate.getHours();
       var minutes = dueDate.getMinutes();
@@ -339,6 +407,17 @@ export default {
       const { boardId } = this.$route.params;
       this.$router.push("/b/" + boardId);
     },
+    async addNewAttach(newAttach) {
+      this.openAddAttach = false;
+      newAttach.id = "A" + utilService.makeId();
+      this.cardToEdit.attachments.push(newAttach);
+      try {
+        await this.updateCard();
+        console.log(this.cardToEdit);
+      } catch (err) {
+        console.log("can't update card", err);
+      }
+    },
     async updateCard(ev) {
       this.isEditDesc = false;
       try {
@@ -346,7 +425,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          card: JSON.parse(JSON.stringify(this.cardToEdit)),
+          card: JSON.parse(JSON.stringify(this.cardToEdit))
         });
         if (ev) ev.target.blur();
         // this.$emit('reload')
@@ -362,7 +441,7 @@ export default {
           type: "removeCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id)),
+          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id))
         });
         this.closeModal();
       } catch (err) {
@@ -380,8 +459,6 @@ export default {
     async undoDesc() {
       this.cardToEdit.description = this.lastCardDesc;
       this.isEditDesc = false;
-      // if (this.cardToEdit.description === this.lastCardDesc) return
-      //   await this.updateCard()
     },
     setFocus() {
       this.isEditDesc = true;
@@ -406,7 +483,7 @@ export default {
     },
     async updateCL(checklist) {
       const idx = this.cardToEdit.checklists.findIndex(
-        (cl) => cl.id === checklist.id
+        cl => cl.id === checklist.id
       );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
@@ -422,13 +499,15 @@ export default {
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
-    },
+    }
   },
   components: {
     checklist,
     date,
     cardLabels,
-  },
+    addAttachment,
+    attachment
+  }
 };
 </script>
 

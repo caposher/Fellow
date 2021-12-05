@@ -1,5 +1,7 @@
 <template>
   <section class="home" v-if="boards">
+    <app-header class="blue-header" />
+
     <div class="menu">
       <nav>
         <div class="top-menu">

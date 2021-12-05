@@ -159,4 +159,9 @@
 }
 .icon-back {
   @include to-icon('\e90a');
+.icon-external{
+  @include to-icon('\e92c');
+}
+.icon-cover{
+  @include to-icon('\e914');
 }

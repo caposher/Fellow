@@ -30,7 +30,7 @@
         <span class="icon-sm icon-watch badge"></span>
       </div>
       <div class="icon-wrapper" v-if="card.dueDate">
-        <span class="icon-sm icon-clock badge"></span>
+        <span class="clock icon-sm icon-clock badge"></span>
         <span class="icon-text">{{ dateToShow }}</span>
       </div>
       <div class="icon-wrapper" v-if="card.description">

@@ -1,6 +1,6 @@
 <template>
   <div id="app" :class="{ 'on-board': onBoard }" :style="bgImage">
-    <app-header :class="{ 'blue-header': !onBoard }" />
+    <!-- <app-header :class="{ 'blue-header': !onBoard }" /> -->
     <router-view />
   </div>
 </template>
@@ -11,7 +11,7 @@ import appHeader from "@/cmps/app-header.cmp.vue";
 export default {
   data() {
     return {
-      onBoard: false
+      onBoard: false,
     };
   },
   watch: {
@@ -35,8 +35,8 @@ export default {
         }
         // console.log(this.onBoard);
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {},
   computed: {
@@ -54,10 +54,10 @@ export default {
         // let bgImage = require("@/assets" + this.board.imgUrl);
         // console.log("bgImage", bgImage);
         return {
-          backgroundImage: `url("${bgImage}")`
+          backgroundImage: `url("${bgImage}")`,
         };
       }
-    }
+    },
   },
   components: {
     appHeader,

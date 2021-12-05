@@ -4,14 +4,15 @@
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
       </button>
-      <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverUrl">
-      </div>
+      <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverUrl"></div>
       <header>
         <div class="header">
           <span class="icon-card icon-lg"></span>
           <!-- <span class="fa fa-newspaper"></span> -->
           <div class="card-header-container">
             <textarea
+              rows
+              contenteditable="true"
               @blur="updateCard"
               v-model="cardToEdit.title"
               @keydown.enter.prevent="updateCard"
@@ -88,18 +89,28 @@
               </div>
             </div>
             <!-- @blur="updateCard" -->
-            <textarea
+            <form @submit.prevent="updateDesc">
+              <div
+                contenteditable="true"
+                ref="desc"
+                class="desc action-btn"
+                @focus="setEditDesc"
+                placeholder="Add a more detailed description..."
+              ></div>
+              <!-- <textarea
               rows="2"
               ref="desc"
               class="action-btn desc"
               @focus="setEditDesc"
               placeholder="Add a more detailed description..."
               v-model="cardToEdit.description"
-            />
-            <div class="buttons" v-show="isEditDesc">
-              <button class="submit-btn" @click.stop="updateCard">Save</button>
-              <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
-            </div>
+              />-->
+              <div class="buttons" v-show="isEditDesc">
+                <!-- <button class="submit-btn" @click.stop="updateCard">Save</button> -->
+                <button class="submit-btn" @click.stop.prevent="updateDesc">Save</button>
+                <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
+              </div>
+            </form>
           </div>
 
           <div class="attachments" v-show="cardToEdit.attachments && cardToEdit.attachments.length">
@@ -175,7 +186,7 @@
           />
 
           <section class="checklist-btn">
-            <button @click.stop="openCheckList = !openCheckList">
+            <button @click.stop="openCheckList = !openCheckList" @focus="$event.target.select()">
               <span class="action-btn">
                 <span class="icon-sm icon-checklist"></span>
                 <span>Checklist</span>
@@ -291,6 +302,9 @@ export default {
   created() {
     this.cardToEdit = this.card;
   },
+  mounted() {
+    this.$refs.desc.innerText = this.cardToEdit.description;
+  },
   computed: {
     card() {
       return this.$store.getters.card;
@@ -327,7 +341,7 @@ export default {
   },
   methods: {
     async removeCover() {
-      this.cardToEdit.cover = '';
+      this.cardToEdit.cover = "";
       try {
         await this.updateCard();
       } catch (err) {
@@ -339,7 +353,6 @@ export default {
       this.cardToEdit.cover = url;
       try {
         await this.updateCard();
-
       } catch (err) {
         console.log("cant make cover", err);
       }
@@ -368,6 +381,10 @@ export default {
         attachment => attachment.id === attach.id
       );
       this.cardToEdit.attachments.splice(idx, 1);
+      this.updateCard();
+    },
+    updateDesc() {
+      this.cardToEdit.description = this.$refs.desc.innerText;
       this.updateCard();
     },
     formatAMPM(dueDate) {

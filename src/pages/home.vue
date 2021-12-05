@@ -116,6 +116,8 @@
 </template>
 
 <script>
+import appHeader from '@/cmps/app-header.cmp.vue';
+
 export default {
   name: 'Home',
   data() {

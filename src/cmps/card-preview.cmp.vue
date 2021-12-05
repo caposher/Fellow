@@ -1,6 +1,8 @@
 <template>
   <section class="card" @click="showDetails" v-if="card">
-    <img v-show="card.cover" :url="card.cover" class="card-cover" />
+    <div class="cover-img" v-show="card.cover" :style="getCover">
+
+    </div>
     <!-- <div> -->
     <!-- <section class="label-and-q-edit"> -->
     <span class="card-wrapper" @click.stop.prevent>
@@ -138,6 +140,10 @@ export default {
       });
       return `${undoneTodos}/${doneTodos}`;
     },
+    getCover(){
+      return { backgroundImage: `url("${this.card.cover}")` };
+
+    }
   },
   components: {},
 };

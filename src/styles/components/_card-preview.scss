@@ -72,8 +72,13 @@
       text-decoration: none;
       text-overflow: ellipsis;
       vertical-align: top;
+
+      .clock {
+        line-height: 19px;
+      }
       .badge {
         color: #6b778c;
+
         vertical-align: top;
       }
       .icon-text {

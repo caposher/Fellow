@@ -157,3 +157,9 @@
 .icon-gear{
   @include to-icon('\e932');
 }
+.icon-external{
+  @include to-icon('\e92c');
+}
+.icon-cover{
+  @include to-icon('\e914');
+}

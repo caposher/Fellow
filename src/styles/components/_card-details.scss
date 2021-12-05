@@ -18,6 +18,19 @@
   position: relative;
   width: 768px;
   z-index: 25;
+  .cover-wrapper{
+    background-size: contain;
+    background-origin: content-box;
+    box-sizing: border-box;
+    background-position: center center;
+    background-color: transparent;
+    // background-image: url(https://res.cloudinary.com/oshra/image/upload/v1638727515/a4mttgg817dppktjssoh.png);
+    background-repeat: no-repeat;
+    height: 160px;
+    min-height: 160px;
+    padding: 0px;
+
+  }
   & header {
     margin: 12px 40px 8px 56px;
     min-height: 32px;
@@ -155,6 +168,30 @@
       position: relative;
       margin-left: 40px;
     }
+    .attachments {
+      .attach-header {
+        margin: 0 0 4px 0px;
+        padding: 8px 0;
+        // position: relative;
+        .icon-attach {
+        padding: 8px 0;
+
+          left: -40px;
+          position: absolute;
+          top: -5px;
+        }
+        h3 {
+          display: inline-block;
+          margin: 0;
+          min-height: 18px;
+          min-width: 40px;
+          width: auto;
+          font-size: 16px;
+          line-height: 20px;
+          font-weight: 600;
+        }
+      }
+    }
     .description {
       & .card-details-icon {
         left: -40px;
@@ -162,7 +199,7 @@
         top: -2px;
         font-family: icomoon;
         &::after {
-          content: "\e922";
+          content: '\e922';
         }
       }
       & .content {
@@ -265,6 +302,10 @@
   position: relative;
 }
 
+.attachment-btn {
+  position: relative;
+}
+
 .check-list {
   & .card-details-icon {
     left: -40px;
@@ -272,7 +313,7 @@
     top: 6px;
     font-family: icomoon;
     &::after {
-      content: "\e91a";
+      content: '\e91a';
     }
   }
 }
@@ -311,7 +352,7 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: "\e912";
+    content: '\e912';
   }
 }
 
@@ -328,7 +369,7 @@
   background-color: #f2d600;
 }
 
-input[id="cb"] + label {
+input[id='cb'] + label {
   display: inline-block;
   flex-shrink: 0;
   height: 16px;
@@ -342,13 +383,13 @@ input[id="cb"] + label {
   border-radius: 2px;
   cursor: pointer;
 }
-input[id="cb"]:checked + label:after {
+input[id='cb']:checked + label:after {
   position: relative;
   box-sizing: border-box;
   color: white;
   padding: 2px;
   font-family: icomoon;
-  content: "\e916";
+  content: '\e916';
   height: 16px;
   width: 16px;
   display: flex;
@@ -362,7 +403,7 @@ input[id="cb"]:checked + label:after {
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
 }
-input[id="cb"] {
+input[id='cb'] {
   display: none;
 }
 

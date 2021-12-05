@@ -138,10 +138,10 @@ export default {
   },
   methods: {
     bgImage(board) {
-      console.log("board", board);
+      // console.log("board", board);
       if (board) {
         let bgImage = require("@/assets" + board.style.imgUrl);
-        console.log("bgImage", bgImage);
+        // console.log("bgImage", bgImage);
         return {
           backgroundImage: `url("${bgImage}")`
         };

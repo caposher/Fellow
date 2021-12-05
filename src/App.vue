@@ -33,7 +33,7 @@ export default {
             console.log("problem with getting board", err);
           }
         }
-        console.log(this.onBoard);
+        // console.log(this.onBoard);
       },
       immediate: true
     }
@@ -60,7 +60,8 @@ export default {
     }
   },
   components: {
-    appHeader
+    appHeader,
+
   }
 };
 </script>

@@ -12,7 +12,8 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: home,
+        // component: home,
+        component: login,
     },
     {
         path: '/about',
@@ -20,9 +21,10 @@ const routes = [
         component: about
     },
     {
-        path: '/login',
+        path: '/home',
+        // path: '/login',
         name: 'login',
-        component: login
+        component: home
     },
     {
         // get params id
@@ -31,12 +33,12 @@ const routes = [
         component: board,
         children: [
             {
-              path: 'c/:cardId',
-              name: 'cardDetails',
-              component: cardDetails,
+                path: 'c/:cardId',
+                name: 'cardDetails',
+                component: cardDetails,
             },
-            
-          ],
+
+        ],
     },
 ];
 

@@ -1,5 +1,7 @@
 <template>
   <section class="home" v-if="boards">
+    <app-header class="blue-header" />
+
     <div class="menu">
       <nav>
         <div class="top-menu">
@@ -119,11 +121,13 @@
 </template>
 
 <script>
+import appHeader from "@/cmps/app-header.cmp.vue";
+
 export default {
   name: "Home",
   data() {
     return {
-      user: null
+      user: null,
     };
   },
   async created() {
@@ -134,7 +138,7 @@ export default {
     boards() {
       var boards = this.$store.getters.boards;
       return boards;
-    }
+    },
   },
   methods: {
     bgImage(board) {
@@ -143,7 +147,7 @@ export default {
         let bgImage = require("@/assets" + board.style.imgUrl);
         console.log("bgImage", bgImage);
         return {
-          backgroundImage: `url("${bgImage}")`
+          backgroundImage: `url("${bgImage}")`,
         };
       }
     },
@@ -155,7 +159,7 @@ export default {
       try {
         const board = await this.$store.dispatch({
           type: "createBoard",
-          title
+          title,
         });
         this.$router.push("/b/" + board._id);
       } catch (err) {
@@ -169,8 +173,8 @@ export default {
       } catch (err) {
         console.log("cant get board" + boardId, err);
       }
-    }
+    },
   },
-  components: {}
+  components: { appHeader },
 };
 </script>

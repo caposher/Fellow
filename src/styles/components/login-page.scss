@@ -1,0 +1,256 @@
+.login-page-wrapper {
+  display: flex;
+  background-color: #f9fafc;
+  margin-top: -96px;
+  height: 100vh;
+  padding-top: 1px;
+  justify-content: space-between;
+}
+.login-page {
+  background-color: #f9fafc;
+  padding-top: 1px;
+  min-width: 400px;
+}
+.fellow-right {
+  max-width: 400px;
+  width: 400px;
+  height: 400px;
+  background-image: url("../assets/img/fellow-right.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  align-self: flex-end;
+}
+.fellow-left {
+  max-width: 400px;
+  width: 400px;
+  height: 400px;
+  max-height: 400px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-image: url("../assets/img/fellow-left.svg");
+  align-self: flex-end;
+}
+
+.fellow-main-logo {
+  display: block;
+  height: 43px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.inner-section {
+  width: 100%;
+  padding: 0px;
+  overflow: visible;
+  margin-bottom: 30px;
+
+  & .section-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+
+    & .account-form {
+      background-color: #ffffff;
+      border-radius: 3px;
+      padding: 25px 40px;
+      box-shadow: rgb(0 0 0 / 10%) 0 0 10px;
+
+      & .google-icon {
+        background: url("https://d2k1ftgv7pobq7.cloudfront.net/meta/c/p/res/images/8215f6659adc202403198fef903a447e/sign-in-with-google.svg")
+          0 50% no-repeat;
+        display: inline-block;
+        border-radius: 1px;
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+        margin-top: 6px;
+        margin-right: 4px;
+      }
+      & .facebook-icon {
+        // background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Facebook_icon_2013.svg/450px-Facebook_icon_2013.svg.png")
+        //   0 50% no-repeat;
+        display: inline-block;
+        border-radius: 1px;
+        color: #3b5998;
+        // background-color: blue;
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+        margin-top: 6px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  h1 {
+    text-align: center;
+    color: #5e6c84;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    line-height: 28px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+  }
+
+  .form-field {
+    font-size: 14px;
+    background-color: #fafbfc;
+    border: 2px solid #dfe1e6;
+    box-sizing: border-box;
+    border-radius: 3px;
+    height: 44px;
+    transition: background-color 0.2s ease-in-out 0s,
+      border-color 0.2s ease-in-out 0s;
+    width: 100%;
+    padding: 0.5em;
+    display: block;
+    font-weight: 100;
+    margin: 0 0 1.2em;
+    &:focus {
+      background-color: white;
+      border: 2px solid #4c9aff;
+      box-shadow: 0 0 0;
+      outline: none;
+    }
+  }
+  .button-green {
+    background: #61bd4f;
+    // background: -webkit-gradient(
+    //   linear,
+    //   left top,
+    //   left bottom,
+    //   from(#61bd4f),
+    //   to(#5aac44)
+    // );
+    // background: linear-gradient(to bottom, #61bd4f 0%, #5aac44 100%);
+    background: #5aac44;
+    // box-shadow: 0 2px 0 #3f6f21;
+    color: #fff;
+    width: 100%;
+    box-shadow: none;
+    // background: #CDD2D4;
+    //     background: -webkit-gradient(linear, left top, left bottom, from(#CDD2D4), to(#C4C9CC));
+    // background: linear-gradient(to bottom, #CDD2D4 0%, #C4C9CC 100%);
+    border-radius: 0.3em;
+    // box-shadow: 0 2px 0 hsl(0,0%,30%);
+    // color: hsl(0,0%,30%);
+    display: inline-block;
+    font-weight: bold;
+    // margin-bottom: .8em;
+    padding: 0.6em 1.3em;
+    padding: 8.5px 18.2px;
+    position: relative;
+    text-decoration: none;
+    border: 0px;
+
+    &:hover {
+      background: #61bd4f;
+      cursor: pointer;
+    }
+  }
+
+  & .login-method-separator {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-weight: 100;
+  }
+  & .oauth-button {
+    background: #fff;
+    color: rgba(0, 0, 0, 0.54);
+    box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0;
+    border-color: transparent;
+    text-align: center;
+    border-radius: 3px;
+    width: 99%;
+    height: 39px;
+    padding-top: 0;
+    margin-bottom: 12px;
+    transition: background-color 0.2s ease-in-out 0s,
+      border-color 0.2s ease-in-out 0s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #f9fafc;
+    }
+
+    & span.label {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: bold;
+      color: #505f79;
+      padding: 3px;
+      height: 32px;
+      line-height: 32px;
+    }
+  }
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid hsl(0, 0%, 80%);
+    margin: 1em 0;
+    margin-top: 25px;
+    padding: 0;
+  }
+
+  .bottom-form-link {
+    text-align: center;
+    font-size: 14px;
+    display: block;
+    padding: 0;
+    text-decoration: none;
+    color: #0052cc;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+// .google-login {
+//   margin-top: 16px;
+// }
+
+// .form-field:focus {
+//   background-color: white;
+//   border: 2px solid #4c9aff;
+//   box-shadow: 0 0 0;
+//   outline: none;
+// }
+.logo-img {
+  width: 43px;
+}
+
+.logo {
+  //   color: white;
+  //   text-decoration: none;
+  //   align-items: center;
+  display: block;
+  font-family: paytone;
+  font-size: 55px;
+  line-height: 32px;
+  //   display: inline-flex;
+  padding-top: 5px;
+  //   margin: 0 4px 0 0;
+  // margin-top: 5px;
+  padding: 0 12px;
+  padding-right: 12px;
+  padding-left: 12px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  //   cursor: pointer;
+  &:hover {
+    box-shadow: none;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    // color: #ffffff;
+  }
+}

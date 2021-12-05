@@ -172,7 +172,10 @@
             @update="updateLabels"
           />
           <section class="checklist-btn">
-            <button @click.stop="openCheckList = !openCheckList">
+            <button
+              @click.stop="openCheckList = !openCheckList"
+              @focus="$event.target.select()"
+            >
               <span class="action-btn">
                 <span class="icon-sm icon-checklist"></span>
                 <span>Checklist</span>

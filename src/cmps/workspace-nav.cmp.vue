@@ -1,10 +1,6 @@
 <template>
   <nav>
-    <div
-      class="nav-container collapsed"
-      :class="openBar ? 'hidden' : 'shown'"
-      @click="onOpenBar(true)"
-    >
+    <div class="nav-container collapsed" :class="openBar ? 'hidden' : 'shown'" @click="onOpenBar(true)">
       <div class="collapsed-main">
         <button><i class="fas fa-chevron-right"></i></button>
       </div>
@@ -25,9 +21,7 @@
           <div class="body-main">
             <ul>
               <li v-for="board in boards" :key="board._id">
-                <router-link
-                  :to="{ name: 'board', params: { boardId: board._id } }"
-                >
+                <router-link :to="{ name: 'board', params: { boardId: board._id } }">
                   <img :src="bgImage(board)" />
                   <p>{{ board.title }}</p>
                   <span class="star icon-star" @click.stop.prevent=""></span
@@ -56,14 +50,17 @@ export default {
   methods: {
     showNavBar() {},
     bgImage(board) {
-      if (board) {
-        let bgImage = require("@/assets" + board.style.imgUrl);
+      if (board && board.style.imgUrl.includes('http')) {
+        let bgImage = `url("${board.style.imgUrl}")`;
+        return bgImage;
+      } else if (board) {
+        let bgImage = require('@/assets' + board.style.imgUrl);
         return bgImage;
       }
     },
     onOpenBar(val) {
       this.openBar = val;
-      this.$emit("openBar", val);
+      this.$emit('openBar', val);
     },
   },
 };

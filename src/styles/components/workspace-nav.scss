@@ -23,6 +23,7 @@
   border-right: 1px solid rgba(54, 58, 64, 0.24);
   padding: 0;
   justify-content: flex-start;
+  z-index: 5;
 
   &:hover {
     background: none;
@@ -30,6 +31,7 @@
     cursor: pointer;
 
     button {
+      z-index: 10;
       background-color: #fafbfc;
       color: #7a869a;
     }

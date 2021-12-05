@@ -148,12 +148,15 @@
 .icon-card {
   @include to-icon('\e912');
 }
-.icon-board{
+.icon-board {
   @include to-icon('\e90b');
 }
-.icon-home{
+.icon-home {
   @include to-icon('\e938');
 }
-.icon-gear{
+.icon-gear {
   @include to-icon('\e932');
+}
+.icon-back {
+  @include to-icon('\e90a');
 }

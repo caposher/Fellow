@@ -1,0 +1,128 @@
+.main-menu {
+  right: 0;
+  top: 0;
+  border-radius: 0;
+  width: 340px;
+  height: 100vh;
+  padding: 0 6px 0 12px;
+
+  .popup-header h4 {
+    width: 100%;
+    line-height: 48px;
+    font-weight: bold;
+    padding-left: 7px;
+    padding-right: 6px;
+    letter-spacing: -0.2px;
+    font-size: 16px;
+  }
+
+  .close-popup {
+    padding: 0 15px;
+  }
+
+  .back-popup {
+    position: absolute;
+    // top: 0;
+    color: #172b4d;
+    left: 0; //TODO:
+    top: 5px;
+  }
+
+  .main-menu-actions {
+    display: flex;
+    flex-direction: column;
+    padding: 0 13px;
+    padding-block-end: 25px;
+    border-bottom: 1px solid #091e4221;
+
+    // li {
+    //   cursor: pointer;
+
+    //   :hover {
+    //   }
+    // }
+
+    .menu-about {
+      padding-block-start: 16px;
+      h3 {
+        line-height: 28px;
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .menu-action-icon {
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+        color: #172b4d;
+        line-height: 30px;
+      }
+
+      p {
+        line-height: 14px;
+      }
+    }
+  }
+
+  .menu-action {
+    padding-block-start: 14px;
+
+    .icon-img {
+      height: 0;
+      padding: 10px;
+      margin-inline-end: 12px;
+      background-color: lightgreen;
+    }
+
+    h3 {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+
+  .menu-background-size {
+    height: 95px;
+    width: 152.7px;
+    background-size: cover;
+    margin-inline-end: 8px;
+    border-radius: 8px;
+    margin: 0 4px 8px 4px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  .main-menu-background {
+    display: flex;
+    padding-block-start: 10px;
+    padding-block-end: 12px;
+    border-bottom: 1px solid #091e4221;
+    li p {
+      text-align: center;
+      line-height: 23px;
+    }
+
+    .background-photo {
+      background-image: url('~@/assets/img/menu-photos.jpg');
+    }
+    .background-colors {
+      background-image: url('~@/assets/img/menu-colors.jpg');
+    }
+  }
+
+  .menu-bgc-custom {
+    padding-block-start: 22px;
+    font-size: 14px;
+    h2 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-block-end: 10px;
+    }
+  }
+
+  .menu-color-set {
+    padding-block-start: 12px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

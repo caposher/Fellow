@@ -7,6 +7,7 @@ export const boardStore = {
     currCard: null,
     currList: null,
     labelsState: false,
+    bgPhotos: [],
   },
 
   getters: {
@@ -31,6 +32,9 @@ export const boardStore = {
     labelsState(state) {
       return JSON.parse(JSON.stringify(state.labelsState));
     },
+    getBgPhotos(state) {
+      return JSON.parse(JSON.stringify(state.bgPhotos));
+    },
   },
 
   mutations: {
@@ -49,6 +53,10 @@ export const boardStore = {
     toggleLabel(state, { labelsState }) {
       state.labelsState = !labelsState; //switch state
     },
+    setPhotos(state, { photos }) {
+      state.bgPhotos = photos;
+    },
+    // setBg(state,)
   },
 
   actions: {
@@ -177,6 +185,22 @@ export const boardStore = {
         commit({ type: 'setCard', card: data.savedCard });
       } catch (err) {
         console.log('cant remove card', err);
+      }
+    },
+    async requestPhotos({ commit }) {
+      try {
+        const photos = await boardService.getBgImgs();
+        commit({ type: 'setPhotos', photos });
+      } catch (err) {
+        console.log('failed to get photos', err);
+      }
+    },
+    async setBackground({ commit }, { boardId, url }) {
+      try {
+        const board = await boardService.setBackground(boardId, url);
+        commit({ type: 'setBoard', board });
+      } catch (err) {
+        console.log('failed to set background', err);
       }
     },
   },

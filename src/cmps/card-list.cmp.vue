@@ -2,7 +2,6 @@
   <li>
     <!-- card preview gats card and mini-list-->
     <card-preview :card="card" :list="list" :labelsState="$store.getters.labelsState"></card-preview>
-    <!-- <card-preview class="card-drag" v-if="doDrag" :card="card" :list="list" @mousemove="dragCard"></card-preview> -->
   </li>
 </template>
 
@@ -21,13 +20,6 @@ export default {
       type: Boolean,
     },
   },
-  methods: {
-    dragCard(ev) {
-      // debugger;
-    },
-  },
-  // props- card
-  // props mini-list
   components: {
     cardPreview,
   },

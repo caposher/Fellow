@@ -47,21 +47,34 @@
     </div>
 
     <ul>
-      <li v-for="todo in todosToShow" :key="todo.id">
-        <span class="c-b-container">
-          <input
-            class="c-b-btn"
-            type="checkbox"
-            :checked="todo.isDone"
-            @click.stop="toggleTodo(todo.id)"
-          />
-          <!-- </span> -->
-          <span @click.stop="editTodo(todo)" :class="{ done: todo.isDone }"
-            >{{ todo.title }}
+      <draggable
+        v-model="CLtoUpdate.todos"
+        group="todo-group"
+        ghost-class="ghost"
+        chosenClass=""
+        dragClass="drag"
+        dragoverBubble: false,
+
+        @start="updateCL"
+        @end="updateCL"
+        @add="updateCL"
+      >
+        <li v-for="todo in todosToShow" :key="todo.id">
+          <span class="c-b-container">
+            <input
+              class="c-b-btn"
+              type="checkbox"
+              :checked="todo.isDone"
+              @click.stop="toggleTodo(todo.id)"
+            />
+            <!-- </span> -->
+            <span @click.stop="editTodo(todo)" :class="{ done: todo.isDone }"
+              >{{ todo.title }}
+            </span>
           </span>
-        </span>
-        <span @click="removeTodo(todo.id)">X</span>
-      </li>
+          <span @click="removeTodo(todo.id)">X</span>
+        </li>
+      </draggable>
       <section v-if="newTodo">
         <form @submit.prevent="updateTodo">
           <input
@@ -88,6 +101,8 @@
 </template>
 
 <script>
+import draggable from "vuedraggable";
+
 import { utilService } from "../services/util.service.js";
 
 export default {
@@ -184,6 +199,9 @@ export default {
         "%"
       );
     },
+  },
+  components: {
+    draggable,
   },
 };
 </script>

@@ -6,19 +6,17 @@
       </button>
       <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverStyle">
         <section class="cover-menu-header">
-          <button @click="showCoverMenu=!showCoverMenu" class="cover-menu-btn">
+          <button @click.stop="showCoverMenu=!showCoverMenu" class="cover-menu-btn">
             <span class="icon-sm icon-cover"></span>
             Cover
           </button>
-          <section class="card-popup" v-show="showCoverMenu">
-            <section class="popup-header">
-              <div @click.stop="showCoverMenu=false">
-                <span class="close-popup icon-md icon-close"></span>
-              </div>
-              <h4>Cover</h4>
-            </section>
-            <cover @makeCover="makeCover" :card="cardToEdit"></cover>
-          </section>
+          <cover
+            v-if="showCoverMenu"
+            @makeCover="makeCover"
+            :card="cardToEdit"
+            @removeCover="removeCover"
+            @closeCover="showCoverMenu=false"
+          ></cover>
         </section>
       </div>
       <header>
@@ -257,9 +255,19 @@
               <add-attachment @addNewAttach="addNewAttach"></add-attachment>
             </section>
           </section>
-          <button class="cover action-btn not-yet" title="Not yet developed">
-            <span class="icon-sm icon-cover"></span>Cover
-          </button>
+          <section v-show="!card.cover" class="cover-menu-header">
+            <button @click.stop="showCoverMenu=!showCoverMenu" class="cover-menu-btn action-btn">
+              <span class="icon-sm icon-cover"></span>
+              Cover
+            </button>
+            <cover
+              v-if="showCoverMenu"
+              @makeCover="makeCover"
+              :card="cardToEdit"
+              @removeCover="removeCover"
+              @closeCover="showCoverMenu=false"
+            ></cover>
+          </section>
           <section class="actions">
             <h3>Actions</h3>
             <button class="cover action-btn not-yet" title="Not yet developed">
@@ -336,7 +344,7 @@ export default {
     coverStyle() {
       if (!this.cardToEdit.cover) return;
       if (this.cardToEdit.cover.charAt(0) === "#") {
-        console.log(this.cardToEdit.cover);
+        // console.log(this.cardToEdit.cover);
         return {
           backgroundColor: this.cardToEdit.cover,
           height: "116px",
@@ -371,6 +379,7 @@ export default {
       this.cardToEdit.cover = "";
       try {
         await this.updateCard();
+        this.showCoverMenu = false
       } catch (err) {
         console.log("cant remove cover", err);
       }

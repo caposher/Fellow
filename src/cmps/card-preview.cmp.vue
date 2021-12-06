@@ -155,7 +155,7 @@ export default {
         };
       }
     
-      return { backgroundImage: `url("${this.card.cover}")`, height: '204.575px'};
+      return { backgroundImage: `url("${this.card.cover}")`, height: '163.58px'};
     }
   },
   components: {}

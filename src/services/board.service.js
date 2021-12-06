@@ -182,11 +182,11 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
   };
 }
 
-async function getBgImgs(searchKey, imgNum) {
+async function getBgImgs(searchKey, imgNum,page) {
   try {
     const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
       imgNum ? imgNum : 50
-    }&client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
     let res = await axios.get(search);
     // let res = gRes;
     return res.data.results.map((obj) => obj.urls);

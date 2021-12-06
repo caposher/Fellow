@@ -18,7 +18,7 @@
   position: relative;
   width: 768px;
   z-index: 25;
-  .cover-wrapper{
+  .cover-wrapper {
     background-size: contain;
     background-origin: content-box;
     box-sizing: border-box;
@@ -30,7 +30,7 @@
     min-height: 160px;
     padding: 0px;
     position: relative;
-    .cover-menu-header{
+    .cover-menu-header {
       align-items: center;
       bottom: 0;
       box-sizing: border-box;
@@ -39,20 +39,18 @@
       padding: 8px;
       position: absolute;
       width: 100%;
-      .cover-menu-btn{
+      .cover-menu-btn {
         background-color: #00000014;
         border-radius: 3px;
         color: #172b4d;
         padding: 6px 12px 6px 6px;
         text-decoration: none;
-        &:hover{
+        &:hover {
           background-color: #00000029;
           cursor: pointer;
-
         }
       }
-  }
-
+    }
   }
   & header {
     margin: 12px 40px 8px 56px;
@@ -197,7 +195,7 @@
         padding: 8px 0;
         // position: relative;
         .icon-attach {
-        padding: 8px 0;
+          padding: 8px 0;
 
           left: -40px;
           position: absolute;
@@ -458,6 +456,10 @@ input[id='cb'] {
   .side-menu & {
     width: 168px;
   }
+  .suggestions & {
+    width: auto;
+  }
+
   &.checklist-btn {
     max-width: fit-content;
     display: inline;

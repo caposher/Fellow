@@ -39,7 +39,7 @@
           </svg>
         </span>
       </button>
-      <span class="user-img"><i class="fas fa-user"></i></span>
+      <span class="user-img" :title="user"><i class="fas fa-user"></i></span>
     </div>
   </header>
 </template>
@@ -47,6 +47,11 @@
 <script>
 import logo from "../cmps/logo.cmp.vue";
 export default {
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+  },
   components: {
     logo,
   },

@@ -8,15 +8,21 @@
       <!-- <button class="close-label-popup" @click="$emit('close')">X</button> -->
     </header>
     <input type="text" placeholder="Search labels..." />
-    <form @submit.prevent="addCheckList">
+    <form @submit.prevent="">
       <h5>Labels</h5>
-
-      <section v-for="(label, idx) in allLabels" :key="label.id" @change="toggleCheck(label.id, idx)">
+      <section
+        v-for="(label, idx) in allLabels"
+        :key="label.id"
+        @change="toggleCheck(label.id, idx)"
+      >
         <label class="label-picker">
           <div :class="setColor(label.colorClass)">
             <span class="label-name">{{ label.txt }}</span>
             <input type="checkbox" :checked="checkLabel(label.id)" />
-            <span v-show="checkLabel(label.id)" class="close-popup icon-sm icon-check"></span>
+            <span
+              v-show="checkLabel(label.id)"
+              class="close-popup icon-sm icon-check"
+            ></span>
           </div>
           <span class="edit-btn icon-sm icon-edit"></span>
         </label>
@@ -46,8 +52,10 @@ export default {
     },
     toggleCheck(labelId, posIdx) {
       const idx = this.selectedIds.findIndex((lId) => lId === labelId);
-      0 <= idx ? this.selectedIds.splice(idx, 1) : this.selectedIds.splice(posIdx, 0, labelId);
-      this.$emit('update', JSON.parse(JSON.stringify(this.selectedIds)));
+      0 <= idx
+        ? this.selectedIds.splice(idx, 1)
+        : this.selectedIds.splice(posIdx, 0, labelId);
+      this.$emit("update", JSON.parse(JSON.stringify(this.selectedIds)));
     },
     setColor(colorClass) {
       return `${colorClass} ${colorClass}-lg`;

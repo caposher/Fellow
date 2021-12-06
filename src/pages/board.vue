@@ -244,7 +244,6 @@ export default {
       this.slider.classList.remove("active");
     },
     onOpenBar(val) {
-      console.log("val", val);
       this.openBar = val;
     },
   },

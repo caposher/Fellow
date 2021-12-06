@@ -4089,11 +4089,31 @@ function travelBoard() {
 
   board.lists.push(done);
 
-  console.log('lists', board.lists);
+  // console.log('lists', board.lists);
   board.lists.forEach((list) => {
     list.id = 'L' + utilService.makeId();
   });
-  console.log(board);
+  // console.log(board);
+  board.createdBy = {
+    "_id": "u101",
+    "fullname": "Oshra Hartuv",
+    "username": "oshraHartuv1",
+    "color": "pink"
+  }
+  board.members = [
+    {
+      "_id": "u103",
+      "fullname": "Adam Bercovich",
+      "username": "adamBerco",
+      "color": "green"
+    },
+    {
+      "_id": "u102",
+      "fullname": "Osher Cappelli",
+      "username": "osherCappelli",
+      "color": "blue"
+    }
+  ]
   return board;
 }
 
@@ -4102,7 +4122,12 @@ function mealPlanner() {
     _id: 'i9n9w',
     title: 'Meal Planning',
     createdAt: '',
-    createdBy: 'user',
+    createdBy: {
+      "_id": "u102",
+      "fullname": "Osher Cappelli",
+      "username": "osherCappelli",
+      "color": "blue"
+    },
     style: {
       imgUrl:
         'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2398x1600/6a5ac82565edf3fa43b6b3b00cb25322/photo-1591189863430-ab87e120f312.jpg',
@@ -4115,7 +4140,20 @@ function mealPlanner() {
       { id: 'thr5F', txt: 'Egg Free', colorClass: 'label-purple' },
       { id: 'VvivO', txt: 'Dairy Free', colorClass: 'label-blue' },
     ],
-    members: [],
+    members: [
+      {
+        "_id": "u101",
+        "fullname": "Oshra Hartuv",
+        "username": "oshraHartuv1",
+        "color": "pink"
+      },
+      {
+        "_id": "u103",
+        "fullname": "Adam Bercovich",
+        "username": "adamBerco",
+        "color": "green"
+      },
+    ],
     lists: [
       {
         id: 'LnRD7u',
@@ -5229,7 +5267,12 @@ function companyBoard() {
     _id: 'uaUog',
     title: 'Company Overview',
     createdAt: '',
-    createdBy: 'user',
+    createdBy: {
+      "_id": "u103",
+      "fullname": "Adam Bercovich",
+      "username": "adamBerco",
+      "color": "green"
+    },
     style: {
       imgUrl:
         'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/2c7f3ad5d8130dc15eae5305a6071253/photo-1572025442646-866d16c84a54.jpg',
@@ -5266,7 +5309,21 @@ function companyBoard() {
         colorClass: 'label-blue',
       },
     ],
-    members: [],
+
+    members: [
+      {
+        "_id": "u101",
+        "fullname": "Oshra Hartuv",
+        "username": "oshraHartuv1",
+        "color": "pink"
+      },
+      {
+        "_id": "u102",
+        "fullname": "Osher Cappelli",
+        "username": "osherCappelli",
+        "color": "blue"
+      },
+    ],
     lists: [
       {
         id: 'LSAgms',

@@ -1,32 +1,33 @@
 // SETUP
-@import 'setup/typography';
-@import 'setup/variables';
-@import 'setup/mixins';
-@import 'setup/functions';
+@import "setup/typography";
+@import "setup/variables";
+@import "setup/mixins";
+@import "setup/functions";
 
 // BASICS
-@import 'basics/helpers';
-@import 'basics/base';
-@import 'basics/layout';
+@import "basics/helpers";
+@import "basics/base";
+@import "basics/layout";
 
 // COMPONENTS
-@import 'components/main-header';
-@import 'components/board-header';
-@import 'components/board-list';
-@import 'components/popup';
-@import 'components/card-preview';
-@import 'components/card-details';
-@import 'components/attachment';
-@import 'components/cover-menu';
-@import 'components/checklist';
-@import 'components/date';
-@import 'components/workspace-nav';
-@import 'components/home';
-@import 'components/date';
-@import 'components/login-page';
-@import 'components/main-menu';
+@import "components/main-header";
+@import "components/board-header";
+@import "components/board-list";
+@import "components/popup";
+@import "components/card-preview";
+@import "components/card-details";
+@import "components/attachment";
+@import "components/cover-menu";
+@import "components/checklist";
+@import "components/date";
+@import "components/workspace-nav";
+@import "components/home";
+@import "components/date";
+@import "components/login-page";
+@import "components/main-menu";
+@import "components/members";
 // @import "components/main-footer";
 // @import "components/cat-card";
 
-@import 'components/labels';
-@import 'components/board';
+@import "components/labels";
+@import "components/board";

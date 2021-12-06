@@ -1,18 +1,25 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
+  <div
+    v-if="list && cardToEdit"
+    class="card-details-container"
+    @click.stop.prevent="closeModal"
+  >
     <div class="card-details" @click.stop>
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
       </button>
       <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverStyle">
         <section class="cover-menu-header">
-          <button @click="showCoverMenu=!showCoverMenu" class="cover-menu-btn">
+          <button
+            @click="showCoverMenu = !showCoverMenu"
+            class="cover-menu-btn"
+          >
             <span class="icon-sm icon-cover"></span>
             Cover
           </button>
           <section class="card-popup" v-show="showCoverMenu">
             <section class="popup-header">
-              <div @click.stop="showCoverMenu=false">
+              <div @click.stop="showCoverMenu = false">
                 <span class="close-popup icon-md icon-close"></span>
               </div>
               <h4>Cover</h4>
@@ -82,7 +89,9 @@
                     :key="label.id"
                     :class="label.colorClass"
                     class="label-tag white-text"
-                  >{{ label.txt }}</button>
+                  >
+                    {{ label.txt }}
+                  </button>
                   <button v-show="getLabels.length > 0" class="action-btn">
                     <span class="icon-sm icon-plus"></span>
                   </button>
@@ -101,7 +110,9 @@
                   v-show="cardToEdit.description && !isEditDesc"
                   @click.stop="setFocus"
                   class="action-btn"
-                >Edit</button>
+                >
+                  Edit
+                </button>
               </div>
             </div>
             <!-- @blur="updateCard" -->
@@ -113,29 +124,28 @@
                 @focus="setEditDesc"
                 placeholder="Add a more detailed description..."
               ></div>
-              <!-- <textarea
-              rows="2"
-              ref="desc"
-              class="action-btn desc"
-              @focus="setEditDesc"
-              placeholder="Add a more detailed description..."
-              v-model="cardToEdit.description"
-              />-->
               <div class="buttons" v-show="isEditDesc">
-                <!-- <button class="submit-btn" @click.stop="updateCard">Save</button> -->
-                <button class="submit-btn" @click.stop.prevent="updateDesc">Save</button>
+                <button class="submit-btn" @click.stop.prevent="updateDesc">
+                  Save
+                </button>
                 <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
               </div>
             </form>
           </div>
 
-          <div class="attachments" v-show="cardToEdit.attachments && cardToEdit.attachments.length">
+          <div
+            class="attachments"
+            v-show="cardToEdit.attachments && cardToEdit.attachments.length"
+          >
             <section class="attach-header">
               <span class="icon-attach icon-lg"></span>
               <h3>Attachments</h3>
             </section>
 
-            <div v-for="attachment in cardToEdit.attachments" :key="attachment.id">
+            <div
+              v-for="attachment in cardToEdit.attachments"
+              :key="attachment.id"
+            >
               <attachment
                 :attachment="attachment"
                 @makeCover="makeCover"
@@ -148,19 +158,30 @@
             <section class="card-popup" v-show="openEditAttach">
               <section class="popup-header">
                 <div>
-                  <span @click.stop="openEditAttach=false" class="close-popup icon-md icon-close"></span>
+                  <span
+                    @click.stop="openEditAttach = false"
+                    class="close-popup icon-md icon-close"
+                  ></span>
                 </div>
                 <h4>Edit attachment</h4>
               </section>
               <form @submit.stop.prevent="updateAttach">
                 <label>Link name</label>
-                <input @focus="$event.target.select()" type="text" v-model="attachToEdit.name" />
+                <input
+                  @focus="$event.target.select()"
+                  type="text"
+                  v-model="attachToEdit.name"
+                />
                 <button class="submit">Update</button>
               </form>
             </section>
           </div>
 
-          <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
+          <div
+            class="check-list"
+            v-for="checklist in cardToEdit.checklists"
+            :key="checklist.id"
+          >
             <span class="card-details-icon icon-lg"></span>
 
             <checklist :checklist="checklist" @updateCL="updateCL" />
@@ -175,7 +196,11 @@
               @click="isComment = true"
               >-->
               <!-- <textarea rows="1" placeholder="Write a comment..." @blur="isComment = false" /> -->
-              <textarea rows="1" placeholder="not yet developed..." @blur="isComment = false" />
+              <textarea
+                rows="1"
+                placeholder="not yet developed..."
+                @blur="isComment = false"
+              />
               <button class="submit-btn">save</button>
             </div>
           </div>
@@ -187,9 +212,19 @@
           </button>
           <h3>Add to card</h3>
           <!-- side menu renders cmp in click -->
-          <button class="action-btn not-yet" title="Not yet developed">
+          <button
+            class="action-btn"
+            title="Members"
+            @click.stop="showMembers = !showMembers"
+          >
             <span class="icon-sm icon-member"></span>Members
           </button>
+          <card-members
+            v-show="showMembers"
+            @close="showMembers = !showMembers"
+            :cardMembers="cardToEdit.members"
+            @update="updateMembers"
+          />
           <button @click.stop="toggleLabels" class="action-btn">
             <span class="icon-sm icon-label"></span>
             <span>Labels</span>
@@ -202,7 +237,7 @@
           />
 
           <section class="checklist-btn">
-            <button @click.stop="openCheckList = !openCheckList" @focus="$event.target.select()">
+            <button @click.stop="openCheckList = !openCheckList">
               <span class="action-btn">
                 <span class="icon-sm icon-checklist"></span>
                 <span>Checklist</span>
@@ -241,7 +276,7 @@
             :datePlaceholder="'Dates'"
           ></date>
           <section class="attachment-btn">
-            <button @click.stop="openAddAttach=!openAddAttach">
+            <button @click.stop="openAddAttach = !openAddAttach">
               <span class="action-btn">
                 <span class="icon-sm icon-attach"></span>
                 Attachments
@@ -249,7 +284,7 @@
             </button>
             <section class="card-popup" v-show="openAddAttach">
               <section class="popup-header">
-                <div @click.stop="openAddAttach=false">
+                <div @click.stop="openAddAttach = false">
                   <span class="close-popup icon-md icon-close"></span>
                 </div>
                 <h4>Attach from...</h4>
@@ -290,6 +325,7 @@
 
 <script>
 import cardLabels from "../cmps/labels.cmp.vue";
+import cardMembers from "../cmps/members.cmp.vue";
 import date from "../cmps/date.cmp.vue";
 import addAttachment from "../cmps/add-attachment.cmp.vue";
 import attachment from "../cmps/attachment.cmp.vue";
@@ -304,6 +340,7 @@ export default {
       isEditDesc: false,
       showDate: false,
       showLabels: false,
+      showMembers: false,
       openCheckList: false,
       newChecklist: { title: "Checklist" },
       cardToEdit: null,
@@ -313,8 +350,8 @@ export default {
       openEditAttach: false,
       showCoverMenu: false,
       attachToEdit: {
-        name: ""
-      }
+        name: "",
+      },
     };
   },
   created() {
@@ -340,7 +377,7 @@ export default {
         return {
           backgroundColor: this.cardToEdit.cover,
           height: "116px",
-          minHeight: "116px"
+          minHeight: "116px",
         };
       }
       return { backgroundImage: `url("${this.cardToEdit.cover}")` };
@@ -363,8 +400,8 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map(lId => allLabels.find(label => label.id === lId));
-    }
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
+    },
   },
   methods: {
     async removeCover() {
@@ -386,14 +423,14 @@ export default {
     },
     async updateAttach() {
       const idx = this.cardToEdit.attachments.findIndex(
-        currAttach => currAttach.id === this.attachToEdit.id
+        (currAttach) => currAttach.id === this.attachToEdit.id
       );
       this.cardToEdit.attachments.splice(idx, 1, this.attachToEdit);
       try {
         await this.updateCard();
         this.openEditAttach = false;
         this.attachToEdit = {
-          name: ""
+          name: "",
         };
       } catch (err) {
         console.log("cant update attachment", err);
@@ -405,7 +442,7 @@ export default {
     },
     deleteAttach(attach) {
       const idx = this.cardToEdit.attachments.findIndex(
-        attachment => attachment.id === attach.id
+        (attachment) => attachment.id === attach.id
       );
       this.cardToEdit.attachments.splice(idx, 1);
       this.updateCard();
@@ -440,7 +477,6 @@ export default {
       this.cardToEdit.attachments.push(newAttach);
       try {
         await this.updateCard();
-        console.log(this.cardToEdit);
       } catch (err) {
         console.log("can't update card", err);
       }
@@ -452,7 +488,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          card: JSON.parse(JSON.stringify(this.cardToEdit))
+          card: JSON.parse(JSON.stringify(this.cardToEdit)),
         });
         if (ev) ev.target.blur();
         // this.$emit('reload')
@@ -468,7 +504,7 @@ export default {
           type: "removeCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id))
+          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id)),
         });
         this.closeModal();
       } catch (err) {
@@ -510,7 +546,7 @@ export default {
     },
     async updateCL(checklist) {
       const idx = this.cardToEdit.checklists.findIndex(
-        cl => cl.id === checklist.id
+        (cl) => cl.id === checklist.id
       );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
@@ -524,9 +560,13 @@ export default {
       this.cardToEdit.labelIds = labelIds;
       await this.updateCard();
     },
+    async updateMembers(members) {
+      this.cardToEdit.members = members;
+      await this.updateCard();
+    },
     toggleLabels() {
       this.showLabels = !this.showLabels;
-    }
+    },
   },
   components: {
     checklist,
@@ -534,8 +574,9 @@ export default {
     cardLabels,
     addAttachment,
     attachment,
-    coverMenu
-  }
+    coverMenu,
+    cardMembers,
+  },
 };
 </script>
 

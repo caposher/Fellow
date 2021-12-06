@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import appHeader from '@/cmps/app-header.cmp.vue';
+import appHeader from "@/cmps/app-header.cmp.vue";
 
 export default {
   data() {
@@ -14,23 +14,26 @@ export default {
       onBoard: false,
     };
   },
+  created() {
+    this.$store.dispatch({ type: "setUser" });
+  },
   watch: {
-    '$route.params.boardId': {
+    "$route.params.boardId": {
       async handler() {
         const { boardId } = this.$route.params;
         if (boardId) {
           try {
-            await this.$store.dispatch({ type: 'loadBoard', boardId });
+            await this.$store.dispatch({ type: "loadBoard", boardId });
             this.onBoard = true;
           } catch (err) {
-            console.log('problem with getting board', err);
+            console.log("problem with getting board", err);
           }
         } else {
           try {
-            await this.$store.dispatch({ type: 'loadBoard', boardId: '' });
+            await this.$store.dispatch({ type: "loadBoard", boardId: "" });
             this.onBoard = false;
           } catch (err) {
-            console.log('problem with getting board', err);
+            console.log("problem with getting board", err);
           }
         }
         // console.log(this.onBoard);
@@ -48,12 +51,12 @@ export default {
       return board;
     },
     bgImage() {
-      if (this.board && this.board.style.imgUrl.includes('https')) {
+      if (this.board && this.board.style.imgUrl.includes("https")) {
         return {
           backgroundImage: `url("${this.board.style.imgUrl}")`,
         };
       } else if (this.board) {
-        let bgImage = require('@/assets' + this.board.style.imgUrl);
+        let bgImage = require("@/assets" + this.board.style.imgUrl);
         // let bgImage = require("@/assets" + this.board.imgUrl);
         // console.log("bgImage", bgImage);
         return {

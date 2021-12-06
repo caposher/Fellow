@@ -1,5 +1,6 @@
 <template>
   <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
+    <app-header />
     <workspace-nav :boards="boards" @openBar="onOpenBar" />
     <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar }" />
     <ul class="board" :class="{ 'nav-open': openBar }" @mouseenter="scroll">
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+import appHeader from '../cmps/app-header.cmp.vue';
 import boardHeader from '../cmps/board-header.cmp.vue';
 import mainMenu from '../cmps/main-menu.cmp.vue';
 import boardMenu from '../cmps/board-menu.cmp.vue';

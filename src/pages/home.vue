@@ -139,11 +139,8 @@ export default {
     bgImage(board) {
       console.log('board', board);
       if (board && board.style.imgUrl.includes('http')) {
-      } else {
-        let bgImage = require('@/assets' + board.style.imgUrl);
-        console.log('bgImage', bgImage);
         return {
-          backgroundImage: `url("${bgImage}")`,
+          backgroundImage: `url("${board.style.imgUrl}")`,
         };
       }
     },
@@ -171,6 +168,8 @@ export default {
       }
     },
   },
-  components: {},
+  components: {
+    appHeader,
+  },
 };
 </script>

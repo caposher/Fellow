@@ -22,7 +22,7 @@
             <ul>
               <li v-for="board in boards" :key="board._id">
                 <router-link :to="{ name: 'board', params: { boardId: board._id } }">
-                  <img :src="bgImage(board)" />
+                  <img :src="board.style.imgUrl" />
                   <p>{{ board.title }}</p>
                   <span class="star icon-star" @click.stop.prevent=""></span
                 ></router-link>
@@ -48,16 +48,6 @@ export default {
     };
   },
   methods: {
-    showNavBar() {},
-    bgImage(board) {
-      if (board && board.style.imgUrl.includes('http')) {
-        let bgImage = `url("${board.style.imgUrl}")`;
-        return bgImage;
-      } else if (board) {
-        let bgImage = require('@/assets' + board.style.imgUrl);
-        return bgImage;
-      }
-    },
     onOpenBar(val) {
       this.openBar = val;
       this.$emit('openBar', val);

@@ -3844,10 +3844,22 @@ function _createBoards() {
       travelBoard(),
       mealPlanner(),
       companyBoard(),
-      _createBoard('Work', '/img/background2.jpg'),
-      _createBoard('Personal', '/img/background3.jpg'),
-      _createBoard('Tinto', '/img/background4.jpg'),
-      _createBoard('My First Board', '/img/background1.jpg'),
+      _createBoard(
+        'Work',
+        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x1920/e33d2a27fb80f83f54d82ffeb4f9e838/photo-1629221892514-7abb71a803f7.jpg'
+      ),
+      _createBoard(
+        'Personal',
+        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2134x1600/02bb168d57905b1b5df6342f71ee94da/photo-1638130419943-1242ff0300bf.jpg'
+      ),
+      _createBoard(
+        'Tinto',
+        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/5adf43e7129c68d8452213d9399c02cd/photo-1632758995926-17bbf7fad399.jpg'
+      ),
+      _createBoard(
+        'My First Board',
+        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/e1b4d655b33c1ef09b9aea6c6360f70c/photo-1637928114342-05b15ee4034e.jpg'
+      ),
     ];
     localStorage.setItem(KEY, JSON.stringify(boards));
   }
@@ -3876,7 +3888,8 @@ function travelBoard() {
     createdAt: Date.now(),
     createdBy: 'Oshra',
     style: {
-      imgUrl: '/img/camera-background.jpg',
+      imgUrl:
+        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2133x1600/5e42c28aa28ba97ebe02ca239ca3ee4a/photo-1452421822248-d4c2b47f0c81.jpg',
     },
     labels: [
       { id: utilService.makeId(), txt: 'Flights', colorClass: 'label-green' },
@@ -4054,7 +4067,10 @@ function mealPlanner() {
     title: 'Meal Planning',
     createdAt: '',
     createdBy: 'user',
-    style: { imgUrl: '/img/meal-plan.jpg' },
+    style: {
+      imgUrl:
+        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2398x1600/6a5ac82565edf3fa43b6b3b00cb25322/photo-1591189863430-ab87e120f312.jpg',
+    },
     labels: [
       { id: 'b0JnY', txt: 'Vegetarian', colorClass: 'label-green' },
       { id: '1b2ET', txt: 'Vegan', colorClass: 'label-yellow' },
@@ -5179,7 +5195,8 @@ function companyBoard() {
     createdAt: '',
     createdBy: 'user',
     style: {
-      imgUrl: '/img/company.jpg',
+      imgUrl:
+        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/2c7f3ad5d8130dc15eae5305a6071253/photo-1572025442646-866d16c84a54.jpg',
     },
     labels: [
       {

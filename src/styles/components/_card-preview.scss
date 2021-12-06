@@ -7,12 +7,19 @@
   margin-block-end: 8px;
   padding: 6px 8px 2px;
   position: relative;
+  &.with-cover{
+    padding: 0px 0px 2px;
+    .card-title, .card-icons{
+      padding: 0 8px 0;
+    }
+  }
 
   .cover-img{
     background-position: 50%;
     background-repeat: no-repeat;
     border-radius: 3px 3px 0 0;
-    height: 204.575px;
+    // position: absolute;
+    width: 100%;
     background-color: transparent;
     background-size: cover;
   }

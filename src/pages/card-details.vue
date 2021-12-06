@@ -4,7 +4,23 @@
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
       </button>
-      <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverUrl"></div>
+      <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverStyle">
+        <section class="cover-menu-header">
+          <button @click="showCoverMenu=!showCoverMenu" class="cover-menu-btn">
+            <span class="icon-sm icon-cover"></span>
+            Cover
+          </button>
+          <section class="card-popup" v-show="showCoverMenu">
+            <section class="popup-header">
+              <div @click.stop="showCoverMenu=false">
+                <span class="close-popup icon-md icon-close"></span>
+              </div>
+              <h4>Cover</h4>
+            </section>
+            <cover-menu @makeCover="makeCover" :card="cardToEdit"></cover-menu>
+          </section>
+        </section>
+      </div>
       <header>
         <div class="header">
           <span class="icon-card icon-lg"></span>
@@ -277,6 +293,7 @@ import cardLabels from "../cmps/labels.cmp.vue";
 import date from "../cmps/date.cmp.vue";
 import addAttachment from "../cmps/add-attachment.cmp.vue";
 import attachment from "../cmps/attachment.cmp.vue";
+import coverMenu from "../cmps/cover-menu.cmp.vue";
 
 import { utilService } from "../services/util.service.js";
 import checklist from "../cmps/checklist.cmp.vue";
@@ -294,6 +311,7 @@ export default {
       isComment: false,
       openAddAttach: false,
       openEditAttach: false,
+      showCoverMenu: false,
       attachToEdit: {
         name: ""
       }
@@ -315,7 +333,16 @@ export default {
     boardId() {
       return this.$store.getters.boardId;
     },
-    coverUrl() {
+    coverStyle() {
+      if (!this.cardToEdit.cover) return;
+      if (this.cardToEdit.cover.charAt(0) === "#") {
+        console.log(this.cardToEdit.cover);
+        return {
+          backgroundColor: this.cardToEdit.cover,
+          height: "116px",
+          minHeight: "116px"
+        };
+      }
       return { backgroundImage: `url("${this.cardToEdit.cover}")` };
     },
     dateToShow() {
@@ -348,9 +375,9 @@ export default {
         console.log("cant remove cover", err);
       }
     },
-    async makeCover(url) {
-      console.log(url);
-      this.cardToEdit.cover = url;
+    async makeCover(val) {
+      console.log(val);
+      this.cardToEdit.cover = val;
       try {
         await this.updateCard();
       } catch (err) {
@@ -506,7 +533,8 @@ export default {
     date,
     cardLabels,
     addAttachment,
-    attachment
+    attachment,
+    coverMenu
   }
 };
 </script>

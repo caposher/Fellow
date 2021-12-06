@@ -29,6 +29,29 @@
     height: 160px;
     min-height: 160px;
     padding: 0px;
+    position: relative;
+    .cover-menu-header{
+      align-items: center;
+      bottom: 0;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: flex-end;
+      padding: 8px;
+      position: absolute;
+      width: 100%;
+      .cover-menu-btn{
+        background-color: #00000014;
+        border-radius: 3px;
+        color: #172b4d;
+        padding: 6px 12px 6px 6px;
+        text-decoration: none;
+        &:hover{
+          background-color: #00000029;
+          cursor: pointer;
+
+        }
+      }
+  }
 
   }
   & header {

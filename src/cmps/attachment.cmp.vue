@@ -29,13 +29,16 @@
         <a class="edit options" @click.stop="openEdit">
           <span>Edit</span>
         </a>
-        <a class="cover options">
+        <a class="cover options" v-if="attachment.type === 'img'">
           <span class="icon-wrapper">
-
-          <span class="icon-cover icon-sm"></span>
+            <span class="icon-cover icon-sm"></span>
           </span>
           <span v-show="cardToEdit.cover!==attachment.href" @click.stop="makeCover">Make cover</span>
-          <span v-show="cardToEdit.cover===attachment.href" @click.stop="removeCover" class="remove-cover">Remove cover</span>
+          <span
+            v-show="cardToEdit.cover===attachment.href"
+            @click.stop="removeCover"
+            class="remove-cover"
+          >Remove cover</span>
         </a>
       </span>
     </p>
@@ -51,7 +54,7 @@
         <input type="text" value="Checklist" v-model=" attachToEdit" />
         <button class="submit">Add</button>
       </form>
-    </section> -->
+    </section>-->
   </section>
 </template>
 
@@ -61,23 +64,22 @@ export default {
     attachment: {
       type: Object
     },
-    cardToEdit:{
+    cardToEdit: {
       type: Object
-
     }
   },
   data() {
     return {
       // openEdit: false,
-      attachToEdit: null
+      // attachToEdit: null
     };
   },
   created() {
-    this.attachToEdit = this.attachment;
+    // this.attachToEdit = this.attachment;
   },
   methods: {
-    openEdit(){
- this.$emit("openEdit", this.attachment);
+    openEdit() {
+      this.$emit("openEdit", this.attachment);
     },
     openLink() {
       if (!this.attachment.href) return;
@@ -101,6 +103,9 @@ export default {
     }
   },
   computed: {
+    attachToEdit() {
+      return this.attachment;
+    },
     bgImg() {
       if (this.attachment.type === "img") {
         return { backgroundImage: `url("${this.attachment.href}")` };

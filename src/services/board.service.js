@@ -1,6 +1,8 @@
 import { storageService } from './async-storage.service.js';
 import { utilService } from './util.service.js';
 const axios = require('axios');
+import { httpService } from './http.service'
+
 const gRes = {
   data: {
     total: 10000,
@@ -3655,22 +3657,11 @@ export const boardService = {
 _createBoards();
 
 function query() {
-  // return storageService.query(KEY)
-  const boards = storageService.query(KEY);
-  return boards;
+  return storageService.query(KEY)
 }
 
 function getById(id) {
   return storageService.get(KEY, id);
-}
-
-async function getListAndCardById(boardId, cardId) {
-  const board = await getById(boardId);
-  const list = board.lists.find((list) => {
-    return list.cards.find((card) => card.id === cardId);
-  });
-  const card = list.cards.find((card) => card.id === cardId);
-  return { card, list };
 }
 
 function remove(id) {
@@ -3680,6 +3671,51 @@ function remove(id) {
 function save(board) {
   const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
   return savedBoard;
+}
+
+// async function query(filterBy) {
+//   try {
+//     return httpService.get('board/', filterBy)
+//   } catch (err) {
+//     console.log('error:', err)
+//   }
+// }
+
+// async function getById(id) {
+//   try {
+//     return httpService.get('board/' + id)
+//   } catch (err) {
+//     console.log('error:', err)
+//   }
+// }
+
+// async function save(board) {
+//   try {
+//     if (board._id) {
+//       return httpService.put('board/' + board._id, board)
+//     } else {
+//       return httpService.post('board/', board)
+//     }
+//   } catch (err) {
+//     console.log('err', err)
+//   }
+// }
+
+// async function remove(id) {
+//   try {
+//     return httpService.delete('board/' + id)
+//   } catch (err) {
+//     console.log('error:', err)
+//   }
+// }
+
+async function getListAndCardById(boardId, cardId) {
+  const board = await getById(boardId);
+  const list = board.lists.find((list) => {
+    return list.cards.find((card) => card.id === cardId);
+  });
+  const card = list.cards.find((card) => card.id === cardId);
+  return { card, list };
 }
 
 async function saveList(list, board) {

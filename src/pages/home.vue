@@ -101,7 +101,12 @@
             </div>
           </div>
           <ul class="workspaces-boards">
-            <li v-for="board in boards" :key="board._id" :style="bgImage(board)" @click="setBoard(board._id)">
+            <li
+              v-for="board in boards"
+              :key="board._id"
+              :style="bgImage(board)"
+              @click="setBoard(board._id)"
+            >
               <span>{{ board.title }}</span>
             </li>
             <div class="add" @click="createBoard">
@@ -116,10 +121,10 @@
 </template>
 
 <script>
-import appHeader from '@/cmps/app-header.cmp.vue';
+import appHeader from "@/cmps/app-header.cmp.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
       user: null,
@@ -127,7 +132,7 @@ export default {
   },
   async created() {
     // get userId
-    await this.$store.dispatch({ type: 'loadBoards' });
+    await this.$store.dispatch({ type: "loadBoards" });
   },
   computed: {
     boards() {
@@ -137,8 +142,8 @@ export default {
   },
   methods: {
     bgImage(board) {
-      console.log('board', board);
-      if (board && board.style.imgUrl.includes('http')) {
+      // console.log('board', board);
+      if (board && board.style.imgUrl.includes("http")) {
         return {
           backgroundImage: `url("${board.style.imgUrl}")`,
         };
@@ -146,25 +151,25 @@ export default {
     },
     async createBoard() {
       if (this.boards.length === 10) return;
-      const title = prompt('add title');
+      const title = prompt("add title");
       if (!title) return;
 
       try {
         const board = await this.$store.dispatch({
-          type: 'createBoard',
+          type: "createBoard",
           title,
         });
-        this.$router.push('/b/' + board._id);
+        this.$router.push("/b/" + board._id);
       } catch (err) {
-        console.log('cant get new board', err);
+        console.log("cant get new board", err);
       }
     },
     async setBoard(boardId) {
       try {
-        await this.$store.dispatch({ type: 'loadAndWatchBoard', boardId });
-        this.$router.push('/b/' + boardId);
+        await this.$store.dispatch({ type: "loadAndWatchBoard", boardId });
+        this.$router.push("/b/" + boardId);
       } catch (err) {
-        console.log('cant get board' + boardId, err);
+        console.log("cant get board" + boardId, err);
       }
     },
   },

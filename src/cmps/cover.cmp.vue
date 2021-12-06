@@ -1,5 +1,5 @@
 <template>
-  <section class="cover-menu">
+  <section class="cover">
     <!-- <form @submit.prevent="changeCover"> -->
     <label class="">Size</label>
     <label class="">Colors</label>

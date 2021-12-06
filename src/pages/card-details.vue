@@ -17,7 +17,7 @@
               </div>
               <h4>Cover</h4>
             </section>
-            <cover-menu @makeCover="makeCover" :card="cardToEdit"></cover-menu>
+            <cover @makeCover="makeCover" :card="cardToEdit"></cover>
           </section>
         </section>
       </div>
@@ -293,7 +293,7 @@ import cardLabels from "../cmps/labels.cmp.vue";
 import date from "../cmps/date.cmp.vue";
 import addAttachment from "../cmps/add-attachment.cmp.vue";
 import attachment from "../cmps/attachment.cmp.vue";
-import coverMenu from "../cmps/cover-menu.cmp.vue";
+import cover from "../cmps/cover.cmp.vue";
 
 import { utilService } from "../services/util.service.js";
 import checklist from "../cmps/checklist.cmp.vue";
@@ -534,7 +534,7 @@ export default {
     cardLabels,
     addAttachment,
     attachment,
-    coverMenu
+    cover
   }
 };
 </script>

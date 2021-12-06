@@ -124,7 +124,7 @@
     padding-block-start: 12px;
     display: flex;
     flex-wrap: wrap;
-    max-height: 77vh;
+    max-height: calc(100vh - 162px);
     overflow-y: scroll;
   }
 

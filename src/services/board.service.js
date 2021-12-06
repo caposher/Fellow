@@ -3850,12 +3850,12 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
   };
 }
 
-async function getBgImgs() {
+async function getBgImgs(searchKey, imgNum) {
   try {
-    // const res = await axios.get(
-    //   'https://api.unsplash.com/search/photos/?query=wallpaper&client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo'
-    // );
-    const res = gRes;
+    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${imgNum ? imgNum : 50
+      }&client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    let res = await axios.get(search);
+    // let res = gRes;
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {
     console.log('cant receive images from unsplash', err);

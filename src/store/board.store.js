@@ -187,15 +187,15 @@ export const boardStore = {
         console.log('cant remove card', err);
       }
     },
-    async requestPhotos({ commit }) {
+    async requestPhotos({ commit }, { searchKey, imgNum }) {
       try {
-        const photos = await boardService.getBgImgs();
+        const photos = await boardService.getBgImgs(searchKey, imgNum);
         commit({ type: 'setPhotos', photos });
       } catch (err) {
         console.log('failed to get photos', err);
       }
     },
-    async setBackground({ commit, dispatch }, { boardId, url }) {
+    async setBackground({ commit, dispatch }, { boardId, url = 0 }) {
       try {
         const board = await boardService.setBackground(boardId, url);
         commit({ type: 'setBoard', board });

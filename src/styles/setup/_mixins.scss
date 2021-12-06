@@ -53,7 +53,7 @@
   position: relative;
   overflow: hidden;
   &:before {
-    content: "";
+    content: '';
     display: block;
     width: 100%;
     padding-top: ($height / $width) * 100%;
@@ -64,10 +64,41 @@
     left: 0;
     right: 0;
     bottom: 0;
-  }  
+  }
   > img {
     height: 100%;
     object-fit: cover;
+  }
+}
+
+@mixin scroll-bar() {
+  /* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #bfc4ce #d9dce2;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #bfc4ce;
+    border: 0px none #ffffff;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #d9dce2;
+    border: 0px none #ffffff;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
   }
 }
 

@@ -70,7 +70,7 @@
       height: 0;
       padding: 10px;
       margin-inline-end: 12px;
-      background-color: lightgreen;
+      background-size: contain;
     }
 
     h3 {
@@ -81,7 +81,7 @@
 
   .menu-background-size {
     height: 95px;
-    width: 152.7px;
+    width: 149px;
     background-size: cover;
     margin-inline-end: 8px;
     border-radius: 8px;
@@ -124,5 +124,11 @@
     padding-block-start: 12px;
     display: flex;
     flex-wrap: wrap;
+    max-height: 77vh;
+    overflow-y: scroll;
+  }
+
+  .main-menu-search {
+    position: relative;
   }
 }

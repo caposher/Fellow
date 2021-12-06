@@ -1,5 +1,12 @@
 <template>
-  <section>
+  <section class="card-popup">
+    <section class="popup-header">
+      <div @click.stop="close">
+        <span class="close-popup icon-md icon-close"></span>
+      </div>
+      <h4>Attach from...</h4>
+    </section>
+
     <form @submit.prevent="addAttach">
       <label class="img-upload-container">
         Computer
@@ -42,20 +49,21 @@ export default {
   methods: {
     async onUploadImg(ev) {
       this.isLoading = true;
-      try{
-
+      try {
         let res = await uploadImg(ev);
-      //   this.imgUrls.push(res.url);
-      this.newAttach.href = res.url;
-      this.newAttach.type = "img";
-      // console.log(this.imgUrls);
-      // console.log(res);
-      // this.$emit('onSaveImg', res.url)
-      this.isLoading = false;
+        //   this.imgUrls.push(res.url);
+        this.newAttach.href = res.url;
+        this.newAttach.type = "img";
+        // console.log(this.imgUrls);
+        // console.log(res);
+        // this.$emit('onSaveImg', res.url)
+        this.isLoading = false;
+      } catch (err) {
+        console.log("cant upload img".err);
       }
-      catch(err){
-        console.log('cant upload img'. err);
-      }
+    },
+    close(){
+      this.$emit('close')
     },
     // saveImg(imgUrl) {
     //   this.imgUrls.push(imgUrl);

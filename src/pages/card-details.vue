@@ -22,7 +22,6 @@
       <header>
         <div class="header">
           <span class="icon-card icon-lg"></span>
-          <!-- <span class="fa fa-newspaper"></span> -->
           <div class="card-header-container">
             <textarea
               rows
@@ -245,15 +244,7 @@
                 Attachments
               </span>
             </button>
-            <section class="card-popup" v-show="openAddAttach">
-              <section class="popup-header">
-                <div @click.stop="openAddAttach=false">
-                  <span class="close-popup icon-md icon-close"></span>
-                </div>
-                <h4>Attach from...</h4>
-              </section>
-              <add-attachment @addNewAttach="addNewAttach"></add-attachment>
-            </section>
+              <add-attachment @addNewAttach="addNewAttach" @close="openAddAttach=false"  v-show="openAddAttach"></add-attachment >
           </section>
           <section v-show="!card.cover" class="cover-menu-header">
             <button @click.stop="showCoverMenu=!showCoverMenu" class="cover-menu-btn action-btn">

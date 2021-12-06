@@ -13,13 +13,32 @@ body {
   background-repeat: no-repeat;
   overflow-y: hidden;
   background-attachment: fixed;
+
+  @include scroll-bar;
+  ::-webkit-scrollbar {
+    height: 12px;
+  }
+  ::-webkit-scrollbar-button {
+    width: 25px;
+    height: 18px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.45);
+    // border: 0px none #ffffff;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.15);
+    // border: 0px none #ffffff;
+    border-radius: 4px;
+  }
 }
 
 .board {
   display: flex;
   list-style: none;
   align-items: flex-start;
-  height: 100vh;
+  height: calc(100vh - 105px);
   position: relative;
   width: 100%;
   overflow-x: scroll;
@@ -36,10 +55,6 @@ body {
     min-width: 272px;
     max-width: 272px;
   }
-
-  // &.nav-open {
-  //   margin-left: 250px;
-  // }
 }
 
 .nav-open {

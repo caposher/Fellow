@@ -187,9 +187,9 @@ export const boardStore = {
         console.log('cant remove card', err);
       }
     },
-    async requestPhotos({ commit }) {
+    async requestPhotos({ commit }, { searchKey }) {
       try {
-        const photos = await boardService.getBgImgs();
+        const photos = await boardService.getBgImgs(searchKey);
         commit({ type: 'setPhotos', photos });
       } catch (err) {
         console.log('failed to get photos', err);

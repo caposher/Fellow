@@ -12,7 +12,7 @@
         <p>Add a description to your board</p>
       </li>
       <li class="menu-action" @click="isChangeColor = true">
-        <span class="icon-img"></span>
+        <span class="icon-img" :style="{ backgroundImage: 'url(' + setImgIcon + ')' }"></span>
         <h3>Change background</h3>
       </li>
     </ul>
@@ -70,6 +70,10 @@
           <span @click="$emit('close')" class="close-popup icon-md icon-close"></span>
         </div>
       </header>
+      <div class="main-menu-search">
+        <!-- <span class="icon-md icon-search"></span> -->
+        <input type="text" v-model="searchKey" @change="requestPhotos()" />
+      </div>
       <ul class="menu-color-set">
         <li v-for="(url, idx) in getImgs" :key="idx">
           <div
@@ -90,13 +94,15 @@ export default {
       isChangeColor: false,
       isColorSelected: false,
       isPhotosSelected: false,
+      searchKey: '',
       colorSet: ['#0079bf', '#d29134', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#13aecc', '#838c91'],
     };
   },
+
   methods: {
     requestPhotos() {
       this.isPhotosSelected = true;
-      this.$store.dispatch({ type: 'requestPhotos' });
+      this.$store.dispatch({ type: 'requestPhotos', searchKey: this.searchKey });
     },
     setBg(bg) {
       const boardId = this.$store.getters.boardId;
@@ -104,6 +110,9 @@ export default {
     },
   },
   computed: {
+    setImgIcon() {
+      return this.$store.getters.board.style.imgUrl;
+    },
     getImgs() {
       return this.$store.getters.getBgPhotos;
     },

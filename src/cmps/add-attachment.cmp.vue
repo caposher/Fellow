@@ -40,10 +40,10 @@ export default {
         href: "",
         file: null,
         createdAt: "",
-        type: ""
+        type: "",
       },
       //   imgUrls: [],
-      isLoading: false
+      isLoading: false,
     };
   },
   methods: {
@@ -73,8 +73,6 @@ export default {
         this.newAttach.type = "link";
       }
       if (!this.newAttach.type) return;
-
-      console.log(this.newAttach);
       this.newAttach.createdAt = Date.now();
       this.$emit("addNewAttach", this.newAttach);
       this.resetAttach();
@@ -95,15 +93,14 @@ export default {
         file: null,
         createdAt: "",
         type: "",
-        file: null
+        file: null,
       };
-    }
+    },
   },
   components: {
-    imgUpload
-  }
+    imgUpload,
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

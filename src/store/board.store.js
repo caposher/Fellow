@@ -56,7 +56,9 @@ export const boardStore = {
     setPhotos(state, { photos }) {
       state.bgPhotos = photos;
     },
-    // setBg(state,)
+    test(state, { board }) {
+      state.board = board;
+    },
   },
 
   actions: {
@@ -75,9 +77,21 @@ export const boardStore = {
       }
       try {
         const board = await boardService.getById(boardId);
+
         commit({ type: 'setBoard', board });
       } catch (err) {
         console.log('cant load boards:', err);
+      }
+    },
+    async updateBoard({ commit }, { board }) {
+      const boardId = board._id;
+      try {
+        commit({ type: 'setBoard', board });
+        await boardService.save(board);
+      } catch (err) {
+        const board = await boardService.getById(boardId);
+        commit({ type: 'setBoard', board });
+        console.log('failed to update board');
       }
     },
     async deleteBoard({ commit }, { boardId }) {

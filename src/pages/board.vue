@@ -3,14 +3,31 @@
     <app-header />
     <workspace-nav :boards="boards" @openBar="onOpenBar" />
     <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar }" />
-    <ul class="board" :class="{ 'nav-open': openBar }" @mouseenter="scroll">
-      <li class="list-wrapper" v-for="(list, idx) in board.lists" :key="list.id" @mousedown.stop="unscroll">
-        <board-list :list="list" :idx="idx" @update="updateList" @deleteList="deleteList"></board-list>
-      </li>
-      <!--  @click="addList" -->
-      <!-- v-if="!isAddList" -->
+    <Container
+      :tag="'ul'"
+      class="board"
+      orientation="horizontal"
+      @drop="onColumnDrop($event)"
+      drag-class="card-ghost"
+      drop-class="card-ghost-drop"
+      drag-handle-selector=".drag-handle"
+      :class="{ 'nav-open': openBar }"
+      @mousedown="scroll"
+    >
+      <Draggable :tag="'li'" v-for="(list, idx) in board.lists" :key="list.id" class="list-wrapper">
+        <!--  -->
+        <board-list
+          :list="list"
+          :idx="idx"
+          @update="updateList"
+          @updateBoard="updateBoard"
+          @deleteList="deleteList"
+          @mousedown.stop="unscroll"
+        ></board-list>
+      </Draggable>
+
       <div class="add-list-wrapper">
-        <li class="list-wrapper new-list" @click="setAddList" :class="{ 'height-0': isAddList }">
+        <li class="new-list" @click="setAddList" :class="{ 'height-0': isAddList }">
           <p>
             <span>
               <i class="icon-sm icon-plus"></i>
@@ -18,7 +35,7 @@
             {{ addListText }}
           </p>
         </li>
-        <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add list-wrapper">
+        <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add">
           <input type="text" ref="input" v-focus="isAddList" v-model="newListTitle" @keydown.enter="addList" />
           <div class="list-add-controls">
             <button class="submit-btn add-list-btn" @click="addList">Add List</button>
@@ -28,7 +45,8 @@
           </div>
         </li>
       </div>
-    </ul>
+    </Container>
+
     <router-view v-if="selectedCardId"></router-view>
   </section>
 </template>
@@ -40,6 +58,7 @@ import mainMenu from '../cmps/main-menu.cmp.vue';
 import boardMenu from '../cmps/board-menu.cmp.vue';
 import boardList from '../cmps/board-list.cmp.vue';
 import workspaceNav from '../cmps/workspace-nav.cmp.vue';
+import { Container, Draggable } from 'vue-smooth-dnd';
 import { focus } from 'vue-focus';
 
 export default {
@@ -104,6 +123,7 @@ export default {
     try {
       await this.$store.dispatch({ type: 'loadBoard', boardId });
       await this.$store.dispatch({ type: 'loadBoards' });
+      // console.log(this.$store.getters.boards);
     } catch (err) {
       console.log('problem with getting board', err);
     }
@@ -164,18 +184,26 @@ export default {
         console.log('cant delete list', err);
       }
     },
+    async updateBoard(board) {
+      try {
+        this.$store.dispatch({ type: 'updateBoard', board });
+      } catch (err) {
+        console.log('cant update board', err);
+      }
+    },
     async deleteBoard() {
       try {
         await this.$store.dispatch({
           type: 'deleteBoard',
           boardId: this.board._id,
         });
-        this.$router.push('/');
+        this.$router.push('/home');
       } catch (err) {
         console.log('cant delete board', err);
       }
     },
     scroll(ev) {
+      debugger;
       const slider = ev.target;
       this.slider = slider;
       let isDown = false;
@@ -204,12 +232,34 @@ export default {
         slider.scrollLeft = scrollLeft - walk;
       });
     },
+
+    onColumnDrop(dropResult) {
+      const { removedIndex, addedIndex, payload } = dropResult;
+      const newBoard = this.$store.getters.board;
+      if (removedIndex === null && addedIndex === null) return newBoard.lists;
+
+      const newLists = [...this.board.lists];
+      let itemToAdd = payload;
+
+      if (removedIndex !== null) {
+        itemToAdd = newBoard.lists.splice(removedIndex, 1)[0];
+      }
+
+      if (addedIndex !== null) {
+        newBoard.lists.splice(addedIndex, 0, itemToAdd);
+      }
+      this.updateBoard(newBoard);
+
+      return newBoard.lists;
+    },
+
+    applyDrag(arr, dragResult) {},
+
     unscroll() {
       if (!this.slider) return;
       this.slider.classList.remove('active');
     },
     onOpenBar(val) {
-      console.log('val', val);
       this.openBar = val;
     },
   },
@@ -220,6 +270,8 @@ export default {
     boardList,
     workspaceNav,
     focus,
+    Container,
+    Draggable,
     appHeader,
   },
 };

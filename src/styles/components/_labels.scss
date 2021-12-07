@@ -46,11 +46,6 @@
 }
 
 .preview-label {
-  .text-label {
-    // display: block;
-    // transition: color 0.8s 3s;
-  }
-
   &-close {
     .text-label {
       // display: none;
@@ -58,20 +53,21 @@
     border-radius: 4px;
     min-width: 40px;
     margin: 0 4px 4px 0;
-    padding: 5px 8px 2px 8px;
-    line-height: 14px;
+    padding: 5px 20px 2px 8px;
+    line-height: 5px;
     font-size: 1px;
     white-space: nowrap;
     height: 0;
     color: rgba(255, 255, 255, 0);
-    transition: color 0.5s, height 0.5s, font-size 0.2s 0.4s linear;
+    transition: color 0.5s, height 0.5s 0.2s, font-size 0.2s 0.4s linear;
     transition-delay: font-size 10s;
   }
+
   height: 16px;
-  line-height: 14px;
+  line-height: 5px;
   max-width: 198px;
   margin: 0 4px 4px 0;
-  padding: 3px 20px 2px 8px;
+  padding: 5px 20px 2px 8px;
   border-radius: 4px;
   white-space: nowrap;
   font-size: 11px;
@@ -95,18 +91,22 @@
 }
 
 .card-labels {
+  float: left;
+
   h4 {
     display: block;
     width: 100%;
     font-size: 12px;
     color: #68768b;
     margin-block-end: 4px;
+    font-weight: 500;
   }
 }
 
 .label-wrapper {
   display: flex;
   flex-wrap: wrap;
+  margin-right: 5px;
 
   .action-btn {
     margin: 0;

@@ -1,7 +1,7 @@
 <template>
   <li class="list">
     <header>
-      <h4 v-if="!editTitle" @click="editTitle = true">{{ showTitle }}</h4>
+      <h4 v-if="!editTitle" @click="editTitle = true" class="drag-handle">{{ showTitle }}</h4>
       <textarea
         type="text"
         v-else
@@ -13,28 +13,22 @@
         @keydown.enter="updateList()"
       />
       <button @click="deleteList"><span class="icon-sm icon-close"></span></button>
-      <!-- <button @click="deleteList">x</button> -->
     </header>
-    <ul class="card-list">
-      <!-- v-for cards in list.cards  :mini-list="mini-list"-->
-      <draggable
-        v-model="updatedList.cards"
-        group="list-group"
-        ghost-class="ghost"
-        @add="updateList"
-        @start="dragCard = true"
-        @end="ondragEnd"
-      >
-        <card-list
-          @change="updatedList"
-          v-for="card in updatedList.cards"
-          :key="card.id"
-          :card="card"
-          :list="list"
-          :do-drag="dragCard"
-        ></card-list>
-      </draggable>
-    </ul>
+    <Container
+      :tag="'ul'"
+      class="card-list"
+      group-name="cardList"
+      drag-class="card-ghost"
+      drop-class="card-ghost-drop"
+      :drop-placeholder="{ className: 'ghost' }"
+      @drop="(e) => onCardDrop(list, e)"
+      :get-child-payload="getChildPayload(JSON.parse(JSON.stringify(list)))"
+    >
+      <Draggable v-for="card in updatedList.cards" :key="card.id" :tag="'li'">
+        <card-list @change="updatedList" :card="card" :list="list"></card-list>
+      </Draggable>
+    </Container>
+
     <footer class="add-card">
       <!-- @click="addCard" -->
       <button class="add-card" @click="isAddCard = true" v-if="!isAddCard">
@@ -67,7 +61,7 @@
 <script>
 import cardList from './card-list.cmp.vue';
 import { focus } from 'vue-focus';
-import draggable from 'vuedraggable';
+import { Container, Draggable } from 'vue-smooth-dnd';
 
 // props- list
 export default {
@@ -127,7 +121,6 @@ export default {
       event.target.blur();
       console.log('end of close');
     },
-
     updateList() {
       this.editTitle = false;
       this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
@@ -140,6 +133,27 @@ export default {
       if (confirm('This action will delete the list! continue?')) {
         this.$emit('deleteList', JSON.parse(JSON.stringify(this.updatedList)));
       }
+    },
+    onCardDrop(targetList, dropResult) {
+      const { addedIndex, removedIndex, payload } = dropResult;
+      if (targetList === null || (removedIndex === null && addedIndex === null)) {
+        return;
+      }
+      const newBoard = this.$store.getters.board;
+      const list = newBoard.lists.find((list) => list.id === targetList.id);
+      let itemToAdd = payload;
+
+      if (removedIndex !== null) {
+        itemToAdd = list.cards.splice(removedIndex, 1)[0];
+      }
+
+      if (addedIndex !== null) {
+        list.cards.splice(addedIndex, 0, itemToAdd);
+      }
+      this.$emit('updateBoard', JSON.parse(JSON.stringify(newBoard)));
+    },
+    getChildPayload(detachList) {
+      return (index) => detachList.cards[index];
     },
   },
   computed: {
@@ -158,28 +172,11 @@ export default {
     },
   },
   components: {
-    draggable,
+    Container,
+    Draggable,
     cardList,
   },
 };
 </script>
 
-<style>
-.ghost {
-  background: rgb(226, 228, 234);
-  border-radius: 3px;
-}
-
-.sortable-chosen {
-  opacity: 1;
-}
-
-.sortable-chosen > * {
-  opacity: 1;
-  background-color: rgba(0, 0, 0, 100%);
-}
-
-.ghost > * {
-  opacity: 0;
-}
-</style>
+<style></style>

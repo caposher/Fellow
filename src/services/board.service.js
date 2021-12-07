@@ -187,8 +187,8 @@ async function getBgImgs(searchKey, imgNum) {
     const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
       imgNum ? imgNum : 50
     }&client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    console.log('GET IMGS FROM SERVER');
     let res = await axios.get(search);
-    // let res = gRes;
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {
     console.log('cant receive images from unsplash', err);

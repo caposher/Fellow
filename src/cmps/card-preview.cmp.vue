@@ -1,9 +1,5 @@
 <template>
-  <section 
-  class="card"
-  :class="{'with-cover': card.cover}"
-   @click="showDetails" 
-   v-if="card">
+  <section class="card" :class="{ 'with-cover': card.cover }" @click="showDetails" v-if="card">
     <div class="cover-img" v-show="card.cover" :style="getCover"></div>
     <!-- <div> -->
     <!-- <section class="label-and-q-edit"> -->
@@ -57,25 +53,25 @@
 export default {
   props: {
     card: {
-      type: Object
+      type: Object,
     },
     list: {
-      type: Object
+      type: Object,
     },
     labelsState: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
-      islabelHover: false
+      islabelHover: false,
       // todos: 0,
       // doneTodos: 0
     };
   },
   methods: {
     showDetails() {
-      this.$router.push(this.$route.path + "/c/" + this.card.id);
+      this.$router.push(this.$route.path + '/c/' + this.card.id);
     },
     formatDate(dueDate) {
       var date = dueDate.getDate();
@@ -85,18 +81,18 @@ export default {
     },
     onLabelClick() {
       this.$store.commit({
-        type: "toggleLabel",
-        labelsState: this.labelsState
+        type: 'toggleLabel',
+        labelsState: this.labelsState,
       });
-    }
+    },
   },
   computed: {
     todos() {
       var todos = 0;
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach(checklist => {
+        this.card.checklists.forEach((checklist) => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach(todo => {
+            checklist.todos.forEach((todo) => {
               todos++;
             });
           }
@@ -107,9 +103,9 @@ export default {
     doneTodos() {
       var doneTodos = 0;
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach(checklist => {
+        this.card.checklists.forEach((checklist) => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach(todo => {
+            checklist.todos.forEach((todo) => {
               if (todo.isDone) doneTodos++;
             });
           }
@@ -120,10 +116,10 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map(lId => allLabels.find(label => label.id === lId));
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
     setLabelClass() {
-      let classes = `preview-label${this.labelsState ? "" : "-close"}`;
+      let classes = `preview-label${this.labelsState ? '' : '-close'}`;
       return classes;
     },
 
@@ -133,12 +129,12 @@ export default {
         return this.formatDate(dueDate);
       }
 
-      return this.formatDate(dueDate) + ", " + dueDate.getFullYear();
+      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear();
     },
     ChecklistNum() {
       var doneTodos = 0;
-      this.card.checklists.forEach(checklist => {
-        checklist.todos.forEach(todo => {
+      this.card.checklists.forEach((checklist) => {
+        checklist.todos.forEach((todo) => {
           if (todo.isDone) doneTodos++;
           else undoneTodos++;
         });
@@ -146,19 +142,19 @@ export default {
       return `${undoneTodos}/${doneTodos}`;
     },
     getCover() {
-      if (!this.card.cover) return
-      if (this.card.cover.charAt(0) === "#") {
+      if (!this.card.cover) return;
+      if (this.card.cover.charAt(0) === '#') {
         return {
           backgroundColor: this.card.cover,
-          height: "32px",
-          minHeight: "32px",
+          height: '32px',
+          minHeight: '32px',
         };
       }
-    
-      return { backgroundImage: `url("${this.card.cover}")`, height: '204.575px'};
-    }
+
+      return { backgroundImage: `url("${this.card.cover}")`, height: '204.575px' };
+    },
   },
-  components: {}
+  components: {},
 };
 </script>
 

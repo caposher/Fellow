@@ -35,26 +35,16 @@ body {
 }
 
 .board {
-  display: flex;
+  display: flex !important;
   list-style: none;
   align-items: flex-start;
   height: calc(100vh - 105px);
   position: relative;
   width: 100%;
   overflow-x: scroll;
-  padding-left: 16px;
+  padding-left: 24px;
   margin: 0;
   transition: margin 0.5s;
-  > * {
-    margin: 0 4px;
-    border-radius: 3px;
-    background-color: hsl(227, 14%, 93%);
-  }
-
-  .list-wrapper {
-    min-width: 272px;
-    max-width: 272px;
-  }
 }
 
 .nav-open {
@@ -65,6 +55,8 @@ body {
 .add-list-wrapper {
   position: relative;
   .list-add {
+    width: 272px;
+    margin: 0 4px;
     &.add-list {
       opacity: 1;
       background-color: hsl(227, 14%, 93%);
@@ -113,6 +105,8 @@ body {
   line-height: 28px;
   padding: 6px 8px;
   transition: background 85ms;
+  width: 272px;
+  margin: 0 4px;
   &:hover {
     background-color: #ffffff52;
   }

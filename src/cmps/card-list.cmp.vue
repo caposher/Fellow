@@ -1,13 +1,10 @@
 <template>
-  <li>
-    <!-- card preview gats card and mini-list-->
-    <card-preview :card="card" :list="list" :labelsState="$store.getters.labelsState"></card-preview>
-  </li>
+  <card-preview :card="card" :list="list" :labelsState="$store.getters.labelsState"></card-preview>
 </template>
 
 <script>
 import cardPreview from './card-preview.cmp.vue';
-
+import { Draggable } from 'vue-smooth-dnd';
 export default {
   props: {
     card: {
@@ -16,12 +13,10 @@ export default {
     list: {
       type: Object,
     },
-    doDrag: {
-      type: Boolean,
-    },
   },
   components: {
     cardPreview,
+    Draggable,
   },
 };
 </script>

@@ -1,17 +1,22 @@
 .list {
   margin: 0 4px;
-  padding: 0 0 0 4px;
+  padding: 0 4px 0 8px;
   display: flex;
   flex-direction: column;
   position: relative;
   max-height: calc(100vh - 125px);
+  border-radius: 3px;
+  background-color: hsl(227, 14%, 93%);
+  min-width: 272px;
+  max-width: 272px;
+
   > * {
     font-weight: 600;
     padding-right: 4px;
   }
 
   header {
-    display: flex;
+    position: relative;
     line-height: 40px;
     align-items: center;
 
@@ -133,31 +138,20 @@
   }
 
   @include scroll-bar;
-  // /* ===== Scrollbar CSS ===== */
-  // /* Firefox */
-  // * {
-  //   scrollbar-width: auto;
-  //   scrollbar-color: #bfc4ce #d9dce2;
-  // }
-  // ::-webkit-scrollbar {
-  //   width: 8px;
-  //   height: 8px;
-  // }
-  // ::-webkit-scrollbar-button {
-  //   width: 0px;
-  //   height: 0px;
-  // }
-  // ::-webkit-scrollbar-thumb {
-  //   background: #bfc4ce;
-  //   border: 0px none #ffffff;
-  //   border-radius: 8px;
-  // }
-  // ::-webkit-scrollbar-track {
-  //   background: #d9dce2;
-  //   border: 0px none #ffffff;
-  //   border-radius: 8px;
-  // }
-  // ::-webkit-scrollbar-corner {
-  //   background: transparent;
-  // }
+}
+
+.ghost {
+  background: rgb(226, 228, 234);
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+
+.card-ghost {
+  transition: transform 0.18s ease;
+  transform: rotateZ(5deg);
+}
+
+.card-ghost-drop {
+  transition: transform 0.18s ease-in-out;
+  transform: rotateZ(0deg);
 }

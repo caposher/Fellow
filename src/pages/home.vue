@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     bgImage(board) {
-      console.log('board', board);
+      // console.log('board', board);
       if (board && board.style.imgUrl.includes('http')) {
         return {
           backgroundImage: `url("${board.style.imgUrl}")`,

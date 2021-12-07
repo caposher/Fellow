@@ -16,15 +16,16 @@
           @click="makeCover(colorCode)"
           class="color"
           :style="{ backgroundColor: colorCode }"
-          :class="{'selected-btn':card.cover===colorCode}"
+          :class="{'selected-btn': isSelected(colorCode) }"
         ></button>
+        <!-- card.style && !card.style.img && card.style.bgColor ===colorCode -->
       </div>
       <label class="img-attachs">Attachments</label>
       <div class="attachments-container">
         <button
           v-for="img in imgAttachs"
           :key="img.href"
-          :class="{'selected-btn':card.cover===img.href}"
+          :class="{'selected-btn':isSelected(img.small)}"
           :style="backgroundImg(img.href)"
           @click="makeCover(img.href)"
         ></button>
@@ -34,7 +35,7 @@
         <button
           v-for="img in previewImgs"
           :key="img.regular"
-          :class="{'selected-btn':card.cover===img.small}"
+          :class="{'selected-btn':isSelected(img.small)}"
           :style="backgroundImg(img.small)"
           @click="makeCover(img.small)"
         ></button>
@@ -69,7 +70,7 @@
             <button
               v-for="img in imgs"
               :key="img.regular"
-              :class="{'selected-btn':card.cover===img.small}"
+              :class="{'selected-btn':isSelected(img.small)}"
               :style="backgroundImg(img.small)"
               @click="makeCover(img.small,'putInPreview')"
             ></button>
@@ -89,7 +90,7 @@
             <div
               v-for="img in searchResults"
               :key="img.small"
-              :class="{'selected-btn':card.cover===img.small}"
+              :class="{'selected-btn':isSelected(img.small)}"
               :style="backgroundImg(img.small)"
               @click="makeCover(img.small,'putInPreview')"
             ></div>
@@ -114,6 +115,8 @@
 </template>
 
 <script>
+import FastAverageColor from "fast-average-color";
+
 export default {
   props: {
     card: {
@@ -211,9 +214,20 @@ export default {
   created() {
     this.showUnsplash = false;
     this.previewImgs = this.imgs.slice(0, 6);
-    this.putInPrev(this.card.cover);
+    this.putInPrev(
+      this.card.style.img ? this.card.style.img : this.card.style.bgColor
+    );
   },
   methods: {
+    isSelected(val) {
+      if (!this.card.style) return;
+      if (val.charAt(0) === "#") {
+        return !this.card.style.img && this.card.style.bgColor === val
+          ? true
+          : false;
+      }
+      return this.card.style.img === val ? true : false;
+    },
     async loadMore() {
       console.log("loading");
       this.busy = true;
@@ -228,13 +242,29 @@ export default {
         this.searchResults.push(...this.$store.getters.getBgPhotos);
         console.log(this.searchResults.length);
         this.busy = false;
-        console.log('done');
+        console.log("done");
       } catch (err) {
         console.log("cant load next page", err);
       }
     },
-    makeCover(val, putInPreview = false) {
-      this.$emit("makeCover", val);
+    async makeCover(val, putInPreview = false) {
+      let style = {
+        img: null,
+        bgColor: null,
+        isDark: false
+      };
+      const fac = new FastAverageColor();
+      if (val.charAt(0) === "#") {
+        style.isDark = val === "#172b4d" ? true : false;
+        style.bgColor = val;
+      } else {
+        const color = await fac.getColorAsync(val);
+        style.bgColor = color.rgba;
+        style.isDark = color.isDark;
+        style.img = val;
+      }
+
+      this.$emit("makeCover", style);
       if (putInPreview) this.putInPrev(val);
     },
     backgroundImg(url) {
@@ -255,7 +285,7 @@ export default {
       this.noResults = false;
       this.showSuggestions = false;
       this.showResults = true;
-      this.searchResults=[]
+      this.searchResults = [];
       this.isLoading = true;
       if (val) {
         this.searchStr = val;
@@ -274,18 +304,18 @@ export default {
       }
     },
     async openUnsplash() {
-        this.showUnsplash = true;
-        this.showResults = false;
+      this.showUnsplash = true;
+      this.showResults = false;
     },
     putInPrev(val) {
-      if (!this.card.cover || this.card.cover.charAt(0) === "#") return;
+      if (!this.card.style || !this.card.style.img) return;
       var inPreview = this.previewImgs.some(img => img.small === val);
       if (inPreview) return;
       inPreview = this.imgAttachs.some(attachment => attachment.href === val);
       if (inPreview) return;
       this.previewImgs.unshift({ small: val });
       this.previewImgs.pop();
-    },
+    }
   },
   computed: {
     unsplashImgs() {

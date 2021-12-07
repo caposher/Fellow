@@ -1,10 +1,6 @@
 <template>
-  <section 
-  class="card"
-  :class="{'with-cover': card.cover}"
-   @click="showDetails" 
-   v-if="card">
-    <div class="cover-img" v-show="card.cover" :style="getCover"></div>
+  <section class="card" :class="{'with-cover': card.style}" @click="showDetails" v-if="card">
+    <div class="cover-img" v-show="card.style" :style="getCover"></div>
     <!-- <div> -->
     <!-- <section class="label-and-q-edit"> -->
     <span class="card-wrapper" @click.stop.prevent>
@@ -146,16 +142,20 @@ export default {
       return `${undoneTodos}/${doneTodos}`;
     },
     getCover() {
-      if (!this.card.cover) return
-      if (this.card.cover.charAt(0) === "#") {
+      if (!this.card.style) return;
+      const backgroundColor = this.card.style.bgColor
+      if (!this.card.style.img) {
         return {
-          backgroundColor: this.card.cover,
+          backgroundColor,
           height: "32px",
-          minHeight: "32px",
+          minHeight: "32px"
         };
       }
-    
-      return { backgroundImage: `url("${this.card.cover}")`, height: '163.58px'};
+      return {
+        height: "163.58px",
+        backgroundColor,
+        backgroundImage: `url("${this.card.style.img}")`,
+      };
     }
   },
   components: {}

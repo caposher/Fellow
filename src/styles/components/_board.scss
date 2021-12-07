@@ -7,12 +7,15 @@
   overflow-y: hidden;
   
 }
+.board-app{
+  overflow-y: hidden;
+}
 
 body {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  overflow-y: hidden;
+  // overflow-y: hidden;
   background-attachment: fixed;
 
   @include scroll-bar;

@@ -33,9 +33,9 @@
           <span class="icon-wrapper">
             <span class="icon-cover icon-sm"></span>
           </span>
-          <span v-show="cardToEdit.cover!==attachment.href" @click.stop="makeCover">Make cover</span>
+          <span v-show="cardToEdit.style.img!==attachment.href" @click.stop="makeCover">Make cover</span>
           <span
-            v-show="cardToEdit.cover===attachment.href"
+            v-show="cardToEdit.style.img===attachment.href"
             @click.stop="removeCover"
             class="remove-cover"
           >Remove cover</span>

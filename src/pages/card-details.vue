@@ -4,9 +4,13 @@
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
       </button>
-      <div v-if="cardToEdit.cover" class="cover-wrapper" :style="coverStyle">
+      <div v-if="cardToEdit.style" class="cover-wrapper" :style="coverStyle">
         <section class="cover-menu-header">
-          <button @click.stop="showCoverMenu=!showCoverMenu" class="cover-menu-btn">
+          <button
+            @click.stop="showCoverMenu=!showCoverMenu"
+            class="cover-menu-btn"
+            :style="doLight"
+          >
             <span class="icon-sm icon-cover"></span>
             Cover
           </button>
@@ -244,9 +248,13 @@
                 Attachments
               </span>
             </button>
-              <add-attachment @addNewAttach="addNewAttach" @close="openAddAttach=false"  v-show="openAddAttach"></add-attachment >
+            <add-attachment
+              @addNewAttach="addNewAttach"
+              @close="openAddAttach=false"
+              v-show="openAddAttach"
+            ></add-attachment>
           </section>
-          <section v-show="!card.cover" class="cover-menu-header">
+          <section v-show="!card.style" class="cover-menu-header">
             <button @click.stop="showCoverMenu=!showCoverMenu" class="cover-menu-btn action-btn">
               <span class="icon-sm icon-cover"></span>
               Cover
@@ -333,16 +341,30 @@ export default {
       return this.$store.getters.boardId;
     },
     coverStyle() {
-      if (!this.cardToEdit.cover) return;
-      if (this.cardToEdit.cover.charAt(0) === "#") {
-        // console.log(this.cardToEdit.cover);
+      if (!this.cardToEdit.style) return;
+      // if (this.cardToEdit.cover.charAt(0) === "#") {
+      //   // console.log(this.cardToEdit.cover);
+      //   return {
+      //     backgroundColor: this.cardToEdit.cover,
+      //     height: "116px",
+      //     minHeight: "116px"
+      //   };
+      // }
+      // return {
+      //   backgroundImage: `url("${this.cardToEdit.cover}")`,
+      //   backgroundColor: this.cardToEdit.color.rgba
+      // };
+      if (this.cardToEdit.style.img) {
         return {
-          backgroundColor: this.cardToEdit.cover,
-          height: "116px",
-          minHeight: "116px"
+          backgroundImage: `url("${this.cardToEdit.style.img}")`,
+          backgroundColor: this.cardToEdit.style.bgColor
         };
       }
-      return { backgroundImage: `url("${this.cardToEdit.cover}")` };
+      return {
+        backgroundColor: this.cardToEdit.style.bgColor,
+        height: "116px",
+        minHeight: "116px"
+      };
     },
     dateToShow() {
       const dateString = this.cardToEdit.dueDate;
@@ -359,6 +381,13 @@ export default {
       }
       return this.formatDate(dueDate) + ", " + dueDate.getFullYear() + time;
     },
+    doLight() {
+      // console.log(this.cardToEdit.cover);
+      if (!this.cardToEdit.style) return;
+      return this.cardToEdit.style.isDark
+        ? { backgroundColor: "#ffffff3d", color: "#fff" }
+        : { backgroundColor: "#00000014", color: "#172b4d" };
+    },
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
@@ -367,17 +396,20 @@ export default {
   },
   methods: {
     async removeCover() {
-      this.cardToEdit.cover = "";
+      this.cardToEdit.style = null;
       try {
         await this.updateCard();
-        this.showCoverMenu = false
+        this.showCoverMenu = false;
       } catch (err) {
         console.log("cant remove cover", err);
       }
     },
-    async makeCover(val) {
-      console.log(val);
-      this.cardToEdit.cover = val;
+    async makeCover( style) {
+      console.log('style', style);
+      // console.log(val);
+      // this.cardToEdit.color = color;
+      // this.cardToEdit.cover = val;
+      this.cardToEdit.style = style;
       try {
         await this.updateCard();
       } catch (err) {

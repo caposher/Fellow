@@ -52,6 +52,52 @@
         <div class="main-details">
           <div class="icon-header">
             <div class="detail-labels">
+              <div
+                class="card-members card-labels"
+                v-show="cardToEdit.members.length > 0"
+              >
+                <h4>Members</h4>
+                <span class="label-wrapper" @click="showMembers = !showMembers">
+                  <!-- <button
+                    v-for="member in cardToEdit.members"
+                    :key="member.id"
+                    class="label-tag white-text"
+                  > -->
+                  <!-- {{ label.txt }} -->
+                  <avatar
+                    v-for="member in cardToEdit.members"
+                    :key="member.id"
+                    :username="member.fullname"
+                    :size="32"
+                    :lighten="200"
+                    :src="member.imgUrl"
+                    class="member-avatar"
+                  ></avatar>
+                  <!-- </button> -->
+                  <button
+                    v-show="cardToEdit.members.length > 0"
+                    class="action-btn round"
+                  >
+                    <span class="icon-sm icon-plus"></span>
+                  </button>
+                </span>
+              </div>
+              <div class="card-labels" v-show="getLabels.length > 0">
+                <h4>Labels</h4>
+                <span class="label-wrapper" @click="showLabels = !showLabels">
+                  <button
+                    v-for="label in getLabels"
+                    :key="label.id"
+                    :class="label.colorClass"
+                    class="label-tag white-text"
+                  >
+                    {{ label.txt }}
+                  </button>
+                  <button v-show="getLabels.length > 0" class="action-btn">
+                    <span class="icon-sm icon-plus"></span>
+                  </button>
+                </span>
+              </div>
               <div class="due-date" v-show="cardToEdit.dueDate">
                 <h3>Due date</h3>
                 <div class="due-date-body">
@@ -80,22 +126,6 @@
                     ></date>
                   </div>
                 </div>
-              </div>
-              <div class="card-labels">
-                <h4>Labels</h4>
-                <span class="label-wrapper" @click="showLabels = true">
-                  <button
-                    v-for="label in getLabels"
-                    :key="label.id"
-                    :class="label.colorClass"
-                    class="label-tag white-text"
-                  >
-                    {{ label.txt }}
-                  </button>
-                  <button v-show="getLabels.length > 0" class="action-btn">
-                    <span class="icon-sm icon-plus"></span>
-                  </button>
-                </span>
               </div>
             </div>
           </div>
@@ -163,7 +193,7 @@
                     class="close-popup icon-md icon-close"
                   ></span>
                 </div>
-                <h4>Edit attachment</h4>
+                <h4>Edit</h4>
               </section>
               <form @submit.stop.prevent="updateAttach">
                 <label>Link name</label>
@@ -330,6 +360,7 @@ import date from "../cmps/date.cmp.vue";
 import addAttachment from "../cmps/add-attachment.cmp.vue";
 import attachment from "../cmps/attachment.cmp.vue";
 import coverMenu from "../cmps/cover-menu.cmp.vue";
+import Avatar from "vue-avatar";
 
 import { utilService } from "../services/util.service.js";
 import checklist from "../cmps/checklist.cmp.vue";
@@ -576,6 +607,7 @@ export default {
     attachment,
     coverMenu,
     cardMembers,
+    Avatar,
   },
 };
 </script>

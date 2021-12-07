@@ -95,18 +95,22 @@
 }
 
 .card-labels {
+  float: left;
+
   h4 {
     display: block;
     width: 100%;
     font-size: 12px;
     color: #68768b;
     margin-block-end: 4px;
+    font-weight: 500;
   }
 }
 
 .label-wrapper {
   display: flex;
   flex-wrap: wrap;
+  margin-right: 5px;
 
   .action-btn {
     margin: 0;

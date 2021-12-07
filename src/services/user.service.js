@@ -38,7 +38,9 @@ async function login(username, password) {
                     "_id": "u103",
                     "fullname": "Adam Bercovich",
                     "username": "adamBerco",
-                    "color": "green"
+                    "color": "green",
+                    "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
+
                 }
                 break
             case 'oshra':
@@ -46,7 +48,8 @@ async function login(username, password) {
                     "_id": "u101",
                     "fullname": "Oshra Hartuv",
                     "username": "oshraHartuv1",
-                    "color": "pink"
+                    "color": "pink",
+                    "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
                 }
                 break
             case 'osher':
@@ -54,17 +57,27 @@ async function login(username, password) {
                     "_id": "u102",
                     "fullname": "Osher Cappelli",
                     "username": "osherCappelli",
-                    "color": "blue"
+                    "color": "blue",
+                    "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
+
                 }
                 break
+            default:
+                user = {
+                    "_id": "u111",
+                    "fullname": username,
+                    "username": username,
+                    "color": "blue"
+
+                }
         }
 
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user))
         return user
-    }
-    catch (err) {
+    } catch (err) {
         console.log('can\'t login', err)
     }
+
 }
 
 async function signup(username, password, fullname) {

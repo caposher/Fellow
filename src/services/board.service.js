@@ -4098,20 +4098,32 @@ function travelBoard() {
     "_id": "u101",
     "fullname": "Oshra Hartuv",
     "username": "oshraHartuv1",
-    "color": "pink"
+    "color": "pink",
+    "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
   }
   board.members = [
     {
       "_id": "u103",
       "fullname": "Adam Bercovich",
       "username": "adamBerco",
-      "color": "green"
+      "color": "green",
+      "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
+
     },
     {
       "_id": "u102",
       "fullname": "Osher Cappelli",
       "username": "osherCappelli",
-      "color": "blue"
+      "color": "blue",
+      "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
+
+    },
+    {
+      "_id": "u101",
+      "fullname": "Oshra Hartuv",
+      "username": "oshraHartuv1",
+      "color": "pink",
+      "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
     }
   ]
   return board;
@@ -4126,7 +4138,8 @@ function mealPlanner() {
       "_id": "u102",
       "fullname": "Osher Cappelli",
       "username": "osherCappelli",
-      "color": "blue"
+      "color": "blue",
+      "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
     },
     style: {
       imgUrl:
@@ -4142,17 +4155,28 @@ function mealPlanner() {
     ],
     members: [
       {
-        "_id": "u101",
-        "fullname": "Oshra Hartuv",
-        "username": "oshraHartuv1",
-        "color": "pink"
-      },
-      {
         "_id": "u103",
         "fullname": "Adam Bercovich",
         "username": "adamBerco",
-        "color": "green"
+        "color": "green",
+        "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
+
       },
+      {
+        "_id": "u102",
+        "fullname": "Osher Cappelli",
+        "username": "osherCappelli",
+        "color": "blue",
+        "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
+
+      },
+      {
+        "_id": "u101",
+        "fullname": "Oshra Hartuv",
+        "username": "oshraHartuv1",
+        "color": "pink",
+        "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
+      }
     ],
     lists: [
       {
@@ -5271,7 +5295,8 @@ function companyBoard() {
       "_id": "u103",
       "fullname": "Adam Bercovich",
       "username": "adamBerco",
-      "color": "green"
+      "color": "green",
+      "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
     },
     style: {
       imgUrl:
@@ -5312,17 +5337,27 @@ function companyBoard() {
 
     members: [
       {
-        "_id": "u101",
-        "fullname": "Oshra Hartuv",
-        "username": "oshraHartuv1",
-        "color": "pink"
+        "_id": "u103",
+        "fullname": "Adam Bercovich",
+        "username": "adamBerco",
+        "color": "green",
+        "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
       },
       {
         "_id": "u102",
         "fullname": "Osher Cappelli",
         "username": "osherCappelli",
-        "color": "blue"
+        "color": "blue",
+        "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
+
       },
+      {
+        "_id": "u101",
+        "fullname": "Oshra Hartuv",
+        "username": "oshraHartuv1",
+        "color": "pink",
+        "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
+      }
     ],
     lists: [
       {

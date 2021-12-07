@@ -25,8 +25,6 @@
           value=""
         />
       </div>
-      <!-- <button>!</button>    -->
-      <!-- <button><i class="far fa-bell"></i></button> -->
       <button class="header-bell">
         <span>
           <svg width="24" height="32" focusable="false" viewBox="0 0 24 24">
@@ -39,12 +37,19 @@
           </svg>
         </span>
       </button>
-      <span class="user-img" :title="user"><i class="fas fa-user"></i></span>
+      <avatar
+        :username="user.fullname"
+        :size="32"
+        :lighten="200"
+        :src="user.imgUrl"
+        :title="`${user.fullname} (${user.username})`"
+      ></avatar>
     </div>
   </header>
 </template>
 
 <script>
+import Avatar from "vue-avatar";
 import logo from "../cmps/logo.cmp.vue";
 export default {
   computed: {
@@ -54,8 +59,7 @@ export default {
   },
   components: {
     logo,
+    Avatar,
   },
 };
 </script>
-
-<style></style>

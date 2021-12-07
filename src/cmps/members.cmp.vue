@@ -5,7 +5,6 @@
       <div @click="$emit('close')">
         <span class="close-popup icon-md icon-close"></span>
       </div>
-      <!-- <button class="close-label-popup" @click="$emit('close')">X</button> -->
     </header>
     <input type="text" placeholder="Search members" />
     <form @submit.prevent="">
@@ -24,35 +23,21 @@
             :title="`${member.fullname} (${member.username})`"
             :autocompletetext="member.username"
           >
-            <p
-              class="member js-member member-icon"
-              :style="{ backgroundColor: member.color }"
-            >
-              {{ iconToShow(member) }}
+            <p class="member js-member member-icon">
+              <avatar
+                :username="member.fullname"
+                :size="32"
+                :lighten="200"
+                :src="member.imgUrl"
+              ></avatar>
             </p>
-            <!-- <p class="member-avatar">{{ iconToShow(member) }}</p> -->
-            <!-- <img
-                class="member-avatar"
-                height="30"
-                width="30"
-                src="https://trello-members.s3.amazonaws.com/619fe0a5bfaa03163f844a19/30c68a5fe55968e001394575e5d5c4cc/30.png"
-                srcset="
-                  https://trello-members.s3.amazonaws.com/619fe0a5bfaa03163f844a19/30c68a5fe55968e001394575e5d5c4cc/30.png 1x,
-                  https://trello-members.s3.amazonaws.com/619fe0a5bfaa03163f844a19/30c68a5fe55968e001394575e5d5c4cc/50.png 2x
-                "
-                :title="`${member.fullname} (${member.username})`"
-              /> -->
-            <!-- <span :id="member._id"> </span> -->
-            <!-- </p> -->
             <p
               class="full-name"
               :name="`${member.fullname} (${member.username})`"
             >
               {{ member.fullname }}
             </p>
-
             <p class="username">({{ member.username }})</p>
-            <!-- </p> -->
             <span
               class="icon-sm icon-check checked-icon"
               :style="{
@@ -67,6 +52,8 @@
 </template>
 
 <script>
+import Avatar from "vue-avatar";
+
 export default {
   props: {
     cardMembers: {
@@ -81,9 +68,6 @@ export default {
   },
 
   methods: {
-    setColor(colorClass) {
-      return `${colorClass} ${colorClass}-lg`;
-    },
     checkMember(memberId) {
       return this.selectedMembers.find((member) => member._id === memberId);
     },
@@ -98,22 +82,19 @@ export default {
       }
       this.$emit("update", JSON.parse(JSON.stringify(this.selectedMembers)));
     },
-    iconToShow(member) {
-      var matches = member.fullname.match(/\b(\w)/g);
-      var acronym = matches.join("").toUpperCase();
-      return acronym;
-    },
   },
   computed: {
     membersToShow() {
       const members = JSON.parse(JSON.stringify(this.allMembers));
       const user = this.$store.getters.user;
-      members.unshift(this.$store.getters.board.createdBy);
       const idx = members.findIndex((mbr) => mbr._id === user._id);
       members.splice(idx, 1);
       members.unshift(user);
       return members;
     },
+  },
+  components: {
+    Avatar,
   },
 };
 </script>

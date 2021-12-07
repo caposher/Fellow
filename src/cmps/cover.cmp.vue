@@ -25,7 +25,7 @@
         <button
           v-for="img in imgAttachs"
           :key="img.href"
-          :class="{'selected-btn':isSelected(img.small)}"
+          :class="{'selected-btn':isSelected(img.href)}"
           :style="backgroundImg(img.href)"
           @click="makeCover(img.href)"
         ></button>
@@ -220,6 +220,7 @@ export default {
   },
   methods: {
     isSelected(val) {
+      console.log(val);
       if (!this.card.style) return;
       if (val.charAt(0) === "#") {
         return !this.card.style.img && this.card.style.bgColor === val

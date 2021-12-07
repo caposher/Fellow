@@ -33,9 +33,12 @@
           <span class="icon-wrapper">
             <span class="icon-cover icon-sm"></span>
           </span>
-          <span v-show="cardToEdit.style.img!==attachment.href" @click.stop="makeCover">Make cover</span>
           <span
-            v-show="cardToEdit.style.img===attachment.href"
+            v-show="!cardToEdit.style||cardToEdit.style.img!==attachment.href"
+            @click.stop="makeCover"
+          >Make cover</span>
+          <span
+            v-show=" cardToEdit.style && cardToEdit.style.img===attachment.href"
             @click.stop="removeCover"
             class="remove-cover"
           >Remove cover</span>
@@ -59,6 +62,8 @@
 </template>
 
 <script>
+import FastAverageColor from "fast-average-color";
+
 export default {
   props: {
     attachment: {
@@ -92,8 +97,15 @@ export default {
       this.$emit("deleteAttach", this.attachment);
       console.log(this.attachment);
     },
-    makeCover() {
-      this.$emit("makeCover", this.attachment.href);
+    async makeCover() {
+      const fac = new FastAverageColor();
+      const color = await fac.getColorAsync(this.attachment.href);
+      const style = {
+        img: this.attachment.href,
+        bgColor: color.rgba,
+        isDark: color.isDark
+      };
+      this.$emit("makeCover", style);
       // console.log(this.attachment);
     },
     removeCover() {

@@ -9,9 +9,10 @@
           <button
             @click.stop="showCoverMenu=!showCoverMenu"
             class="cover-menu-btn"
-            :style="doLight"
+            :style="{color:textColor ,backgroundColor: bgColor}"
           >
-            <span class="icon-sm icon-cover"></span>
+            <!-- :class="{'lightBtn':cardToEdit.style.isDark,'darkBtn': !cardToEdit.style.isDark}" -->
+            <span :style="{color:textColor}" class="icon-sm icon-cover"></span>
             Cover
           </button>
           <cover
@@ -135,7 +136,7 @@
               <span class="icon-attach icon-lg"></span>
               <h3>Attachments</h3>
             </section>
-
+{{cardToEdit.attachments}}
             <div v-for="attachment in cardToEdit.attachments" :key="attachment.id">
               <attachment
                 :attachment="attachment"
@@ -342,26 +343,15 @@ export default {
     },
     coverStyle() {
       if (!this.cardToEdit.style) return;
-      // if (this.cardToEdit.cover.charAt(0) === "#") {
-      //   // console.log(this.cardToEdit.cover);
-      //   return {
-      //     backgroundColor: this.cardToEdit.cover,
-      //     height: "116px",
-      //     minHeight: "116px"
-      //   };
-      // }
-      // return {
-      //   backgroundImage: `url("${this.cardToEdit.cover}")`,
-      //   backgroundColor: this.cardToEdit.color.rgba
-      // };
+      const backgroundColor = this.cardToEdit.style.bgColor;
       if (this.cardToEdit.style.img) {
         return {
           backgroundImage: `url("${this.cardToEdit.style.img}")`,
-          backgroundColor: this.cardToEdit.style.bgColor
+          backgroundColor
         };
       }
       return {
-        backgroundColor: this.cardToEdit.style.bgColor,
+        backgroundColor,
         height: "116px",
         minHeight: "116px"
       };
@@ -381,18 +371,21 @@ export default {
       }
       return this.formatDate(dueDate) + ", " + dueDate.getFullYear() + time;
     },
-    doLight() {
-      // console.log(this.cardToEdit.cover);
-      if (!this.cardToEdit.style) return;
-      return this.cardToEdit.style.isDark
-        ? { backgroundColor: "#ffffff3d", color: "#fff" }
-        : { backgroundColor: "#00000014", color: "#172b4d" };
-    },
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
       return labelIds.map(lId => allLabels.find(label => label.id === lId));
-    }
+    },
+    bgColor() {
+      return this.cardToEdit.style.isDark
+        ?  "#ffffff3d" 
+        :  "#00000014" ;
+    },
+    textColor() {
+      return this.cardToEdit.style.isDark
+        ? "#fff" 
+        :  "#172b4d" ;
+    },
   },
   methods: {
     async removeCover() {
@@ -404,8 +397,8 @@ export default {
         console.log("cant remove cover", err);
       }
     },
-    async makeCover( style) {
-      console.log('style', style);
+    async makeCover(style) {
+      console.log("style", style);
       // console.log(val);
       // this.cardToEdit.color = color;
       // this.cardToEdit.cover = val;

@@ -5,7 +5,7 @@
     <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar }" />
     <Container
       :tag="'ul'"
-      class="board"
+      class="board smooth-dnd-container"
       orientation="horizontal"
       @drop="onColumnDrop($event)"
       drag-class="card-ghost"

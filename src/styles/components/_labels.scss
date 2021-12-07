@@ -41,13 +41,37 @@
     margin-left: 4px;
   }
 }
-// .label-blue {
-//   background-color: #0079bf;
-//   &-lg:hover {
-//     box-shadow: -8px 0 #055a8c;
-//     margin-left: 4px;
-//   }
-// }
+.label-lightblue {
+  background-color: #00c2e0;
+  &-lg:hover {
+    box-shadow: -8px 0 #0098b7;
+    margin-left: 4px;
+  }
+}
+
+.label-lightgreen {
+  background-color: #51e898;
+  &-lg:hover {
+    box-shadow: -8px 0 #4bbf6b;
+    margin-left: 4px;
+  }
+}
+.label-pink {
+  background-color: #ff78cb;
+  &-lg:hover {
+    box-shadow: -8px 0 #c9558f;
+    margin-left: 4px;
+  }
+}
+
+.label-darkblue {
+  background-color: #344563;
+  &-lg:hover {
+    // box-shadow: -8px 0 #055a8c;
+    margin-left: 4px;
+  }
+}
+
 .white-text {
   color: white;
 }

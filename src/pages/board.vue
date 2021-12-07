@@ -234,16 +234,13 @@ export default {
       }
     },
     scroll(ev) {
-      console.log("scroll");
       // if (this.dragging) return;
       const slider = this.$refs.board.firstChild;
-      console.log("slider", slider);
       this.slider = slider;
       let isDown = false;
       let startX;
       let scrollLeft;
       this.dragging = false;
-      console.log("this.dragging", this.dragging);
 
       slider.addEventListener("mousedown", (e) => {
         if (this.dragging) return;
@@ -292,11 +289,9 @@ export default {
     applyDrag(arr, dragResult) {},
 
     unscroll() {
-      console.log("unscroll");
       if (!this.slider) return;
       this.dragging = true;
       this.slider.classList.remove("active");
-      console.log("dragging", this.dragging);
     },
     onOpenBar(val) {
       this.openBar = val;

@@ -2,7 +2,7 @@
   <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
     <app-header />
     <workspace-nav :boards="boards" @openBar="onOpenBar" />
-    <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar }" />
+    <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar,'dark':board.style.isDark, 'light': !board.style.isDark }" />
     <Container
       :tag="'ul'"
       class="board"
@@ -27,7 +27,7 @@
       </Draggable>
 
       <div class="add-list-wrapper">
-        <li class="new-list" @click="setAddList" :class="{ 'height-0': isAddList }">
+        <li class="new-list" @click="setAddList" :class="{ 'height-0': isAddList ,'dark':board.style.isDark, 'light': !board.style.isDark}">
           <p>
             <span>
               <i class="icon-sm icon-plus"></i>

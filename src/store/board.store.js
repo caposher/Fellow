@@ -210,9 +210,9 @@ export const boardStore = {
         console.log('failed to get photos', err);
       }
     },
-    async setBackground({ commit, dispatch }, { boardId, url = 0 }) {
+    async setBackground({ commit, dispatch }, { boardId, style}) {
       try {
-        const board = await boardService.setBackground(boardId, url);
+        const board = await boardService.setBackground(boardId, style);
         commit({ type: 'setBoard', board });
         dispatch({ type: 'loadBoards' });
       } catch (err) {

@@ -9,15 +9,15 @@
   position: relative;
   &.with-cover{
     padding: 0px 0px 2px;
-    .card-title, .card-icons{
+    .card-title, .card-icons,.card-wrapper{
       padding: 0 8px 0;
     }
   }
-
   .cover-img{
     background-position: 50%;
     background-repeat: no-repeat;
     border-radius: 3px 3px 0 0;
+    margin-bottom: 5px;
     // position: absolute;
     width: 100%;
     background-color: transparent;

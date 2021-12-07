@@ -13,9 +13,9 @@
           <button
             @click.stop="showCoverMenu=!showCoverMenu"
             class="cover-menu-btn"
-            :style="{color:textColor ,backgroundColor: bgColor}"
+            :class="{'light-btn':cardToEdit.style.isDark,'dark-btn': !cardToEdit.style.isDark}"
           >
-            <!-- :class="{'lightBtn':cardToEdit.style.isDark,'darkBtn': !cardToEdit.style.isDark}" -->
+            <!-- :style="{color:textColor ,backgroundColor: bgColor}" -->
             <span :style="{color:textColor}" class="icon-sm icon-cover"></span>
             Cover
           </button>
@@ -441,11 +441,6 @@ export default {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
       return labelIds.map(lId => allLabels.find(label => label.id === lId));
-    },
-    bgColor() {
-      return this.cardToEdit.style.isDark
-        ?  "#ffffff3d" 
-        :  "#00000014" ;
     },
     textColor() {
       return this.cardToEdit.style.isDark

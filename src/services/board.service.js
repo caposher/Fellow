@@ -3795,6 +3795,7 @@ function getEmptyBoard(title) {
     style: {
       imgUrl:
         'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/e1b4d655b33c1ef09b9aea6c6360f70c/photo-1637928114342-05b15ee4034e.jpg',
+      isDark: true
     },
     labels: [
       { id: utilService.makeId(), txt: 'test1', colorClass: 'label-green' },
@@ -3862,10 +3863,10 @@ async function getBgImgs(searchKey, imgNum,page) {
   }
 }
 
-async function setBackground(boardId, url) {
+async function setBackground(boardId, style) {
   try {
     const board = await getById(boardId);
-    board.style.imgUrl = url;
+    board.style=style;
     return await save(board);
   } catch (err) {
     console.log('Failed to set background', err);

@@ -33,28 +33,26 @@ export default {
         href: "",
         file: null,
         createdAt: "",
-        type: ""
+        type: "",
       },
       //   imgUrls: [],
-      isLoading: false
+      isLoading: false,
     };
   },
   methods: {
     async onUploadImg(ev) {
       this.isLoading = true;
-      try{
-
+      try {
         let res = await uploadImg(ev);
-      //   this.imgUrls.push(res.url);
-      this.newAttach.href = res.url;
-      this.newAttach.type = "img";
-      // console.log(this.imgUrls);
-      // console.log(res);
-      // this.$emit('onSaveImg', res.url)
-      this.isLoading = false;
-      }
-      catch(err){
-        console.log('cant upload img'. err);
+        //   this.imgUrls.push(res.url);
+        this.newAttach.href = res.url;
+        this.newAttach.type = "img";
+        // console.log(this.imgUrls);
+        // console.log(res);
+        // this.$emit('onSaveImg', res.url)
+        this.isLoading = false;
+      } catch (err) {
+        console.log("cant upload img".err);
       }
     },
     // saveImg(imgUrl) {
@@ -65,8 +63,6 @@ export default {
         this.newAttach.type = "link";
       }
       if (!this.newAttach.type) return;
-
-      console.log(this.newAttach);
       this.newAttach.createdAt = Date.now();
       this.$emit("addNewAttach", this.newAttach);
       this.resetAttach();
@@ -87,15 +83,14 @@ export default {
         file: null,
         createdAt: "",
         type: "",
-        file: null
+        file: null,
       };
-    }
+    },
   },
   components: {
-    imgUpload
-  }
+    imgUpload,
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

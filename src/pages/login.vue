@@ -26,6 +26,7 @@
                           type="text"
                           name="user"
                           id="user"
+                          v-model="username"
                           class="form-field"
                           autocorrect="off"
                           spellcheck="false"
@@ -41,6 +42,7 @@
                             type="password"
                             name="password"
                             id="password"
+                            v-model="password"
                             class="form-field"
                             placeholder="Enter password"
                             autocomplete="current-password"
@@ -52,6 +54,7 @@
                         type="submit"
                         class="button account-button button-green btn btn-success"
                         value="Log in"
+                        @click="login"
                       />
                     </div>
                   </div>
@@ -196,8 +199,19 @@
 <script>
 import logo from "../cmps/logo.cmp.vue";
 export default {
+  data() {
+    return {
+      username: "demo",
+      password: "demo",
+    };
+  },
   methods: {
     login() {
+      this.$store.dispatch({
+        type: "login",
+        username: this.username,
+        password: this.password,
+      });
       this.$router.push("/home");
     },
   },

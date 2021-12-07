@@ -1,0 +1,70 @@
+.member-container {
+  border-radius: 3px;
+  display: block;
+  height: 40px;
+  line-height: 32px;
+  margin-bottom: 2px;
+  overflow: hidden;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #172b4d;
+
+  &:hover {
+    background-color: #091e420a;
+  }
+
+  &:active {
+    background-color: #e4f0f6;
+  }
+
+  & p {
+    display: inline;
+  }
+}
+
+.member-icon {
+  background-color: #dfe1e6;
+  border-radius: 25em;
+  color: #172b4d;
+  cursor: pointer;
+  display: block;
+  float: left;
+  height: 32px;
+  margin: 0 4px 4px 0;
+  overflow: visible;
+  position: relative;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 32px;
+  z-index: 0;
+  margin-right: 8px;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+
+  span {
+    padding: 0;
+  }
+}
+
+.member-avatar {
+  border-radius: 25em;
+  height: 32px;
+  object-fit: cover;
+  width: 32px;
+  max-width: 100%;
+  border: 0;
+}
+.icon-check {
+  background-clip: content-box;
+  background-origin: content-box;
+  //   display: block;
+  padding: 11px !important;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

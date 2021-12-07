@@ -123,6 +123,7 @@ export default {
     try {
       await this.$store.dispatch({ type: 'loadBoard', boardId });
       await this.$store.dispatch({ type: 'loadBoards' });
+      // console.log(this.$store.getters.boards);
     } catch (err) {
       console.log('problem with getting board', err);
     }
@@ -196,7 +197,7 @@ export default {
           type: 'deleteBoard',
           boardId: this.board._id,
         });
-        this.$router.push('/');
+        this.$router.push('/home');
       } catch (err) {
         console.log('cant delete board', err);
       }
@@ -259,7 +260,6 @@ export default {
       this.slider.classList.remove('active');
     },
     onOpenBar(val) {
-      console.log('val', val);
       this.openBar = val;
     },
   },

@@ -18,7 +18,7 @@
   position: relative;
   width: 768px;
   z-index: 25;
-  .cover-wrapper{
+  .cover-wrapper {
     background-size: contain;
     background-origin: content-box;
     box-sizing: border-box;
@@ -30,7 +30,7 @@
     min-height: 160px;
     padding: 0px;
     position: relative;
-    .cover-menu-header{
+    .cover-menu-header {
       align-items: center;
       bottom: 0;
       box-sizing: border-box;
@@ -39,20 +39,18 @@
       padding: 8px;
       position: absolute;
       width: 100%;
-      .cover-menu-btn{
+      .cover-menu-btn {
         background-color: #00000014;
         border-radius: 3px;
         color: #172b4d;
         padding: 6px 12px 6px 6px;
         text-decoration: none;
-        &:hover{
+        &:hover {
           background-color: #00000029;
           cursor: pointer;
-
         }
       }
-  }
-
+    }
   }
   & header {
     margin: 12px 40px 8px 56px;
@@ -142,6 +140,7 @@
 }
 .icon-header {
   .due-date {
+    clear: both;
     h3 {
       color: #5e6c84;
       display: block;
@@ -197,7 +196,7 @@
         padding: 8px 0;
         // position: relative;
         .icon-attach {
-        padding: 8px 0;
+          padding: 8px 0;
 
           left: -40px;
           position: absolute;
@@ -216,13 +215,14 @@
       }
     }
     .description {
+      clear: both;
       & .card-details-icon {
         left: -40px;
         position: absolute;
         top: -2px;
         font-family: icomoon;
         &::after {
-          content: '\e922';
+          content: "\e922";
         }
       }
       & .content {
@@ -337,7 +337,7 @@
     top: 6px;
     font-family: icomoon;
     &::after {
-      content: '\e91a';
+      content: "\e91a";
     }
   }
 }
@@ -376,7 +376,7 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: '\e912';
+    content: "\e912";
   }
 }
 
@@ -393,7 +393,7 @@
   background-color: #f2d600;
 }
 
-input[id='cb'] + label {
+input[id="cb"] + label {
   display: inline-block;
   flex-shrink: 0;
   height: 16px;
@@ -407,13 +407,13 @@ input[id='cb'] + label {
   border-radius: 2px;
   cursor: pointer;
 }
-input[id='cb']:checked + label:after {
+input[id="cb"]:checked + label:after {
   position: relative;
   box-sizing: border-box;
   color: white;
   padding: 2px;
   font-family: icomoon;
-  content: '\e916';
+  content: "\e916";
   height: 16px;
   width: 16px;
   display: flex;
@@ -427,7 +427,7 @@ input[id='cb']:checked + label:after {
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
 }
-input[id='cb'] {
+input[id="cb"] {
   display: none;
 }
 
@@ -551,4 +551,17 @@ input[id='cb'] {
       // color: #a5adba;
     }
   }
+}
+
+.member-avatar {
+  margin: 0 4px;
+  cursor: pointer;
+}
+.round {
+  border-radius: 20em;
+  height: 32px;
+  width: 32px;
+  padding: 6px 9px;
+  overflow: visible;
+  margin-right: 5px;
 }

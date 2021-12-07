@@ -16,6 +16,7 @@ export default {
   },
   created() {
     this.$store.dispatch({ type: "setUser" });
+    this.$store.dispatch({ type: "loadUsers" });
   },
   watch: {
     "$route.params.boardId": {

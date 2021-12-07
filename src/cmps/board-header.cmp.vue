@@ -23,7 +23,7 @@
             class="draggable-item"
           />
         </Draggable>
-        <button>Invite</button
+        <button @click="inviteMembers">Invite</button
         ><button @click="deleteBoard">Delete Board</button>
       </Container>
       <!-- </p> -->
@@ -65,6 +65,10 @@ export default {
       // console.log("sourceContainerOptions", sourceContainerOptions);
       // console.log("payload", payload);
       return false;
+    },
+    inviteMembers() {
+      const users = this.$store.getters.users;
+      console.log("users = ", users);
     },
   },
   computed: {

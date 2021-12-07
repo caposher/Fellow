@@ -72,6 +72,7 @@
 
 <script>
 import Avatar from "vue-avatar";
+import { Container, Draggable } from "vue-smooth-dnd";
 
 export default {
   props: {
@@ -108,6 +109,19 @@ export default {
         labelsState: this.labelsState,
       });
     },
+    // getShouldAcceptDrop(index, src, payload) {
+    //   // console.log("index", index);
+    //   // console.log("src", src);
+    //   // console.log("payload", payload);
+    // },
+    // getChildPayload(detachList) {
+    //   // console.log((index) => detachList.members[index]);
+    //   // return (index) => detachList.cards[index];
+    // },
+    // onMemberDrop(targetList, dropResult) {
+    //   const { addedIndex, removedIndex, payload } = dropResult;
+    //   console.log(dropResult, targetList);
+    // },
   },
   computed: {
     todos() {
@@ -181,7 +195,7 @@ export default {
       };
     },
   },
-  components: { Avatar },
+  components: { Avatar, Container, Draggable },
 };
 </script>
 

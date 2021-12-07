@@ -118,6 +118,7 @@
 }
 .card-members-preview {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   margin-right: -4px;
   padding-bottom: 4px;

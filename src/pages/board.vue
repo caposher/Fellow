@@ -6,11 +6,16 @@
   >
     <app-header />
     <workspace-nav :boards="boards" @openBar="onOpenBar" />
+    <!-- <container
+      group-name="members"
+          :get-child-payload="getChildPayload(JSON.parse(JSON.stringify(card)))"
+
+    > -->
     <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar }" />
     <div class="board-container" @mouseenter="scroll" ref="board">
       <Container
         :tag="'ul'"
-        class="board"
+        class="board smooth-dnd-container"
         orientation="horizontal"
         @drop="onColumnDrop($event)"
         drag-class="card-ghost"

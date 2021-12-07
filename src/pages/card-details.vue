@@ -11,12 +11,15 @@
       <div v-if="cardToEdit.style" class="cover-wrapper" :style="coverStyle">
         <section class="cover-menu-header">
           <button
-            @click.stop="showCoverMenu=!showCoverMenu"
+            @click.stop="showCoverMenu = !showCoverMenu"
             class="cover-menu-btn"
-            :style="{color:textColor ,backgroundColor: bgColor}"
+            :style="{ color: textColor, backgroundColor: bgColor }"
           >
             <!-- :class="{'lightBtn':cardToEdit.style.isDark,'darkBtn': !cardToEdit.style.isDark}" -->
-            <span :style="{color:textColor}" class="icon-sm icon-cover"></span>
+            <span
+              :style="{ color: textColor }"
+              class="icon-sm icon-cover"
+            ></span>
             Cover
           </button>
           <cover
@@ -24,7 +27,7 @@
             @makeCover="makeCover"
             :card="cardToEdit"
             @removeCover="removeCover"
-            @closeCover="showCoverMenu=false"
+            @closeCover="showCoverMenu = false"
           ></cover>
         </section>
       </div>
@@ -57,12 +60,6 @@
               >
                 <h4>Members</h4>
                 <span class="label-wrapper" @click="showMembers = !showMembers">
-                  <!-- <button
-                    v-for="member in cardToEdit.members"
-                    :key="member.id"
-                    class="label-tag white-text"
-                  > -->
-                  <!-- {{ label.txt }} -->
                   <avatar
                     v-for="member in cardToEdit.members"
                     :key="member.id"
@@ -72,7 +69,6 @@
                     :src="member.imgUrl"
                     class="member-avatar"
                   ></avatar>
-                  <!-- </button> -->
                   <button
                     v-show="cardToEdit.members.length > 0"
                     class="action-btn round"
@@ -131,8 +127,6 @@
           <div class="description">
             <span class="card-details-icon icon-lg"></span>
             <div>
-              <!-- <span class="icon-lg icon-desc"></span> -->
-              <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
                 <button
@@ -144,7 +138,6 @@
                 </button>
               </div>
             </div>
-            <!-- @blur="updateCard" -->
             <form @submit.prevent="updateDesc">
               <div
                 contenteditable="true"
@@ -236,11 +229,15 @@
         </div>
         <!--     SIDE MENU      -->
         <div class="side-menu">
-          <button class="action-btn not-yet" title="Not yet developed">
+          <button
+            class="action-btn"
+            title="Join to this card"
+            @click="joinCard"
+            v-show="!checkJoined"
+          >
             <span class="icon-sm icon-member"></span>Join
           </button>
           <h3>Add to card</h3>
-          <!-- side menu renders cmp in click -->
           <button
             class="action-btn"
             title="Members"
@@ -313,12 +310,15 @@
             </button>
             <add-attachment
               @addNewAttach="addNewAttach"
-              @close="openAddAttach=false"
+              @close="openAddAttach = false"
               v-show="openAddAttach"
             ></add-attachment>
           </section>
           <section v-show="!card.style" class="cover-menu-header">
-            <button @click.stop="showCoverMenu=!showCoverMenu" class="cover-menu-btn action-btn">
+            <button
+              @click.stop="showCoverMenu = !showCoverMenu"
+              class="cover-menu-btn action-btn"
+            >
               <span class="icon-sm icon-cover"></span>
               Cover
             </button>
@@ -327,7 +327,7 @@
               @makeCover="makeCover"
               :card="cardToEdit"
               @removeCover="removeCover"
-              @closeCover="showCoverMenu=false"
+              @closeCover="showCoverMenu = false"
             ></cover>
           </section>
           <section class="actions">
@@ -396,6 +396,7 @@ export default {
   },
   mounted() {
     this.$refs.desc.innerText = this.cardToEdit.description;
+    // this.$refs.desc.innerText.select();
   },
   computed: {
     card() {
@@ -413,13 +414,13 @@ export default {
       if (this.cardToEdit.style.img) {
         return {
           backgroundImage: `url("${this.cardToEdit.style.img}")`,
-          backgroundColor
+          backgroundColor,
         };
       }
       return {
         backgroundColor,
         height: "116px",
-        minHeight: "116px"
+        minHeight: "116px",
       };
     },
     dateToShow() {
@@ -440,17 +441,17 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map(lId => allLabels.find(label => label.id === lId));
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
     bgColor() {
-      return this.cardToEdit.style.isDark
-        ?  "#ffffff3d" 
-        :  "#00000014" ;
+      return this.cardToEdit.style.isDark ? "#ffffff3d" : "#00000014";
     },
     textColor() {
-      return this.cardToEdit.style.isDark
-        ? "#fff" 
-        :  "#172b4d" ;
+      return this.cardToEdit.style.isDark ? "#fff" : "#172b4d";
+    },
+    checkJoined() {
+      const user = this.$store.getters.user;
+      return this.cardToEdit.members.find((u) => u._id === user._id);
     },
   },
   methods: {
@@ -620,6 +621,12 @@ export default {
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
+    },
+    joinCard() {
+      const user = this.$store.getters.user;
+      if (this.checkJoined) return;
+      this.cardToEdit.members.push(user);
+      this.updateCard();
     },
   },
   components: {

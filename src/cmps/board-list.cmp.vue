@@ -1,7 +1,9 @@
 <template>
-  <li class="list">
+  <li class="list" @mousedown="unscroll" @mouseleave="scroll">
     <header>
-      <h4 v-if="!editTitle" @click="editTitle = true" class="drag-handle">{{ showTitle }}</h4>
+      <h4 v-if="!editTitle" @click="editTitle = true" class="drag-handle">
+        {{ showTitle }}
+      </h4>
       <textarea
         type="text"
         v-else
@@ -12,7 +14,9 @@
         @blur="updateList()"
         @keydown.enter="updateList()"
       />
-      <button @click="deleteList"><span class="icon-sm icon-close"></span></button>
+      <button @click="deleteList">
+        <span class="icon-sm icon-close"></span>
+      </button>
     </header>
     <Container
       :tag="'ul'"
@@ -36,10 +40,17 @@
         <p>Add a card</p>
       </button>
       <div v-else class="add-card-actions">
-        <input type="text" v-focus="isAddCard" v-model="newCardTitle" @keydown.enter="addCard" />
+        <input
+          type="text"
+          v-focus="isAddCard"
+          v-model="newCardTitle"
+          @keydown.enter="addCard"
+        />
         <div class="add-card-btns">
           <div class="submit-btns">
-            <button class="submit-btn submit-card" @click="addCard">Add Card</button>
+            <button class="submit-btn submit-card" @click="addCard">
+              Add Card
+            </button>
             <button>
               <span
                 id="close"
@@ -59,9 +70,9 @@
 </template>
 
 <script>
-import cardList from './card-list.cmp.vue';
-import { focus } from 'vue-focus';
-import { Container, Draggable } from 'vue-smooth-dnd';
+import cardList from "./card-list.cmp.vue";
+import { focus } from "vue-focus";
+import { Container, Draggable } from "vue-smooth-dnd";
 
 // props- list
 export default {
@@ -77,7 +88,7 @@ export default {
       updatedList: null,
       editTitle: false,
       isAddCard: false,
-      newCardTitle: '',
+      newCardTitle: "",
     };
   },
   created() {
@@ -95,7 +106,7 @@ export default {
     },
     async addCard() {
       // if (!this.isAddCard) return
-      console.log('adding card');
+      console.log("adding card");
       // const title = prompt('card title');
       const title = this.newCardTitle;
       if (!title) {
@@ -104,39 +115,48 @@ export default {
       }
       try {
         await this.$store.dispatch({
-          type: 'addCard',
+          type: "addCard",
           board: this.$store.getters.board,
           list: this.list,
           title,
         });
-        this.newCardTitle = '';
+        this.newCardTitle = "";
         this.isAddCard = false;
       } catch (err) {
-        console.log('cant add card', err);
+        console.log("cant add card", err);
       }
     },
     closeAddCard(event) {
-      this.newCardTitle = '';
+      this.newCardTitle = "";
       this.isAddCard = false;
       event.target.blur();
-      console.log('end of close');
+      console.log("end of close");
     },
     updateList() {
       this.editTitle = false;
-      this.$emit('update', JSON.parse(JSON.stringify(this.updatedList)));
+      this.$emit("update", JSON.parse(JSON.stringify(this.updatedList)));
+    },
+    unscroll() {
+      this.$emit("unscroll");
+    },
+    scroll() {
+      this.$emit("scroll");
     },
     ondragEnd() {
       this.dragCard = false;
       this.updateList();
     },
     deleteList() {
-      if (confirm('This action will delete the list! continue?')) {
-        this.$emit('deleteList', JSON.parse(JSON.stringify(this.updatedList)));
+      if (confirm("This action will delete the list! continue?")) {
+        this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
       }
     },
     onCardDrop(targetList, dropResult) {
       const { addedIndex, removedIndex, payload } = dropResult;
-      if (targetList === null || (removedIndex === null && addedIndex === null)) {
+      if (
+        targetList === null ||
+        (removedIndex === null && addedIndex === null)
+      ) {
         return;
       }
       const newBoard = this.$store.getters.board;
@@ -150,7 +170,7 @@ export default {
       if (addedIndex !== null) {
         list.cards.splice(addedIndex, 0, itemToAdd);
       }
-      this.$emit('updateBoard', JSON.parse(JSON.stringify(newBoard)));
+      this.$emit("updateBoard", JSON.parse(JSON.stringify(newBoard)));
     },
     getChildPayload(detachList) {
       return (index) => detachList.cards[index];
@@ -161,7 +181,7 @@ export default {
       return JSON.parse(JSON.stringify(this.list));
     },
     showTitle() {
-      return this.list.title ? this.list.title : 'Enter title';
+      return this.list.title ? this.list.title : "Enter title";
     },
   },
   watch: {

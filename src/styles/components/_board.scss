@@ -5,9 +5,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   overflow-y: hidden;
-  
 }
-.board-app{
+.board-app {
   overflow-y: hidden;
 }
 
@@ -37,7 +36,18 @@ body {
     border-radius: 4px;
   }
 }
-
+.board-container {
+  // position: relative;
+  // width: 100%;
+  // overflow-x: scroll;
+  // overflow-y: hidden;
+  // white-space: nowrap;
+  // transition: all 0.2s;
+  // transform: scale(0.98);
+  // will-change: transform;
+  // user-select: none;
+  // cursor: pointer;
+}
 .board {
   display: flex !important;
   list-style: none;
@@ -46,11 +56,11 @@ body {
   position: relative;
   width: 100%;
   overflow-x: scroll;
+  overflow-y: hidden;
   padding-left: 24px;
   margin: 0;
   transition: margin 0.5s;
 }
-
 .nav-open {
   margin-left: 250px;
   padding-inline-start: 15px;

@@ -1,5 +1,10 @@
 <template>
-  <section class="card" :class="{'with-cover': card.style}" @click="showDetails" v-if="card">
+  <section
+    class="card"
+    :class="{ 'with-cover': card.style }"
+    @click="showDetails"
+    v-if="card"
+  >
     <div class="cover-img" v-show="card.style" :style="getCover"></div>
     <!-- <div> -->
     <!-- <section class="label-and-q-edit"> -->
@@ -36,20 +41,38 @@
       <div class="icon-wrapper" v-if="card.description">
         <span class="icon-sm icon-desc badge"></span>
       </div>
-      <div class="icon-wrapper" v-if="card.attachments && card.attachments.length">
+      <div
+        class="icon-wrapper"
+        v-if="card.attachments && card.attachments.length"
+      >
         <span class="icon-sm icon-attach badge"></span>
         <span class="icon-text">{{ card.attachments.length }}</span>
       </div>
-      <div class="icon-wrapper" v-if="card.checklists && card.checklists.length && todos">
+      <div
+        class="icon-wrapper"
+        v-if="card.checklists && card.checklists.length && todos"
+      >
         <span class="icon-sm icon-checklist badge"></span>
         <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
     </section>
-    <div class="card-members"></div>
+    <div class="card-members-preview">
+      <avatar
+        v-for="member in card.members"
+        :key="member.id"
+        :username="member.fullname"
+        :size="32"
+        :lighten="200"
+        :src="member.imgUrl"
+        class="member-avatar"
+      ></avatar>
+    </div>
   </section>
 </template>
 
 <script>
+import Avatar from "vue-avatar";
+
 export default {
   props: {
     card: {
@@ -71,7 +94,7 @@ export default {
   },
   methods: {
     showDetails() {
-      this.$router.push(this.$route.path + '/c/' + this.card.id);
+      this.$router.push(this.$route.path + "/c/" + this.card.id);
     },
     formatDate(dueDate) {
       var date = dueDate.getDate();
@@ -81,7 +104,7 @@ export default {
     },
     onLabelClick() {
       this.$store.commit({
-        type: 'toggleLabel',
+        type: "toggleLabel",
         labelsState: this.labelsState,
       });
     },
@@ -119,7 +142,7 @@ export default {
       return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
     setLabelClass() {
-      let classes = `preview-label${this.labelsState ? '' : '-close'}`;
+      let classes = `preview-label${this.labelsState ? "" : "-close"}`;
       return classes;
     },
 
@@ -129,7 +152,7 @@ export default {
         return this.formatDate(dueDate);
       }
 
-      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear();
+      return this.formatDate(dueDate) + ", " + dueDate.getFullYear();
     },
     ChecklistNum() {
       var doneTodos = 0;
@@ -143,12 +166,12 @@ export default {
     },
     getCover() {
       if (!this.card.style) return;
-      const backgroundColor = this.card.style.bgColor
+      const backgroundColor = this.card.style.bgColor;
       if (!this.card.style.img) {
         return {
           backgroundColor,
           height: "32px",
-          minHeight: "32px"
+          minHeight: "32px",
         };
       }
       return {
@@ -156,9 +179,9 @@ export default {
         backgroundColor,
         backgroundImage: `url("${this.card.style.img}")`,
       };
-    }
+    },
   },
-  components: {},
+  components: { Avatar },
 };
 </script>
 

@@ -13,8 +13,37 @@
         @blur="updateList()"
         @keydown.enter="updateList()"
       />
-      <button @click="deleteList">
-        <span class="icon-sm icon-close"></span>
+      <!-- <button @click="deleteList"> -->
+      <button @click="listMenu = !listMenu">
+        <span class="icon-sm icon-dots">
+          <section class="card-popup" v-show="listMenu" @click.stop="">
+            <section class="popup-header">
+              <div @click.stop="close">
+                <span class="close-popup icon-md icon-close"></span>
+              </div>
+              <h4>List action</h4>
+            </section>
+
+            <form @submit.prevent="">
+              <label class="img-upload-container">
+                Computer
+                <div>
+                  <label class="clickable add-img">
+                    <input type="file" id="uploadImg" />
+                  </label>
+                  <!-- <div v-else class="loader"> -->
+                  <!-- <img :src="require('../assets/img/loader.svg')" alt /> -->
+                  <!-- </div> -->
+                </div>
+              </label>
+              <!-- <label v-if="!isLoading">Attach a link</label> -->
+              <!-- <input v-if="!isLoading" type="text" v-model="newAttach.href" /> -->
+              <!-- <label v-show="newAttach.href">Link name (optional)</label> -->
+              <input type="text" />
+              <button class="submit">Add</button>
+            </form>
+          </section>
+        </span>
       </button>
     </header>
     <Container
@@ -88,6 +117,7 @@ export default {
       editTitle: false,
       isAddCard: false,
       newCardTitle: "",
+      listMenu: true,
     };
   },
   created() {

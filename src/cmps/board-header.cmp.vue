@@ -1,5 +1,9 @@
 <template>
-  <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
+  <header
+    class="board-header"
+    :class="{ 'main-menu-spacing': showMainMenu }"
+    v-if="board"
+  >
     <section>
       <!-- <span
         class="board-title"
@@ -51,23 +55,26 @@
             class="draggable-item"
           />
         </Draggable>
-        <button @click="inviteMembers">Invite</button><button @click="deleteBoard">Delete Board</button>
+        <button @click="inviteMembers">Invite</button
+        ><button @click="deleteBoard">Delete Board</button>
       </Container>
       <!-- </p> -->
     </section>
     <section>
       <button>Filter</button>
-      <button v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <button v-if="!showMainMenu" @click="showMainMenu = true">
+        Show menu
+      </button>
       <main-menu :class="mainMenuToggle" @close="showMainMenu = false" />
     </section>
   </header>
 </template>
 
 <script>
-import Avatar from 'vue-avatar';
-import mainMenu from '@/cmps/main-menu.cmp.vue';
-import { Container, Draggable } from 'vue-smooth-dnd';
-import { focus } from 'vue-focus';
+import Avatar from "vue-avatar";
+import mainMenu from "@/cmps/main-menu.cmp.vue";
+import { Container, Draggable } from "vue-smooth-dnd";
+import { focus } from "vue-focus";
 
 // import { applyDrag, generateItems } from "./utils";
 export default {
@@ -86,13 +93,14 @@ export default {
       this.$refs.editBoardTitle.blur();
     },
     updateTitle() {
-      console.log('u');
+      console.log("u");
       this.board.title = this.$refs.editBoardTitle.innerText;
-      this.$emit('updateBoard', this.board);
+      this.$emit("updateBoard", this.board);
       this.editTitle = false;
     },
     deleteBoard() {
-      if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
+      if (confirm("This action will delete the board! continue?"))
+        this.$emit("deleteBoard");
     },
     onDragStart(dragResult) {
       // console.log("start", isSource, payload, willAcceptDrop);
@@ -110,7 +118,7 @@ export default {
     },
     inviteMembers() {
       const users = this.$store.getters.users;
-      console.log('users = ', users);
+      console.log("users = ", users);
     },
   },
   computed: {
@@ -118,10 +126,11 @@ export default {
       return this.$store.getters.board;
     },
     membersToShow() {
-      return this.board.members.reverse();
+      // return this.board.members.reverse();
+      return this.board.members;
     },
     mainMenuToggle() {
-      return this.showMainMenu ? 'show-main-menu' : 'hide-main-menu';
+      return this.showMainMenu ? "show-main-menu" : "hide-main-menu";
     },
   },
 

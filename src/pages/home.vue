@@ -222,6 +222,7 @@ export default {
         };
       }
     },
+
     checkTitle(ev) {
       if (ev.target.value) this.emptyTitle = false;
       else this.emptyTitle = true;

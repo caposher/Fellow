@@ -15,36 +15,17 @@
       />
       <!-- <button @click="deleteList"> -->
       <button @click="listMenu = !listMenu">
-        <span class="icon-sm icon-dots">
-          <section class="card-popup" v-show="listMenu" @click.stop="">
-            <section class="popup-header">
-              <div @click.stop="close">
-                <span class="close-popup icon-md icon-close"></span>
-              </div>
-              <h4>List action</h4>
-            </section>
-
-            <form @submit.prevent="">
-              <label class="img-upload-container">
-                Computer
-                <div>
-                  <label class="clickable add-img">
-                    <input type="file" id="uploadImg" />
-                  </label>
-                  <!-- <div v-else class="loader"> -->
-                  <!-- <img :src="require('../assets/img/loader.svg')" alt /> -->
-                  <!-- </div> -->
-                </div>
-              </label>
-              <!-- <label v-if="!isLoading">Attach a link</label> -->
-              <!-- <input v-if="!isLoading" type="text" v-model="newAttach.href" /> -->
-              <!-- <label v-show="newAttach.href">Link name (optional)</label> -->
-              <input type="text" />
-              <button class="submit">Add</button>
-            </form>
-          </section>
-        </span>
+        <span class="icon-sm icon-dots"> </span>
       </button>
+      <section class="card-popup list-popup" v-show="listMenu" @click.stop="">
+        <section class="popup-header">
+          <div @click.stop="listMenu = false">
+            <span class="close-popup icon-md icon-close"></span>
+          </div>
+          <h4>List action</h4>
+        </section>
+        <span class="action" @click="deleteList">Delete this list</span>
+      </section>
     </header>
     <Container
       :tag="'ul'"
@@ -118,7 +99,7 @@ export default {
       editTitle: false,
       isAddCard: false,
       newCardTitle: "",
-      listMenu: true,
+      listMenu: false,
     };
   },
   created() {
@@ -177,9 +158,7 @@ export default {
       this.updateList();
     },
     deleteList() {
-      if (confirm("This action will delete the list! continue?")) {
-        this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
-      }
+      this.$emit("deleteList", JSON.parse(JSON.stringify(this.updatedList)));
     },
     onCardDrop(targetList, dropResult) {
       const { addedIndex, removedIndex, payload } = dropResult;

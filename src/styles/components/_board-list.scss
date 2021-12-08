@@ -18,13 +18,40 @@
   header {
     position: relative;
     align-items: center;
-    
+
+    .list-popup {
+      width: 304px;
+      font-weight: 100;
+      h4 {
+        width: 280px;
+      }
+
+      span.action {
+        cursor: pointer;
+        margin: 0 -12px;
+        padding: 6px 12px;
+        position: relative;
+        text-decoration: none;
+        display: block;
+        font-weight: 400;
+
+        &:hover {
+          background-color: #091e420a;
+        }
+
+        &:active {
+          background-color: #e4f0f6;
+        }
+      }
+    }
+
     h4 {
       line-height: 40px;
       font-weight: 500;
       width: 100%;
       padding-inline-start: 9px;
-      cursor: pointer;
+      // cursor: pointer;
+      // font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
     button {

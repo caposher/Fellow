@@ -1,5 +1,9 @@
 <template>
-  <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
+  <section
+    v-if="board"
+    :class="{ 'display-modal': selectedCardId }"
+    class="board-app"
+  >
     <app-header />
     <workspace-nav :boards="boards" @openBar="onOpenBar" />
     <!-- <container
@@ -8,9 +12,13 @@
 
     >-->
     <board-header
-@updateBoard="updateBoard"      @deleteBoard="deleteBoard"
-      :class="{ 'nav-open': openBar, 'dark':board.style.isDark, 'light': !board.style.isDark
-  }"
+      @updateBoard="updateBoard"
+      @deleteBoard="deleteBoard"
+      :class="{
+        'nav-open': openBar,
+        dark: board.style.isDark,
+        light: !board.style.isDark,
+      }"
     />
     <div class="board-container" @mouseenter="scroll" ref="board">
       <Container
@@ -45,8 +53,11 @@
           <li
             class="new-list"
             @click="setAddList"
-            :class="{ 'height-0': isAddList, 'dark':board.style.isDark, 'light': !board.style.isDark}
- "
+            :class="{
+              'height-0': isAddList,
+              dark: board.style.isDark,
+              light: !board.style.isDark,
+            }"
           >
             <p>
               <span>
@@ -55,7 +66,10 @@
               {{ addListText }}
             </p>
           </li>
-          <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add">
+          <li
+            :class="{ 'height-0': !isAddList, 'add-list': isAddList }"
+            class="list-add"
+          >
             <input
               type="text"
               ref="input"
@@ -64,9 +78,14 @@
               @keydown.enter="addList"
             />
             <div class="list-add-controls">
-              <button class="submit-btn add-list-btn" @click="addList">Add List</button>
+              <button class="submit-btn add-list-btn" @click="addList">
+                Add List
+              </button>
               <button>
-                <span @click="isAddList = false" class="icon-close icon-lg close-add-btn"></span>
+                <span
+                  @click="isAddList = false"
+                  class="icon-close icon-lg close-add-btn"
+                ></span>
               </button>
             </div>
           </li>
@@ -86,6 +105,7 @@ import boardList from "../cmps/board-list.cmp.vue";
 import workspaceNav from "../cmps/workspace-nav.cmp.vue";
 import { Container, Draggable } from "vue-smooth-dnd";
 import { focus } from "vue-focus";
+import { socketService } from "@/services/socket.service";
 
 export default {
   directives: { focus: focus },
@@ -96,7 +116,7 @@ export default {
       isAddList: false,
       newListTitle: "",
       openBar: false,
-      dragging: false
+      dragging: false,
     };
   },
   watch: {
@@ -109,7 +129,7 @@ export default {
             await this.$store.dispatch({
               type: "setListAndCard",
               boardId,
-              cardId
+              cardId,
             });
             this.selectedCardId = cardId;
           } catch (err) {
@@ -120,7 +140,7 @@ export default {
             await this.$store.dispatch({
               type: "setListAndCard",
               boardId: "",
-              cardId: ""
+              cardId: "",
             });
             this.selectedCardId = null;
           } catch (err) {
@@ -128,7 +148,7 @@ export default {
           }
         }
       },
-      immediate: true
+      immediate: true,
     },
     "$route.params.boardId": {
       async handler() {
@@ -136,24 +156,29 @@ export default {
         try {
           await this.$store.dispatch({
             type: "loadBoard",
-            boardId
+            boardId,
           });
+          socketService.emit("board new-enter", boardId);
         } catch (err) {
           console.log("problem with getting board", err);
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   async created() {
     const { boardId } = this.$route.params;
     try {
       await this.$store.dispatch({ type: "loadBoard", boardId });
       await this.$store.dispatch({ type: "loadBoards" });
-      // console.log(this.$store.getters.boards);
+      socketService.on("board pushed", this.pushedBoard);
     } catch (err) {
       console.log("problem with getting board", err);
     }
+  },
+  destroyed() {
+    socketService.off("pushed-bored");
+    // socketService.terminate();
   },
   computed: {
     board() {
@@ -166,9 +191,17 @@ export default {
     },
     boards() {
       return this.$store.getters.boards;
-    }
+    },
   },
   methods: {
+    pushedBoard(board) {
+      console.log("board - pushBoard");
+      this.$store.dispatch({
+        type: "pushedBoard",
+        board,
+      });
+    },
+
     setAddList() {
       this.isAddList = true;
       console.log("board", this.board);
@@ -182,7 +215,7 @@ export default {
         await this.$store.dispatch({
           type: "addList",
           title,
-          board: this.board
+          board: this.board,
         });
         this.isAddList = false;
         this.newListTitle = "";
@@ -196,7 +229,7 @@ export default {
         await this.$store.dispatch({
           type: "updateList",
           list,
-          board: this.board
+          board: this.board,
         });
       } catch (err) {
         console.log("cant update list", err);
@@ -207,7 +240,7 @@ export default {
         await this.$store.dispatch({
           type: "deleteList",
           list,
-          board: this.board
+          board: this.board,
         });
       } catch (err) {
         console.log("cant delete list", err);
@@ -224,7 +257,7 @@ export default {
       try {
         await this.$store.dispatch({
           type: "deleteBoard",
-          boardId: this.board._id
+          boardId: this.board._id,
         });
         this.$router.push("/home");
       } catch (err) {
@@ -240,7 +273,7 @@ export default {
       let scrollLeft;
       this.dragging = false;
 
-      slider.addEventListener("mousedown", e => {
+      slider.addEventListener("mousedown", (e) => {
         if (this.dragging) return;
 
         isDown = true;
@@ -256,7 +289,7 @@ export default {
         isDown = false;
         slider.classList.remove("active");
       });
-      slider.addEventListener("mousemove", e => {
+      slider.addEventListener("mousemove", (e) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
@@ -293,7 +326,7 @@ export default {
     },
     onOpenBar(val) {
       this.openBar = val;
-    }
+    },
   },
   components: {
     boardHeader,
@@ -304,8 +337,8 @@ export default {
     focus,
     Container,
     Draggable,
-    appHeader
-  }
+    appHeader,
+  },
 };
 </script>
 

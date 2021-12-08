@@ -62,6 +62,10 @@ export const boardStore = {
   },
 
   actions: {
+    pushedBoard({ commit }, { board }) {
+      console.log('board store')
+      commit({ type: 'setBoard', board, });
+    },
     async loadBoards({ commit }) {
       try {
         const boards = await boardService.query();
@@ -221,7 +225,7 @@ export const boardStore = {
         console.log('failed to get photos', err);
       }
     },
-    async setBackground({ commit, dispatch }, { boardId, style}) {
+    async setBackground({ commit, dispatch }, { boardId, style }) {
       try {
         const board = await boardService.setBackground(boardId, style);
         commit({ type: 'setBoard', board });

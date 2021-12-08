@@ -222,7 +222,7 @@
         top: -2px;
         font-family: icomoon;
         &::after {
-          content: "\e922";
+          content: '\e922';
         }
       }
       & .content {
@@ -337,7 +337,7 @@
     top: 6px;
     font-family: icomoon;
     &::after {
-      content: "\e91a";
+      content: '\e91a';
     }
   }
 }
@@ -376,7 +376,7 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: "\e912";
+    content: '\e912';
   }
 }
 
@@ -393,7 +393,7 @@
   background-color: #f2d600;
 }
 
-input[id="cb"] + label {
+input[id='cb'] + label {
   display: inline-block;
   flex-shrink: 0;
   height: 16px;
@@ -407,13 +407,13 @@ input[id="cb"] + label {
   border-radius: 2px;
   cursor: pointer;
 }
-input[id="cb"]:checked + label:after {
+input[id='cb']:checked + label:after {
   position: relative;
   box-sizing: border-box;
   color: white;
   padding: 2px;
   font-family: icomoon;
-  content: "\e916";
+  content: '\e916';
   height: 16px;
   width: 16px;
   display: flex;
@@ -427,7 +427,7 @@ input[id="cb"]:checked + label:after {
   white-space: nowrap;
   transition: all 0.2s ease-in-out;
 }
-input[id="cb"] {
+input[id='cb'] {
   display: none;
 }
 

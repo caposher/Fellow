@@ -1,10 +1,15 @@
 .main-menu {
-  right: 0;
-  top: 0;
+  position: fixed;
+  right: 0px;
   border-radius: 0;
   width: 340px;
   height: 100vh;
   padding: 0 6px 0 12px;
+  transition: transform 0.5s;
+
+  .card-popup {
+    top: 0px;
+  }
 
   .popup-header h4 {
     width: 100%;
@@ -17,7 +22,7 @@
   }
 
   .close-popup {
-    padding: 0 15px;
+    // padding: 0 15px;
   }
 
   .back-popup {
@@ -153,4 +158,17 @@
   .main-menu-search {
     position: relative;
   }
+}
+.show-main-menu {
+  // right: -400px;
+  transform: translateX(0px);
+}
+
+.hide-main-menu {
+  // right: 400px;
+  transform: translateX(400px);
+}
+
+.main-menu-spacing {
+  padding-right: 344px;
 }

@@ -8,9 +8,9 @@
 
     >-->
     <board-header
-@updateBoard="updateBoard"      @deleteBoard="deleteBoard"
-      :class="{ 'nav-open': openBar, 'dark':board.style.isDark, 'light': !board.style.isDark
-  }"
+      @updateBoard="updateBoard"
+      @deleteBoard="deleteBoard"
+      :class="{ 'nav-open': openBar, dark: board.style.isDark, light: !board.style.isDark }"
     />
     <div class="board-container" @mouseenter="scroll" ref="board">
       <Container
@@ -23,12 +23,7 @@
         drag-handle-selector=".drag-handle"
         :class="{ 'nav-open': openBar }"
       >
-        <Draggable
-          :tag="'li'"
-          v-for="(list, idx) in board.lists"
-          :key="list.id"
-          class="list-wrapper"
-        >
+        <Draggable :tag="'li'" v-for="(list, idx) in board.lists" :key="list.id" class="list-wrapper">
           <!--  -->
           <board-list
             :list="list"
@@ -45,8 +40,7 @@
           <li
             class="new-list"
             @click="setAddList"
-            :class="{ 'height-0': isAddList, 'dark':board.style.isDark, 'light': !board.style.isDark}
- "
+            :class="{ 'height-0': isAddList, dark: board.style.isDark, light: !board.style.isDark }"
           >
             <p>
               <span>
@@ -56,13 +50,7 @@
             </p>
           </li>
           <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add">
-            <input
-              type="text"
-              ref="input"
-              v-focus="isAddList"
-              v-model="newListTitle"
-              @keydown.enter="addList"
-            />
+            <input type="text" ref="input" v-focus="isAddList" v-model="newListTitle" @keydown.enter="addList" />
             <div class="list-add-controls">
               <button class="submit-btn add-list-btn" @click="addList">Add List</button>
               <button>
@@ -78,14 +66,15 @@
 </template>
 
 <script>
-import appHeader from "../cmps/app-header.cmp.vue";
-import boardHeader from "../cmps/board-header.cmp.vue";
-import mainMenu from "../cmps/main-menu.cmp.vue";
-import boardMenu from "../cmps/board-menu.cmp.vue";
-import boardList from "../cmps/board-list.cmp.vue";
-import workspaceNav from "../cmps/workspace-nav.cmp.vue";
-import { Container, Draggable } from "vue-smooth-dnd";
-import { focus } from "vue-focus";
+import appHeader from '../cmps/app-header.cmp.vue';
+import boardHeader from '../cmps/board-header.cmp.vue';
+import mainMenu from '../cmps/main-menu.cmp.vue';
+import boardMenu from '../cmps/board-menu.cmp.vue';
+import boardList from '../cmps/board-list.cmp.vue';
+import workspaceNav from '../cmps/workspace-nav.cmp.vue';
+// import dashBoard from '../cmps/dashboard.cmp.vue';
+import { Container, Draggable } from 'vue-smooth-dnd';
+import { focus } from 'vue-focus';
 
 export default {
   directives: { focus: focus },
@@ -94,65 +83,65 @@ export default {
       selectedCardId: null,
       slider: null,
       isAddList: false,
-      newListTitle: "",
+      newListTitle: '',
       openBar: false,
-      dragging: false
+      dragging: false,
     };
   },
   watch: {
-    "$route.params.cardId": {
+    '$route.params.cardId': {
       async handler() {
         const { cardId } = this.$route.params;
         const { boardId } = this.$route.params;
         if (cardId) {
           try {
             await this.$store.dispatch({
-              type: "setListAndCard",
+              type: 'setListAndCard',
               boardId,
-              cardId
+              cardId,
             });
             this.selectedCardId = cardId;
           } catch (err) {
-            console.log("problem with getting board", err);
+            console.log('problem with getting board', err);
           }
         } else {
           try {
             await this.$store.dispatch({
-              type: "setListAndCard",
-              boardId: "",
-              cardId: ""
+              type: 'setListAndCard',
+              boardId: '',
+              cardId: '',
             });
             this.selectedCardId = null;
           } catch (err) {
-            console.log("problem with getting board", err);
+            console.log('problem with getting board', err);
           }
         }
       },
-      immediate: true
+      immediate: true,
     },
-    "$route.params.boardId": {
+    '$route.params.boardId': {
       async handler() {
         const { boardId } = this.$route.params;
         try {
           await this.$store.dispatch({
-            type: "loadBoard",
-            boardId
+            type: 'loadBoard',
+            boardId,
           });
         } catch (err) {
-          console.log("problem with getting board", err);
+          console.log('problem with getting board', err);
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   async created() {
     const { boardId } = this.$route.params;
     try {
-      await this.$store.dispatch({ type: "loadBoard", boardId });
-      await this.$store.dispatch({ type: "loadBoards" });
+      await this.$store.dispatch({ type: 'loadBoard', boardId });
+      await this.$store.dispatch({ type: 'loadBoards' });
       // console.log(this.$store.getters.boards);
     } catch (err) {
-      console.log("problem with getting board", err);
+      console.log('problem with getting board', err);
     }
   },
   computed: {
@@ -160,18 +149,16 @@ export default {
       return this.$store.getters.board;
     },
     addListText() {
-      return this.board.lists && this.board.lists.length
-        ? "Add another list"
-        : "Add a list";
+      return this.board.lists && this.board.lists.length ? 'Add another list' : 'Add a list';
     },
     boards() {
       return this.$store.getters.boards;
-    }
+    },
   },
   methods: {
     setAddList() {
       this.isAddList = true;
-      console.log("board", this.board);
+      console.log('board', this.board);
 
       // this.$refs.titleInput.focus()
     },
@@ -180,55 +167,55 @@ export default {
       if (!title) return;
       try {
         await this.$store.dispatch({
-          type: "addList",
+          type: 'addList',
           title,
-          board: this.board
+          board: this.board,
         });
         this.isAddList = false;
-        this.newListTitle = "";
+        this.newListTitle = '';
       } catch (err) {
-        console.log("cant add list", err);
+        console.log('cant add list', err);
       }
     },
 
     async updateList(list) {
       try {
         await this.$store.dispatch({
-          type: "updateList",
+          type: 'updateList',
           list,
-          board: this.board
+          board: this.board,
         });
       } catch (err) {
-        console.log("cant update list", err);
+        console.log('cant update list', err);
       }
     },
     async deleteList(list) {
       try {
         await this.$store.dispatch({
-          type: "deleteList",
+          type: 'deleteList',
           list,
-          board: this.board
+          board: this.board,
         });
       } catch (err) {
-        console.log("cant delete list", err);
+        console.log('cant delete list', err);
       }
     },
     async updateBoard(board) {
       try {
-        this.$store.dispatch({ type: "updateBoard", board });
+        this.$store.dispatch({ type: 'updateBoard', board });
       } catch (err) {
-        console.log("cant update board", err);
+        console.log('cant update board', err);
       }
     },
     async deleteBoard() {
       try {
         await this.$store.dispatch({
-          type: "deleteBoard",
-          boardId: this.board._id
+          type: 'deleteBoard',
+          boardId: this.board._id,
         });
-        this.$router.push("/home");
+        this.$router.push('/home');
       } catch (err) {
-        console.log("cant delete board", err);
+        console.log('cant delete board', err);
       }
     },
     scroll(ev) {
@@ -240,23 +227,23 @@ export default {
       let scrollLeft;
       this.dragging = false;
 
-      slider.addEventListener("mousedown", e => {
+      slider.addEventListener('mousedown', (e) => {
         if (this.dragging) return;
 
         isDown = true;
-        slider.classList.add("active");
+        slider.classList.add('active');
         startX = e.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
       });
-      slider.addEventListener("mouseleave", () => {
+      slider.addEventListener('mouseleave', () => {
         isDown = false;
-        slider.classList.remove("active");
+        slider.classList.remove('active');
       });
-      slider.addEventListener("mouseup", () => {
+      slider.addEventListener('mouseup', () => {
         isDown = false;
-        slider.classList.remove("active");
+        slider.classList.remove('active');
       });
-      slider.addEventListener("mousemove", e => {
+      slider.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - slider.offsetLeft;
@@ -289,11 +276,11 @@ export default {
     unscroll() {
       if (!this.slider) return;
       this.dragging = true;
-      this.slider.classList.remove("active");
+      this.slider.classList.remove('active');
     },
     onOpenBar(val) {
       this.openBar = val;
-    }
+    },
   },
   components: {
     boardHeader,
@@ -304,8 +291,9 @@ export default {
     focus,
     Container,
     Draggable,
-    appHeader
-  }
+    appHeader,
+    // dashBoard,
+  },
 };
 </script>
 

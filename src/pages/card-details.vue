@@ -50,12 +50,6 @@
               <div class="card-members card-labels" v-show="cardToEdit.members.length > 0">
                 <h4>Members</h4>
                 <span class="label-wrapper" @click="showMembers = !showMembers">
-                  <!-- <button
-                    v-for="member in cardToEdit.members"
-                    :key="member.id"
-                    class="label-tag white-text"
-                  > -->
-                  <!-- {{ label.txt }} -->
                   <avatar
                     v-for="member in cardToEdit.members"
                     :key="member.id"
@@ -116,8 +110,6 @@
           <div class="description">
             <span class="card-details-icon icon-lg"></span>
             <div>
-              <!-- <span class="icon-lg icon-desc"></span> -->
-              <!-- <span class="fa fa-align-left"></span> -->
               <div class="content">
                 <h3>Description</h3>
                 <button v-show="cardToEdit.description && !isEditDesc" @click.stop="setFocus" class="action-btn">
@@ -125,7 +117,6 @@
                 </button>
               </div>
             </div>
-            <!-- @blur="updateCard" -->
             <form @submit.prevent="updateDesc">
               <div
                 contenteditable="true"
@@ -194,7 +185,7 @@
         </div>
         <!--     SIDE MENU      -->
         <div class="side-menu">
-          <button class="action-btn not-yet" title="Not yet developed">
+          <button class="action-btn" title="Join to this card" @click="joinCard" v-show="!checkJoined">
             <span class="icon-sm icon-member"></span>Join
           </button>
           <h3>Add to card</h3>
@@ -340,6 +331,7 @@ export default {
   },
   mounted() {
     this.$refs.desc.innerText = this.cardToEdit.description;
+    // this.$refs.desc.innerText.select();
   },
   computed: {
     card() {
@@ -381,19 +373,18 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      var a = labelIds.map((lId) =>
-        allLabels.find((label) => {
-          return label.id === lId;
-        })
-      );
-      a = a.filter((label) => label); //filter invalid labels
-      return a;
+      const labels = labelIds.map((lId) => allLabels.find((label) => label.id === lId));
+      return labels.filter((label) => label); //filter invalid labels
     },
     bgColor() {
       return this.cardToEdit.style.isDark ? '#ffffff3d' : '#00000014';
     },
     textColor() {
       return this.cardToEdit.style.isDark ? '#fff' : '#172b4d';
+    },
+    checkJoined() {
+      const user = this.$store.getters.user;
+      return this.cardToEdit.members.find((u) => u._id === user._id);
     },
   },
   methods: {
@@ -557,6 +548,12 @@ export default {
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
+    },
+    joinCard() {
+      const user = this.$store.getters.user;
+      if (this.checkJoined) return;
+      this.cardToEdit.members.push(user);
+      this.updateCard();
     },
   },
   components: {

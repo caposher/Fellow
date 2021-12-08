@@ -45,11 +45,24 @@
         <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
     </section>
-    <div class="card-members"></div>
+    <div class="card-members-preview">
+      <avatar
+        v-for="member in card.members"
+        :key="member.id"
+        :username="member.fullname"
+        :size="32"
+        :lighten="200"
+        :src="member.imgUrl"
+        class="member-avatar"
+      ></avatar>
+    </div>
   </section>
 </template>
 
 <script>
+import Avatar from 'vue-avatar';
+import { Container, Draggable } from 'vue-smooth-dnd';
+
 export default {
   props: {
     card: {
@@ -85,6 +98,19 @@ export default {
         labelsState: this.labelsState,
       });
     },
+    // getShouldAcceptDrop(index, src, payload) {
+    //   // console.log("index", index);
+    //   // console.log("src", src);
+    //   // console.log("payload", payload);
+    // },
+    // getChildPayload(detachList) {
+    //   // console.log((index) => detachList.members[index]);
+    //   // return (index) => detachList.cards[index];
+    // },
+    // onMemberDrop(targetList, dropResult) {
+    //   const { addedIndex, removedIndex, payload } = dropResult;
+    //   console.log(dropResult, targetList);
+    // },
   },
   computed: {
     todos() {
@@ -158,7 +184,7 @@ export default {
       };
     },
   },
-  components: {},
+  components: { Avatar, Container, Draggable },
 };
 </script>
 

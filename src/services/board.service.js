@@ -220,9 +220,8 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 
 async function getBgImgs(searchKey, imgNum, page) {
   try {
-    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
-      imgNum ? imgNum : 50
-    }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${imgNum ? imgNum : 50
+      }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
     let res = await axios.get(search);
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {

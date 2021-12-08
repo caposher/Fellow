@@ -7,14 +7,15 @@
   margin-block-end: 8px;
   padding: 6px 8px 2px;
   position: relative;
-  &.with-cover{
+  &.with-cover {
     padding: 0px 0px 2px;
-    .card-title, .card-icons{
+    .card-title,
+    .card-icons {
       padding: 0 8px 0;
     }
   }
 
-  .cover-img{
+  .cover-img {
     background-position: 50%;
     background-repeat: no-repeat;
     border-radius: 3px 3px 0 0;
@@ -46,7 +47,6 @@
     .edit-wrapper {
       display: block;
       background-color: rgba(235, 236, 240, 0.815);
-
     }
   }
 
@@ -115,4 +115,15 @@
   left: 0;
   top: 0;
   z-index: 1000;
+}
+.card-members-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-right: -4px;
+  padding-bottom: 4px;
+  & .member-avatar {
+    margin: 0;
+    margin-right: 2px;
+  }
 }

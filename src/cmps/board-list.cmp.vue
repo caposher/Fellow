@@ -174,7 +174,7 @@ export default {
       return this.list.title ? this.list.title : 'Enter title';
     },
     emptyList() {
-      return this.updatedList.cards.length ? '' : 'empty-list';
+      return this.updatedList.cards.length ? 'smooth-dnd-container ' : ' smooth-dnd-container empty-list';
     },
   },
   watch: {

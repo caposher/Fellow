@@ -6,6 +6,9 @@
   height: 100vh;
   padding: 0 6px 0 12px;
   transition: transform 0.5s;
+  span {
+    color: #172b4d;
+  }
 
   .card-popup {
     top: 0px;
@@ -21,16 +24,21 @@
     font-size: 16px;
   }
 
-  .close-popup {
-    // padding: 0 15px;
+  .menu-close {
+    font-size: 20px;
+    position: absolute;
+    right: 6px;
+    top: 8px;
+    margin: 0 0;
+    padding: 0 1px;
   }
 
   .back-popup {
+    font-size: 20px;
     position: absolute;
-    // top: 0;
     color: #172b4d;
-    left: 0;
-    top: 5px;
+    left: 6px;
+    top: 8px;
   }
 
   .main-menu-actions {
@@ -85,6 +93,9 @@
   }
 
   .menu-background-size {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 95px;
     width: 149px;
     background-size: cover;
@@ -124,9 +135,11 @@
     padding-block-start: 10px;
     padding-block-end: 12px;
     border-bottom: 1px solid #091e4221;
-    li p {
-      text-align: center;
+    li {
       line-height: 23px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .background-photo {
@@ -145,6 +158,10 @@
       font-weight: 500;
       margin-block-end: 10px;
     }
+  }
+
+  .custom-btn {
+    font-size: 30px;
   }
 
   .menu-color-set {

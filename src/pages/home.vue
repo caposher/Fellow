@@ -170,7 +170,7 @@ export default {
     },
     async setBoard(boardId) {
       try {
-        await this.$store.dispatch({ type: "loadAndWatchBoard", boardId });
+        await this.$store.dispatch({ type: "loadBoard", boardId });
         this.$router.push("/b/" + boardId);
       } catch (err) {
         console.log("cant get board" + boardId, err);

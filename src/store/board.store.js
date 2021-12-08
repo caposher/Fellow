@@ -120,15 +120,15 @@ export const boardStore = {
         console.log('cant load card:', err);
       }
     },
-    async loadAndWatchBoard({ commit }, { boardId }) {
-      try {
-        const board = await boardService.getById(boardId);
-        commit({ type: 'setBoard', board });
-        return board;
-      } catch (err) {
-        console.log('cant load board:' + id, err);
-      }
-    },
+    // async loadAndWatchBoard({ commit }, { boardId }) {
+    //   try {
+    //     const board = await boardService.getById(boardId);
+    //     commit({ type: 'setBoard', board });
+    //     return board;
+    //   } catch (err) {
+    //     console.log('cant load board:' + id, err);
+    //   }
+    // },
     async createBoard({ commit }, { title }) {
       try {
         const board = boardService.getEmptyBoard(title);

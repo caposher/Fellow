@@ -1,7 +1,7 @@
 <template>
   <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
     <app-header />
-    <workspace-nav :boards="boards" @openBar="onOpenBar" />
+    <workspace-nav @openBar="onOpenBar" />
     <!-- <container
       group-name="members"
           :get-child-payload="getChildPayload(JSON.parse(JSON.stringify(card)))"
@@ -150,7 +150,7 @@ export default {
     try {
       await this.$store.dispatch({ type: "loadBoard", boardId });
       await this.$store.dispatch({ type: "loadBoards" });
-      // console.log(this.$store.getters.boards);
+      console.log(this.$store.getters.boards);
     } catch (err) {
       console.log("problem with getting board", err);
     }
@@ -216,6 +216,7 @@ export default {
     async updateBoard(board) {
       try {
         this.$store.dispatch({ type: "updateBoard", board });
+        console.log('board', board);
       } catch (err) {
         console.log("cant update board", err);
       }

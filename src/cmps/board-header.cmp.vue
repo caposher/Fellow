@@ -26,7 +26,7 @@
         contenteditable="true"
         ref="editBoardTitle"
         class="title"
-      ></div>
+      >{{board.title}}</div>
 
       <span class="board-star
       bh-btn">
@@ -81,7 +81,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.editBoardTitle.innerText = this.board.title;
+    // this.$refs.editBoardTitle.innerText = this.board.title;
   },
   methods: {
     removeBr() {

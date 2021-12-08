@@ -86,8 +86,10 @@ export const boardStore = {
     async updateBoard({ commit }, { board }) {
       const boardId = board._id;
       try {
-        commit({ type: 'setBoard', board });
-        await boardService.save(board);
+        const updatedBoard = await boardService.save(board);
+        const updatedBoards = await boardService.query()
+        commit({ type: 'setBoard', board : updatedBoard });
+        commit({ type: 'setBoards', boards : updatedBoards });
       } catch (err) {
         const board = await boardService.getById(boardId);
         commit({ type: 'setBoard', board });

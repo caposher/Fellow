@@ -8,7 +8,7 @@
 
     >-->
     <board-header
-      @deleteBoard="deleteBoard"
+@updateBoard="updateBoard"      @deleteBoard="deleteBoard"
       :class="{ 'nav-open': openBar, 'dark':board.style.isDark, 'light': !board.style.isDark
   }"
     />

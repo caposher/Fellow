@@ -1,29 +1,37 @@
 <template>
   <header class="board-header" v-if="board">
     <section>
-      <span
+      <!-- <span
         class="board-title"
+        v-if="!editTitle"
+        :style="{width: this.width ? this.width +'px': ''}"
         ref="boardTitle"
-      >{{ board.title }}
-      </span>
-        <!-- @click="openEditTitle" -->
-        <!-- v-if="!editTitle" -->
-        <!-- v-else -->
-         <!-- 'display': editTitle ? 'block' : 'none'
-      <textarea
+        @click="openEditTitle"
+      >{{ board.title }}</span>-->
+      <!-- 'display': editTitle ? 'block' : 'none' -->
+      <!-- <textarea
         ref="editBoardTitle"
-        @input="changeWidth"
-        :style="{width: this.width +'px'}"
+        @click="changeWidth"
         v-model="board.title"
         v-focus="editTitle"
-        @focus="$event.target.select()"
-        @blur="updateBoard"
-        @keydown.enter="updateBoard"
-      /> -->
+      />-->
+      <!-- @focus="$event.target.innerText.select()" -->
+      <!-- @focus="$event.target.select()" -->
+      <!-- v-focus="editTitle" -->
+      <!-- v-else -->
+      <div
+        @focus="editTitle=true"
+        @blur="updateTitle"
+        @keydown.enter="removeBr"
+        contenteditable="true"
+        ref="editBoardTitle"
+        class="title"
+      ></div>
+
       <span class="board-star">
         <i class="icon-sm icon-star"></i>
       </span>
-      <!-- <p> -->
+      <!-- <p>  -->
       <Container
         tag="P"
         group-name="card-list"
@@ -69,33 +77,19 @@ export default {
     return {
       showMainMenu: false,
       editTitle: false,
-      width: 0,
-      scroll: 0
     };
   },
   mounted() {
-    // this.width = this.$refs.boardTitle.clientWidth + "px";
+    this.$refs.editBoardTitle.innerText = this.board.title;
   },
   methods: {
-//     openEditTitle() {
-//       this.width = this.$refs.boardTitle.clientWidth+1;
-//       this.editTitle = true;
-//       // this.scroll = this.$refs.editBoardTitle.scrollHeight
-//       // console.log('myScroll',this.scroll);
-//     },
-//     changeWidth() {
-//       const scroll = this.$refs.editBoardTitle.scrollHeight
-// console.log('title', this.$refs.boardTitle.clientWidth);
-//       console.log('scroll',scroll);
-//       console.log('width', this.width);
-//       if (!this.scroll) this.scroll = scroll
-//       if (this.scroll === scroll) return 
-//       this.scroll = scroll
-//       // this.width = this.$refs.boardTitle.clientWidth+30
-//       this.width = this.width +scroll
-//     },
-    updateBoard() {
-      // console.log("update");
+    removeBr() {
+      this.$refs.editBoardTitle.blur()
+    },
+    updateTitle() {
+      console.log('u');
+      this.board.title = this.$refs.editBoardTitle.innerText;
+      this.$emit("updateBoard", this.board);
       this.editTitle = false;
     },
     deleteBoard() {

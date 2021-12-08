@@ -103,6 +103,7 @@ import mainMenu from "../cmps/main-menu.cmp.vue";
 import boardMenu from "../cmps/board-menu.cmp.vue";
 import boardList from "../cmps/board-list.cmp.vue";
 import workspaceNav from "../cmps/workspace-nav.cmp.vue";
+// import dashBoard from '../cmps/dashboard.cmp.vue';
 import { Container, Draggable } from "vue-smooth-dnd";
 import { focus } from "vue-focus";
 import { socketService } from "@/services/socket.service";
@@ -338,6 +339,7 @@ export default {
     Container,
     Draggable,
     appHeader,
+    // dashBoard,
   },
 };
 </script>

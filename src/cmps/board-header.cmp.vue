@@ -32,7 +32,7 @@
         class="title"
       ></div>
 
-      <span class="board-star">
+      <span class="board-star bh-btn">
         <i class="icon-sm icon-star"></i>
       </span>
       <!-- <p>  -->
@@ -55,14 +55,14 @@
             class="draggable-item"
           />
         </Draggable>
-        <button @click="inviteMembers">Invite</button
-        ><button @click="deleteBoard">Delete Board</button>
+        <button @click="inviteMembers" class="bh-btn">Invite</button>
+        <button @click="deleteBoard" class="bh-btn">Delete Board</button>
       </Container>
       <!-- </p> -->
     </section>
     <section>
-      <button>Filter</button>
-      <button v-if="!showMainMenu" @click="showMainMenu = true">
+      <button class="bh-btn">Filter</button>
+      <button class="bh-btn" v-if="!showMainMenu" @click="showMainMenu = true">
         Show menu
       </button>
       <main-menu :class="mainMenuToggle" @close="showMainMenu = false" />
@@ -93,7 +93,8 @@ export default {
       this.$refs.editBoardTitle.blur();
     },
     updateTitle() {
-      console.log("u");
+      if (!this.$refs.editBoardTitle.innerText) return;
+      console.log(this.$refs.editBoardTitle.innerText);
       this.board.title = this.$refs.editBoardTitle.innerText;
       this.$emit("updateBoard", this.board);
       this.editTitle = false;

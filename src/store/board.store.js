@@ -138,6 +138,7 @@ export const boardStore = {
         const board = boardService.getEmptyBoard(title);
         const savedBoard = boardService.save(board);
         commit({ type: 'setBoard', board: savedBoard });
+        commit({ type: 'setBoards', boards: savedBoard });
         return savedBoard;
       } catch (err) {
         console.log("can't create board", err);

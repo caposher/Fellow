@@ -11,12 +11,16 @@ import appHeader from "@/cmps/app-header.cmp.vue";
 export default {
   data() {
     return {
-      onBoard: false
+      onBoard: false,
     };
   },
-  created() {
-    this.$store.dispatch({ type: "setUser" });
-    this.$store.dispatch({ type: "loadUsers" });
+  async created() {
+    try {
+      await this.$store.dispatch({ type: "setUser" });
+      await this.$store.dispatch({ type: "loadUsers" });
+    } catch (err) {
+      console.log("err", err);
+    }
   },
   watch: {
     "$route.params.boardId": {
@@ -39,8 +43,8 @@ export default {
         }
         // console.log(this.onBoard);
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {},
   computed: {
@@ -52,16 +56,16 @@ export default {
       return board;
     },
     appStyle() {
-      if (!this.board) return;
+      if (!this.board || !this.board.style) return;
       if (this.board.style.imgUrl)
         return {
-          backgroundImage: `url("${this.board.style.imgUrl}")`
+          backgroundImage: `url("${this.board.style.imgUrl}")`,
         };
       return {
-          backgroundColor: this.board.style.bgColor
-        };
-    }
+        backgroundColor: this.board.style.bgColor,
+      };
+    },
   },
-  components: {}
+  components: {},
 };
 </script>

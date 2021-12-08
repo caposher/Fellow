@@ -3140,7 +3140,7 @@ async function getById(id) {
 async function save(board) {
   try {
     if (board._id) {
-      socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
+      // socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
       return httpService.put('board/' + board._id, board)
 
     } else {
@@ -3238,7 +3238,7 @@ async function removeCard(cardId, listToUpdate, boardId) {
 
 function getEmptyBoard(title) {
   return {
-    _id: '',
+    // _id: '',
     title,
     createdAt: '',
     createdBy: 'user',

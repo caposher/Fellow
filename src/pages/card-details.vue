@@ -328,6 +328,7 @@ export default {
   },
   created() {
     this.cardToEdit = this.card;
+    console.log(this.card, 'card');
   },
   mounted() {
     this.$refs.desc.innerText = this.cardToEdit.description;
@@ -335,6 +336,7 @@ export default {
   },
   computed: {
     card() {
+      // console.log('card', card);
       return this.$store.getters.card;
     },
     list() {
@@ -418,6 +420,7 @@ export default {
         this.attachToEdit = {
           name: '',
         };
+        console.log(this.card);
       } catch (err) {
         console.log('cant update attachment', err);
       }

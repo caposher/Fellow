@@ -5,7 +5,7 @@
     class="board-app"
   >
     <app-header />
-    <workspace-nav :boards="boards" @openBar="onOpenBar" />
+    <workspace-nav @openBar="onOpenBar" />
     <!-- <container
       group-name="members"
           :get-child-payload="getChildPayload(JSON.parse(JSON.stringify(card)))"

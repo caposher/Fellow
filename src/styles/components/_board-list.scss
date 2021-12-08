@@ -58,7 +58,7 @@
   .card-list {
     list-style: none;
     max-height: 90vh;
-    overflow-y: auto; //TODO:
+    overflow-y: auto;
 
     .card-wrapper {
       display: flex;
@@ -66,6 +66,13 @@
       width: 90%;
       overflow-wrap: break-word;
     }
+  }
+
+  .empty-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
 
   footer {

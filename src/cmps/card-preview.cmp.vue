@@ -45,12 +45,12 @@
         <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
     </section>
-    <div class="card-members-preview">
+    <div v-show="card.members.length" class="card-members-preview">
       <avatar
         v-for="member in card.members"
         :key="member.id"
         :username="member.fullname"
-        :size="32"
+        :size="28"
         :lighten="200"
         :src="member.imgUrl"
         class="member-avatar"

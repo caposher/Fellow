@@ -1,5 +1,5 @@
 <template>
-  <header class="board-header" v-if="board">
+  <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
     <section>
       <span class="board-title">{{ board.title }}</span>
       <span class="board-star"><i class="icon-sm icon-star"></i></span>
@@ -16,30 +16,29 @@
           <avatar
             :style="{ 'z-index': board.members.length - index }"
             :username="member.fullname"
-            :size="32"
+            :size="28"
             :lighten="200"
             :src="member.imgUrl"
             :title="member.fullname"
             class="draggable-item"
           />
         </Draggable>
-        <button @click="inviteMembers">Invite</button
-        ><button @click="deleteBoard">Delete Board</button>
+        <button @click="inviteMembers">Invite</button><button @click="deleteBoard">Delete Board</button>
       </Container>
       <!-- </p> -->
     </section>
     <section>
       <button>Filter</button>
-      <button @click="showMainMenu = true">Show menu</button>
-      <main-menu v-show="showMainMenu" @close="showMainMenu = false" />
+      <button v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <main-menu :class="mainMenuToggle" @close="showMainMenu = false" />
     </section>
   </header>
 </template>
 
 <script>
-import Avatar from "vue-avatar";
-import mainMenu from "@/cmps/main-menu.cmp.vue";
-import { Container, Draggable } from "vue-smooth-dnd";
+import Avatar from 'vue-avatar';
+import mainMenu from '@/cmps/main-menu.cmp.vue';
+import { Container, Draggable } from 'vue-smooth-dnd';
 // import { applyDrag, generateItems } from "./utils";
 export default {
   data() {
@@ -49,8 +48,7 @@ export default {
   },
   methods: {
     deleteBoard() {
-      if (confirm("This action will delete the board! continue?"))
-        this.$emit("deleteBoard");
+      if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
     },
     onDragStart(dragResult) {
       // console.log("start", isSource, payload, willAcceptDrop);
@@ -68,7 +66,7 @@ export default {
     },
     inviteMembers() {
       const users = this.$store.getters.users;
-      console.log("users = ", users);
+      console.log('users = ', users);
     },
   },
   computed: {
@@ -77,6 +75,9 @@ export default {
     },
     membersToShow() {
       return this.board.members.reverse();
+    },
+    mainMenuToggle() {
+      return this.showMainMenu ? 'show-main-menu' : 'hide-main-menu';
     },
   },
 

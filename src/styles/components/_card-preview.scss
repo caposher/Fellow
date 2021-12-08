@@ -10,8 +10,8 @@
   &.with-cover {
     padding: 0px 0px 2px;
     .card-title,
-    .card-icons {
-      padding: 0 8px 0;
+    > * {
+      padding: 0 8px;
     }
   }
 
@@ -23,6 +23,7 @@
     width: 100%;
     background-color: transparent;
     background-size: cover;
+    margin-bottom: 5px;
   }
 
   .card-title {
@@ -36,7 +37,6 @@
     font-weight: 400;
 
     p {
-      padding-block-start: 3px;
       padding-inline-end: 22px;
     }
   }
@@ -81,7 +81,7 @@
     .icon-wrapper {
       color: #5e6c84;
       display: inline-block;
-      margin: 0 4px 4px 0;
+      margin: 0 8px 0 0;
       max-width: 100%;
       min-height: 20px;
       overflow: hidden;
@@ -92,11 +92,11 @@
       vertical-align: top;
 
       .clock {
-        line-height: 19px;
       }
       .badge {
         color: #6b778c;
-
+        margin-right: 2px;
+        line-height: 20px;
         vertical-align: top;
       }
       .icon-text {
@@ -108,22 +108,29 @@
       }
     }
   }
-}
+  .card-drag {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  .card-members-preview {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin: 0px -2px 0px 0;
+    padding-bottom: 5px;
+    padding-top: 2px;
+    // margin-inline-end: -7px;
+    // padding-bottom: 2px;
+    .member-avatar {
+      margin: 0;
+      margin-left: 4px;
+    }
+  }
 
-.card-drag {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1000;
-}
-.card-members-preview {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  margin-right: -4px;
-  padding-bottom: 4px;
-  & .member-avatar {
-    margin: 0;
+  &.member-avatar:not(:last-child) {
     margin-right: 2px;
+    // margin: 0 0 4px 4px;
   }
 }

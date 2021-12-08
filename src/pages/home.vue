@@ -210,8 +210,13 @@ export default {
   },
   methods: {
     bgImage(board) {
+      if (!board) return;
+      if (!board.style.imgUrl)
+        return {
+          backgroundColor: board.style.bgColor,
+        };
       // console.log('board', board);
-      if (board && board.style.imgUrl.includes("http")) {
+      if (board.style.imgUrl.includes("http")) {
         return {
           backgroundImage: `url("${board.style.imgUrl}")`,
         };
@@ -243,7 +248,7 @@ export default {
     },
     async setBoard(boardId) {
       try {
-        await this.$store.dispatch({ type: "loadAndWatchBoard", boardId });
+        await this.$store.dispatch({ type: "loadBoard", boardId });
         this.$router.push("/b/" + boardId);
       } catch (err) {
         console.log("cant get board" + boardId, err);

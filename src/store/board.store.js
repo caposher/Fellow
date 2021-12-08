@@ -120,15 +120,15 @@ export const boardStore = {
         console.log('cant load card:', err);
       }
     },
-    async loadAndWatchBoard({ commit }, { boardId }) {
-      try {
-        const board = await boardService.getById(boardId);
-        commit({ type: 'setBoard', board });
-        return board;
-      } catch (err) {
-        console.log('cant load board:' + id, err);
-      }
-    },
+    // async loadAndWatchBoard({ commit }, { boardId }) {
+    //   try {
+    //     const board = await boardService.getById(boardId);
+    //     commit({ type: 'setBoard', board });
+    //     return board;
+    //   } catch (err) {
+    //     console.log('cant load board:' + id, err);
+    //   }
+    // },
     async createBoard({ commit }, { title }) {
       try {
         const board = boardService.getEmptyBoard(title);
@@ -169,7 +169,6 @@ export const boardStore = {
         console.log('cant delete list', err);
       }
     },
-
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
       list.cards.push(card);
@@ -201,18 +200,30 @@ export const boardStore = {
         console.log('cant remove card', err);
       }
     },
-    async requestPhotos({ commit }, { searchKey, imgNum ,page }) {
+    async createLabel({ commit }, { board, label }) {
+      try {
+        let newLabel = boardService.getEmptyLabel();
+        newLabel.txt = label.txt;
+        newLabel.colorClass = label.colorClass;
+        board.labels.push(newLabel);
+        const newBoard = await boardService.save(board);
+        commit({ type: 'setBoard', board: newBoard });
+      } catch (err) {
+        console.log('failed to create new label');
+      }
+    },
+    async requestPhotos({ commit }, { searchKey, imgNum, page }) {
       // console.log('next', next);
       try {
-        const photos = await boardService.getBgImgs(searchKey, imgNum,page);
+        const photos = await boardService.getBgImgs(searchKey, imgNum, page);
         commit({ type: 'setPhotos', photos });
       } catch (err) {
         console.log('failed to get photos', err);
       }
     },
-    async setBackground({ commit, dispatch }, { boardId, url = 0 }) {
+    async setBackground({ commit, dispatch }, { boardId, style}) {
       try {
-        const board = await boardService.setBackground(boardId, url);
+        const board = await boardService.setBackground(boardId, style);
         commit({ type: 'setBoard', board });
         dispatch({ type: 'loadBoards' });
       } catch (err) {

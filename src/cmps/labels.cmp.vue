@@ -1,50 +1,61 @@
 <template>
   <section class="card-popup label-popup">
-    <section v-show="!isEditLabel">
+    <section v-show="!isEditLabel && !isNewLabel">
       <header class="popup-header">
         <h4>Labels</h4>
-        <div @click="$emit('close')">
+        <div @click="onClose">
           <span class="close-popup icon-md icon-close"></span>
         </div>
       </header>
       <input type="text" placeholder="Search labels..." />
-      <form @submit.prevent="addLabel">
-        <h5>Labels</h5>
+      <h5>Labels</h5>
 
-        <section v-for="(label, idx) in allLabels" :key="label.id" @change="toggleCheck(label.id, idx)">
-          <label class="label-picker">
-            <div :class="setColor(label.colorClass)">
-              <span class="label-name">{{ label.txt }}</span>
-              <input type="checkbox" :checked="checkLabel(label.id)" />
-              <span v-show="checkLabel(label.id)" class="close-popup icon-sm icon-check"></span>
-            </div>
-            <span class="edit-btn icon-sm icon-edit" @click="editLabel(label)"></span>
-          </label>
-        </section>
-
-        <button class="action-btn">Create a new label</button>
-      </form>
+      <section
+        class="label-container"
+        v-for="(label, idx) in allLabels"
+        :key="label.id"
+        @change="toggleCheck(label.id, idx)"
+      >
+        <label class="label-picker">
+          <div :class="setColor(label.colorClass)">
+            <span class="label-name">{{ label.txt }}</span>
+            <input type="checkbox" :checked="checkLabel(label.id)" />
+            <span v-show="checkLabel(label.id)" class="label-check icon-sm icon-check"></span>
+          </div>
+        </label>
+        <span class="edit-btn icon-sm icon-edit" @click.stop="editLabel(label)"></span>
+      </section>
+      <button class="action-btn" @click="isNewLabel = true">Create a new label</button>
     </section>
 
-    <section v-show="isEditLabel">
+    <section v-show="isEditLabel || isNewLabel" class="edit-label">
       <header class="popup-header">
-        <h4>Change label</h4>
-        <div @click="$emit('close')">
+        <h4>{{ title }}</h4>
+        <div @click="onClose">
           <span class="close-popup icon-md icon-close"></span>
+          <span @click.stop="goBack" class="back-popup icon-sm icon-back"></span>
         </div>
       </header>
       <h5>Name</h5>
-      <input type="text" />
+      <form @submit.stop.prevent="formAction()">
+        <input type="text" v-model="labelOnEdit.txt" />
+      </form>
       <h5>Select a color</h5>
-      <section v-for="color in colorSet" :key="color" :style="{ backgroundColor: color }">
-        <label class="label-picker">
-          <input type="radio" :value="color" v-model="colorSelect" />
-          {{ colorSelect }}
-          {{ labelOnEdit }}
-        </label>
-      </section>
-      <button class="action-btn" @click="updateLabel">Save</button>
-      <button class="action-btn" @click="deleteLabel">Delete</button>
+
+      <div class="color-selectors">
+        <section v-for="color in colorSet" :key="color" :class="color">
+          <label class="label-picker">
+            <input type="radio" :value="color" v-model="labelOnEdit.colorClass" />
+            <!-- {{ color }} -->
+            <span v-show="labelOnEdit.colorClass === color" class="label-check icon-sm icon-check"></span>
+          </label>
+        </section>
+      </div>
+      <div class="label-popup-btn">
+        <button class="submit-accept label-popup-submit" v-if="isEditLabel" @click="updateLabel">Save</button>
+        <button class="submit-delete label-popup-submit" v-if="isEditLabel" @click="deleteLabel">Delete</button>
+      </div>
+      <button class="action-btn" v-if="isNewLabel" @click="createLabel">Create</button>
     </section>
   </section>
 </template>
@@ -58,43 +69,103 @@ export default {
   },
   data() {
     return {
-      selectedIds: JSON.parse(JSON.stringify(this.cardLabels)),
+      cardLabelsIds: JSON.parse(JSON.stringify(this.cardLabels)),
       allLabels: this.$store.getters.labels,
       isEditLabel: false,
-      labelOnEdit: '',
-      colorSelect: '#61bd4f',
+      isNewLabel: false,
+      labelOnEdit: { txt: '', colorClass: 'label-green' },
+      colorSelect: 'label-green',
       colorSet: [
-        '#61bd4f',
-        '#f2d600',
-        '#ff9f1a',
-        '#eb5a46',
-        '#c377e0',
-        '#0079bf',
-        '#00c2e0',
-        '#51e898',
-        '#ff78cb',
-        '#344563',
+        'label-green',
+        'label-yellow',
+        'label-orange',
+        'label-red',
+        'label-purple',
+        'label-blue',
+        'label-lightblue',
+        'label-lightgreen',
+        'label-pink',
+        'label-darkblue',
       ],
     };
   },
   methods: {
-    updateLabel() {},
-    checkLabel(labelId) {
-      return 0 <= this.selectedIds.findIndex((lId) => lId === labelId);
+    updateLabel() {
+      const board = this.$store.getters.board;
+      const idx = this.allLabels.findIndex((label) => label.id === this.labelOnEdit.id);
+      this.allLabels.splice(idx, 1, JSON.parse(JSON.stringify(this.labelOnEdit)));
+      board.labels = JSON.parse(JSON.stringify(this.allLabels));
+      this.$store.dispatch({ type: 'updateBoard', board });
+      this.labelOnEdit = this.emptyLabel();
+      this.isEditLabel = false;
     },
-    deleteLabel() {},
+    async createLabel() {
+      const board = this.$store.getters.board;
+      try {
+        this.isNewLabel = false;
+        await this.$store.dispatch({ type: 'createLabel', board, label: JSON.parse(JSON.stringify(this.labelOnEdit)) });
+        this.allLabels = this.$store.getters.labels;
+        this.isNewLabel = false;
+        this.labelOnEdit = this.emptyLabel();
+      } catch (err) {
+        console.log('failed to create Label');
+      }
+    },
+    async deleteLabel() {
+      try {
+        const board = this.$store.getters.board;
+        const idx = this.allLabels.findIndex((label) => label.id === this.labelOnEdit.id);
+        this.allLabels.splice(idx, 1);
+        board.labels = JSON.parse(JSON.stringify(this.allLabels));
+
+        //remove all labels ids from cards
+        board.lists.forEach((list) => {
+          list.cards.forEach((card) => {
+            card.labelIds = card.labelIds.filter((labelId) => labelId !== this.labelOnEdit.id);
+          });
+        });
+        await this.$store.dispatch({ type: 'updateBoard', board: JSON.parse(JSON.stringify(board)) });
+
+        this.isEditLabel = false;
+        this.labelOnEdit = this.emptyLabel();
+      } catch (err) {
+        console.log('cant delete label');
+      }
+    },
+    checkLabel(labelId) {
+      return 0 <= this.cardLabelsIds.findIndex((lId) => lId === labelId);
+    },
     toggleCheck(labelId, posIdx) {
-      const idx = this.selectedIds.findIndex((lId) => lId === labelId);
-      0 <= idx ? this.selectedIds.splice(idx, 1) : this.selectedIds.splice(posIdx, 0, labelId);
-      this.$emit('update', JSON.parse(JSON.stringify(this.selectedIds)));
+      const idx = this.cardLabelsIds.findIndex((lId) => lId === labelId);
+      0 <= idx ? this.cardLabelsIds.splice(idx, 1) : this.cardLabelsIds.splice(posIdx, 0, labelId);
+      this.$emit('update', JSON.parse(JSON.stringify(this.cardLabelsIds)));
     },
     setColor(colorClass) {
       return `${colorClass} ${colorClass}-lg`;
     },
-    editLabel(labelId) {
-      debugger;
-      isEditLabel = true;
-      this.labelOnEdit = labelId;
+    editLabel(label) {
+      this.isEditLabel = true;
+      this.labelOnEdit = label;
+    },
+    emptyLabel() {
+      return { txt: '', colorClass: 'label-green' };
+    },
+    formAction() {
+      return this.isNewLabel ? this.createLabel() : this.updateLabel();
+    },
+    goBack() {
+      this.isEditLabel = false;
+      this.isNewLabel = false;
+      this.labelOnEdit = this.emptyLabel();
+    },
+    onClose() {
+      this.goBack();
+      this.$emit('close');
+    },
+  },
+  computed: {
+    title() {
+      return this.isNewLabel ? 'Create Label' : 'Change label';
     },
   },
 };

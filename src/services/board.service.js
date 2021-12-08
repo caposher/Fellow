@@ -212,7 +212,7 @@ function getEmptyCard(title) {
 
 function getEmptyLabel(txt = '', colorClass = '.label-green') {
   return {
-    id: '',
+    id: 'L' + utilService.makeId(),
     txt,
     colorClass,
   };

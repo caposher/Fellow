@@ -203,7 +203,6 @@ export default {
       }
     },
     scroll(ev) {
-      debugger;
       const slider = ev.target;
       this.slider = slider;
       let isDown = false;

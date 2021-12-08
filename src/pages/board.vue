@@ -2,51 +2,57 @@
   <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
     <app-header />
     <workspace-nav :boards="boards" @openBar="onOpenBar" />
-    <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar,'dark':board.style.isDark, 'light': !board.style.isDark }" />
-    <Container
-      :tag="'ul'"
-      class="board"
-      orientation="horizontal"
-      @drop="onColumnDrop($event)"
-      drag-class="card-ghost"
-      drop-class="card-ghost-drop"
-      drag-handle-selector=".drag-handle"
-      :class="{ 'nav-open': openBar }"
-      @mousedown="scroll"
-    >
-      <Draggable :tag="'li'" v-for="(list, idx) in board.lists" :key="list.id" class="list-wrapper">
-        <!--  -->
-        <board-list
-          :list="list"
-          :idx="idx"
-          @update="updateList"
-          @updateBoard="updateBoard"
-          @deleteList="deleteList"
-          @mousedown.stop="unscroll"
-        ></board-list>
-      </Draggable>
+    <!-- <container
+      group-name="members"
+          :get-child-payload="getChildPayload(JSON.parse(JSON.stringify(card)))"
 
-      <div class="add-list-wrapper">
-        <li class="new-list" @click="setAddList" :class="{ 'height-0': isAddList ,'dark':board.style.isDark, 'light': !board.style.isDark}">
-          <p>
-            <span>
-              <i class="icon-sm icon-plus"></i>
-            </span>
-            {{ addListText }}
-          </p>
-        </li>
-        <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add">
-          <input type="text" ref="input" v-focus="isAddList" v-model="newListTitle" @keydown.enter="addList" />
-          <div class="list-add-controls">
-            <button class="submit-btn add-list-btn" @click="addList">Add List</button>
-            <button>
-              <span @click="isAddList = false" class="icon-close icon-lg close-add-btn"></span>
-            </button>
-          </div>
-        </li>
-      </div>
-    </Container>
+    > -->
+    <board-header @deleteBoard="deleteBoard" :class="{ 'nav-open': openBar }" />
+    <div class="board-container" @mouseenter="scroll" ref="board">
+      <Container
+        :tag="'ul'"
+        class="board smooth-dnd-container"
+        orientation="horizontal"
+        @drop="onColumnDrop($event)"
+        drag-class="card-ghost"
+        drop-class="card-ghost-drop"
+        drag-handle-selector=".drag-handle"
+        :class="{ 'nav-open': openBar }"
+      >
+        <Draggable :tag="'li'" v-for="(list, idx) in board.lists" :key="list.id" class="list-wrapper">
+          <!--  -->
+          <board-list
+            :list="list"
+            :idx="idx"
+            @update="updateList"
+            @updateBoard="updateBoard"
+            @deleteList="deleteList"
+            @unscroll="unscroll"
+            @scroll="scroll"
+          ></board-list>
+        </Draggable>
 
+        <div class="add-list-wrapper">
+          <li class="new-list" @click="setAddList" :class="{ 'height-0': isAddList }">
+            <p>
+              <span>
+                <i class="icon-sm icon-plus"></i>
+              </span>
+              {{ addListText }}
+            </p>
+          </li>
+          <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add">
+            <input type="text" ref="input" v-focus="isAddList" v-model="newListTitle" @keydown.enter="addList" />
+            <div class="list-add-controls">
+              <button class="submit-btn add-list-btn" @click="addList">Add List</button>
+              <button>
+                <span @click="isAddList = false" class="icon-close icon-lg close-add-btn"></span>
+              </button>
+            </div>
+          </li>
+        </div>
+      </Container>
+    </div>
     <router-view v-if="selectedCardId"></router-view>
   </section>
 </template>
@@ -70,6 +76,7 @@ export default {
       isAddList: false,
       newListTitle: '',
       openBar: false,
+      dragging: false,
     };
   },
   watch: {
@@ -203,14 +210,17 @@ export default {
       }
     },
     scroll(ev) {
-      debugger;
-      const slider = ev.target;
+      // if (this.dragging) return;
+      const slider = this.$refs.board.firstChild;
       this.slider = slider;
       let isDown = false;
       let startX;
       let scrollLeft;
+      this.dragging = false;
 
       slider.addEventListener('mousedown', (e) => {
+        if (this.dragging) return;
+
         isDown = true;
         slider.classList.add('active');
         startX = e.pageX - slider.offsetLeft;
@@ -249,7 +259,6 @@ export default {
         newBoard.lists.splice(addedIndex, 0, itemToAdd);
       }
       this.updateBoard(newBoard);
-
       return newBoard.lists;
     },
 
@@ -257,6 +266,7 @@ export default {
 
     unscroll() {
       if (!this.slider) return;
+      this.dragging = true;
       this.slider.classList.remove('active');
     },
     onOpenBar(val) {

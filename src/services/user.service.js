@@ -1,17 +1,23 @@
 // import Axios from "axios";
 // var axios = Axios.create({ withCredentials: true });
 import { httpService } from './http.service'
+import { storageService } from './async-storage.service.js';
 
 const USER_URL = 'http://localhost:3030/api/auth/'
 
-
+const KEY = 'usersDB'
 const STORAGE_KEY = 'loggedInUser'
 
 export const userService = {
     login,
     getLoggedInUser,
     logout,
-    signup
+    signup,
+    query
+}
+
+function query() {
+    return storageService.query(KEY);
 }
 
 // Debug technique
@@ -110,4 +116,36 @@ async function logout() {
     } catch (err) {
         console.log('can\'t logout', err)
     }
+}
+_createUsers()
+
+function _createUsers() {
+    var users = JSON.parse(localStorage.getItem(KEY));
+    if (!users || !users.length) {
+        users = [
+            {
+                _id: 'u103',
+                fullname: 'Adam Bercovich',
+                username: 'adamBerco',
+                color: 'green',
+                imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg',
+            },
+            {
+                _id: 'u102',
+                fullname: 'Osher Cappelli',
+                username: 'osherCappelli',
+                color: 'blue',
+                imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg',
+            },
+            {
+                _id: 'u101',
+                fullname: 'Oshra Hartuv',
+                username: 'oshraHartuv1',
+                color: 'pink',
+                imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg',
+            },
+        ]
+        localStorage.setItem(KEY, JSON.stringify(users));
+    }
+    return users
 }

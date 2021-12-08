@@ -58,12 +58,24 @@
         <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
     </section>
-    <div class="card-members"></div>
+    <div class="card-members-preview">
+      <avatar
+        v-for="member in card.members"
+        :key="member.id"
+        :username="member.fullname"
+        :size="32"
+        :lighten="200"
+        :src="member.imgUrl"
+        class="member-avatar"
+      ></avatar>
+    </div>
   </section>
 </template>
 
 <script>
 import { focus } from "vue-focus";
+import Avatar from 'vue-avatar';
+import { Container, Draggable } from 'vue-smooth-dnd';
 
 export default {
   directives: { focus },
@@ -127,6 +139,19 @@ export default {
       this.cardToEdit = JSON.parse(JSON.stringify(this.card));
       this.isQuick = true;
     }
+    // getShouldAcceptDrop(index, src, payload) {
+    //   // console.log("index", index);
+    //   // console.log("src", src);
+    //   // console.log("payload", payload);
+    // },
+    // getChildPayload(detachList) {
+    //   // console.log((index) => detachList.members[index]);
+    //   // return (index) => detachList.cards[index];
+    // },
+    // onMemberDrop(targetList, dropResult) {
+    //   const { addedIndex, removedIndex, payload } = dropResult;
+    //   console.log(dropResult, targetList);
+    // },
   },
   computed: {
     todos() {
@@ -189,22 +214,18 @@ export default {
       if (!this.card.style.img) {
         return {
           backgroundColor,
-          height: "32px",
-          minHeight: "32px"
+          height: '32px',
+          minHeight: '32px',
         };
       }
       return {
-        height: "163.58px",
+        height: '163.58px',
         backgroundColor,
         backgroundImage: `url("${this.card.style.img}")`
       };
-    }
-    //  isQEdit(){
-    //   //  console.log(this.$store.getters.qEdit);
-    //    return this.$store.getters.qEdit
-    //   }
+    },
   },
-  components: {}
+  components: { Avatar, Container, Draggable },
 };
 </script>
 

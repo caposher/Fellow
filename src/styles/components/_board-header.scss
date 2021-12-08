@@ -73,4 +73,23 @@
     padding-right: 3px;
     line-height: 37px;
   }
+
+  & p {
+    display: flex;
+    padding-left: 10px;
+
+    & button:first-of-type {
+      margin-left: 12px;
+    }
+    & .vue-avatar--wrapper {
+    }
+    & .smooth-dnd-draggable-wrapper {
+      // border: 3px solid white;
+      margin: 0 0 0 -4px;
+      z-index: unset;
+    }
+    // & :first-child {
+    //   margin: 0;
+    // }
+  }
 }

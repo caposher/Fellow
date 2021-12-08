@@ -5,7 +5,7 @@
     <section class="login-page">
       <div>
         <span class="fellow-main-logo"
-          ><img class="logo-img" src="../assets/img/logo.png" alt="" />
+          ><img class="logo-img" src="../assets/img/logo-login.png" alt="" />
           <span class="logo"> Fellow </span></span
         >
         <!-- <img

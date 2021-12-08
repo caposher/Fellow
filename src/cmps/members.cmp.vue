@@ -69,7 +69,10 @@ export default {
 
   methods: {
     checkMember(memberId) {
-      return this.selectedMembers.find((member) => member._id === memberId);
+      return this.$store.getters.card.members.find(
+        (member) => member._id === memberId
+      );
+      // return this.selectedMembers.find((member) => member._id === memberId);
     },
     toggleMember(member) {
       if (this.checkMember(member._id)) {

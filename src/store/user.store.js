@@ -3,7 +3,8 @@ import { userService } from "../services/user.service.js";
 
 export const userStore = {
     state: {
-        user: null
+        user: null,
+        users: null
     },
     getters: {
         user(state) {
@@ -12,10 +13,16 @@ export const userStore = {
         // activitiesToShow(state) {
         //     return state.user.activities.slice(state.pageIndex * state.actPageSize, state.actPageSize * (state.pageIndex + 1))
         // }
+        users(state) {
+            return JSON.parse(JSON.stringify(state.users))
+        }
     },
     mutations: {
         setUser(state, { user }) {
             state.user = user;
+        },
+        setUsers(state, { users }) {
+            state.users = users;
         },
         // editUser(state, { user }) {
         //     state.user = user
@@ -31,11 +38,14 @@ export const userStore = {
         // }
     },
     actions: {
-        loadUsers({ commit }) {
-            userService.query()
-                .then(user => {
-                    commit({ type: 'setUser', user })
-                })
+        async loadUsers({ commit }) {
+            try {
+                const users = await userService.query()
+                commit({ type: 'setUsers', users })
+            } catch (err) {
+                console.log('err')
+            }
+
         },
         setUser({ commit }) {
             const user = userService.getLoggedInUser()

@@ -9,17 +9,10 @@
           <button
             @click.stop="showCoverMenu = !showCoverMenu"
             class="cover-menu-btn"
-<<<<<<< HEAD
             :class="{'light-btn':cardToEdit.style.isDark,'dark-btn': !cardToEdit.style.isDark}"
           >
             <!-- :style="{color:textColor ,backgroundColor: bgColor}" -->
             <span :style="{color:textColor}" class="icon-sm icon-cover"></span>
-=======
-            :style="{ color: textColor, backgroundColor: bgColor }"
-          >
-            <!-- :class="{'lightBtn':cardToEdit.style.isDark,'darkBtn': !cardToEdit.style.isDark}" -->
-            <span :style="{ color: textColor }" class="icon-sm icon-cover"></span>
->>>>>>> 540c91939549ac0671813864da241ae2f1b9debd
             Cover
           </button>
           <cover

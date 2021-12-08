@@ -142,8 +142,12 @@ export default {
   },
   methods: {
     bgImage(board) {
+      if (!board )return
+      if (!board.style.imgUrl)  return {
+          backgroundColor: board.style.bgColor,
+        };
       // console.log('board', board);
-      if (board && board.style.imgUrl.includes('http')) {
+      if ( board.style.imgUrl.includes('http')) {
         return {
           backgroundImage: `url("${board.style.imgUrl}")`,
         };

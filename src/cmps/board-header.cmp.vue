@@ -28,7 +28,8 @@
         class="title"
       ></div>
 
-      <span class="board-star">
+      <span class="board-star
+      bh-btn">
         <i class="icon-sm icon-star"></i>
       </span>
       <!-- <p>  -->
@@ -51,13 +52,14 @@
             class="draggable-item"
           />
         </Draggable>
-        <button @click="inviteMembers">Invite</button><button @click="deleteBoard">Delete Board</button>
+        <button @click="inviteMembers" class="bh-btn">Invite</button>
+        <button @click="deleteBoard" class="bh-btn">Delete Board</button>
       </Container>
       <!-- </p> -->
     </section>
     <section>
-      <button>Filter</button>
-      <button v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <button class="bh-btn">Filter</button>
+      <button class="bh-btn" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
       <main-menu :class="mainMenuToggle" @close="showMainMenu = false" />
     </section>
   </header>

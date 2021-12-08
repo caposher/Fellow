@@ -55,39 +55,48 @@
     text-overflow: ellipsis;
     transition: background 85ms;
   }
-  & button:hover,
-  span:not(.board-title):hover {
-    background-color: #ffffff52;
-  }
+  // & bh-btn:hover,
+  // span:not(.board-title):hover {
+  //   background-color: #ffffff52;
+  // }
 
-  & button:active,
-  span:not(.board-title):active {
-    background-color: #fff6;
-  }
+  // & button:active,
+  // span:not(.board-title):active {
+  //   background-color: #fff6;
+  // }
   &.dark {
-    & button,
+    // & button,
     .title,
-    span {
+    .bh-btn {
+    // & button,
+    // .title,
+    // span {
       color: #fff;
       background-color: #ffffff3d;
     }
-    & button:hover,
+    // & button:hover,
     .title:hover,
-    span:not(.board-title):hover {
+    .bh-btn:hover {
       background-color: #ffffff52;
     }
   }
 
   &.light {
-    & button,
+    // & button,
     .title,
-    span {
+    .bh-btn {
+  // &.light {
+  //   & button,
+  //   .title,
+  //   span {
       background-color: #00000014;
       color: #172b4d;
     }
-    & button:hover,
-    .title:hover,
-    span:not(.board-title):hover {
+    .bh-btn:hover
+    {
+    // & button:hover,
+    // .title:hover,
+    // span:not(.board-title):hover {
       background-color: rgba(0, 0, 0, 0.2);
     }
   }

@@ -114,8 +114,6 @@ body {
   border-radius: 3px;
   position: absolute;
   opacity: 1;
-  background-color: #ffffff3d;
-  color: #fff;
   line-height: 28px;
   padding: 6px 8px;
   transition: background 85ms;
@@ -129,6 +127,21 @@ body {
     line-height: 24px;
     padding-block-start: 4px;
     padding-inline-start: 5px;
+  }
+  &.dark {
+    color: #fff;
+    background-color: #ffffff3d;
+    &:hover {
+      background-color: #ffffff52;
+    }
+  }
+
+  &.light {
+    background-color: #00000014;
+    color: #172b4d;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
   }
   span {
   }

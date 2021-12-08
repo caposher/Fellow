@@ -1,29 +1,42 @@
 <template>
-  <section class="card" :class="{ 'with-cover': card.style }" @click="showDetails" v-if="card">
+  <section
+    class="card"
+    ref="card"
+    :class="{'with-cover': card.style, 'is-quick': isQuick}"
+    @click="showDetails"
+    v-if="card"
+  >
+    <button v-show="isQuick" @click.stop="isQuick=false">close</button>
     <div class="cover-img" v-show="card.style" :style="getCover"></div>
     <!-- <div> -->
-    <!-- <section class="label-and-q-edit"> -->
     <span class="card-wrapper" @click.stop.prevent>
       <span
         v-for="label in getLabels"
         :key="label.id"
         :class="[label.colorClass, setLabelClass]"
         class="open-label"
-        @click="onLabelClick"
+        @click.stop="onLabelClick"
         @mouseover="islabelHover = true"
         @mouseleave="islabelHover = false"
       >
         <span class="text-label">{{ label.txt }}</span>
       </span>
     </span>
-    <span class="edit-wrapper">
+    <span class="edit-wrapper" v-show="!isQuick" @click.stop="openQuick">
       <span class="icon-sm icon-edit q-edit"></span>
     </span>
-    <!-- </section> -->
-    <!-- <button>Quick edit</button> -->
-    <!-- </div> -->
-    <section class="card-title">
-      <p>{{ card.title }}</p>
+    <section class="card-title" v-show="!isQuick">
+      <p :ref="card.id">{{ card.title }}</p>
+    </section>
+    <section class="edit-title" v-if="isQuick">
+      <textarea
+        v-focus="isQuick"
+        @focus="$event.target.select()"
+        ref="text"
+        :style="{'height': height }"
+        @input="checkHeight"
+        v-model="cardToEdit.title"
+      ></textarea>
     </section>
     <section class="card-icons">
       <div class="icon-wrapper" v-if="card.isWatch">
@@ -60,31 +73,50 @@
 </template>
 
 <script>
+import { focus } from "vue-focus";
 import Avatar from 'vue-avatar';
 import { Container, Draggable } from 'vue-smooth-dnd';
 
 export default {
+  directives: { focus },
   props: {
     card: {
-      type: Object,
+      type: Object
     },
     list: {
-      type: Object,
+      type: Object
     },
     labelsState: {
-      type: Boolean,
-    },
+      type: Boolean
+    }
   },
   data() {
     return {
       islabelHover: false,
+      isQuick: false,
+      pos: null,
+      cardToEdit: {
+        title: ""
+      },
+      height: ""
       // todos: 0,
       // doneTodos: 0
     };
   },
+  mounted() {
+    this.height = this.$refs[this.card.id].clientHeight +'px';
+    // console.log("m", this.$refs);
+    // console.log("h", this.height);
+  },
   methods: {
+    checkHeight() {
+      if (!this.isQuick || !this.$refs.text) console.log("N");
+      console.log("text", this.$refs.text.scrollHeight);
+      this.height = this.$refs.text.scrollHeight + "px";
+    },
     showDetails() {
-      this.$router.push(this.$route.path + '/c/' + this.card.id);
+      if (this.isQuick) return;
+      this.$router.push(this.$route.path + "/c/" + this.card.id);
     },
     formatDate(dueDate) {
       var date = dueDate.getDate();
@@ -94,10 +126,19 @@ export default {
     },
     onLabelClick() {
       this.$store.commit({
-        type: 'toggleLabel',
-        labelsState: this.labelsState,
+        type: "toggleLabel",
+        labelsState: this.labelsState
       });
     },
+    openQuick(ev) {
+      console.log(ev);
+      this.pos = {
+        x: ev.clientX,
+        y: ev.clientY
+      };
+      this.cardToEdit = JSON.parse(JSON.stringify(this.card));
+      this.isQuick = true;
+    }
     // getShouldAcceptDrop(index, src, payload) {
     //   // console.log("index", index);
     //   // console.log("src", src);
@@ -116,9 +157,9 @@ export default {
     todos() {
       var todos = 0;
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach((checklist) => {
+        this.card.checklists.forEach(checklist => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach((todo) => {
+            checklist.todos.forEach(todo => {
               todos++;
             });
           }
@@ -129,9 +170,9 @@ export default {
     doneTodos() {
       var doneTodos = 0;
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach((checklist) => {
+        this.card.checklists.forEach(checklist => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach((todo) => {
+            checklist.todos.forEach(todo => {
               if (todo.isDone) doneTodos++;
             });
           }
@@ -142,10 +183,10 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
+      return labelIds.map(lId => allLabels.find(label => label.id === lId));
     },
     setLabelClass() {
-      let classes = `preview-label${this.labelsState ? '' : '-close'}`;
+      let classes = `preview-label${this.labelsState ? "" : "-close"}`;
       return classes;
     },
 
@@ -155,12 +196,12 @@ export default {
         return this.formatDate(dueDate);
       }
 
-      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear();
+      return this.formatDate(dueDate) + ", " + dueDate.getFullYear();
     },
     ChecklistNum() {
       var doneTodos = 0;
-      this.card.checklists.forEach((checklist) => {
-        checklist.todos.forEach((todo) => {
+      this.card.checklists.forEach(checklist => {
+        checklist.todos.forEach(todo => {
           if (todo.isDone) doneTodos++;
           else undoneTodos++;
         });
@@ -180,7 +221,7 @@ export default {
       return {
         height: '163.58px',
         backgroundColor,
-        backgroundImage: `url("${this.card.style.img}")`,
+        backgroundImage: `url("${this.card.style.img}")`
       };
     },
   },

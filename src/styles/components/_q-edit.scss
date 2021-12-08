@@ -1,0 +1,25 @@
+.quick-edit {
+  top: 50px;
+  left: 50px;
+  width: 248px;
+  min-height: 200px;
+  position: fixed;
+  background-color: rgb(204, 127, 127);
+  z-index: 2000;
+  .card-title {
+    & div.desc {
+        &:focus-visible {
+          outline: none;
+        }
+        // overflow: hidden;
+        overflow-wrap: break-word;
+        // height: 100% !important;
+        // height: 20px;
+        width: 100%;
+        max-width: 100%;
+        &::placeholder {
+          color: inherit;
+        }
+      }
+  }
+}

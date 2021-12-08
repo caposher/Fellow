@@ -7,11 +7,33 @@
   margin-block-end: 8px;
   padding: 6px 8px 2px;
   position: relative;
+  &.is-quick {
+    width: 248px;
+    min-height: 200px;
+    position: fixed;
+    // background-color: rgb(204, 127, 127);
+    z-index: 200;
+    &:hover {
+      background-color: #fff;
+
+      // background-color: rgb(204, 127, 127);
+    }
+    textarea {
+      // min-height: 90px;
+      width: 100%;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      resize: none;
+      border: none;
+    }
+  }
   &.with-cover {
     padding: 0px 0px 2px;
     .card-title,
-    > * {
-      padding: 0 8px;
+    .card-icons,
+    .card-wrapper,
+    .edit-title {
+      padding: 0 8px 0;
     }
   }
 
@@ -19,6 +41,7 @@
     background-position: 50%;
     background-repeat: no-repeat;
     border-radius: 3px 3px 0 0;
+    margin-bottom: 5px;
     // position: absolute;
     width: 100%;
     background-color: transparent;

@@ -5,7 +5,6 @@
         {{ showTitle }}
       </h4>
       <textarea
-        type="text"
         v-else
         v-model="updatedList.title"
         v-focus="editTitle"

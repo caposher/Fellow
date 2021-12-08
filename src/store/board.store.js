@@ -120,15 +120,15 @@ export const boardStore = {
         console.log('cant load card:', err);
       }
     },
-    async loadAndWatchBoard({ commit }, { boardId }) {
-      try {
-        const board = await boardService.getById(boardId);
-        commit({ type: 'setBoard', board });
-        return board;
-      } catch (err) {
-        console.log('cant load board:' + id, err);
-      }
-    },
+    // async loadAndWatchBoard({ commit }, { boardId }) {
+    //   try {
+    //     const board = await boardService.getById(boardId);
+    //     commit({ type: 'setBoard', board });
+    //     return board;
+    //   } catch (err) {
+    //     console.log('cant load board:' + id, err);
+    //   }
+    // },
     async createBoard({ commit }, { title }) {
       try {
         const board = boardService.getEmptyBoard(title);
@@ -221,9 +221,9 @@ export const boardStore = {
         console.log('failed to get photos', err);
       }
     },
-    async setBackground({ commit, dispatch }, { boardId, url = 0 }) {
+    async setBackground({ commit, dispatch }, { boardId, style}) {
       try {
-        const board = await boardService.setBackground(boardId, url);
+        const board = await boardService.setBackground(boardId, style);
         commit({ type: 'setBoard', board });
         dispatch({ type: 'loadBoards' });
       } catch (err) {

@@ -8,7 +8,9 @@
     </header>
     <ul class="main-menu-actions">
       <li class="menu-about">
-        <h3><span class="menu-action-icon icon-lg icon-board"></span> About this board</h3>
+        <h3>
+          <span class="menu-action-icon icon-lg icon-board"></span> About this board
+        </h3>
         <p>Add a description to your board</p>
       </li>
       <li class="menu-action" @click="isChangeColor = true">
@@ -41,7 +43,9 @@
       </ul>
       <section class="menu-bgc-custom">
         <h2>Custom</h2>
-        <div class="menu-background-size action-btn"><span class="back-popup icon-md icon-back"></span></div>
+        <div class="menu-background-size action-btn">
+          <span class="back-popup icon-md icon-back"></span>
+        </div>
       </section>
     </section>
 
@@ -56,7 +60,11 @@
       </header>
       <ul class="menu-color-set">
         <li v-for="color in colorSet" :key="color">
-          <div class="menu-background-size" :style="{ backgroundColor: color }"></div>
+          <div
+            @click="setBg(color)"
+            class="menu-background-size"
+            :style="{ backgroundColor: color }"
+          ></div>
         </li>
       </ul>
     </section>
@@ -77,10 +85,15 @@
       <ul class="menu-color-set">
         <li v-for="(url, idx) in getImgs" :key="idx">
           <div
-            @click="setBg(url)"
+            @click="setBg(url.regular)"
             class="menu-background-size"
             :style="{ backgroundImage: 'url(' + url.regular + ')' }"
-          ></div>
+          >
+            <div class="loader" v-if="loading === url.regular">
+              <img :src="require('../assets/img/loader.svg')" alt />
+              Uploading...
+            </div>
+          </div>
         </li>
       </ul>
     </section>
@@ -88,26 +101,65 @@
 </template>
 
 <script>
+import FastAverageColor from "fast-average-color";
+
 export default {
   data() {
     return {
       isChangeColor: false,
       isColorSelected: false,
       isPhotosSelected: false,
-      searchKey: '',
-      colorSet: ['#0079bf', '#d29134', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#13aecc', '#838c91'],
+      searchKey: "",
+      colorSet: [
+        "#0079bf",
+        "#d29134",
+        "#519839",
+        "#b04632",
+        "#89609e",
+        "#cd5a91",
+        "#4bbf6b",
+        "#13aecc",
+        "#838c91"
+      ],
+      loading: ""
     };
   },
 
   methods: {
     requestPhotos() {
       this.isPhotosSelected = true;
-      this.$store.dispatch({ type: 'requestPhotos', searchKey: this.searchKey });
+      this.$store.dispatch({
+        type: "requestPhotos",
+        searchKey: this.searchKey
+      });
     },
-    setBg(bg) {
-      const boardId = this.$store.getters.boardId;
-      this.$store.dispatch({ type: 'setBackground', boardId, url: bg.full });
-    },
+    async setBg(val) {
+      let style;
+      if (val.charAt(0) === "#") {
+        style = {
+          imgUrl: null,
+          bgColor: val,
+          isDark: true
+        };
+      } else {
+        this.loading = val;
+        const fac = new FastAverageColor();
+        const color = await fac.getColorAsync(val);
+        style = {
+          imgUrl: val,
+          bgColor: color.rgba,
+          isDark: color.isDark
+        };
+      }
+      try {
+        console.log("style", style);
+        const boardId = this.$store.getters.boardId;
+        await this.$store.dispatch({ type: "setBackground", boardId, style });
+        this.loading = "";
+      } catch (err) {
+        console.log("cant set board bg", err);
+      }
+    }
   },
   computed: {
     setImgIcon() {
@@ -115,7 +167,7 @@ export default {
     },
     getImgs() {
       return this.$store.getters.getBgPhotos;
-    },
-  },
+    }
+  }
 };
 </script>

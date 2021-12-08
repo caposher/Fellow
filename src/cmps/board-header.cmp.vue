@@ -1,9 +1,37 @@
 <template>
   <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
     <section>
-      <span class="board-title">{{ board.title }}</span>
-      <span class="board-star"><i class="icon-sm icon-star"></i></span>
-      <!-- <p> -->
+      <!-- <span
+        class="board-title"
+        v-if="!editTitle"
+        :style="{width: this.width ? this.width +'px': ''}"
+        ref="boardTitle"
+        @click="openEditTitle"
+      >{{ board.title }}</span>-->
+      <!-- 'display': editTitle ? 'block' : 'none' -->
+      <!-- <textarea
+        ref="editBoardTitle"
+        @click="changeWidth"
+        v-model="board.title"
+        v-focus="editTitle"
+      />-->
+      <!-- @focus="$event.target.innerText.select()" -->
+      <!-- @focus="$event.target.select()" -->
+      <!-- v-focus="editTitle" -->
+      <!-- v-else -->
+      <div
+        @focus="editTitle = true"
+        @blur="updateTitle"
+        @keydown.enter="removeBr"
+        contenteditable="true"
+        ref="editBoardTitle"
+        class="title"
+      ></div>
+
+      <span class="board-star">
+        <i class="icon-sm icon-star"></i>
+      </span>
+      <!-- <p>  -->
       <Container
         tag="P"
         group-name="card-list"
@@ -39,14 +67,30 @@
 import Avatar from 'vue-avatar';
 import mainMenu from '@/cmps/main-menu.cmp.vue';
 import { Container, Draggable } from 'vue-smooth-dnd';
+import { focus } from 'vue-focus';
+
 // import { applyDrag, generateItems } from "./utils";
 export default {
+  directives: { focus },
   data() {
     return {
       showMainMenu: false,
+      editTitle: false,
     };
   },
+  mounted() {
+    this.$refs.editBoardTitle.innerText = this.board.title;
+  },
   methods: {
+    removeBr() {
+      this.$refs.editBoardTitle.blur();
+    },
+    updateTitle() {
+      console.log('u');
+      this.board.title = this.$refs.editBoardTitle.innerText;
+      this.$emit('updateBoard', this.board);
+      this.editTitle = false;
+    },
     deleteBoard() {
       if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
     },

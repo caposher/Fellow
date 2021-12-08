@@ -105,8 +105,8 @@ export default {
   },
   mounted() {
     this.height = this.$refs[this.card.id].clientHeight +'px';
-    console.log("m", this.$refs);
-    console.log("h", this.height);
+    // console.log("m", this.$refs);
+    // console.log("h", this.height);
   },
   methods: {
     checkHeight() {

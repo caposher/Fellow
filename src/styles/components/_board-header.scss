@@ -10,6 +10,28 @@
   z-index: 1;
   transition: margin 0.5s, padding-inline-start 0.5s, padding 0.5s;
 
+
+  textarea {
+    overflow: hidden;
+    // position: absolute;
+    // overflow-wrap: break-word;
+    height: 32px;
+    // display: inline;
+    resize: none;
+    background-color: white;
+    border-radius: 3px;
+    border-color: #0079bf;
+    border-width: 2px;
+    font-weight: 600;
+    font-weight: 700;
+    float: left;
+    line-height: 29px;
+    font-size: 18px;
+    margin: 0 4px 4px 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+
   & button,
   span {
     background-color: #00000014;
@@ -65,6 +87,7 @@
     font-weight: 700;
     line-height: 32px;
     padding: 0 12px;
+    position: relative;
   }
 
   .board-star {

@@ -42,8 +42,10 @@
       <div class="icon-wrapper" v-if="card.isWatch">
         <span class="icon-sm icon-watch badge"></span>
       </div>
-      <div class="icon-wrapper" v-if="card.dueDate">
+      <div class="icon-wrapper date" v-if="card.dueDate" :class="dateClass" @click.stop="checkCard">
         <span class="clock icon-sm icon-clock badge"></span>
+        <input id="cbp" type="checkbox" v-model="card.isComplete" />
+        <label for="cbp"></label>
         <span class="icon-text">{{ dateToShow }}</span>
       </div>
       <div class="icon-wrapper" v-if="card.description">
@@ -74,8 +76,8 @@
 
 <script>
 import { focus } from "vue-focus";
-import Avatar from 'vue-avatar';
-import { Container, Draggable } from 'vue-smooth-dnd';
+import Avatar from "vue-avatar";
+import { Container, Draggable } from "vue-smooth-dnd";
 
 export default {
   directives: { focus },
@@ -104,7 +106,7 @@ export default {
     };
   },
   mounted() {
-    this.height = this.$refs[this.card.id].clientHeight +'px';
+    this.height = this.$refs[this.card.id].clientHeight + "px";
     // console.log("m", this.$refs);
     // console.log("h", this.height);
   },
@@ -123,6 +125,19 @@ export default {
       var month = `${dueDate}`.substring(4, 7);
       const strDate = `${month} ${date}`;
       return strDate;
+    },
+    async checkCard() {
+      this.card.isComplete = !this.card.isComplete;
+      try {
+        await this.$store.dispatch({
+          type: "updateCard",
+          boardId: this.boardId,
+          list: JSON.parse(JSON.stringify(this.list)),
+          card: JSON.parse(JSON.stringify(this.card))
+        });
+      } catch (err) {
+        console.log("cant update card", err);
+      }
     },
     onLabelClick() {
       this.$store.commit({
@@ -166,6 +181,14 @@ export default {
         });
       }
       return todos;
+    },
+    dateClass() {
+      if (!this.card.dueDate) return;
+      if (this.card.isComplete) return "done";
+      if (+new Date(this.card.dueDate) - Date.now() > 86400000) return;
+      return +new Date(this.card.dueDate) - Date.now() <= 0
+        ? "over-due"
+        : "soon";
     },
     doneTodos() {
       var doneTodos = 0;
@@ -214,18 +237,21 @@ export default {
       if (!this.card.style.img) {
         return {
           backgroundColor,
-          height: '32px',
-          minHeight: '32px',
+          height: "32px",
+          minHeight: "32px"
         };
       }
       return {
-        height: '163.58px',
+        height: "163.58px",
         backgroundColor,
         backgroundImage: `url("${this.card.style.img}")`
       };
     },
+    boardId(){
+      return this.$store.getters.boardId
+    }
   },
-  components: { Avatar, Container, Draggable },
+  components: { Avatar, Container, Draggable }
 };
 </script>
 

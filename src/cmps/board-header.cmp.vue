@@ -3,10 +3,10 @@
     <section>
       <span
         class="board-title"
-        @click="openEditTitle"
         ref="boardTitle"
       >{{ board.title }}
       </span>
+        <!-- @click="openEditTitle" -->
         <!-- v-if="!editTitle" -->
         <!-- v-else -->
          <!-- 'display': editTitle ? 'block' : 'none'

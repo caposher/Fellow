@@ -86,7 +86,8 @@ export default {
       this.$refs.editBoardTitle.blur();
     },
     updateTitle() {
-      console.log('u');
+      if (!this.$refs.editBoardTitle.innerText) return
+      console.log(this.$refs.editBoardTitle.innerText);
       this.board.title = this.$refs.editBoardTitle.innerText;
       this.$emit('updateBoard', this.board);
       this.editTitle = false;

@@ -3124,7 +3124,7 @@ function save(board) {
 // async function save(board) {
 //   try {
 //     if (board._id) {
-//       // socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
+//       socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
 //       return httpService.put('board/' + board._id, board)
 
 //     } else {

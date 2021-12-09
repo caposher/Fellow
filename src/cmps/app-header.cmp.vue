@@ -1,19 +1,29 @@
 <template>
   <header class="main-header">
     <div class="left-container">
-      <router-link class="logo" :to="$route.path !== '/home' ? '/home' : ''" aria-label="Back to home"
+      <router-link
+        class="logo"
+        :to="$route.path !== '/home' ? '/home' : ''"
+        aria-label="Back to home"
         ><span><logo /></span> Fellow</router-link
       >
-      <button>Workspaces <i class="fas fa-chevron-down"></i></button>
-      <button>Recent <i class="fas fa-chevron-down"></i></button>
-      <button>Starred <i class="fas fa-chevron-down"></i></button>
-      <button>Templates <i class="fas fa-chevron-down"></i></button>
+      <!-- <button>Workspaces <i class="fas fa-chevron-down"></i></button> -->
+      <!-- <button>Recent <i class="fas fa-chevron-down"></i></button> -->
+      <!-- <button>Starred <i class="fas fa-chevron-down"></i></button> -->
+      <!-- <button>Templates <i class="fas fa-chevron-down"></i></button> -->
       <button>Create</button>
     </div>
     <div class="container">
       <div class="input-container">
         <i class="fas fa-search search-icon"></i>
-        <input autocomplete="off" autocorrect="off" spellcheck="false" type="search" placeholder="Search..." value="" />
+        <input
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          type="search"
+          placeholder="Search..."
+          value=""
+        />
       </div>
       <button class="header-bell">
         <span>
@@ -39,8 +49,8 @@
 </template>
 
 <script>
-import Avatar from 'vue-avatar';
-import logo from '../cmps/logo.cmp.vue';
+import Avatar from "vue-avatar";
+import logo from "../cmps/logo.cmp.vue";
 export default {
   computed: {
     user() {

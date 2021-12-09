@@ -62,8 +62,8 @@ export default {
         console.log("cant upload img".err);
       }
     },
-    close(){
-      this.$emit('close')
+    close() {
+      this.$emit("close");
     },
     // saveImg(imgUrl) {
     //   this.imgUrls.push(imgUrl);
@@ -78,7 +78,7 @@ export default {
       this.resetAttach();
     },
     handleFileUpload() {
-      console.log(this.$refs.file.files[0]);
+      // console.log(this.$refs.file.files[0]);
       const file = this.$refs.file.files[0];
       this.newAttach.type = file.type;
       this.newAttach.file = file;

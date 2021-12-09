@@ -2,11 +2,11 @@
   <section
     class="card"
     ref="card"
-    :class="{'with-cover': card.style, 'is-quick': isQuick}"
+    :class="{ 'with-cover': card.style, 'is-quick': isQuick }"
     @click="showDetails"
     v-if="card"
   >
-    <button v-show="isQuick" @click.stop="isQuick=false">close</button>
+    <button v-show="isQuick" @click.stop="isQuick = false">close</button>
     <div class="cover-img" v-show="card.style" :style="getCover"></div>
     <!-- <div> -->
     <span class="card-wrapper" @click.stop.prevent>
@@ -33,7 +33,7 @@
         v-focus="isQuick"
         @focus="$event.target.select()"
         ref="text"
-        :style="{'height': height }"
+        :style="{ height: height }"
         @input="checkHeight"
         v-model="cardToEdit.title"
       ></textarea>
@@ -42,7 +42,12 @@
       <div class="icon-wrapper" v-if="card.isWatch">
         <span class="icon-sm icon-watch badge"></span>
       </div>
-      <div class="icon-wrapper date" v-if="card.dueDate" :class="dateClass" @click.stop="checkCard">
+      <div
+        class="icon-wrapper date"
+        v-if="card.dueDate"
+        :class="dateClass"
+        @click.stop="checkCard"
+      >
         <span class="clock icon-sm icon-clock badge"></span>
         <input id="cbp" type="checkbox" v-model="card.isComplete" />
         <label for="cbp"></label>
@@ -51,11 +56,17 @@
       <div class="icon-wrapper" v-if="card.description">
         <span class="icon-sm icon-desc badge"></span>
       </div>
-      <div class="icon-wrapper" v-if="card.attachments && card.attachments.length">
+      <div
+        class="icon-wrapper"
+        v-if="card.attachments && card.attachments.length"
+      >
         <span class="icon-sm icon-attach badge"></span>
         <span class="icon-text">{{ card.attachments.length }}</span>
       </div>
-      <div class="icon-wrapper" v-if="card.checklists && card.checklists.length && todos">
+      <div
+        class="icon-wrapper"
+        v-if="card.checklists && card.checklists.length && todos"
+      >
         <span class="icon-sm icon-checklist badge"></span>
         <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
@@ -83,14 +94,14 @@ export default {
   directives: { focus },
   props: {
     card: {
-      type: Object
+      type: Object,
     },
     list: {
-      type: Object
+      type: Object,
     },
     labelsState: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -98,9 +109,9 @@ export default {
       isQuick: false,
       pos: null,
       cardToEdit: {
-        title: ""
+        title: "",
       },
-      height: ""
+      height: "",
       // todos: 0,
       // doneTodos: 0
     };
@@ -113,7 +124,7 @@ export default {
   methods: {
     checkHeight() {
       if (!this.isQuick || !this.$refs.text) console.log("N");
-      console.log("text", this.$refs.text.scrollHeight);
+      // console.log("text", this.$refs.text.scrollHeight);
       this.height = this.$refs.text.scrollHeight + "px";
     },
     showDetails() {
@@ -133,7 +144,7 @@ export default {
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          card: JSON.parse(JSON.stringify(this.card))
+          card: JSON.parse(JSON.stringify(this.card)),
         });
       } catch (err) {
         console.log("cant update card", err);
@@ -142,18 +153,18 @@ export default {
     onLabelClick() {
       this.$store.commit({
         type: "toggleLabel",
-        labelsState: this.labelsState
+        labelsState: this.labelsState,
       });
     },
     openQuick(ev) {
-      console.log(ev);
+      // console.log(ev);
       this.pos = {
         x: ev.clientX,
-        y: ev.clientY
+        y: ev.clientY,
       };
       this.cardToEdit = JSON.parse(JSON.stringify(this.card));
       this.isQuick = true;
-    }
+    },
     // getShouldAcceptDrop(index, src, payload) {
     //   // console.log("index", index);
     //   // console.log("src", src);
@@ -172,9 +183,9 @@ export default {
     todos() {
       var todos = 0;
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach(checklist => {
+        this.card.checklists.forEach((checklist) => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach(todo => {
+            checklist.todos.forEach((todo) => {
               todos++;
             });
           }
@@ -193,9 +204,9 @@ export default {
     doneTodos() {
       var doneTodos = 0;
       if (this.card.checklists && this.card.checklists.length) {
-        this.card.checklists.forEach(checklist => {
+        this.card.checklists.forEach((checklist) => {
           if (checklist.todos && checklist.todos.length) {
-            checklist.todos.forEach(todo => {
+            checklist.todos.forEach((todo) => {
               if (todo.isDone) doneTodos++;
             });
           }
@@ -206,7 +217,7 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      return labelIds.map(lId => allLabels.find(label => label.id === lId));
+      return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
     setLabelClass() {
       let classes = `preview-label${this.labelsState ? "" : "-close"}`;
@@ -223,8 +234,8 @@ export default {
     },
     ChecklistNum() {
       var doneTodos = 0;
-      this.card.checklists.forEach(checklist => {
-        checklist.todos.forEach(todo => {
+      this.card.checklists.forEach((checklist) => {
+        checklist.todos.forEach((todo) => {
           if (todo.isDone) doneTodos++;
           else undoneTodos++;
         });
@@ -238,20 +249,20 @@ export default {
         return {
           backgroundColor,
           height: "32px",
-          minHeight: "32px"
+          minHeight: "32px",
         };
       }
       return {
         height: "163.58px",
         backgroundColor,
-        backgroundImage: `url("${this.card.style.img}")`
+        backgroundImage: `url("${this.card.style.img}")`,
       };
     },
-    boardId(){
-      return this.$store.getters.boardId
-    }
+    boardId() {
+      return this.$store.getters.boardId;
+    },
   },
-  components: { Avatar, Container, Draggable }
+  components: { Avatar, Container, Draggable },
 };
 </script>
 

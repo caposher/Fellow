@@ -315,7 +315,7 @@ export default {
     Container,
     Draggable,
     appHeader,
-    dashBoard,
+    // dashBoard,
   },
 };
 </script>

@@ -8,6 +8,10 @@ export const boardStore = {
     currList: null,
     labelsState: false,
     bgPhotos: [],
+    statistics: {
+      labels: ['boardUpdate', 'cardUpdate', 'listUpdate', 'labelsUpdate', 'bgUpdate'],
+      data: [0, 0, 0, 0, 0],
+    },
   },
 
   getters: {
@@ -35,29 +39,35 @@ export const boardStore = {
     getBgPhotos(state) {
       return JSON.parse(JSON.stringify(state.bgPhotos));
     },
+    getStatistics(state) {
+      return JSON.parse(JSON.stringify(state.statistics));
+    },
   },
 
   mutations: {
     setBoard(state, { board }) {
       state.currBoard = board;
+      ++state.statistic.boardUpdate;
     },
     setBoards(state, { boards }) {
       state.boards = boards;
+      ++state.statistic.boardUpdate;
     },
     setCard(state, { card }) {
       state.currCard = card;
+      ++state.statistic.cardUpdate;
     },
     setList(state, { list }) {
       state.currList = list;
+      ++state.statistic.listUpdate;
     },
     toggleLabel(state, { labelsState }) {
       state.labelsState = !labelsState; //switch state
+      ++state.statistic.labelsUpdate;
     },
     setPhotos(state, { photos }) {
       state.bgPhotos = photos;
-    },
-    test(state, { board }) {
-      state.board = board;
+      ++state.statistic.bgUpdate;
     },
   },
 
@@ -221,7 +231,7 @@ export const boardStore = {
         console.log('failed to get photos', err);
       }
     },
-    async setBackground({ commit, dispatch }, { boardId, style}) {
+    async setBackground({ commit, dispatch }, { boardId, style }) {
       try {
         const board = await boardService.setBackground(boardId, style);
         commit({ type: 'setBoard', board });

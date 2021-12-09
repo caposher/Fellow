@@ -72,6 +72,10 @@ export const boardStore = {
   },
 
   actions: {
+    pushedBoard({ commit }, { board }) {
+      console.log('board store')
+      commit({ type: 'setBoard', board, });
+    },
     async loadBoards({ commit }) {
       try {
         const boards = await boardService.query();
@@ -96,8 +100,10 @@ export const boardStore = {
     async updateBoard({ commit }, { board }) {
       const boardId = board._id;
       try {
-        commit({ type: 'setBoard', board });
-        await boardService.save(board);
+        const updatedBoard = await boardService.save(board);
+        const updatedBoards = await boardService.query()
+        commit({ type: 'setBoard', board : updatedBoard });
+        commit({ type: 'setBoards', boards : updatedBoards });
       } catch (err) {
         const board = await boardService.getById(boardId);
         commit({ type: 'setBoard', board });
@@ -144,6 +150,7 @@ export const boardStore = {
         const board = boardService.getEmptyBoard(title);
         const savedBoard = boardService.save(board);
         commit({ type: 'setBoard', board: savedBoard });
+        commit({ type: 'setBoards', boards: savedBoard });
         return savedBoard;
       } catch (err) {
         console.log("can't create board", err);

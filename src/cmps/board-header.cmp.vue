@@ -1,5 +1,9 @@
 <template>
-  <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
+  <header
+    class="board-header"
+    :class="{ 'main-menu-spacing': showMainMenu }"
+    v-if="board"
+  >
     <section>
       <!-- <span
         class="board-title"
@@ -26,10 +30,9 @@
         contenteditable="true"
         ref="editBoardTitle"
         class="title"
-      ></div>
+      >{{board.title}}</div>
 
-      <span class="board-star
-      bh-btn">
+      <span class="board-star bh-btn">
         <i class="icon-sm icon-star"></i>
       </span>
       <!-- <p>  -->
@@ -59,17 +62,19 @@
     </section>
     <section>
       <button class="bh-btn">Filter</button>
-      <button class="bh-btn" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <button class="bh-btn" v-if="!showMainMenu" @click="showMainMenu = true">
+        Show menu
+      </button>
       <main-menu :class="mainMenuToggle" @close="showMainMenu = false" />
     </section>
   </header>
 </template>
 
 <script>
-import Avatar from 'vue-avatar';
-import mainMenu from '@/cmps/main-menu.cmp.vue';
-import { Container, Draggable } from 'vue-smooth-dnd';
-import { focus } from 'vue-focus';
+import Avatar from "vue-avatar";
+import mainMenu from "@/cmps/main-menu.cmp.vue";
+import { Container, Draggable } from "vue-smooth-dnd";
+import { focus } from "vue-focus";
 
 // import { applyDrag, generateItems } from "./utils";
 export default {
@@ -81,21 +86,22 @@ export default {
     };
   },
   mounted() {
-    this.$refs.editBoardTitle.innerText = this.board.title;
+    // this.$refs.editBoardTitle.innerText = this.board.title;
   },
   methods: {
     removeBr() {
       this.$refs.editBoardTitle.blur();
     },
     updateTitle() {
-      if (!this.$refs.editBoardTitle.innerText) return
+      if (!this.$refs.editBoardTitle.innerText) return;
       console.log(this.$refs.editBoardTitle.innerText);
       this.board.title = this.$refs.editBoardTitle.innerText;
-      this.$emit('updateBoard', this.board);
+      this.$emit("updateBoard", this.board);
       this.editTitle = false;
     },
     deleteBoard() {
-      if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
+      if (confirm("This action will delete the board! continue?"))
+        this.$emit("deleteBoard");
     },
     onDragStart(dragResult) {
       // console.log("start", isSource, payload, willAcceptDrop);
@@ -113,7 +119,7 @@ export default {
     },
     inviteMembers() {
       const users = this.$store.getters.users;
-      console.log('users = ', users);
+      console.log("users = ", users);
     },
   },
   computed: {
@@ -121,10 +127,11 @@ export default {
       return this.$store.getters.board;
     },
     membersToShow() {
-      return this.board.members.reverse();
+      // return this.board.members.reverse();
+      return this.board.members;
     },
     mainMenuToggle() {
-      return this.showMainMenu ? 'show-main-menu' : 'hide-main-menu';
+      return this.showMainMenu ? "show-main-menu" : "hide-main-menu";
     },
   },
 

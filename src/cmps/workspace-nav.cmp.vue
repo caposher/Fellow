@@ -37,11 +37,11 @@
 
 <script>
 export default {
-  props: {
-    boards: {
-      type: Array,
-    },
-  },
+  // props: {
+  //   boards: {
+  //     type: Array,
+  //   },
+  // },
   data() {
     return {
       openBar: false,
@@ -53,5 +53,11 @@ export default {
       this.$emit('openBar', val);
     },
   },
+  computed:{
+    boards(){
+      console.log( this.$store.getters.boards);
+      return this.$store.getters.boards
+    }
+  }
 };
 </script>

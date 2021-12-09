@@ -222,6 +222,7 @@ export default {
         };
       }
     },
+
     checkTitle(ev) {
       if (ev.target.value) this.emptyTitle = false;
       else this.emptyTitle = true;
@@ -231,7 +232,6 @@ export default {
       if (this.emptyTitle) return;
       this.onAddBoard = false;
       const title = this.$refs.title.value;
-      console.log("title", title);
       if (this.boards.length === 10) return;
       // // const title = prompt("add title");
       // if (!title) return;

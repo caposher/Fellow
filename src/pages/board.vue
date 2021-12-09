@@ -1,7 +1,7 @@
 <template>
   <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
     <app-header />
-    <workspace-nav :boards="boards" @openBar="onOpenBar" />
+    <workspace-nav @openBar="onOpenBar" />
     <!-- <container
       group-name="members"
           :get-child-payload="getChildPayload(JSON.parse(JSON.stringify(card)))"
@@ -10,7 +10,11 @@
     <board-header
       @updateBoard="updateBoard"
       @deleteBoard="deleteBoard"
-      :class="{ 'nav-open': openBar, dark: board.style.isDark, light: !board.style.isDark }"
+      :class="{
+        'nav-open': openBar,
+        dark: board.style.isDark,
+        light: !board.style.isDark,
+      }"
     />
     <!-- <dash-board :board="board" /> -->
     <div class="board-container" @mouseenter="scroll" ref="board">
@@ -41,7 +45,11 @@
           <li
             class="new-list"
             @click="setAddList"
-            :class="{ 'height-0': isAddList, dark: board.style.isDark, light: !board.style.isDark }"
+            :class="{
+              'height-0': isAddList,
+              dark: board.style.isDark,
+              light: !board.style.isDark,
+            }"
           >
             <p>
               <span>
@@ -73,9 +81,10 @@ import mainMenu from '../cmps/main-menu.cmp.vue';
 import boardMenu from '../cmps/board-menu.cmp.vue';
 import boardList from '../cmps/board-list.cmp.vue';
 import workspaceNav from '../cmps/workspace-nav.cmp.vue';
-import dashBoard from '../cmps/dashboard.cmp.vue';
+// import dashBoard from '../cmps/dashboard.cmp.vue';
 import { Container, Draggable } from 'vue-smooth-dnd';
 import { focus } from 'vue-focus';
+import { socketService } from '@/services/socket.service';
 
 export default {
   directives: { focus: focus },
@@ -128,6 +137,7 @@ export default {
             type: 'loadBoard',
             boardId,
           });
+          socketService.emit('board new-enter', boardId);
         } catch (err) {
           console.log('problem with getting board', err);
         }
@@ -140,10 +150,14 @@ export default {
     try {
       await this.$store.dispatch({ type: 'loadBoard', boardId });
       await this.$store.dispatch({ type: 'loadBoards' });
-      // console.log(this.$store.getters.boards);
+      socketService.on('board pushed', this.pushedBoard);
     } catch (err) {
       console.log('problem with getting board', err);
     }
+  },
+  destroyed() {
+    socketService.off('pushed-bored');
+    // socketService.terminate();
   },
   computed: {
     board() {
@@ -157,6 +171,14 @@ export default {
     },
   },
   methods: {
+    pushedBoard(board) {
+      console.log('board - pushBoard');
+      this.$store.dispatch({
+        type: 'pushedBoard',
+        board,
+      });
+    },
+
     setAddList() {
       this.isAddList = true;
       console.log('board', this.board);

@@ -30,7 +30,9 @@
         contenteditable="true"
         ref="editBoardTitle"
         class="title"
-      >{{board.title}}</div>
+      >
+        {{ board.title }}
+      </div>
 
       <span class="board-star bh-btn">
         <i class="icon-sm icon-star"></i>
@@ -94,7 +96,7 @@ export default {
     },
     updateTitle() {
       if (!this.$refs.editBoardTitle.innerText) return;
-      console.log(this.$refs.editBoardTitle.innerText);
+      // console.log(this.$refs.editBoardTitle.innerText);
       this.board.title = this.$refs.editBoardTitle.innerText;
       this.$emit("updateBoard", this.board);
       this.editTitle = false;
@@ -119,7 +121,7 @@ export default {
     },
     inviteMembers() {
       const users = this.$store.getters.users;
-      console.log("users = ", users);
+      // console.log("users = ", users);
     },
   },
   computed: {

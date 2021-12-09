@@ -37,11 +37,16 @@
             <span class="icon-cover icon-sm"></span>
           </span>
           <span
-            v-show="!cardToEdit.style||cardToEdit.style.img!==attachment.href"
+            v-show="
+              !cardToEdit.style || cardToEdit.style.img !== attachment.href
+            "
             @click.stop="makeCover"
-          >Make cover</span>
+            >Make cover</span
+          >
           <span
-            v-show=" cardToEdit.style && cardToEdit.style.img===attachment.href"
+            v-show="
+              cardToEdit.style && cardToEdit.style.img === attachment.href
+            "
             @click.stop="removeCover"
             class="remove-cover"
             >Remove cover</span
@@ -100,7 +105,7 @@ export default {
     },
     deleteAttach() {
       this.$emit("deleteAttach", this.attachment);
-      console.log(this.attachment);
+      // console.log(this.attachment);
     },
     async makeCover() {
       const fac = new FastAverageColor();
@@ -108,7 +113,7 @@ export default {
       const style = {
         img: this.attachment.href,
         bgColor: color.rgba,
-        isDark: color.isDark
+        isDark: color.isDark,
       };
       this.$emit("makeCover", style);
       // console.log(this.attachment);

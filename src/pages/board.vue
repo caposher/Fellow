@@ -178,7 +178,7 @@ export default {
     }
   },
   destroyed() {
-    socketService.off("pushed-bored");
+    socketService.off("board pushed");
     // socketService.terminate();
   },
   computed: {
@@ -196,7 +196,7 @@ export default {
   },
   methods: {
     pushedBoard(board) {
-      console.log("board - pushBoard");
+      // console.log("board - pushBoard");
       this.$store.dispatch({
         type: "pushedBoard",
         board,
@@ -205,7 +205,7 @@ export default {
 
     setAddList() {
       this.isAddList = true;
-      console.log("board", this.board);
+      // console.log("board", this.board);
 
       // this.$refs.titleInput.focus()
     },

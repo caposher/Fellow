@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     handleBlur(e) {
-      console.log(e);
+      // console.log(e);
       if (!this.isAddCard) return;
       else this.addCard();
       // function(e) {
@@ -117,7 +117,7 @@ export default {
     },
     async addCard() {
       // if (!this.isAddCard) return
-      console.log("adding card");
+      // console.log("adding card");
       // const title = prompt('card title');
       const title = this.newCardTitle;
       if (!title) {
@@ -141,7 +141,7 @@ export default {
       this.newCardTitle = "";
       this.isAddCard = false;
       event.target.blur();
-      console.log("end of close");
+      // console.log("end of close");
     },
     updateList() {
       this.editTitle = false;

@@ -8,10 +8,10 @@ export const boardStore = {
     currList: null,
     labelsState: false,
     bgPhotos: [],
-    statistics: {
-      labels: ['boardUpdate', 'cardUpdate', 'listUpdate', 'labelsUpdate', 'bgUpdate'],
-      data: [0, 0, 0, 0, 0],
-    },
+    // statistics: {
+    //   labels: ['boardUpdate', 'cardUpdate', 'listUpdate', 'labelsUpdate', 'bgUpdate'],
+    //   data: [0, 0, 0, 0, 0],
+    // },
   },
 
   getters: {
@@ -47,33 +47,33 @@ export const boardStore = {
   mutations: {
     setBoard(state, { board }) {
       state.currBoard = board;
-      ++state.statistic.boardUpdate;
+      // ++state.statistic.boardUpdate;
     },
     setBoards(state, { boards }) {
       state.boards = boards;
-      ++state.statistic.boardUpdate;
+      // ++state.statistic.boardUpdate;
     },
     setCard(state, { card }) {
       state.currCard = card;
-      ++state.statistic.cardUpdate;
+      // ++state.statistic.cardUpdate;
     },
     setList(state, { list }) {
       state.currList = list;
-      ++state.statistic.listUpdate;
+      // ++state.statistic.listUpdate;
     },
     toggleLabel(state, { labelsState }) {
       state.labelsState = !labelsState; //switch state
-      ++state.statistic.labelsUpdate;
+      // ++state.statistic.labelsUpdate;
     },
     setPhotos(state, { photos }) {
       state.bgPhotos = photos;
-      ++state.statistic.bgUpdate;
+      // ++state.statistic.bgUpdate;
     },
   },
 
   actions: {
     pushedBoard({ commit }, { board }) {
-      commit({ type: 'setBoard', board, });
+      commit({ type: 'setBoard', board });
     },
     async loadBoards({ commit }) {
       try {
@@ -101,7 +101,7 @@ export const boardStore = {
       try {
         commit({ type: 'setBoard', board: board });
         await boardService.save(board);
-        const updatedBoards = await boardService.query()
+        const updatedBoards = await boardService.query();
         commit({ type: 'setBoards', boards: updatedBoards });
       } catch (err) {
         const board = await boardService.getById(boardId);

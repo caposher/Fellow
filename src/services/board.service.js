@@ -5,8 +5,6 @@ import { httpService } from './http.service';
 import { socketService, SOCKET_EVENT_BOARD_UPDATED } from './socket.service';
 import { userService } from '../services/user.service.js';
 
-
-
 var gBoards = [
   {
     _id: 'SUV6b',
@@ -3093,62 +3091,62 @@ export const boardService = {
   getActivity,
 };
 
-// _createBoards();
+_createBoards();
 
-// function query() {
-//   return storageService.query(KEY);
-// }
-
-// function getById(id) {
-//   return storageService.get(KEY, id);
-// }
-
-// function remove(id) {
-//   return storageService.remove(KEY, id);
-// }
-
-// function save(board) {
-//   const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
-//   return savedBoard;
-// }
-
-async function query(filterBy) {
-  try {
-    return httpService.get('board/', filterBy)
-  } catch (err) {
-    console.log('error:', err)
-  }
+function query() {
+  return storageService.query(KEY);
 }
 
-async function getById(id) {
-  try {
-    return httpService.get('board/' + id)
-  } catch (err) {
-    console.log('error:', err)
-  }
+function getById(id) {
+  return storageService.get(KEY, id);
 }
 
-async function save(board) {
-  try {
-    if (board._id) {
-      socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
-      return httpService.put('board/' + board._id, board)
-
-    } else {
-      return httpService.post('board/', board)
-    }
-  } catch (err) {
-    console.log('err', err)
-  }
+function remove(id) {
+  return storageService.remove(KEY, id);
 }
 
-async function remove(id) {
-  try {
-    return httpService.delete('board/' + id)
-  } catch (err) {
-    console.log('error:', err)
-  }
+function save(board) {
+  const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
+  return savedBoard;
 }
+
+// async function query(filterBy) {
+//   try {
+//     return httpService.get('board/', filterBy)
+//   } catch (err) {
+//     console.log('error:', err)
+//   }
+// }
+
+// async function getById(id) {
+//   try {
+//     return httpService.get('board/' + id)
+//   } catch (err) {
+//     console.log('error:', err)
+//   }
+// }
+
+// async function save(board) {
+//   try {
+//     if (board._id) {
+//       socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
+//       return httpService.put('board/' + board._id, board)
+
+//     } else {
+//       return httpService.post('board/', board)
+//     }
+//   } catch (err) {
+//     console.log('err', err)
+//   }
+// }
+
+// async function remove(id) {
+//   try {
+//     return httpService.delete('board/' + id)
+//   } catch (err) {
+//     console.log('error:', err)
+//   }
+// }
 
 // function saveTask(boardId, groupId, task, activity) {
 //   const board = getById(boardId)
@@ -3191,14 +3189,14 @@ async function saveList(list, board) {
 async function updateCard(cardToUpdate, listToUpdate, boardId, activity) {
   try {
     var boardToUpdate = await getById(boardId);
-    if (boardToUpdate.activities) boardToUpdate.activities.unshift(activity)
-    else boardToUpdate.activities = [activity]
+    if (boardToUpdate.activities) boardToUpdate.activities.unshift(activity);
+    else boardToUpdate.activities = [activity];
 
     const listIdx = boardToUpdate.lists.findIndex((currList) => listToUpdate.id === currList.id);
     const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardToUpdate.id);
     listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
     boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
-    console.log('boardToUpdate.activities', boardToUpdate.activities)
+    console.log('boardToUpdate.activities', boardToUpdate.activities);
     try {
       const savedBoard = await save(boardToUpdate);
       const savedList = savedBoard.lists[listIdx];
@@ -3306,8 +3304,9 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 
 async function getBgImgs(searchKey, imgNum, page) {
   try {
-    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${imgNum ? imgNum : 50
-      }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
+      imgNum ? imgNum : 50
+    }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
     let res = await axios.get(search);
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {
@@ -5311,16 +5310,18 @@ function companyBoard() {
 
 function getActivity(txt, card = null) {
   const activity = {
-    id: "act" + utilService.makeId(),
+    id: 'act' + utilService.makeId(),
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    card: (card) ? {
-      id: card.id,
-      title: card.title,
-    } : null,
-  }
-  return activity
+    card: card
+      ? {
+          id: card.id,
+          title: card.title,
+        }
+      : null,
+  };
+  return activity;
 }
 
 // card

@@ -15,17 +15,14 @@
         <span class="icon-img" :style="styleToShow"></span>
         <h3>Change background</h3>
       </li>
-      <li class="menu-about" @click="openDashboard">
+      <li class="menu-action" @click="openDashboard">
         <h3><span class="menu-action-icon icon-lg icon-home"></span>Dashboard</h3>
       </li>
-    </ul>
-    <ul class="delete-board">
-      <!--  -->
-      <!-- <button >Delete Board</button> -->
-      <li @click="deleteBoard">
-        <h3><span class="icon-lg icon-archive"></span>Archive board</h3>
+      <li class="menu-action" @click="deleteBoard">
+        <h3><span class="menu-action-icon icon-lg icon-archive"></span>Archive board</h3>
       </li>
     </ul>
+    <ul class="delete-board"></ul>
     <ul class="main-menu-activity">
       <li></li>
     </ul>

@@ -16,8 +16,6 @@
 //   @include aspect-ratio(100, 150);
 // }
 
-
-
 .icon {
   &-sm {
     font-family: icomoon;
@@ -31,6 +29,7 @@
     -webkit-font-smoothing: antialiased;
     font-style: normal;
     text-align: center;
+    vertical-align: -2px;
   }
   &-md {
     font-family: icomoon;

@@ -12,7 +12,7 @@
       <span class="checklist-actions">
         <button
           v-if="doneTodos > 0"
-          class="action-btn checklist-btn"
+          class="action-btn relative-btn"
           @click.stop="hideDone = !hideDone"
         >
           {{
@@ -94,7 +94,7 @@
     <span
       v-show="!newTodo"
       @click="newTodo = true"
-      class="action-btn checklist-btn"
+      class="action-btn relative-btn"
       >Add an item</span
     >
   </section>

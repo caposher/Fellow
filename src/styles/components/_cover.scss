@@ -1,6 +1,9 @@
 .cover-popup {
+  position: absolute;
+  top: -100px;
   padding: 0 11px;
   color: #5e6c84;
+
   .icon-close {
     margin-right: 0;
   }

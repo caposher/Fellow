@@ -1,5 +1,5 @@
 <template>
-  <section class="card-popup">
+  <section class="card-popup attachment-popup">
     <section class="popup-header">
       <div @click.stop="close">
         <span class="close-popup icon-md icon-close"></span>
@@ -29,18 +29,18 @@
 </template>
 
 <script>
-import imgUpload from "@/cmps/img-upload";
-import { uploadImg } from "@/services/imgUpload.service.js";
+import imgUpload from '@/cmps/img-upload';
+import { uploadImg } from '@/services/imgUpload.service.js';
 
 export default {
   data() {
     return {
       newAttach: {
-        name: "",
-        href: "",
+        name: '',
+        href: '',
         file: null,
-        createdAt: "",
-        type: "",
+        createdAt: '',
+        type: '',
       },
       //   imgUrls: [],
       isLoading: false,
@@ -53,28 +53,28 @@ export default {
         let res = await uploadImg(ev);
         //   this.imgUrls.push(res.url);
         this.newAttach.href = res.url;
-        this.newAttach.type = "img";
+        this.newAttach.type = 'img';
         // console.log(this.imgUrls);
         // console.log(res);
         // this.$emit('onSaveImg', res.url)
         this.isLoading = false;
       } catch (err) {
-        console.log("cant upload img".err);
+        console.log('cant upload img'.err);
       }
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
     },
     // saveImg(imgUrl) {
     //   this.imgUrls.push(imgUrl);
     // },
     addAttach() {
       if (this.newAttach.href && !this.newAttach.type) {
-        this.newAttach.type = "link";
+        this.newAttach.type = 'link';
       }
       if (!this.newAttach.type) return;
       this.newAttach.createdAt = Date.now();
-      this.$emit("addNewAttach", this.newAttach);
+      this.$emit('addNewAttach', this.newAttach);
       this.resetAttach();
     },
     handleFileUpload() {
@@ -83,16 +83,16 @@ export default {
       this.newAttach.type = file.type;
       this.newAttach.file = file;
       this.newAttach.name = file.name;
-      this.$emit("addNewAttach", this.newAttach);
+      this.$emit('addNewAttach', this.newAttach);
       this.resetAttach();
     },
     resetAttach() {
       this.newAttach = {
-        name: "",
-        href: "",
+        name: '',
+        href: '',
         file: null,
-        createdAt: "",
-        type: "",
+        createdAt: '',
+        type: '',
         file: null,
       };
     },

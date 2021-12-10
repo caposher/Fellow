@@ -105,7 +105,6 @@ import dashBoard from "../cmps/dashboard.cmp.vue";
 import { Container, Draggable } from "vue-smooth-dnd";
 import { focus } from "vue-focus";
 import { socketService } from "@/services/socket.service";
-import Hammer from "hammerjs";
 
 export default {
   directives: { focus: focus },

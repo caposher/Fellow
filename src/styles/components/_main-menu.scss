@@ -1,3 +1,8 @@
+// .header-main-menu {
+//   display: absolute;
+//   right: 5px;
+// }
+
 .main-menu {
   position: fixed;
   right: 0px;
@@ -49,21 +54,13 @@
   .main-menu-actions {
     display: flex;
     flex-direction: column;
-    // padding: 0 13px;
-    padding-block-end: 25px;
     border-bottom: 1px solid #091e4221;
-
+    padding-block-end: 15px;
+    padding-block-start: 16px;
     li {
       cursor: pointer;
     }
 
-    // li {
-    //   cursor: pointer;
-
-    //   :hover {
-    //   }
-    // }
-    .menu-about,
     .menu-action {
       > * {
         &:hover {
@@ -71,18 +68,13 @@
         }
       }
     }
-    .menu-about {
-      padding-block-start: 16px;
-      h3 {
-        font-weight: 600;
-        font-size: 14px;
-      }
-      .menu-action-icon {
-        padding: 0;
-        right: 3px;
-        margin: 0px 0px 0 12px;
-        font-size: 25px;
-      }
+
+    .menu-action-icon {
+      padding: 0;
+      padding-left: 3px;
+      right: 3px;
+      margin: 0px 0px 0 12px;
+      font-size: 18px;
     }
   }
 
@@ -92,8 +84,8 @@
     // align-items: center;
     .icon-img {
       height: 0;
-      padding: 10px;
-      margin: 6px 12px;
+      padding: 9px;
+      margin: 6px 12px 6px 12px;
       // margin-inline-end: 12px;
       background-size: cover;
       background-position: center;

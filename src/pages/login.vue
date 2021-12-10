@@ -83,13 +83,13 @@
                 <div class="login-methods hide-when-two-factor">
                   <div class="login-method-separator">OR</div>
                   <div class="login-oauth-container">
-                    <div id="googleButton" class="google-button oauth-button" tabindex="0">
+                    <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure" id="googleButton" class="google-button oauth-button" tabindex="0">
                       <span id="google-icon" class="google-icon icon"></span>
                       <span
                         class="label"
                         data-analytics-button="loginWithGmailButton"
                       >Continue with Google</span>
-                    </div>
+                    </GoogleLogin>
                     <div id="msftButton" class="msft-button oauth-button" tabindex="0">
                       <!-- <span id="google-icon" class="facebook-icon icon"></span> -->
                       <i class="fab fa-facebook-square facebook-icon"></i>
@@ -101,7 +101,7 @@
                   </div>
                 </div>
               </div>
-              <div class="hidden">
+              <!-- <div class="hidden">
                 <form id="login-atlassian-google" action="/authenticate_openid" method="post">
                   <input type="hidden" name="subProvider" value="google" />
                   <input type="hidden" name="isSignup" value="false" />
@@ -134,7 +134,7 @@
                   <input type="hidden" name="subProvider" value="slack" />
                   <input type="hidden" name="locale" id="login-atlassian-slack-locale" value />
                 </form>
-              </div>
+              </div>-->
               <hr class="bottom-form-separator" />
               <ul class="bottom-form-link">
                 <li>
@@ -150,6 +150,15 @@
           </div>
         </section>
       </div>
+      <!--  -->
+      <facebook-login class="button"
+      appId="668161277923698"
+      @logout="logout"
+      @login="getFBUserData"
+      @get-initial-status="getFBUserData">
+    </facebook-login>
+      <!-- :renderParams="renderParams" -->
+      <!-- <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure">Google</GoogleLogin> -->
     </section>
     <div v-else class="loader">
       <img :src="require('../assets/img/loader.svg')" alt />
@@ -163,6 +172,8 @@
 <script>
 import logo from "../cmps/logo.cmp.vue";
 import { focus } from "vue-focus";
+import GoogleLogin from "vue-google-login";
+import facebookLogin from 'facebook-login-vuejs';
 
 export default {
   directives: { focus },
@@ -173,9 +184,23 @@ export default {
         username: "demo",
         password: "demo"
       },
+      googleUser: {
+        fullname: "",
+        username: "",
+        imgUrl: ""
+      },
       signUp: false,
       isLoading: false,
-      invalid: false
+      invalid: false,
+      params: {
+        client_id:
+          "961995621272-60aj5sk5o9vlm2a68pqoqbtd32uo5ka3.apps.googleusercontent.com"
+      },
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true
+      }
     };
   },
   methods: {
@@ -216,10 +241,41 @@ export default {
         this.user.fullname = "";
       }
       this.signUp = !this.signUp;
+    },
+    async onSuccess(googleUser) {
+      try {
+        console.log(googleUser);
+        console.log(googleUser.getBasicProfile());
+        const userFromGoogle = googleUser.getBasicProfile();
+        this.googleUser.fullname = userFromGoogle.jf;
+        this.googleUser.username = userFromGoogle.pv;
+        this.googleUser.imgUrl = userFromGoogle.oN;
+        await this.$store.dispatch( {
+          type: 'googleLogin',
+          username: this.googleUser.username,
+          fullname: this.googleUser.fullname,
+          imgUrl: this.googleUser.imgUrl
+        });
+        this.$router.push("/home");
+
+      }catch(err){
+        console.log('cant login with google', err);
+      }
+    },
+    onFailure(err) {
+      console.log("failed", err);
+    },
+    getFBUserData(data){
+      console.log(data);
+    },
+   logout(){
+      console.log('logged out');
     }
   },
   components: {
-    logo
+    logo,
+    GoogleLogin,
+    facebookLogin
   }
 };
 </script>

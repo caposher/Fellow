@@ -8,6 +8,8 @@
 }
 .board-app {
   overflow-y: hidden;
+  min-height: 100vh;
+
 }
 
 body {
@@ -47,23 +49,34 @@ body {
   // will-change: transform;
   // user-select: none;
   // cursor: pointer;
+  display: flex;
 }
 .board {
+  @media (max-width: 550px) {
+  height: calc(100vh - 69px);
+  padding-left: 8px;
+
+  }
   display: flex !important;
   list-style: none;
   align-items: flex-start;
   height: calc(100vh - 105px);
   position: relative;
+  flex-grow: 1;
+  // min-height: 100%;
   width: 100%;
   overflow-x: scroll;
   overflow-y: hidden;
-  padding-left: 24px;
+  padding-left: 28px;
+  margin-inline-start: 4px;
   margin: 0;
   transition: margin 0.5s;
+
+
 }
+
 .nav-open {
-  margin-left: 250px;
-  padding-inline-start: 15px;
+  margin-left: 242px;
 }
 
 .add-list-wrapper {

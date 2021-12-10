@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="ws-nav">
     <div
       class="nav-container collapsed"
       :class="openBar ? 'hidden' : 'shown'"
@@ -28,7 +28,8 @@
                 <router-link
                   :to="{ name: 'board', params: { boardId: board._id } }"
                 >
-                  <img :src="board.style.imgUrl" />
+                  <div  class="small-bg"  :style="styleToShow(board)"/>
+                  <!-- <img :src="board.style.imgUrl" /> -->
                   <p>{{ board.title }}</p>
                   <span class="star icon-star" @click.stop.prevent=""></span
                 ></router-link>
@@ -58,6 +59,16 @@ export default {
       this.openBar = val;
       this.$emit("openBar", val);
     },
+    styleToShow(board){
+      if (!board.style) return;
+      if (board.style.imgUrl)
+        return {
+          backgroundImage: `url("${board.style.imgUrl}")`,
+        };
+      return {
+        backgroundColor: board.style.bgColor,
+      };
+    }
   },
   computed: {
     boards() {

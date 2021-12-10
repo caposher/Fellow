@@ -8,12 +8,23 @@
     </header>
     <ul class="main-menu-actions">
       <li class="menu-about">
-        <h3><span class="menu-action-icon icon-lg icon-board"></span> About this board</h3>
-        <p>Add a description to your board</p>
+        <h3>
+          <span class="menu-action-icon icon-lg icon-board"></span> About this board
+        </h3>
+        <!-- <p>Add a description to your board</p> -->
       </li>
       <li class="menu-action" @click="isChangeColor = true">
-        <span class="icon-img" :style="{ backgroundImage: 'url(' + setImgIcon + ')' }"></span>
+        <span class="icon-img" :style="styleToShow"></span>
         <h3>Change background</h3>
+      </li>
+    </ul>
+    <ul class="delete-board">
+      <!--  -->
+      <!-- <button >Delete Board</button> -->
+      <li @click="deleteBoard">
+        <h3>
+          <span class="icon-lg icon-archive"></span>Archive board
+        </h3>
       </li>
     </ul>
     <ul class="main-menu-activity">
@@ -58,7 +69,11 @@
       </header>
       <ul class="menu-color-set">
         <li v-for="color in colorSet" :key="color">
-          <div @click="setBg(color)" class="menu-background-size" :style="{ backgroundColor: color }"></div>
+          <div
+            @click="setBg(color)"
+            class="menu-background-size"
+            :style="{ backgroundColor: color }"
+          ></div>
         </li>
       </ul>
     </section>
@@ -78,11 +93,7 @@
       </div>
       <ul class="menu-color-set">
         <li v-for="(url, idx) in getImgs" :key="idx">
-          <div
-            @click="setBg(url.regular)"
-            class="menu-background-size"
-            :style="{ backgroundImage: 'url(' + url.regular + ')' }"
-          >
+          <div @click="setBg(url.regular)" class="menu-background-size" :style="{ backgroundImage: 'url(' + url.regular + ')' }">
             <div class="loader" v-if="loading === url.regular">
               <img :src="require('../assets/img/loader.svg')" alt />
               Uploading...
@@ -95,7 +106,7 @@
 </template>
 
 <script>
-import FastAverageColor from 'fast-average-color';
+import FastAverageColor from "fast-average-color";
 
 export default {
   data() {
@@ -103,9 +114,19 @@ export default {
       isChangeColor: false,
       isColorSelected: false,
       isPhotosSelected: false,
-      searchKey: '',
-      colorSet: ['#0079bf', '#d29134', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#13aecc', '#838c91'],
-      loading: '',
+      searchKey: "",
+      colorSet: [
+        "#0079bf",
+        "#d29134",
+        "#519839",
+        "#b04632",
+        "#89609e",
+        "#cd5a91",
+        "#4bbf6b",
+        "#13aecc",
+        "#838c91"
+      ],
+      loading: ""
     };
   },
 
@@ -113,17 +134,17 @@ export default {
     requestPhotos() {
       this.isPhotosSelected = true;
       this.$store.dispatch({
-        type: 'requestPhotos',
-        searchKey: this.searchKey,
+        type: "requestPhotos",
+        searchKey: this.searchKey
       });
     },
     async setBg(val) {
       let style;
-      if (val.charAt(0) === '#') {
+      if (val.charAt(0) === "#") {
         style = {
           imgUrl: null,
           bgColor: val,
-          isDark: true,
+          isDark: true
         };
       } else {
         this.loading = val;
@@ -132,26 +153,42 @@ export default {
         style = {
           imgUrl: val,
           bgColor: color.rgba,
-          isDark: color.isDark,
+          isDark: color.isDark
         };
       }
       try {
-        console.log('style', style);
+        console.log("style", style);
         const boardId = this.$store.getters.boardId;
-        await this.$store.dispatch({ type: 'setBackground', boardId, style });
-        this.loading = '';
+        await this.$store.dispatch({ type: "setBackground", boardId, style });
+        this.loading = "";
       } catch (err) {
-        console.log('cant set board bg', err);
+        console.log("cant set board bg", err);
       }
     },
+    deleteBoard() {
+      this.$emit("deleteBoard");
+    }
   },
   computed: {
-    setImgIcon() {
-      return this.$store.getters.board.style.imgUrl;
+    styleToShow() {
+      if (!this.boardStyle) return;
+      if (this.boardStyle.imgUrl)
+        return {
+          backgroundImage: `url("${this.boardStyle.imgUrl}")`
+        };
+      return {
+        backgroundColor: this.boardStyle.bgColor
+      };
+    },
+    boardStyle() {
+      return this.$store.getters.board.style;
     },
     getImgs() {
       return this.$store.getters.getBgPhotos;
-    },
-  },
+    }
+    // board(){
+    //   return this.$store.getters.board
+    // }
+  }
 };
 </script>

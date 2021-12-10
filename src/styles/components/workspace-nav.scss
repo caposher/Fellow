@@ -1,3 +1,9 @@
+.ws-nav {
+  @media (max-width: 550px) {
+    display: none;
+  }
+}
+
 .nav-container {
   height: 100%;
   position: fixed;
@@ -10,6 +16,7 @@
 
 .collapsed {
   width: 16px;
+  // padding-left: 16px;
 }
 .collapsed-main {
   display: flex;
@@ -146,6 +153,15 @@
       transform: scale(1.3);
     }
   }
+
+  .small-bg {
+    min-width: 24px;
+    min-height: 20px;
+    border-radius: 3px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }
 
 .body-main li:hover {
@@ -160,11 +176,11 @@
   padding-left: 6px;
 }
 
-.body-main img {
-  width: 24px;
-  height: 20px;
-  border-radius: 3px;
-}
+// .body-main img {
+//   width: 24px;
+//   height: 20px;
+//   border-radius: 3px;
+// }
 .close-nav {
   font-size: 12px;
   height: 28px;

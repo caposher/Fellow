@@ -1,14 +1,14 @@
 .login-page-wrapper {
   display: flex;
-  background-color: #f9fafc;
-  margin-top: -96px;
+  // background-color: #f9fafc;
+  // margin-top: -96px;
   height: 100vh;
   padding-top: 1px;
   justify-content: space-between;
 }
 .login-page {
-  background-color: #f9fafc;
-  padding-top: 1px;
+  // background-color: #f9fafc;
+  padding-top: 19px;
   min-width: 400px;
 }
 .fellow-right {
@@ -18,6 +18,8 @@
   background-image: url("../assets/img/fellow-right.svg");
   background-repeat: no-repeat;
   background-position: bottom;
+  // background-position: right;
+  // background-attachment: fixed;
   align-self: flex-end;
 }
 .fellow-left {
@@ -26,9 +28,13 @@
   height: 400px;
   max-height: 400px;
   background-repeat: no-repeat;
+  // background-size: cover;
   background-position: bottom;
+  // background-position: left;
   background-image: url("../assets/img/fellow-left.svg");
   align-self: flex-end;
+  // background-attachment: fixed;
+
 }
 
 .fellow-main-logo {

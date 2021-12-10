@@ -2,15 +2,16 @@
   background-color: #fafbfc;
   display: flex;
   //   min-height: calc(100vh - 98px);
-  @media (max-width: 600px) {
-    flex-direction: column-reverse;
-  }
+
   .menu {
+    margin: 40px 0 0;
     position: sticky;
-    top: 0px;
+
+    // top: 0px;
     nav {
-      padding: 0 16px;
+      // margin: 40px 0 0;
       width: 240px;
+      padding: 0 16px;
       > * {
         display: flex;
         flex-direction: column;
@@ -68,7 +69,6 @@
             text-align: center;
             width: 32px;
             span {
-              // background-color: rgb(235, 235, 225);
               border-radius: 2px;
               &:hover {
                 background-color: rgba(9, 30, 66, 0.08);
@@ -85,12 +85,23 @@
               background-color: rgba(9, 30, 66, 0.08);
             }
             .F-wrapper {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: bold;
               .F {
+                flex: 0 0 auto;
+                background: linear-gradient(#006644, #00875a);
+                color: #ffffff;
+                font-size: 14px;
+                border-radius: 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 padding-top: 1px;
                 height: 21px;
                 width: 21px;
                 margin: 6px;
-                padding-left: 7px;
                 background: linear-gradient(#006644, #00875a);
               }
             }
@@ -103,7 +114,7 @@
               svg {
                 border-radius: 2px;
                 font-size: 16px;
-                font-weight: 100;
+                // font-weight: 100;
                 height: 12px;
                 line-height: 20px;
                 width: 20px;
@@ -121,7 +132,8 @@
   .boards {
     flex-grow: 1;
     padding: 0 16px;
-
+    margin: 0 auto;
+    max-width: 1266px;
     .workspaces {
       padding: 12px 0;
       max-width: 1250px;
@@ -145,23 +157,21 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        // align-items: center;
-        // margin: 0 0 0 40px;
-        padding: 0 0 11px;
+        margin-bottom: 8px;
         position: relative;
-        .F-wrapper {
+        .header-wrapper {
           margin-right: 8px;
-          margin-top: 8px;
-          .F {
-            font-size: 20px;
-            border-radius: 3px;
-            height: 32px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            width: 32px;
-            padding-top: 8px;
-            padding-top: 6px;
-            padding-left: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 40px;
+          .header {
+            color: #172b4d;
+            display: flex;
+            flex: 1;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 20px;
           }
         }
         .btns {
@@ -170,6 +180,7 @@
           height: auto;
           flex-flow: row wrap;
           white-space: nowrap;
+          align-items: center;
           width: 100%;
           > * {
             margin-left: 8px;
@@ -185,7 +196,7 @@
             }
           }
           &::before {
-            content: "";
+            content: '';
             flex: auto;
           }
         }
@@ -281,26 +292,16 @@
       }
     }
   }
-}
-
-.F-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  .F {
-    // padding-top: 1px;
-    color: #ffffff;
-    font-size: 14px;
-    border-radius: 3px;
-    //   height: 21px;
-    //   width: 21px;
-    //   margin: 6px;
-    flex: 0 0 auto;
-    //   padding-left: 7px;
-    background: linear-gradient(#006644, #00875a);
+  @media (max-width: 675px) {
+    // flex-direction: column-reverse;
+    min-height: 100vh;
+    .menu{
+     display: none;
+    }
+    
   }
 }
+
 .add-board-screen {
   display: flex;
   align-items: flex-start;
@@ -344,8 +345,8 @@
       box-shadow: none;
       box-sizing: border-box;
       color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-        "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Noto Sans', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', sans-serif;
       font-size: 16px;
       font-weight: 700;
       left: -8px;

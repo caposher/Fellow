@@ -1,7 +1,7 @@
 <template>
-  <section class="home" v-if="boards">
+  <section class="home-page" v-if="boards">
     <app-header class="blue-header" />
-
+    <section class="home">
     <div class="menu">
       <nav>
         <div class="top-menu">
@@ -71,15 +71,17 @@
         </ul>
       </div>-->
       <div class="workspaces">
-        <header>
+        <!-- <header>
           <span>YOUR WORKSPACES</span>
-        </header>
+        </header> -->
         <div class="main">
           <div class="nav">
-            <span class="F-wrapper">
-              <span class="F">F</span>
+            <span class="header-wrapper">
+              <!-- <span class="F">F</span> -->
+              <span class="icon-lg icon-member"></span>
+              <span class="header">Boards</span>
             </span>
-            <div class="btns">
+            <!-- <div class="btns">
               <button class="action-btn">
                 <span class="icon-wrapper">
                   <span class="icon-sm icon-board"></span>
@@ -98,7 +100,7 @@
                 </span>
                 <span class="text">Settings</span>
               </button>
-            </div>
+            </div> -->
           </div>
           <ul class="workspaces-boards">
             <li
@@ -180,6 +182,7 @@
         </div>
       </div>
     </div>
+  </section>
   </section>
 </template>
 

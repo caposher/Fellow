@@ -40,7 +40,7 @@
           </svg>
         </span>
       </button>
-      <div class="user-section" @click="showUserPopup= !showUserPopup">
+      <div class="user-section" @click="showUserPopup= !showUserPopup" v-if="user">
         <avatar
           :username="user.fullname"
           :size="32"
@@ -48,7 +48,7 @@
           :src="user.imgUrl"
           :title="`${user.fullname} (${user.username})`"
         ></avatar>
-        <user-popup v-show="showUserPopup" :user="user"></user-popup>
+        <user-popup v-show="showUserPopup" :user="user" @closePopup="showUserPopup = false"></user-popup>
       </div>
     </div>
   </header>

@@ -59,6 +59,24 @@ export const userStore = {
         throw err
       }
     },
+    async googleLogin({ dispatch }, { username, fullname, imgUrl }) {
+      try {
+        await userService.googleLogin(username, fullname, imgUrl);
+        dispatch({ type: 'setUser' });
+      } catch (err) {
+        console.log('cant login user', err);
+        throw err
+      }
+    },
+    async logout({ dispatch }) {
+      try {
+        await userService.logout();
+        dispatch({ type: 'setUser' ,  user:null});
+      } catch (err) {
+        console.log('cant logout user', err);
+        throw err
+      }
+    },
     async signup({ dispatch }, {  username, password , fullname}) {
       try {
           console.log('username:', username,' password:',  password,'fullname:', fullname);

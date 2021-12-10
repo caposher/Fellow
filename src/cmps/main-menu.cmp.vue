@@ -2,7 +2,7 @@
   <section class="card-popup main-menu">
     <header class="popup-header">
       <h4>Menu</h4>
-      <div @click="$emit('close')">
+      <div @click="closeMenu">
         <span class="menu-close icon-md icon-close"></span>
       </div>
     </header>
@@ -15,6 +15,9 @@
         <span class="icon-img" :style="{ backgroundImage: 'url(' + setImgIcon + ')' }"></span>
         <h3>Change background</h3>
       </li>
+      <li class="menu-about" @click="openDashboard">
+        <h3><span class="menu-action-icon icon-lg icon-home"></span>Dashboard</h3>
+      </li>
     </ul>
     <ul class="main-menu-activity">
       <li></li>
@@ -26,7 +29,7 @@
         <h4>Change background</h4>
         <span @click="isChangeColor = false" class="back-popup icon-md icon-back"></span>
         <div>
-          <span @click="$emit('close')" class="menu-close icon-md icon-close"></span>
+          <span @click="closeMenu" class="menu-close icon-md icon-close"></span>
         </div>
       </header>
       <ul class="main-menu-background">
@@ -53,7 +56,7 @@
         <h4>Colors</h4>
         <span @click="isColorSelected = false" class="back-popup icon-md icon-back"></span>
         <div>
-          <span @click="$emit('close')" class="menu-close icon-md icon-close"></span>
+          <span @click="closeMenu" class="menu-close icon-md icon-close"></span>
         </div>
       </header>
       <ul class="menu-color-set">
@@ -69,7 +72,7 @@
         <h4>Photos</h4>
         <span @click="isPhotosSelected = false" class="back-popup icon-md icon-back"></span>
         <div>
-          <span @click="$emit('close')" class="menu-close icon-md icon-close"></span>
+          <span @click="closeMenu" class="menu-close icon-md icon-close"></span>
         </div>
       </header>
       <div class="main-menu-search">
@@ -143,6 +146,16 @@ export default {
       } catch (err) {
         console.log('cant set board bg', err);
       }
+    },
+    openDashboard() {
+      this.$store.commit({ type: 'toggleDashboard' });
+      this.closeMenu();
+    },
+    closeMenu() {
+      this.$emit('close');
+      this.isChangeColor = false;
+      this.isColorSelected = false;
+      this.isPhotosSelected = false;
     },
   },
   computed: {

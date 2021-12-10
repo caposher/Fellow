@@ -8,10 +8,6 @@ export const boardStore = {
     currList: null,
     labelsState: false,
     bgPhotos: [],
-    // statistics: {
-    //   labels: ['boardUpdate', 'cardUpdate', 'listUpdate', 'labelsUpdate', 'bgUpdate'],
-    //   data: [0, 0, 0, 0, 0],
-    // },
   },
 
   getters: {
@@ -39,9 +35,6 @@ export const boardStore = {
     getBgPhotos(state) {
       return JSON.parse(JSON.stringify(state.bgPhotos));
     },
-    getStatistics(state) {
-      return JSON.parse(JSON.stringify(state.statistics));
-    },
   },
 
   mutations: {
@@ -51,23 +44,18 @@ export const boardStore = {
     },
     setBoards(state, { boards }) {
       state.boards = boards;
-      // ++state.statistic.boardUpdate;
     },
     setCard(state, { card }) {
       state.currCard = card;
-      // ++state.statistic.cardUpdate;
     },
     setList(state, { list }) {
       state.currList = list;
-      // ++state.statistic.listUpdate;
     },
     toggleLabel(state, { labelsState }) {
       state.labelsState = !labelsState; //switch state
-      // ++state.statistic.labelsUpdate;
     },
     setPhotos(state, { photos }) {
       state.bgPhotos = photos;
-      // ++state.statistic.bgUpdate;
     },
   },
 

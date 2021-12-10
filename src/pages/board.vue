@@ -16,7 +16,11 @@
         light: !board.style.isDark,
       }"
     />
-    <!-- <dash-board :board="board" /> -->
+    <dash-board
+      :board="board"
+      :showDashboard="$store.getters.showDashboard"
+      @close="$store.commit({ type: 'toggleDashboard' })"
+    />
     <div class="board-container" @mouseenter="scroll" ref="board">
       <Container
         :tag="'ul'"
@@ -81,7 +85,7 @@ import mainMenu from '../cmps/main-menu.cmp.vue';
 import boardMenu from '../cmps/board-menu.cmp.vue';
 import boardList from '../cmps/board-list.cmp.vue';
 import workspaceNav from '../cmps/workspace-nav.cmp.vue';
-// import dashBoard from '../cmps/dashboard.cmp.vue';
+import dashBoard from '../cmps/dashboard.cmp.vue';
 import { Container, Draggable } from 'vue-smooth-dnd';
 import { focus } from 'vue-focus';
 import { socketService } from '@/services/socket.service';
@@ -96,6 +100,7 @@ export default {
       newListTitle: '',
       openBar: false,
       dragging: false,
+      showDashboard: false,
     };
   },
   watch: {
@@ -315,7 +320,7 @@ export default {
     Container,
     Draggable,
     appHeader,
-    // dashBoard,
+    dashBoard,
   },
 };
 </script>

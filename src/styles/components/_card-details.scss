@@ -143,6 +143,12 @@
   }
 }
 .icon-header {
+  .detail-labels {
+    // margin: 0 8px;
+    .card-labels {
+      margin: 8px 0 24px 0;
+    }
+  }
   .due-date {
     clear: both;
     h3 {
@@ -343,28 +349,6 @@
     &::after {
       content: "\e91a";
     }
-  }
-}
-
-@media (max-width: 784px) {
-  .card-details {
-    margin: 48px 7px 80px 7px;
-    width: calc(100vw - 14px);
-  }
-  .main-details {
-    width: 100% !important;
-    float: none !important;
-    padding: 0 16px 8px 16px !important;
-  }
-  .side-menu {
-    float: none !important;
-    width: 100% !important;
-  }
-}
-@media (min-width: 784px) {
-  .card-details {
-    margin: 48px calc((100vw - 770px) / 2) 80px calc((100vw - 770px) / 2);
-    min-width: 770px;
   }
 }
 
@@ -626,5 +610,124 @@ input[id="cb"] {
 
   & .activity-by {
     font-weight: 700;
+  }
+}
+
+@media (max-width: 550px) {
+  .card-details {
+    margin: 8px 7px 8px 7px;
+    width: calc(100vw - 14px);
+  }
+  .main-details {
+    width: 100% !important;
+    float: none !important;
+    padding: 0 16px 8px 16px !important;
+  }
+  .side-menu {
+    margin: 8px 8px 8px 8px;
+    float: none !important;
+    min-width: 100% !important;
+    position: relative;
+    h3 {
+      display: block;
+    }
+    .action-btn,
+    .attachment-btn,
+    .checklist-btn,
+    .cover-menu-header {
+      display: inline-block;
+      margin-right: 8px;
+      min-height: 44px;
+      max-height: 44px;
+      min-width: calc(100% - 8px);
+      // min-width: 50vw;
+      //   display: flex;
+    }
+
+    .date {
+      padding: 0 12px;
+    }
+
+    .attachment-btn,
+    .checklist-btn,
+    .cover-menu-header {
+      min-width: calc(100% - 8px);
+      button,
+      span:not(.close-popup) {
+        // display: flex;
+        min-height: 44px;
+        max-height: 44px;
+        min-width: 100%;
+        line-height: 28px;
+        .action-btn {
+          min-width: 100%;
+        }
+      }
+    }
+
+    .cover-menu-btn {
+      // top: -9px;
+    }
+  }
+}
+
+@media only screen and (min-width: 550px) and (max-width: 783px) {
+  .card-details {
+    margin: 48px 7px 8px 7px;
+
+    // margin: 48px 7px 80px 7px;
+    width: calc(100vw - 14px);
+  }
+  .main-details {
+    width: 100% !important;
+    float: none !important;
+    padding: 0 16px 8px 16px !important;
+  }
+  .side-menu {
+    margin: 8px 8px 8px 8px;
+    float: none !important;
+    min-width: 100% !important;
+    position: relative;
+    h3 {
+      display: block;
+    }
+    .action-btn,
+    .attachment-btn,
+    .checklist-btn,
+    .cover-menu-header {
+      display: inline-block;
+      margin-right: 8px;
+      min-width: calc(50% - 8px);
+      // min-width: 50vw;
+      //   display: flex;
+    }
+
+    // .date {
+    //   padding: 0 12px;
+    // }
+
+    .attachment-btn,
+    .checklist-btn,
+    .cover-menu-header {
+      min-width: calc(50% - 8px);
+      max-height: 32px;
+      button {
+        min-width: 100%;
+        .action-btn {
+          min-width: 100%;
+        }
+      }
+    }
+
+    .cover-menu-btn {
+      top: -9px;
+    }
+  }
+}
+
+@media (min-width: 784px) {
+  .card-details {
+    margin: 48px calc((100vw - 770px) / 2) 80px calc((100vw - 770px) / 2);
+    min-width: 770px;
   }
 }

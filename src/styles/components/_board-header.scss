@@ -4,12 +4,25 @@
   // top: 44px;
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 8px 4px 4px 8px;
+  padding: 0px 4px 2px 8px;
   padding-left: 32px;
   z-index: 1;
   transition: margin 0.5s, padding-inline-start 0.5s, padding 0.5s;
   // max-width: calc(100vw - 4px);
+
+  .left-header {
+    display: flex;
+    align-items: center;
+
+    .members {
+      max-width: calc(100vw - 600px);
+      padding: 0 5px;
+      min-width: 80px;
+    }
+  }
+
   .title,
   .title-small {
     // background-color: #00000014;
@@ -149,39 +162,38 @@
     .members,
     .board-star,
     .title,
+    .invite-btn,
     .show {
       display: none;
     }
     .show-small {
-      display: block;
-      width: 44px;
-      height: 44px;
+      display: inline-block;
+      line-height: 40px;
+      margin: 0;
+      margin-right: 8px;
+      padding: 0;
       span {
-        top: 0px;
-        // overflow: hidden;
-        text-overflow: unset;
-        overflow: unset;
+        padding-right: 13px;
       }
     }
 
     .close-small,
     .title-small-check {
-      &.edit{
-
+      &.edit {
         display: block;
         padding: 0;
         span {
           margin: 0;
-        font-family: icomoon;
-        min-height: 44px;
-        min-width: 44px;
-        text-overflow: unset;
-        padding-left: 0;
-        padding-right: 0;
-        padding: 0 !important;
-        top: 1px;
+          font-family: icomoon;
+          min-height: 44px;
+          min-width: 44px;
+          text-overflow: unset;
+          padding-left: 0;
+          padding-right: 0;
+          padding: 0 !important;
+          top: 1px;
+        }
       }
-    }
     }
 
     .title-small-check {
@@ -207,20 +219,21 @@
       width: 44px;
       height: 44px;
       span {
-        top: 2px;
+        line-height: 45px;
       }
     }
 
     .title-small-cont {
-      display: inline;
-      min-width: 100%;
-      flex-grow: 1;
+      display: inline-block;
+      width: 100%;
+      width: calc(100vw - 100px);
       // min-height: 44px;
       // max-height: 44px;
       .title-small {
-        display: inline;
-        max-width: calc(100vw - 100px);
-        min-width: calc(100vw - 100px);
+        display: inline-block;
+        width: 100%;
+        // max-width: calc(100vw - 100px);
+        // min-width: calc(100vw - 100px);
         // min-height: 44px;
         // max-height: 44px;
         &:focus-visible {
@@ -242,9 +255,9 @@
   }
   @media (min-width: 551px) and (max-width: 686px) {
     &.main-menu-spacing {
-     .members{
-       display: none;
-     }
+      .members {
+        display: none;
+      }
     }
   }
   // @media only screen and (min-width:551px) and (max-width: 800px) {

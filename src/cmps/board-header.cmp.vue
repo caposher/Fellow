@@ -1,16 +1,11 @@
 <template>
   <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
-    <section class="right header">
+    <section class="left-header">
       <router-link to="/home" class="back-home" v-if="!editTitle">
         <span class="icon-md icon-back"></span>
       </router-link>
       <!--   -->
-      <button
-        class="close-small"
-        v-if="editTitle"
-        @click="closeEditTitle"
-        :class="{'edit': this.editTitle}"
-      >
+      <button class="close-small" v-if="editTitle" @click="closeEditTitle" :class="{ edit: this.editTitle }">
         <span class="icon-close"></span>
       </button>
       <div
@@ -20,19 +15,16 @@
         contenteditable="true"
         ref="editBoardTitle"
         class="title"
-      >{{ board.title }}</div>
+      >
+        {{ board.title }}
+      </div>
 
       <div class="title-small-cont">
         <!-- @focus="saveLastTitle" -->
         <!-- @blur="updateTitle" -->
         <!-- @keydown.enter="removeBr" -->
         <!-- @blur="closeEditTitle" -->
-        <div
-          @click="openEditTitle"
-          contenteditable="true"
-          ref="smallEdit"
-          class="title-small"
-        >{{ board.title }}</div>
+        <div @click="openEditTitle" contenteditable="true" ref="smallEdit" class="title-small">{{ board.title }}</div>
       </div>
 
       <span class="board-star bh-btn">
@@ -55,31 +47,23 @@
             :lighten="200"
             :src="member.imgUrl"
             :title="member.fullname"
-            class="draggable-item"
+            class=""
           />
         </Draggable>
-        <button @click="inviteMembers" class="bh-btn">Invite</button>
+
         <!-- <button @click="deleteBoard" class="bh-btn">Delete Board</button> -->
       </Container>
+      <button @click="inviteMembers" class="invite-btn bh-btn">Invite</button>
       <!-- </p> -->
     </section>
     <section>
       <!-- <button class="bh-btn">Filter</button> -->
       <button class="bh-btn show" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
-      <button
-        class="show-small"
-        v-if="!showMainMenu && !editTitle"
-        @click.stop.prevent="showMainMenu = true"
-      >
+      <button class="show-small" v-if="!showMainMenu && !editTitle" @click.stop.prevent="showMainMenu = true">
         <span class="icon-sm icon-dots"></span>
       </button>
       <!--  -->
-      <button
-        class="title-small-check"
-        @click="updateTitle"
-        v-if="editTitle"
-        :class="{'edit': this.editTitle}"
-      >
+      <button class="title-small-check" @click="updateTitle" v-if="editTitle" :class="{ edit: this.editTitle }">
         <span class="icon-check"></span>
       </button>
       <main-menu :class="mainMenuToggle" @deleteBoard="deleteBoard" @close="showMainMenu = false" />
@@ -88,10 +72,10 @@
 </template>
 
 <script>
-import Avatar from "vue-avatar";
-import mainMenu from "@/cmps/main-menu.cmp.vue";
-import { Container, Draggable } from "vue-smooth-dnd";
-import { focus } from "vue-focus";
+import Avatar from 'vue-avatar';
+import mainMenu from '@/cmps/main-menu.cmp.vue';
+import { Container, Draggable } from 'vue-smooth-dnd';
+import { focus } from 'vue-focus';
 
 // import { applyDrag, generateItems } from "./utils";
 export default {
@@ -100,8 +84,8 @@ export default {
     return {
       showMainMenu: false,
       editTitle: false,
-      lastTitle: "",
-      isSmall: false
+      lastTitle: '',
+      isSmall: false,
     };
   },
   mounted() {
@@ -127,20 +111,17 @@ export default {
     updateTitle() {
       console.log(this.lastTitle);
       // if (!this.$refs.editBoardTitle.innerText) return;
-      this.board.title = this.isSmall
-        ? this.$refs.smallEdit.innerText
-        : this.$refs.editBoardTitle.innerText;
+      this.board.title = this.isSmall ? this.$refs.smallEdit.innerText : this.$refs.editBoardTitle.innerText;
       // console.log(this.$refs.editBoardTitle.innerText);
       // this.$refs.editBoardTitle.innerText;
-      this.$emit("updateBoard", this.board);
+      this.$emit('updateBoard', this.board);
       // this.$refs.smallEdit.innerText = this.$refs.editBoardTitle.innerText
       this.editTitle = false;
-      this.isSmall = false
+      this.isSmall = false;
       // this.showMainMenu = false
     },
     deleteBoard() {
-      if (confirm("This action will delete the board! continue?"))
-        this.$emit("deleteBoard");
+      if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
     },
     onDragStart(dragResult) {
       // console.log("start", isSource, payload, willAcceptDrop);
@@ -159,7 +140,7 @@ export default {
     inviteMembers() {
       const users = this.$store.getters.users;
       // console.log("users = ", users);
-    }
+    },
   },
   computed: {
     board() {
@@ -170,15 +151,15 @@ export default {
       return this.board.members;
     },
     mainMenuToggle() {
-      return this.showMainMenu ? "show-main-menu" : "hide-main-menu";
-    }
+      return this.showMainMenu ? 'show-main-menu' : 'hide-main-menu';
+    },
   },
 
   components: {
     mainMenu,
     Avatar,
     Container,
-    Draggable
-  }
+    Draggable,
+  },
 };
 </script>

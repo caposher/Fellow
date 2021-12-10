@@ -273,7 +273,6 @@ export default {
       let scrollLeft;
       slider.addEventListener("mousedown", (ev) => {
         if (ev.path.length > 10) return;
-        console.log("mousedown");
         isDown = true;
         slider.classList.add("active");
         startX = ev.pageX - slider.offsetLeft;

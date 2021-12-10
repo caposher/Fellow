@@ -89,6 +89,7 @@
 import { focus } from "vue-focus";
 import Avatar from "vue-avatar";
 import { Container, Draggable } from "vue-smooth-dnd";
+import { utilService } from "../services/util.service.js";
 
 export default {
   directives: { focus },
@@ -139,12 +140,27 @@ export default {
     },
     async checkCard() {
       this.card.isComplete = !this.card.isComplete;
+      const activityText = this.card.isComplete
+        ? `marked the due date complete on `
+        : `marked the due date not complete on`;
+      console.log("activityText", activityText);
+      const activity = {
+        id: "act" + utilService.makeId(),
+        txt: activityText,
+        createdAt: Date.now(),
+        byMember: this.$store.getters.user,
+        card: {
+          id: this.card.id,
+          title: this.card.title,
+        },
+      };
       try {
         await this.$store.dispatch({
           type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.card)),
+          activity,
         });
       } catch (err) {
         console.log("cant update card", err);

@@ -1,5 +1,5 @@
 <template>
-  <section class="card-popup label-popup">
+  <section class="card-popup label-popup" v-if="cardMembers">
     <header class="popup-header">
       <h4>Members</h4>
       <div @click="$emit('close')">

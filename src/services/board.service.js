@@ -3,12 +3,16 @@ import { utilService } from './util.service.js';
 const axios = require('axios');
 import { httpService } from './http.service';
 import { socketService, SOCKET_EVENT_BOARD_UPDATED } from './socket.service';
+import { userService } from '../services/user.service.js';
+
+
 
 var gBoards = [
   {
     _id: 'SUV6b',
     title: 'Travel Inspiration board',
     createdAt: 1638986360388,
+    activities: [],
     createdBy: {
       _id: 'u101',
       fullname: 'Oshra Hartuv',
@@ -555,6 +559,7 @@ var gBoards = [
     _id: 'i9n9w',
     title: 'Meal Planning',
     createdAt: 1638986360388,
+    activities: [],
     createdBy: {
       _id: 'u102',
       fullname: 'Osher Cappelli',
@@ -2518,6 +2523,7 @@ var gBoards = [
     _id: 'uaUog',
     title: 'Company Overview',
     createdAt: 1638986360388,
+    activities: [],
     createdBy: {
       _id: 'u103',
       fullname: 'Adam Bercovich',
@@ -3084,6 +3090,7 @@ export const boardService = {
   removeCard,
   getBgImgs,
   setBackground,
+  getActivity,
 };
 
 _createBoards();
@@ -3143,6 +3150,15 @@ function save(board) {
 //   }
 // }
 
+// function saveTask(boardId, groupId, task, activity) {
+//   const board = getById(boardId)
+
+//   // TODO: find the task, and update
+//   board.activities.unshift(activity)
+//   save(board)
+//   return board
+// }
+
 async function getListAndCardById(boardId, cardId) {
   const board = await getById(boardId);
   const list = board.lists.find((list) => {
@@ -3172,13 +3188,17 @@ async function saveList(list, board) {
   }
 }
 
-async function updateCard(cardToUpdate, listToUpdate, boardId) {
+async function updateCard(cardToUpdate, listToUpdate, boardId, activity) {
   try {
     var boardToUpdate = await getById(boardId);
+    if (boardToUpdate.activities) boardToUpdate.activities.unshift(activity)
+    else boardToUpdate.activities = [activity]
+
     const listIdx = boardToUpdate.lists.findIndex((currList) => listToUpdate.id === currList.id);
     const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardToUpdate.id);
     listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
     boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
+    console.log('boardToUpdate.activities', boardToUpdate.activities)
     try {
       const savedBoard = await save(boardToUpdate);
       const savedList = savedBoard.lists[listIdx];
@@ -3286,9 +3306,8 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 
 async function getBgImgs(searchKey, imgNum, page) {
   try {
-    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
-      imgNum ? imgNum : 50
-    }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${imgNum ? imgNum : 50
+      }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
     let res = await axios.get(search);
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {
@@ -5288,6 +5307,20 @@ function companyBoard() {
     ],
   };
   return company;
+}
+
+function getActivity(txt, card = null) {
+  const activity = {
+    id: "act" + utilService.makeId(),
+    txt,
+    createdAt: Date.now(),
+    byMember: userService.getLoggedInUser(),
+    card: (card) ? {
+      id: card.id,
+      title: card.title,
+    } : null,
+  }
+  return activity
 }
 
 // card

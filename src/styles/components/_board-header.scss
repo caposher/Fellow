@@ -19,6 +19,7 @@
     .members {
       max-width: calc(100vw - 600px);
       padding: 0 5px;
+      padding-bottom: 2px;
       min-width: 80px;
     }
   }
@@ -227,15 +228,12 @@
       display: inline-block;
       width: 100%;
       width: calc(100vw - 100px);
-      // min-height: 44px;
-      // max-height: 44px;
+
       .title-small {
         display: inline-block;
         width: 100%;
-        // max-width: calc(100vw - 100px);
-        // min-width: calc(100vw - 100px);
-        // min-height: 44px;
-        // max-height: 44px;
+        margin-top: 8px;
+
         &:focus-visible {
           background-color: rgba(0, 0, 0, 0);
           text-decoration: underline;

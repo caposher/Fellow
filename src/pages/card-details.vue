@@ -4,6 +4,8 @@
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
       </button>
+
+      <!-- card cover -->
       <div v-if="cardToEdit.style" class="cover-wrapper" :style="coverStyle">
         <section class="cover-menu-header">
           <button
@@ -14,7 +16,6 @@
               'dark-btn': !cardToEdit.style.isDark,
             }"
           >
-            <!-- :style="{color:textColor ,backgroundColor: bgColor}" -->
             <span :style="{ color: textColor }" class="icon-sm icon-cover"></span>
             Cover
           </button>
@@ -27,6 +28,8 @@
           ></cover>
         </section>
       </div>
+
+      <!-- card header -->
       <header>
         <div class="header">
           <span class="icon-card icon-lg"></span>
@@ -46,10 +49,14 @@
           </div>
         </div>
       </header>
+
+      <!-- card body -->
       <div class="card-body">
+        <!-- card  main-body -->
         <div class="main-details">
           <div class="icon-header">
             <div class="detail-labels">
+              <!-- card  members icons -->
               <div class="card-members card-labels" v-show="cardToEdit.members.length > 0">
                 <h4>Members</h4>
                 <span class="label-wrapper" @click="showMembers = !showMembers">
@@ -62,12 +69,13 @@
                     :src="member.imgUrl"
                     class="member-avatar"
                   ></avatar>
-                  <!-- </button> -->
                   <button v-show="cardToEdit.members.length > 0" class="action-btn round">
                     <span class="icon-sm icon-plus"></span>
                   </button>
                 </span>
               </div>
+
+              <!-- card  labels icons -->
               <div class="card-labels" v-show="getLabels.length > 0">
                 <h4>Labels</h4>
                 <span class="label-wrapper" @click="showLabels = !showLabels">
@@ -84,6 +92,8 @@
                   </button>
                 </span>
               </div>
+
+              <!-- card  date icons -->
               <div class="due-date" v-show="cardToEdit.dueDate">
                 <h3>Due date</h3>
                 <div class="due-date-body">
@@ -110,6 +120,8 @@
               </div>
             </div>
           </div>
+
+          <!-- card description -->
           <div class="description">
             <span class="card-details-icon icon-lg"></span>
             <div>
@@ -135,6 +147,7 @@
             </form>
           </div>
 
+          <!-- card attachments -->
           <div class="attachments" v-show="cardToEdit.attachments && cardToEdit.attachments.length">
             <section class="attach-header">
               <span class="icon-attach icon-lg"></span>
@@ -166,11 +179,14 @@
             </section>
           </div>
 
+          <!-- card checklists -->
           <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
             <span class="card-details-icon icon-lg"></span>
 
             <checklist :checklist="checklist" @updateCL="updateCL" />
           </div>
+
+          <!-- card activities -->
           <div class="activity-log">
             <span class="icon-lg icon-activity"></span>
             <section class="activity-header">
@@ -216,88 +232,110 @@
             </div>
           </div>
         </div>
-        <!--     SIDE MENU      -->
+
+        <!-- card  side-menu-->
         <div class="side-menu">
+          <!-- members + join btn -->
           <button class="action-btn" title="Join to this card" @click="joinCard" v-show="!checkJoined">
             <span class="icon-sm icon-member"></span>Join
           </button>
           <h3>Add to card</h3>
           <!-- side menu renders cmp in click -->
-          <button class="action-btn" title="Members" @click.stop="showMembers = !showMembers">
-            <span class="icon-sm icon-member"></span>Members
-          </button>
-          <card-members
-            v-if="showMembers"
-            @close="showMembers = !showMembers"
-            :cardMembers="cardToEdit.members"
-            @update="updateMembers"
-          />
-          <button @click.stop="toggleLabels" class="action-btn">
-            <span class="icon-sm icon-label"></span>
-            <span>Labels</span>
-          </button>
-          <card-labels
-            v-show="showLabels"
-            @close="toggleLabels"
-            :cardLabels="cardToEdit.labelIds"
-            @update="updateLabels"
-          />
+          <section class="btn-group">
+            <section class="relative-btn">
+              <button class="action-btn" title="Members" @click.stop="showMembers = !showMembers">
+                <span class="icon-sm icon-member"></span>Members
+              </button>
 
-          <section class="checklist-btn">
-            <button @click.stop="openCheckList = !openCheckList">
-              <span class="action-btn">
-                <span class="icon-sm icon-checklist"></span>
-                <span>Checklist</span>
-              </span>
-            </button>
-            <section class="card-popup" v-show="openCheckList">
-              <section class="popup-header">
-                <div @click.stop="openCheckList = false">
-                  <span class="close-popup icon-md icon-close"></span>
-                </div>
-                <!-- <button class="close-popup" @click.stop="openCheckList = false">
+              <section class="relative-btn">
+                <card-members
+                  v-if="showMembers"
+                  @close="showMembers = !showMembers"
+                  :cardMembers="cardToEdit.members"
+                  @update="updateMembers"
+                />
+              </section>
+            </section>
+
+            <!-- labels btn -->
+            <section class="relative-btn">
+              <button @click.stop="toggleLabels" class="action-btn">
+                <p><span class="icon-sm icon-label"></span>Labels</p>
+              </button>
+            </section>
+            <card-labels
+              v-show="showLabels"
+              @close="toggleLabels"
+              :cardLabels="cardToEdit.labelIds"
+              @update="updateLabels"
+            />
+
+            <!-- checklist btn -->
+            <section class="relative-btn">
+              <button @click.stop="openCheckList = !openCheckList">
+                <span class="action-btn">
+                  <span class="icon-sm icon-checklist"></span>
+                  <span>Checklist</span>
+                </span>
+              </button>
+              <section class="card-popup checklist-popup" v-show="openCheckList">
+                <section class="popup-header">
+                  <div @click.stop="openCheckList = false">
+                    <span class="close-popup icon-md icon-close"></span>
+                  </div>
+                  <!-- <button class="close-popup" @click.stop="openCheckList = false">
                   x
                 </button>-->
-                <h4>Add checklist</h4>
+                  <h4>Add checklist</h4>
+                </section>
+                <form @submit.prevent="addCheckList">
+                  <label>Title</label>
+                  <input @focus="$event.target.select()" type="text" value="Checklist" v-model="newChecklist.title" />
+                  <label>Copy items from...</label>
+                  <select name id class="not-yet">
+                    <option value>(none)</option>
+                  </select>
+                  <button class="submit">Add</button>
+                </form>
               </section>
-              <form @submit.prevent="addCheckList">
-                <label>Title</label>
-                <input @focus="$event.target.select()" type="text" value="Checklist" v-model="newChecklist.title" />
-                <label>Copy items from...</label>
-                <select name id class="not-yet">
-                  <option value>(none)</option>
-                </select>
-                <button class="submit">Add</button>
-              </form>
+            </section>
+
+            <!-- dates btn -->
+            <date
+              @updateDate="updateDate"
+              :cardDate="cardToEdit.dueDate"
+              class="date"
+              :datePlaceholder="'Dates'"
+            ></date>
+
+            <!-- attachment btn -->
+            <section class="relative-btn">
+              <button @click.stop="openAddAttach = !openAddAttach">
+                <span class="action-btn"> <span class="icon-sm icon-attach"></span>Attachments</span>
+              </button>
+              <add-attachment
+                @addNewAttach="addNewAttach"
+                @close="openAddAttach = false"
+                v-show="openAddAttach"
+              ></add-attachment>
+            </section>
+
+            <!-- cover btn -->
+            <section v-show="!card.style" class="relative-btn cover-menu-header">
+              <button @click.stop="showCoverMenu = !showCoverMenu" class="cover-menu-btn action-btn">
+                <span class="icon-sm icon-cover"></span>Cover
+              </button>
+              <cover
+                v-if="showCoverMenu"
+                @makeCover="makeCover"
+                :card="cardToEdit"
+                @removeCover="removeCover"
+                @closeCover="showCoverMenu = false"
+              ></cover>
             </section>
           </section>
-          <date @updateDate="updateDate" :cardDate="cardToEdit.dueDate" class="date" :datePlaceholder="'Dates'"></date>
-          <section class="attachment-btn">
-            <button @click.stop="openAddAttach = !openAddAttach">
-              <span class="action-btn">
-                <span class="icon-sm icon-attach"></span>
-                Attachments
-              </span>
-            </button>
-            <add-attachment
-              @addNewAttach="addNewAttach"
-              @close="openAddAttach = false"
-              v-show="openAddAttach"
-            ></add-attachment>
-          </section>
-          <section v-show="!card.style" class="cover-menu-header">
-            <button @click.stop="showCoverMenu = !showCoverMenu" class="cover-menu-btn action-btn">
-              <span class="icon-sm icon-cover"></span>
-              Cover
-            </button>
-            <cover
-              v-if="showCoverMenu"
-              @makeCover="makeCover"
-              :card="cardToEdit"
-              @removeCover="removeCover"
-              @closeCover="showCoverMenu = false"
-            ></cover>
-          </section>
+
+          <!-- actions btn -->
           <section class="actions">
             <h3>Actions</h3>
             <button class="cover action-btn not-yet" title="Not yet developed">

@@ -1,5 +1,5 @@
 <template>
-  <section class="card-popup label-popup" v-if="cardMembers">
+  <section class="card-popup members-popup" v-if="cardMembers">
     <header class="popup-header">
       <h4>Members</h4>
       <div @click="$emit('close')">
@@ -24,17 +24,9 @@
             :autocompletetext="member.username"
           >
             <p class="member js-member member-icon">
-              <avatar
-                :username="member.fullname"
-                :size="32"
-                :lighten="200"
-                :src="member.imgUrl"
-              ></avatar>
+              <avatar :username="member.fullname" :size="32" :lighten="200" :src="member.imgUrl"></avatar>
             </p>
-            <p
-              class="full-name"
-              :name="`${member.fullname} (${member.username})`"
-            >
+            <p class="full-name" :name="`${member.fullname} (${member.username})`">
               {{ member.fullname }}
             </p>
             <p class="username">({{ member.username }})</p>
@@ -52,7 +44,7 @@
 </template>
 
 <script>
-import Avatar from "vue-avatar";
+import Avatar from 'vue-avatar';
 
 export default {
   props: {
@@ -69,21 +61,17 @@ export default {
 
   methods: {
     checkMember(memberId) {
-      return this.$store.getters.card.members.find(
-        (member) => member._id === memberId
-      );
+      return this.$store.getters.card.members.find((member) => member._id === memberId);
       // return this.selectedMembers.find((member) => member._id === memberId);
     },
     toggleMember(member) {
       if (this.checkMember(member._id)) {
-        const idx = this.selectedMembers.findIndex(
-          (mbr) => mbr._id === member._id
-        );
+        const idx = this.selectedMembers.findIndex((mbr) => mbr._id === member._id);
         this.selectedMembers.splice(idx, 1);
       } else {
         this.selectedMembers.push(member);
       }
-      this.$emit("update", JSON.parse(JSON.stringify(this.selectedMembers)));
+      this.$emit('update', JSON.parse(JSON.stringify(this.selectedMembers)));
     },
   },
   computed: {

@@ -30,79 +30,74 @@ function getLoggedInUser() {
 
 async function login(username, password) {
     try {
-        // const user = await httpService.post('auth/login', { username, password })
+        const user = await httpService.post('auth/login', { username, password })
+        console.log('Got User:', user);
+        const userToSave = JSON.parse(JSON.stringify(user))
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToSave))
+        return userToSave
+        // let user
+        // switch (username) {
+        //     case 'adam':
+        //         user = {
+        //             "_id": "u103",
+        //             "fullname": "Adam Bercovich",
+        //             "username": "adamBerco",
+        //             "color": "green",
+        //             "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
 
-        // const res = await axios.post(USER_URL + 'login', { username, password })
-        // const user = res.data
-        // console.log('Got User:', user);
-        // const userToSave = JSON.parse(JSON.stringify(user))
-        // delete userToSave.password
-        // sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToSave))
-        let user
-        switch (username) {
-            case 'adam':
-                user = {
-                    "_id": "u103",
-                    "fullname": "Adam Bercovich",
-                    "username": "adamBerco",
-                    "color": "green",
-                    "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
+        //         }
+        //         break
+        //     case 'oshra':
+        //         user = {
+        //             "_id": "u101",
+        //             "fullname": "Oshra Hartuv",
+        //             "username": "oshraHartuv1",
+        //             "color": "pink",
+        //             "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
+        //         }
+        //         break
+        //     case 'osher':
+        //         user = {
+        //             "_id": "u102",
+        //             "fullname": "Osher Cappelli",
+        //             "username": "osherCappelli",
+        //             "color": "blue",
+        //             "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
 
-                }
-                break
-            case 'oshra':
-                user = {
-                    "_id": "u101",
-                    "fullname": "Oshra Hartuv",
-                    "username": "oshraHartuv1",
-                    "color": "pink",
-                    "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
-                }
-                break
-            case 'osher':
-                user = {
-                    "_id": "u102",
-                    "fullname": "Osher Cappelli",
-                    "username": "osherCappelli",
-                    "color": "blue",
-                    "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
+        //         }
+        //         break
+        //     default:
+        //         user = {
+        //             "_id": "u111",
+        //             "fullname": username,
+        //             "username": username,
+        //         }
+        // }
 
-                }
-                break
-            default:
-                user = {
-                    "_id": "u111",
-                    "fullname": username,
-                    "username": username,
-                }
-        }
-
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user))
-        return user
+        // sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user))
+        // return user
     } catch (err) {
         console.log('can\'t login', err)
+        throw err
     }
 
 }
 
 async function signup(username, password, fullname) {
     try {
-        // const user = await httpService.post('auth/signup', { username, password, fullname })
-
-        // const res = axios.post(USER_URL + '/signup', { username, password, fullname })
-        // const user = (await res).data
-        // console.log('New user:', user);
-        // const userToSave = JSON.parse(JSON.stringify(user))
-        // delete userToSave.password
-        const user = {
-            username,
-            password,
-            fullname
-        }
+        const user = await httpService.post('auth/signup', { username, password, fullname })
+        console.log('New user:', user);
+        const userToSave = JSON.parse(JSON.stringify(user))
+        // const user = {
+        //     username,
+        //     password,
+        //     fullname
+        // }
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToSave))
-        return user
+        return userToSave
     } catch (err) {
         console.log('can\'t signup', err)
+        throw err
     }
 }
 

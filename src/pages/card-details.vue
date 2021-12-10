@@ -1,5 +1,9 @@
 <template>
-  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
+  <div
+    v-if="list && cardToEdit"
+    class="card-details-container"
+    @click.stop.prevent="closeModal"
+  >
     <div class="card-details" @click.stop>
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
@@ -9,10 +13,16 @@
           <button
             @click.stop="showCoverMenu = !showCoverMenu"
             class="cover-menu-btn"
-            :class="{'light-btn':cardToEdit.style.isDark,'dark-btn': !cardToEdit.style.isDark}"
+            :class="{
+              'light-btn': cardToEdit.style.isDark,
+              'dark-btn': !cardToEdit.style.isDark,
+            }"
           >
             <!-- :style="{color:textColor ,backgroundColor: bgColor}" -->
-            <span :style="{color:textColor}" class="icon-sm icon-cover"></span>
+            <span
+              :style="{ color: textColor }"
+              class="icon-sm icon-cover"
+            ></span>
             Cover
           </button>
           <cover
@@ -47,7 +57,10 @@
         <div class="main-details">
           <div class="icon-header">
             <div class="detail-labels">
-              <div class="card-members card-labels" v-show="cardToEdit.members.length > 0">
+              <div
+                class="card-members card-labels"
+                v-show="cardToEdit.members.length > 0"
+              >
                 <h4>Members</h4>
                 <span class="label-wrapper" @click="showMembers = !showMembers">
                   <avatar
@@ -60,7 +73,10 @@
                     class="member-avatar"
                   ></avatar>
                   <!-- </button> -->
-                  <button v-show="cardToEdit.members.length > 0" class="action-btn round">
+                  <button
+                    v-show="cardToEdit.members.length > 0"
+                    class="action-btn round"
+                  >
                     <span class="icon-sm icon-plus"></span>
                   </button>
                 </span>
@@ -92,7 +108,12 @@
                     }"
                   >-->
                   <!-- <span class="checkbox"> -->
-                  <input id="cb" type="checkbox" v-model="cardToEdit.isComplete" @change="updateCard" />
+                  <input
+                    id="cb"
+                    type="checkbox"
+                    v-model="cardToEdit.isComplete"
+                    @change="updateDueDate"
+                  />
                   <label for="cb"></label>
                   <div class="relative-date">
                     <date
@@ -112,7 +133,11 @@
             <div>
               <div class="content">
                 <h3>Description</h3>
-                <button v-show="cardToEdit.description && !isEditDesc" @click.stop="setFocus" class="action-btn">
+                <button
+                  v-show="cardToEdit.description && !isEditDesc"
+                  @click.stop="setFocus"
+                  class="action-btn"
+                >
                   Edit
                 </button>
               </div>
@@ -126,19 +151,27 @@
                 placeholder="Add a more detailed description..."
               ></div>
               <div class="buttons" v-show="isEditDesc">
-                <button class="submit-btn" @click.stop.prevent="updateDesc">Save</button>
+                <button class="submit-btn" @click.stop.prevent="updateDesc">
+                  Save
+                </button>
                 <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
               </div>
             </form>
           </div>
 
-          <div class="attachments" v-show="cardToEdit.attachments && cardToEdit.attachments.length">
+          <div
+            class="attachments"
+            v-show="cardToEdit.attachments && cardToEdit.attachments.length"
+          >
             <section class="attach-header">
               <span class="icon-attach icon-lg"></span>
               <h3>Attachments</h3>
             </section>
 
-            <div v-for="attachment in cardToEdit.attachments" :key="attachment.id">
+            <div
+              v-for="attachment in cardToEdit.attachments"
+              :key="attachment.id"
+            >
               <attachment
                 :attachment="attachment"
                 @makeCover="makeCover"
@@ -151,50 +184,111 @@
             <section class="card-popup" v-show="openEditAttach">
               <section class="popup-header">
                 <div>
-                  <span @click.stop="openEditAttach = false" class="close-popup icon-md icon-close"></span>
+                  <span
+                    @click.stop="openEditAttach = false"
+                    class="close-popup icon-md icon-close"
+                  ></span>
                 </div>
                 <h4>Edit</h4>
               </section>
               <form @submit.stop.prevent="updateAttach">
                 <label>Link name</label>
-                <input @focus="$event.target.select()" type="text" v-model="attachToEdit.name" />
+                <input
+                  @focus="$event.target.select()"
+                  type="text"
+                  v-model="attachToEdit.name"
+                />
                 <button class="submit">Update</button>
               </form>
             </section>
           </div>
 
-          <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
+          <div
+            class="check-list"
+            v-for="checklist in cardToEdit.checklists"
+            :key="checklist.id"
+          >
             <span class="card-details-icon icon-lg"></span>
 
             <checklist :checklist="checklist" @updateCL="updateCL" />
           </div>
           <div class="activity-log">
             <span class="icon-lg icon-activity"></span>
-            <h3>Activity</h3>
+            <section class="activity-header">
+              <h3>Activity</h3>
+              <button
+                class="action-btn"
+                @click="showActivities = !showActivities"
+              >
+                {{ showActivities ? "Hide details" : "Show details" }}
+              </button>
+            </section>
             <div class="comment-box" @click="isComment = true">
               <!-- <div
               class="comment-box"
               :class="{ onComment: isComment }"
               @click="isComment = true"
-              >-->
-              <!-- <textarea rows="1" placeholder="Write a comment..." @blur="isComment = false" /> -->
-              <textarea rows="1" placeholder="not yet developed..." @blur="isComment = false" />
+            > -->
+              <!-- <textarea
+                rows="1"
+                placeholder="Write a comment..."
+                @blur="isComment = false"
+              /> -->
+              <!-- <textarea
+                rows="1"
+                placeholder="not yet developed..."
+                @blur="isComment = false"
+              /> -->
               <button class="submit-btn">save</button>
+              <div class="log" v-show="showActivities">
+                <!-- <ul> -->
+                <div
+                  class="activity-item"
+                  v-for="activity in activitiesToShow"
+                  :key="activity.id"
+                >
+                  <!-- {{ activity }} -->
+                  <avatar
+                    :username="activity.byMember.fullname"
+                    :size="32"
+                    :lighten="200"
+                    :src="activity.byMember.imgUrl"
+                    class="activity-avatar"
+                  ></avatar>
+                  <span class="activity-by">{{
+                    activity.byMember.fullname
+                  }}</span>
+                  {{ activity.txt }}this card
+                  <span class="activity-time">
+                    {{ timeToShow(activity.createdAt) }}</span
+                  >
+                </div>
+                <!-- </ul> -->
+              </div>
             </div>
           </div>
         </div>
         <!--     SIDE MENU      -->
         <div class="side-menu">
-          <button class="action-btn" title="Join to this card" @click="joinCard" v-show="!checkJoined">
+          <button
+            class="action-btn"
+            title="Join to this card"
+            @click="joinCard"
+            v-show="!checkJoined"
+          >
             <span class="icon-sm icon-member"></span>Join
           </button>
           <h3>Add to card</h3>
           <!-- side menu renders cmp in click -->
-          <button class="action-btn" title="Members" @click.stop="showMembers = !showMembers">
+          <button
+            class="action-btn"
+            title="Members"
+            @click.stop="showMembers = !showMembers"
+          >
             <span class="icon-sm icon-member"></span>Members
           </button>
           <card-members
-            v-show="showMembers"
+            v-if="showMembers"
             @close="showMembers = !showMembers"
             :cardMembers="cardToEdit.members"
             @update="updateMembers"
@@ -229,7 +323,12 @@
               </section>
               <form @submit.prevent="addCheckList">
                 <label>Title</label>
-                <input @focus="$event.target.select()" type="text" value="Checklist" v-model="newChecklist.title" />
+                <input
+                  @focus="$event.target.select()"
+                  type="text"
+                  value="Checklist"
+                  v-model="newChecklist.title"
+                />
                 <label>Copy items from...</label>
                 <select name id class="not-yet">
                   <option value>(none)</option>
@@ -238,7 +337,12 @@
               </form>
             </section>
           </section>
-          <date @updateDate="updateDate" :cardDate="cardToEdit.dueDate" class="date" :datePlaceholder="'Dates'"></date>
+          <date
+            @updateDate="updateDate"
+            :cardDate="cardToEdit.dueDate"
+            class="date"
+            :datePlaceholder="'Dates'"
+          ></date>
           <section class="attachment-btn">
             <button @click.stop="openAddAttach = !openAddAttach">
               <span class="action-btn">
@@ -253,7 +357,10 @@
             ></add-attachment>
           </section>
           <section v-show="!card.style" class="cover-menu-header">
-            <button @click.stop="showCoverMenu = !showCoverMenu" class="cover-menu-btn action-btn">
+            <button
+              @click.stop="showCoverMenu = !showCoverMenu"
+              class="cover-menu-btn action-btn"
+            >
               <span class="icon-sm icon-cover"></span>
               Cover
             </button>
@@ -294,17 +401,19 @@
 </template>
 
 <script>
-import cardLabels from '../cmps/labels.cmp.vue';
-import cardMembers from '../cmps/members.cmp.vue';
-import date from '../cmps/date.cmp.vue';
-import addAttachment from '../cmps/add-attachment.cmp.vue';
-import attachment from '../cmps/attachment.cmp.vue';
-import cover from '../cmps/cover.cmp.vue';
+import cardLabels from "../cmps/labels.cmp.vue";
+import cardMembers from "../cmps/members.cmp.vue";
+import date from "../cmps/date.cmp.vue";
+import addAttachment from "../cmps/add-attachment.cmp.vue";
+import attachment from "../cmps/attachment.cmp.vue";
+import cover from "../cmps/cover.cmp.vue";
 // import coverMenu from "../cmps/cover-menu.cmp.vue";
-import Avatar from 'vue-avatar';
+import Avatar from "vue-avatar";
 
-import { utilService } from '../services/util.service.js';
-import checklist from '../cmps/checklist.cmp.vue';
+import { utilService } from "../services/util.service.js";
+import checklist from "../cmps/checklist.cmp.vue";
+import { userService } from "../services/user.service.js";
+
 export default {
   data() {
     return {
@@ -314,21 +423,22 @@ export default {
       showLabels: false,
       showMembers: false,
       openCheckList: false,
-      newChecklist: { title: 'Checklist' },
+      newChecklist: { title: "Checklist" },
       cardToEdit: null,
       isUndoDesc: false,
       isComment: false,
       openAddAttach: false,
       openEditAttach: false,
       showCoverMenu: false,
+      showActivities: false,
       attachToEdit: {
-        name: '',
+        name: "",
       },
     };
   },
   created() {
     this.cardToEdit = this.card;
-    console.log(this.card, 'card');
+    console.log(this.card, "card");
   },
   mounted() {
     this.$refs.desc.innerText = this.cardToEdit.description;
@@ -345,6 +455,12 @@ export default {
     boardId() {
       return this.$store.getters.boardId;
     },
+    boardActivities() {
+      return this.$store.getters.board.activities;
+    },
+    activitiesToShow() {
+      return this.boardActivities.filter((act) => act.card.id === this.card.id);
+    },
     coverStyle() {
       if (!this.cardToEdit.style) return;
       const backgroundColor = this.cardToEdit.style.bgColor;
@@ -356,33 +472,38 @@ export default {
       }
       return {
         backgroundColor,
-        height: '116px',
-        minHeight: '116px',
+        height: "116px",
+        minHeight: "116px",
       };
     },
     dateToShow() {
       const dateString = this.cardToEdit.dueDate;
       const dueDate = new Date(dateString);
       const time = this.formatAMPM(dueDate);
-      if (new Date().getDate() === new Date(dateString).getDate()) return 'today' + time;
-      else if (new Date().getDate() + 1 === new Date(dateString).getDate()) return 'tomorrow' + time;
-      else if (new Date().getDate() - 1 === new Date(dateString).getDate()) return 'yesterday' + time;
+      if (new Date().getDate() === new Date(dateString).getDate())
+        return "today" + time;
+      else if (new Date().getDate() + 1 === new Date(dateString).getDate())
+        return "tomorrow" + time;
+      else if (new Date().getDate() - 1 === new Date(dateString).getDate())
+        return "yesterday" + time;
       else if (new Date().getYear() === new Date(dateString).getYear()) {
         return this.formatDate(dueDate) + time;
       }
-      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear() + time;
+      return this.formatDate(dueDate) + ", " + dueDate.getFullYear() + time;
     },
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      const labels = labelIds.map((lId) => allLabels.find((label) => label.id === lId));
+      const labels = labelIds.map((lId) =>
+        allLabels.find((label) => label.id === lId)
+      );
       return labels.filter((label) => label); //filter invalid labels
     },
     bgColor() {
-      return this.cardToEdit.style.isDark ? '#ffffff3d' : '#00000014';
+      return this.cardToEdit.style.isDark ? "#ffffff3d" : "#00000014";
     },
     textColor() {
-      return this.cardToEdit.style.isDark ? '#fff' : '#172b4d';
+      return this.cardToEdit.style.isDark ? "#fff" : "#172b4d";
     },
     checkJoined() {
       const user = this.$store.getters.user;
@@ -390,39 +511,54 @@ export default {
     },
   },
   methods: {
+    timeToShow(timeStamp) {
+      return utilService.timeSince(timeStamp);
+    },
     async removeCover() {
       this.cardToEdit.style = null;
       try {
-        await this.updateCard();
+        const activityText = "removed cover from ";
+        console.log("activityText", activityText);
+        await this.updateCard(activityText);
         this.showCoverMenu = false;
       } catch (err) {
-        console.log('cant remove cover', err);
+        console.log("cant remove cover", err);
       }
     },
     async makeCover(style) {
-      console.log('style', style);
+      console.log("style", style);
       // console.log(val);
       // this.cardToEdit.color = color;
       // this.cardToEdit.cover = val;
       this.cardToEdit.style = style;
       try {
-        await this.updateCard();
+        const activityText = "made cover to ";
+        console.log("activityText", activityText);
+        await this.updateCard(activityText);
       } catch (err) {
-        console.log('cant make cover', err);
+        console.log("cant make cover", err);
       }
     },
     async updateAttach() {
-      const idx = this.cardToEdit.attachments.findIndex((currAttach) => currAttach.id === this.attachToEdit.id);
+      const idx = this.cardToEdit.attachments.findIndex(
+        (currAttach) => currAttach.id === this.attachToEdit.id
+      );
       this.cardToEdit.attachments.splice(idx, 1, this.attachToEdit);
       try {
-        await this.updateCard();
+        const activityText = `updated ${
+          this.attachToEdit.name ||
+          this.attachToEdit.file ||
+          this.attachToEdit.url
+        } attachment of `;
+        console.log("activityText", activityText);
+        await this.updateCard(activityText);
         this.openEditAttach = false;
         this.attachToEdit = {
-          name: '',
+          name: "",
         };
         console.log(this.card);
       } catch (err) {
-        console.log('cant update attachment', err);
+        console.log("cant update attachment", err);
       }
     },
     openEdit(attach) {
@@ -430,22 +566,30 @@ export default {
       this.openEditAttach = true;
     },
     deleteAttach(attach) {
-      const idx = this.cardToEdit.attachments.findIndex((attachment) => attachment.id === attach.id);
+      const idx = this.cardToEdit.attachments.findIndex(
+        (attachment) => attachment.id === attach.id
+      );
       this.cardToEdit.attachments.splice(idx, 1);
-      this.updateCard();
+      const activityText = `deleted ${
+        attach.name || attach.file || attach.href
+      } attachment from `;
+      console.log("activityText", activityText);
+      this.updateCard(activityText);
     },
     updateDesc() {
       this.cardToEdit.description = this.$refs.desc.innerText;
-      this.updateCard();
+      const activityText = "updated description to ";
+      console.log("activityText", activityText);
+      this.updateCard(activityText);
     },
     formatAMPM(dueDate) {
       var hours = dueDate.getHours();
       var minutes = dueDate.getMinutes();
-      var ampm = hours >= 12 ? 'PM' : 'AM';
+      var ampm = hours >= 12 ? "PM" : "AM";
       hours = hours % 12;
       hours = hours ? hours : 12;
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      var strTime = ' at ' + hours + ':' + minutes + ' ' + ampm;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      var strTime = " at " + hours + ":" + minutes + " " + ampm;
       return strTime;
     },
     formatDate(dueDate) {
@@ -456,52 +600,74 @@ export default {
     },
     closeModal() {
       const { boardId } = this.$route.params;
-      this.$router.push('/b/' + boardId);
+      this.$router.push("/b/" + boardId);
     },
     async addNewAttach(newAttach) {
       this.openAddAttach = false;
-      newAttach.id = 'A' + utilService.makeId();
+      newAttach.id = "A" + utilService.makeId();
       this.cardToEdit.attachments.push(newAttach);
       try {
-        await this.updateCard();
+        console.log("newAttach", newAttach);
+        const activityText = `added ${
+          newAttach.name || newAttach.file || newAttach.href
+        } attachment to `;
+        console.log("activityText", activityText);
+        await this.updateCard(activityText);
       } catch (err) {
         console.log("can't update card", err);
       }
     },
-    async updateCard(ev) {
+    updateDueDate() {
+      const activityText = `updated due date to `;
+      this.updateCard(activityText);
+    },
+    // async updateCard(ev, activityText) {
+    async updateCard(activityText) {
       this.isEditDesc = false;
+      const activity = {
+        id: "act" + utilService.makeId(),
+        txt: activityText,
+        createdAt: Date.now(),
+        byMember: this.$store.getters.user,
+        card: {
+          id: this.cardToEdit.id,
+          title: this.cardToEdit.title,
+        },
+      };
       try {
         await this.$store.dispatch({
-          type: 'updateCard',
+          type: "updateCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.cardToEdit)),
+          activity,
         });
-        if (ev) ev.target.blur();
+        // if (ev) ev.target.blur();
         // this.$emit('reload')
         // this.$router.matched[0].path.reload()
       } catch (err) {
-        console.log('cant update card', err);
+        console.log("cant update card", err);
       }
     },
     async removeCard() {
-      if (!confirm('this action will delete the card! continue?')) return;
       try {
         await this.$store.dispatch({
-          type: 'removeCard',
+          type: "removeCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
           cardId: JSON.parse(JSON.stringify(this.cardToEdit.id)),
         });
         this.closeModal();
       } catch (err) {
-        console.log('cant remove card', err);
+        console.log("cant remove card", err);
       }
     },
-    async changeComplete() {
-      this.cardToEdit.isComplete = !this.cardToEdit.isComplete;
-      await this.updateCard();
-    },
+    // async changeComplete() {
+    //   this.cardToEdit.isComplete = !this.cardToEdit.isComplete;
+    //   const activityText = `marked the due date on ${this.card.title} complete `;
+    //   console.log("activityText", activityText);
+    //   await this.updateCard(activityText);
+    // },
     setEditDesc() {
       this.lastCardDesc = this.cardToEdit.description;
       this.isEditDesc = true;
@@ -516,38 +682,50 @@ export default {
     },
     async updateDate(date) {
       this.cardToEdit.dueDate = date;
-      await this.updateCard();
+      const activityText = `updated due date to `;
+      console.log("activityText", activityText);
+      await this.updateCard(activityText);
     },
 
     async addCheckList(ev) {
       if (!ev.target[0].value) return;
-      this.newChecklist.id = 'CL' + utilService.makeId();
+      this.newChecklist.id = "CL" + utilService.makeId();
       this.cardToEdit.checklists.push(this.newChecklist);
       this.openCheckList = false;
       try {
-        await this.updateCard();
-        this.newChecklist = { title: 'Checklist' };
+        const activityText = `added checklist to `;
+        console.log("activityText", activityText);
+        await this.updateCard(activityText);
+        this.newChecklist = { title: "Checklist" };
       } catch (err) {
         console.log("can't update card", err);
       }
     },
     async updateCL(checklist) {
-      const idx = this.cardToEdit.checklists.findIndex((cl) => cl.id === checklist.id);
+      const idx = this.cardToEdit.checklists.findIndex(
+        (cl) => cl.id === checklist.id
+      );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
       try {
-        await this.updateCard();
+        const activityText = `updated checklist of `;
+        console.log("activityText", activityText);
+        await this.updateCard(activityText);
       } catch (err) {
-        console.log('cant save the todo', err);
+        console.log("cant save the todo", err);
       }
     },
     async updateLabels(labelIds) {
       this.cardToEdit.labelIds = labelIds;
-      await this.updateCard();
+      const activityText = `updated labels of `;
+      console.log("activityText", activityText);
+      await this.updateCard(activityText);
     },
     async updateMembers(members) {
       this.cardToEdit.members = members;
-      await this.updateCard();
+      const activityText = `updated members of `;
+      console.log("activityText", activityText);
+      await this.updateCard(activityText);
     },
     toggleLabels() {
       this.showLabels = !this.showLabels;
@@ -556,7 +734,9 @@ export default {
       const user = this.$store.getters.user;
       if (this.checkJoined) return;
       this.cardToEdit.members.push(user);
-      this.updateCard();
+      const activityText = `joined as member to `;
+      console.log("activityText", activityText);
+      this.updateCard(activityText);
     },
   },
   components: {

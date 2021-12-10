@@ -16,6 +16,7 @@ export const userService = {
     query
 }
 
+
 function query() {
     return storageService.query(KEY);
 }
@@ -73,8 +74,6 @@ async function login(username, password) {
                     "_id": "u111",
                     "fullname": username,
                     "username": username,
-                    "color": "blue"
-
                 }
         }
 
@@ -124,27 +123,86 @@ function _createUsers() {
     if (!users || !users.length) {
         users = [
             {
-                _id: 'u103',
-                fullname: 'Adam Bercovich',
-                username: 'adamBerco',
-                color: 'green',
-                imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg',
+                "fullname": "Adam Bercovich",
+                "username": "adamBerco",
+                "password": "1234",
+                "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
             },
             {
-                _id: 'u102',
-                fullname: 'Osher Cappelli',
-                username: 'osherCappelli',
-                color: 'blue',
-                imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg',
+                "fullname": "Osher Cappelli",
+                "username": "osherCappelli",
+                "password": "1234",
+                "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
             },
             {
-                _id: 'u101',
-                fullname: 'Oshra Hartuv',
-                username: 'oshraHartuv1',
-                color: 'pink',
-                imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg',
+                "fullname": "Oshra Hartuv",
+                "username": "oshraHartuv1",
+                "password": "1234",
+                "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
             },
+
+            {
+                "fullname": "Jonathan Peck",
+                "username": "lazypeacock761",
+                "password": "proxy",
+                "imgUrl": "https://randomuser.me/api/portraits/men/27.jpg"
+            },
+            {
+                "fullname": "Robin Woods",
+                "username": "bluebird535",
+                "password": "deadpool",
+                "imgUrl": "https://randomuser.me/api/portraits/women/24.jpg"
+            },
+            {
+                "fullname": "Yvonne Carroll",
+                "username": "organicdog552",
+                "password": "vantage",
+                "imgUrl": "https://randomuser.me/api/portraits/women/41.jpg"
+            },
+            {
+                "fullname": "Jane Hill",
+                "username": "yellowladybug184",
+                "password": "herewego",
+                "imgUrl": "https://randomuser.me/api/portraits/women/18.jpg"
+            },
+            {
+                "fullname": "Daniel Hughes",
+                "username": "smallduck899",
+                "password": "music1",
+                "imgUrl": "https://randomuser.me/api/portraits/men/28.jpg"
+            },
+            {
+                "fullname": "Ashley Carroll",
+                "username": "redswan501",
+                "password": "grizzly",
+                "imgUrl": "https://randomuser.me/api/portraits/women/21.jpg"
+            },
+            {
+                "fullname": "Peter Hicks",
+                "username": "brownbutterfly691",
+                "password": "rrrrrr",
+                "imgUrl": "https://randomuser.me/api/portraits/men/80.jpg"
+            },
+            {
+                "fullname": "Rick Bailey",
+                "username": "silvermouse583",
+                "password": "dana",
+                "imgUrl": "https://randomuser.me/api/portraits/men/83.jpg"
+            },
+            {
+                "fullname": "Bernard Miller",
+                "username": "whiteostrich566",
+                "password": "lolo",
+                "imgUrl": "https://randomuser.me/api/portraits/men/90.jpg"
+            },
+            {
+                "fullname": "Brandon Bailey",
+                "username": "bigpeacock932",
+                "password": "mollie",
+                "imgUrl": "https://randomuser.me/api/portraits/men/55.jpg"
+            }
         ]
+
         localStorage.setItem(KEY, JSON.stringify(users));
     }
     return users

@@ -1,5 +1,5 @@
 <template>
-  <li class="list" @mousedown="unscroll" @mouseleave="scroll">
+  <li class="list">
     <header>
       <h4 v-if="!editTitle" @click="editTitle = true" class="drag-handle">
         {{ showTitle }}
@@ -146,12 +146,6 @@ export default {
     updateList() {
       this.editTitle = false;
       this.$emit("update", JSON.parse(JSON.stringify(this.updatedList)));
-    },
-    unscroll() {
-      this.$emit("unscroll");
-    },
-    scroll() {
-      this.$emit("scroll");
     },
     ondragEnd() {
       this.dragCard = false;

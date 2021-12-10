@@ -3150,15 +3150,6 @@ function save(board) {
 //   }
 // }
 
-// function saveTask(boardId, groupId, task, activity) {
-//   const board = getById(boardId)
-
-//   // TODO: find the task, and update
-//   board.activities.unshift(activity)
-//   save(board)
-//   return board
-// }
-
 async function getListAndCardById(boardId, cardId) {
   const board = await getById(boardId);
   const list = board.lists.find((list) => {

@@ -1,28 +1,18 @@
 <template>
-  <header
-    class="board-header"
-    :class="{ 'main-menu-spacing': showMainMenu }"
-    v-if="board"
-  >
-    <section>
-      <!-- <span
-        class="board-title"
-        v-if="!editTitle"
-        :style="{width: this.width ? this.width +'px': ''}"
-        ref="boardTitle"
-        @click="openEditTitle"
-      >{{ board.title }}</span>-->
-      <!-- 'display': editTitle ? 'block' : 'none' -->
-      <!-- <textarea
-        ref="editBoardTitle"
-        @click="changeWidth"
-        v-model="board.title"
-        v-focus="editTitle"
-      />-->
-      <!-- @focus="$event.target.innerText.select()" -->
-      <!-- @focus="$event.target.select()" -->
-      <!-- v-focus="editTitle" -->
-      <!-- v-else -->
+  <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
+    <section class="right header">
+      <router-link to="/home" class="back-home" v-if="!editTitle">
+        <span class="icon-md icon-back"></span>
+      </router-link>
+      <!--   -->
+      <button
+        class="close-small"
+        v-if="editTitle"
+        @click="closeEditTitle"
+        :class="{'edit': this.editTitle}"
+      >
+        <span class="icon-close"></span>
+      </button>
       <div
         @focus="editTitle = true"
         @blur="updateTitle"
@@ -30,14 +20,24 @@
         contenteditable="true"
         ref="editBoardTitle"
         class="title"
-      >
-        {{ board.title }}
+      >{{ board.title }}</div>
+
+      <div class="title-small-cont">
+        <!-- @focus="saveLastTitle" -->
+        <!-- @blur="updateTitle" -->
+        <!-- @keydown.enter="removeBr" -->
+        <!-- @blur="closeEditTitle" -->
+        <div
+          @click="openEditTitle"
+          contenteditable="true"
+          ref="smallEdit"
+          class="title-small"
+        >{{ board.title }}</div>
       </div>
 
       <span class="board-star bh-btn">
         <i class="icon-sm icon-star"></i>
       </span>
-      <!-- <p>  -->
       <Container
         tag="P"
         group-name="card-list"
@@ -45,6 +45,7 @@
         @onDragStart="onDragStart()"
         :should-animate-drop="shouldAnimateDrop"
         behaviour="copy"
+        class="members"
       >
         <Draggable v-for="(member, index) in membersToShow" :key="member.id">
           <avatar
@@ -58,16 +59,30 @@
           />
         </Draggable>
         <button @click="inviteMembers" class="bh-btn">Invite</button>
-        <button @click="deleteBoard" class="bh-btn">Delete Board</button>
+        <!-- <button @click="deleteBoard" class="bh-btn">Delete Board</button> -->
       </Container>
       <!-- </p> -->
     </section>
     <section>
-      <button class="bh-btn">Filter</button>
-      <button class="bh-btn" v-if="!showMainMenu" @click="showMainMenu = true">
-        Show menu
+      <!-- <button class="bh-btn">Filter</button> -->
+      <button class="bh-btn show" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <button
+        class="show-small"
+        v-if="!showMainMenu && !editTitle"
+        @click.stop.prevent="showMainMenu = true"
+      >
+        <span class="icon-sm icon-dots"></span>
       </button>
-      <main-menu :class="mainMenuToggle" @close="showMainMenu = false" />
+      <!--  -->
+      <button
+        class="title-small-check"
+        @click="updateTitle"
+        v-if="editTitle"
+        :class="{'edit': this.editTitle}"
+      >
+        <span class="icon-check"></span>
+      </button>
+      <main-menu :class="mainMenuToggle" @deleteBoard="deleteBoard" @close="showMainMenu = false" />
     </section>
   </header>
 </template>
@@ -85,21 +100,43 @@ export default {
     return {
       showMainMenu: false,
       editTitle: false,
+      lastTitle: "",
+      isSmall: false
     };
   },
   mounted() {
     // this.$refs.editBoardTitle.innerText = this.board.title;
   },
   methods: {
+    closeEditTitle() {
+      this.board.title = this.lastTitle;
+      this.$refs.smallEdit.innerText = this.board.title;
+      this.editTitle = false;
+      this.isSmall = false;
+      this.$refs.smallEdit.blur();
+    },
+    openEditTitle() {
+      this.lastTitle = this.board.title;
+      this.editTitle = true;
+      this.isSmall = true;
+      this.$refs.smallEdit.focus();
+    },
     removeBr() {
       this.$refs.editBoardTitle.blur();
     },
     updateTitle() {
-      if (!this.$refs.editBoardTitle.innerText) return;
+      console.log(this.lastTitle);
+      // if (!this.$refs.editBoardTitle.innerText) return;
+      this.board.title = this.isSmall
+        ? this.$refs.smallEdit.innerText
+        : this.$refs.editBoardTitle.innerText;
       // console.log(this.$refs.editBoardTitle.innerText);
-      this.board.title = this.$refs.editBoardTitle.innerText;
+      // this.$refs.editBoardTitle.innerText;
       this.$emit("updateBoard", this.board);
+      // this.$refs.smallEdit.innerText = this.$refs.editBoardTitle.innerText
       this.editTitle = false;
+      this.isSmall = false
+      // this.showMainMenu = false
     },
     deleteBoard() {
       if (confirm("This action will delete the board! continue?"))
@@ -122,7 +159,7 @@ export default {
     inviteMembers() {
       const users = this.$store.getters.users;
       // console.log("users = ", users);
-    },
+    }
   },
   computed: {
     board() {
@@ -134,14 +171,14 @@ export default {
     },
     mainMenuToggle() {
       return this.showMainMenu ? "show-main-menu" : "hide-main-menu";
-    },
+    }
   },
 
   components: {
     mainMenu,
     Avatar,
     Container,
-    Draggable,
-  },
+    Draggable
+  }
 };
 </script>

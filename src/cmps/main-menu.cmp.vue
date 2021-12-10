@@ -9,14 +9,21 @@
     <ul class="main-menu-actions">
       <li class="menu-about">
         <h3><span class="menu-action-icon icon-lg icon-board"></span> About this board</h3>
-        <p>Add a description to your board</p>
+        <!-- <p>Add a description to your board</p> -->
       </li>
       <li class="menu-action" @click="isChangeColor = true">
-        <span class="icon-img" :style="{ backgroundImage: 'url(' + setImgIcon + ')' }"></span>
+        <span class="icon-img" :style="styleToShow"></span>
         <h3>Change background</h3>
       </li>
       <li class="menu-about" @click="openDashboard">
         <h3><span class="menu-action-icon icon-lg icon-home"></span>Dashboard</h3>
+      </li>
+    </ul>
+    <ul class="delete-board">
+      <!--  -->
+      <!-- <button >Delete Board</button> -->
+      <li @click="deleteBoard">
+        <h3><span class="icon-lg icon-archive"></span>Archive board</h3>
       </li>
     </ul>
     <ul class="main-menu-activity">
@@ -157,14 +164,30 @@ export default {
       this.isColorSelected = false;
       this.isPhotosSelected = false;
     },
+    deleteBoard() {
+      this.$emit('deleteBoard');
+    },
   },
   computed: {
-    setImgIcon() {
-      return this.$store.getters.board.style.imgUrl;
+    styleToShow() {
+      if (!this.boardStyle) return;
+      if (this.boardStyle.imgUrl)
+        return {
+          backgroundImage: `url("${this.boardStyle.imgUrl}")`,
+        };
+      return {
+        backgroundColor: this.boardStyle.bgColor,
+      };
+    },
+    boardStyle() {
+      return this.$store.getters.board.style;
     },
     getImgs() {
       return this.$store.getters.getBgPhotos;
     },
+    // board(){
+    //   return this.$store.getters.board
+    // }
   },
 };
 </script>

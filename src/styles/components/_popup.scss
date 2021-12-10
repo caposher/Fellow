@@ -9,7 +9,9 @@
   padding: 0 12px;
   padding-bottom: 12px;
   z-index: 20;
-
+  @media (max-width: 550px) {
+     top: 0;
+    }
   .popup-header {
     position: relative;
     margin: 0;

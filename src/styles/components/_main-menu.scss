@@ -17,7 +17,6 @@
 
   .card-popup {
     top: 0px;
-  
   }
 
   .popup-header h4 {
@@ -53,6 +52,10 @@
     // padding: 0 13px;
     padding-block-end: 25px;
     border-bottom: 1px solid #091e4221;
+
+    li {
+      cursor: pointer;
+    }
 
     // li {
     //   cursor: pointer;

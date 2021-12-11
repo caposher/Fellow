@@ -59,20 +59,33 @@
         @end="updateCL"
         @add="updateCL"
       >
-        <li v-for="todo in todosToShow" :key="todo.id">
+        <li v-for="todo in todosToShow" :key="todo.id" @click.stop="editTodo(todo)">
           <span class="c-b-container">
-            <input
+            <label for="">
+              <input class="cb-cl" type="checkbox" :checked="todo.isDone" />
+              <label class="c-b-btn" @click.stop="toggleTodo(todo.id)"></label>
+            </label>
+            <!-- <input
               class="c-b-btn"
               type="checkbox"
               :checked="todo.isDone"
               @click.stop="toggleTodo(todo.id)"
-            />
-            <!-- </span> -->
+            /> -->
             <span @click.stop="editTodo(todo)" :class="{ done: todo.isDone }"
               >{{ todo.title }}
             </span>
           </span>
-          <span @click="removeTodo(todo.id)">X</span>
+          <!-- <span class="td-action" @click="removeTodo(todo.id)">X</span> -->
+          <button class="td-action" @click.stop="tdMenu = !tdMenu">
+            <span class="icon-sm icon-dots"> </span>
+            <section class="card-popup td-popup" v-show="tdMenu" @click.stop="">
+              <section class="popup-header">
+                <span @click="tdMenu = false" class="close-popup icon-md icon-close"></span>
+                <h4>Item action</h4>
+              </section>
+              <span class="action" @click="removeTodo(todo.id)">Delete this todo</span>
+            </section>
+          </button>
         </li>
       </draggable>
       <section v-if="newTodo">
@@ -85,17 +98,17 @@
           />
           <br />
           <div class="buttons">
-            <button class="submit-btn" @click.stop="updateTodo">Add</button>
-            <span @click="newTodo = false" class="icon-lg icon-close"></span>
+            <button class="submit-btn" @click.stop="updateTodo">{{todoToAdd.id?'Update':'Add'}}</button>
+            <span @click="cancelEdit" class="icon-lg icon-close"></span>
           </div>
         </form>
       </section>
     </ul>
-    <span
+    <button
       v-show="!newTodo"
       @click="newTodo = true"
       class="action-btn relative-btn"
-      >Add an item</span
+      >Add an item</button
     >
   </section>
 </template>
@@ -113,7 +126,7 @@ export default {
   },
   data() {
     return {
-      CLtoUpdate: JSON.parse(JSON.stringify(this.checklist)),
+      CLtoUpdate: null,
       todoToAdd: {
         title: "",
         isDone: false,
@@ -121,7 +134,12 @@ export default {
       newTodo: false,
       editTitle: false,
       hideDone: false,
+      tdMenu:false,
+
     };
+  },
+  created(){
+      this.CLtoUpdate= JSON.parse(JSON.stringify(this.checklist))
   },
   methods: {
     addTodo() {
@@ -129,9 +147,11 @@ export default {
     },
     editTodo(todo) {
       this.newTodo = true;
-      this.todoToAdd.title = todo.title;
+      this.todoToAdd = JSON.parse(JSON.stringify(todo));
+      // this.todoToAdd.title = todo.title;
     },
-    toggleTodo(todoId) {
+    toggleTodo    (todoId    ) {
+      // console.log('toggleTodo',todoId)
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       let currTodo = this.CLtoUpdate.todos[idx];
       currTodo.isDone = !currTodo.isDone;
@@ -179,6 +199,13 @@ export default {
         this.$emit("updateCL", this.CLtoUpdate);
       }
     },
+    cancelEdit(){
+      this.newTodo = false
+      this.todoToAdd = {
+          title: "",
+          isDone: false,
+        }
+    }
   },
   computed: {
     doneTodos() {

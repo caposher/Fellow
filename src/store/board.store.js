@@ -10,6 +10,7 @@ export const boardStore = {
     currList: null,
     labelsState: false,
     bgPhotos: [],
+    notification: { lastUpdate: Date.now(), updatesCount: 0 },
   },
 
   getters: {
@@ -37,6 +38,15 @@ export const boardStore = {
     getBgPhotos(state) {
       return JSON.parse(JSON.stringify(state.bgPhotos));
     },
+    getLastUpdateTime(state) {
+      return state.notification.lastUpdate;
+    },
+    getNotificationCnt(state) {
+      return state.notification.updatesCount;
+    },
+    getActivities(state) {
+      return state.currBoard.activities;
+    },
   },
 
   mutations: {
@@ -59,11 +69,23 @@ export const boardStore = {
     setPhotos(state, { photos }) {
       state.bgPhotos = photos;
     },
+    addNotificationCnt(state) {
+      state.notification.updatesCount++;
+      state.notification.lastUpdate = Date.now();
+
+      console.log('new update:', state.notification);
+    },
+    resetNotification(state) {
+      state.notification.updatesCount = 0;
+      state.notification.lastUpdate = Date.now();
+      console.log('notification reset');
+    },
   },
 
   actions: {
-    pushedBoard({ commit }, { board }) {
+    pushedBoard({ commit }, { board, haveUpdate }) {
       commit({ type: 'setBoard', board });
+      if (haveUpdate) commit({ type: 'addNotificationCnt' });
     },
     async loadBoards({ commit}) {
       try {

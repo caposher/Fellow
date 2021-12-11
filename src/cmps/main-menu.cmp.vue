@@ -6,10 +6,11 @@
         <span class="menu-close icon-md icon-close"></span>
       </div>
     </header>
+
+    <!-- main actions -->
     <ul class="main-menu-actions">
       <li class="menu-about">
         <h3><span class="menu-action-icon icon-lg icon-board"></span> About this board</h3>
-        <!-- <p>Add a description to your board</p> -->
       </li>
       <li class="menu-action" @click="isChangeColor = true">
         <span class="icon-img" :style="styleToShow"></span>
@@ -18,11 +19,33 @@
       <li class="menu-action" @click="openDashboard">
         <h3><span class="menu-action-icon icon-lg icon-home"></span>Dashboard</h3>
       </li>
+    </ul>
+
+    <!-- side actions -->
+    <ul class="action-board">
+      <li class="menu-action">
+        <h3><span class="menu-action-icon icon-md icon-members"></span>Members</h3>
+        <section class="main-menu-members-container">
+          <avatar
+            v-for="(member, index) in membersToShow"
+            :key="member.id"
+            :style="{ 'z-index': membersToShow.length - index }"
+            :username="member.fullname"
+            :size="28"
+            :lighten="200"
+            :src="member.imgUrl"
+            :title="member.fullname"
+            class=""
+          />
+        </section>
+      </li>
+      <li class="menu-action" @click="showUserPopup = true">
+        <h3><span class="menu-action-icon icon-md icon-member"></span>User account</h3>
+      </li>
       <li class="menu-action" @click="deleteBoard">
-        <h3><span class="menu-action-icon icon-lg icon-archive"></span>Archive board</h3>
+        <h3><span class="menu-action-icon icon-md icon-archive"></span>Archive board</h3>
       </li>
     </ul>
-    <ul class="delete-board"></ul>
     <ul class="main-menu-activity">
       <li></li>
     </ul>
@@ -80,8 +103,7 @@
         </div>
       </header>
       <div class="main-menu-search">
-        <!-- <span class="icon-md icon-search"></span> -->
-        <input type="text" v-model="searchKey" @change="requestPhotos()" />
+        <input type="text" v-model="searchKey" @change="requestPhotos()" placeholder="Photos" />
       </div>
       <ul class="menu-color-set">
         <li v-for="(url, idx) in getImgs" :key="idx">
@@ -103,6 +125,8 @@
 
 <script>
 import FastAverageColor from 'fast-average-color';
+import Avatar from 'vue-avatar';
+import userPopup from '../cmps/user-popup.cmp.vue';
 
 export default {
   data() {
@@ -164,6 +188,7 @@ export default {
       this.isChangeColor = false;
       this.isColorSelected = false;
       this.isPhotosSelected = false;
+      this.searchKey = '';
     },
     deleteBoard() {
       this.$emit('deleteBoard');
@@ -186,9 +211,13 @@ export default {
     getImgs() {
       return this.$store.getters.getBgPhotos;
     },
-    // board(){
-    //   return this.$store.getters.board
-    // }
+    membersToShow() {
+      return this.$store.getters.board.members;
+    },
+  },
+  components: {
+    Avatar,
+    userPopup,
   },
 };
 </script>

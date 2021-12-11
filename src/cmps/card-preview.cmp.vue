@@ -42,12 +42,7 @@
       <div class="icon-wrapper" v-if="card.isWatch">
         <span class="icon-sm icon-watch badge"></span>
       </div>
-      <div
-        class="icon-wrapper date"
-        v-if="card.dueDate"
-        :class="dateClass"
-        @click.stop="checkCard"
-      >
+      <div class="icon-wrapper date" v-if="card.dueDate" :class="dateClass" @click.stop="checkCard">
         <span class="clock icon-sm icon-clock badge"></span>
         <input id="cbp" type="checkbox" v-model="card.isComplete" />
         <label for="cbp"></label>
@@ -56,17 +51,11 @@
       <div class="icon-wrapper" v-if="card.description">
         <span class="icon-sm icon-desc badge"></span>
       </div>
-      <div
-        class="icon-wrapper"
-        v-if="card.attachments && card.attachments.length"
-      >
+      <div class="icon-wrapper" v-if="card.attachments && card.attachments.length">
         <span class="icon-sm icon-attach badge"></span>
         <span class="icon-text">{{ card.attachments.length }}</span>
       </div>
-      <div
-        class="icon-wrapper"
-        v-if="card.checklists && card.checklists.length && todos"
-      >
+      <div class="icon-wrapper" v-if="card.checklists && card.checklists.length && todos">
         <span class="icon-sm icon-checklist badge"></span>
         <span class="icon-text">{{ doneTodos }}/{{ todos }}</span>
       </div>
@@ -86,10 +75,10 @@
 </template>
 
 <script>
-import { focus } from "vue-focus";
-import Avatar from "vue-avatar";
-import { Container, Draggable } from "vue-smooth-dnd";
-import { utilService } from "../services/util.service.js";
+import { focus } from 'vue-focus';
+import Avatar from 'vue-avatar';
+import { Container, Draggable } from 'vue-smooth-dnd';
+import { utilService } from '../services/util.service.js';
 
 export default {
   directives: { focus },
@@ -110,27 +99,26 @@ export default {
       isQuick: false,
       pos: null,
       cardToEdit: {
-        title: "",
+        title: '',
       },
-      height: "",
+      height: '',
+      doIconsOverflow: false,
       // todos: 0,
       // doneTodos: 0
     };
   },
   mounted() {
-    this.height = this.$refs[this.card.id].clientHeight + "px";
-    // console.log("m", this.$refs);
-    // console.log("h", this.height);
+    this.height = this.$refs[this.card.id].clientHeight + 'px';
   },
   methods: {
     checkHeight() {
-      if (!this.isQuick || !this.$refs.text) console.log("N");
+      if (!this.isQuick || !this.$refs.text) console.log('N');
       // console.log("text", this.$refs.text.scrollHeight);
-      this.height = this.$refs.text.scrollHeight + "px";
+      this.height = this.$refs.text.scrollHeight + 'px';
     },
     showDetails() {
       if (this.isQuick) return;
-      this.$router.push(this.$route.path + "/c/" + this.card.id);
+      this.$router.push(this.$route.path + '/c/' + this.card.id);
     },
     formatDate(dueDate) {
       var date = dueDate.getDate();
@@ -143,9 +131,9 @@ export default {
       const activityText = this.card.isComplete
         ? `marked the due date complete on `
         : `marked the due date not complete on`;
-      console.log("activityText", activityText);
+      console.log('activityText', activityText);
       const activity = {
-        id: "act" + utilService.makeId(),
+        id: 'act' + utilService.makeId(),
         txt: activityText,
         createdAt: Date.now(),
         byMember: this.$store.getters.user,
@@ -156,19 +144,19 @@ export default {
       };
       try {
         await this.$store.dispatch({
-          type: "updateCard",
+          type: 'updateCard',
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.card)),
           activity,
         });
       } catch (err) {
-        console.log("cant update card", err);
+        console.log('cant update card', err);
       }
     },
     onLabelClick() {
       this.$store.commit({
-        type: "toggleLabel",
+        type: 'toggleLabel',
         labelsState: this.labelsState,
       });
     },
@@ -211,11 +199,9 @@ export default {
     },
     dateClass() {
       if (!this.card.dueDate) return;
-      if (this.card.isComplete) return "done";
+      if (this.card.isComplete) return 'done';
       if (+new Date(this.card.dueDate) - Date.now() > 86400000) return;
-      return +new Date(this.card.dueDate) - Date.now() <= 0
-        ? "over-due"
-        : "soon";
+      return +new Date(this.card.dueDate) - Date.now() <= 0 ? 'over-due' : 'soon';
     },
     doneTodos() {
       var doneTodos = 0;
@@ -236,7 +222,7 @@ export default {
       return labelIds.map((lId) => allLabels.find((label) => label.id === lId));
     },
     setLabelClass() {
-      let classes = `preview-label${this.labelsState ? "" : "-close"}`;
+      let classes = `preview-label${this.labelsState ? '' : '-close'}`;
       return classes;
     },
 
@@ -246,7 +232,7 @@ export default {
         return this.formatDate(dueDate);
       }
 
-      return this.formatDate(dueDate) + ", " + dueDate.getFullYear();
+      return this.formatDate(dueDate) + ', ' + dueDate.getFullYear();
     },
     ChecklistNum() {
       var doneTodos = 0;
@@ -264,12 +250,12 @@ export default {
       if (!this.card.style.img) {
         return {
           backgroundColor,
-          height: "32px",
-          minHeight: "32px",
+          height: '32px',
+          minHeight: '32px',
         };
       }
       return {
-        height: "163.58px",
+        height: '163.58px',
         backgroundColor,
         backgroundImage: `url("${this.card.style.img}")`,
       };
@@ -278,6 +264,7 @@ export default {
       return this.$store.getters.boardId;
     },
   },
+
   components: { Avatar, Container, Draggable },
 };
 </script>

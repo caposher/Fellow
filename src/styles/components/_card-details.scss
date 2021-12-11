@@ -241,7 +241,7 @@
         position: absolute;
         font-family: icomoon;
         &::after {
-          content: '\e922';
+          content: "\e922";
         }
       }
       & .content {
@@ -361,7 +361,7 @@
     top: 8px;
     font-family: icomoon;
     &::after {
-      content: '\e91a';
+      content: "\e91a";
     }
   }
 }
@@ -378,7 +378,7 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: '\e912';
+    content: "\e912";
   }
 }
 
@@ -393,44 +393,6 @@
 .due-soon {
   color: #172b4d;
   background-color: #f2d600;
-}
-
-input[id='cb'] + label {
-  display: inline-block;
-  flex-shrink: 0;
-  height: 16px;
-  width: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-  box-shadow: inset 0 0 0 2px #dfe1e6;
-  margin: 8px 6px 0 0;
-  border-radius: 2px;
-  cursor: pointer;
-}
-input[id='cb']:checked + label:after {
-  position: relative;
-  box-sizing: border-box;
-  color: white;
-  padding: 2px;
-  font-family: icomoon;
-  content: '\e916';
-  height: 16px;
-  width: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  background-color: #0079bf;
-  box-shadow: inset 0 0 0 2px #0079bf;
-  border-radius: 2px;
-  transition: all 0.2s ease-in-out;
-  white-space: nowrap;
-  transition: all 0.2s ease-in-out;
-}
-input[id='cb'] {
-  display: none;
 }
 
 .action-btn {
@@ -567,7 +529,7 @@ input[id='cb'] {
   border-radius: 20em;
   height: 32px;
   width: 32px;
-  padding: 6px 9px;
+  padding: 5px 8px;
   overflow: visible;
   margin-right: 5px;
 }

@@ -44,11 +44,28 @@
   & li {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0px;
+    padding: 6px 6px;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: #091e420a;
+      .td-action {
+        opacity: 1;
+      }
+    }
   }
 
   & .done {
     text-decoration: line-through;
+  }
+  .td-action {
+    opacity: 0;
+    // z-index: 100;
+    position: relative;
+
+    & .td-popup {
+      top: 0px;
+    }
   }
 }
 .add-item {
@@ -72,8 +89,8 @@
 }
 .c-b-btn {
   position: absolute;
-  top: 1px;
-  left: -38px;
+  top: -4px;
+  left: -43px;
   &:checkbox {
     border: none;
     outline: none;

@@ -49,127 +49,173 @@
 }
 
 .icon-desc {
-  @include to-icon('\e922');
+  @include to-icon("\e922");
 }
 
 .icon-dots {
-  @include to-icon('\e952');
+  @include to-icon("\e952");
 }
 .icon-clock {
-  @include to-icon('\e91b');
+  @include to-icon("\e91b");
 }
 .icon-bell {
-  @include to-icon('\e94c');
+  @include to-icon("\e94c");
 }
 .icon-checklist {
-  @include to-icon('\e91a');
+  @include to-icon("\e91a");
 }
 .icon-plus {
-  @include to-icon('\e901');
+  @include to-icon("\e901");
 }
 
 .icon-star {
-  @include to-icon('\e966');
+  @include to-icon("\e966");
 }
 
 .icon-member {
-  @include to-icon('\e946');
+  @include to-icon("\e946");
 }
 
 .icon-attach {
-  @include to-icon('\e908');
+  @include to-icon("\e908");
 }
 
 .icon-label {
-  @include to-icon('\e93f');
+  @include to-icon("\e93f");
 }
 
 .icon-cover {
-  @include to-icon('\e914');
+  @include to-icon("\e914");
 }
 
 .icon-move {
-  @include to-icon('\e94a');
+  @include to-icon("\e94a");
 }
 
 .icon-copy {
-  @include to-icon('\e91f');
+  @include to-icon("\e91f");
 }
 
 .icon-watch {
-  @include to-icon('\e969');
+  @include to-icon("\e969");
 }
 
 .icon-archive {
-  @include to-icon('\e907');
+  @include to-icon("\e907");
 }
 
 .icon-remove {
-  @include to-icon('\e95c');
+  @include to-icon("\e95c");
 }
 
 .icon-share {
-  @include to-icon('\e963');
+  @include to-icon("\e963");
 }
 
 .icon-check {
-  @include to-icon('\e916');
+  @include to-icon("\e916");
 }
 
 .icon-close {
-  @include to-icon('\e91c');
+  @include to-icon("\e91c");
 }
 
 .icon-activity {
-  @include to-icon('\e900');
+  @include to-icon("\e900");
 }
 .icon-add-member {
-  @include to-icon('\e902');
+  @include to-icon("\e902");
 }
 .icon-mention {
-  @include to-icon('\e947');
+  @include to-icon("\e947");
 }
 .icon-emoji {
-  @include to-icon('\e92a');
+  @include to-icon("\e92a");
 }
 
 .icon-edit {
-  @include to-icon('\e928');
+  @include to-icon("\e928");
 }
 
 .icon-refresh {
-  @include to-icon('\e95b');
+  @include to-icon("\e95b");
 }
 .icon-template {
-  @include to-icon('\e96e');
+  @include to-icon("\e96e");
 }
 .icon-template-board {
-  @include to-icon('\e96d');
+  @include to-icon("\e96d");
 }
 .icon-card {
-  @include to-icon('\e912');
+  @include to-icon("\e912");
 }
 .icon-board {
-  @include to-icon('\e90b');
+  @include to-icon("\e90b");
 }
 .icon-home {
-  @include to-icon('\e938');
+  @include to-icon("\e938");
 }
 .icon-gear {
-  @include to-icon('\e932');
+  @include to-icon("\e932");
 }
 .icon-back {
-  @include to-icon('\e90a');
+  @include to-icon("\e90a");
 }
 .icon-external {
-  @include to-icon('\e92c');
+  @include to-icon("\e92c");
 }
 .icon-cover {
-  @include to-icon('\e914');
+  @include to-icon("\e914");
 }
 .icon-search {
-  @include to-icon('\e960');
+  @include to-icon("\e960");
 }
 .icon-back {
-  @include to-icon('\e90a');
+  @include to-icon("\e90a");
+}
+
+/// custom checkbox
+
+input[id="cb"] + label,
+input.cb-cl + label {
+  display: inline-block;
+  flex-shrink: 0;
+  height: 16px;
+  width: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 2px #dfe1e6;
+  margin: 8px 6px 0 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+input[id="cb"]:checked + label:after,
+input.cb-cl:checked + label:after {
+  position: relative;
+  box-sizing: border-box;
+  color: white;
+  padding: 2px;
+  font-family: icomoon;
+  content: "\e916";
+  height: 16px;
+  width: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  background-color: #0079bf;
+  box-shadow: inset 0 0 0 2px #0079bf;
+  border-radius: 2px;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+  transition: all 0.2s ease-in-out;
+}
+input[id="cb"],
+input.cb-cl {
+  display: none;
+}
+.icon-members {
+  @include to-icon('\e951');
 }

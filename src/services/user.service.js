@@ -17,8 +17,21 @@ export const userService = {
   externalLogin,
 };
 
-function query() {
-  return storageService.query(KEY);
+// async function query() {
+//   try {
+//     return await storageService.query(KEY);
+//   } catch (err) {
+//     console.log('err', err)
+//   }
+// }
+
+async function query(filterBy) {
+  console.log('filter userservice query', filterBy)
+  try {
+    return httpService.get('user/', filterBy)
+  } catch (err) {
+    console.log('error:', err)
+  }
 }
 
 
@@ -33,47 +46,45 @@ async function login(username, password) {
     const userToSave = JSON.parse(JSON.stringify(user));
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToSave));
     return userToSave;
-    // let user
+    // let user;
     // switch (username) {
-    //     case 'adam':
-    //         user = {
-    //             "_id": "u103",
-    //             "fullname": "Adam Bercovich",
-    //             "username": "adamBerco",
-    //             "color": "green",
-    //             "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
-
-    //         }
-    //         break
-    //     case 'oshra':
-    //         user = {
-    //             "_id": "u101",
-    //             "fullname": "Oshra Hartuv",
-    //             "username": "oshraHartuv1",
-    //             "color": "pink",
-    //             "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
-    //         }
-    //         break
-    //     case 'osher':
-    //         user = {
-    //             "_id": "u102",
-    //             "fullname": "Osher Cappelli",
-    //             "username": "osherCappelli",
-    //             "color": "blue",
-    //             "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg"
-
-    //         }
-    //         break
-    //     default:
-    //         user = {
-    //             "_id": "u111",
-    //             "fullname": username,
-    //             "username": username,
-    //         }
+    //   case 'adam':
+    //     user = {
+    //       _id: 'u103',
+    //       fullname: 'Adam Bercovich',
+    //       username: 'adamBerco',
+    //       color: 'green',
+    //       imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg',
+    //     };
+    //     break;
+    //   case 'oshra':
+    //     user = {
+    //       _id: 'u101',
+    //       fullname: 'Oshra Hartuv',
+    //       username: 'oshraHartuv1',
+    //       color: 'pink',
+    //       imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg',
+    //     };
+    //     break;
+    //   case 'osher':
+    //     user = {
+    //       _id: 'u102',
+    //       fullname: 'Osher Cappelli',
+    //       username: 'osherCappelli',
+    //       color: 'blue',
+    //       imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg',
+    //     };
+    //     break;
+    //   default:
+    //     user = {
+    //       _id: 'u111',
+    //       fullname: username,
+    //       username: username,
+    //     };
     // }
 
-    // sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user))
-    // return user
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    return user;
   } catch (err) {
     console.log("can't login", err);
     throw err;
@@ -130,22 +141,19 @@ function _createUsers() {
         fullname: 'Adam Bercovich',
         username: 'adamBerco',
         password: '1234',
-        imgUrl:
-          'https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg',
+        imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg',
       },
       {
         fullname: 'Osher Cappelli',
         username: 'osherCappelli',
         password: '1234',
-        imgUrl:
-          'https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg',
+        imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg',
       },
       {
         fullname: 'Oshra Hartuv',
         username: 'oshraHartuv1',
         password: '1234',
-        imgUrl:
-          'https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg',
+        imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg',
       },
 
       {

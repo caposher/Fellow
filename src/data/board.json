@@ -1,13 +1,10 @@
 [
   {
-    "_id": "SUV6b",
     "title": "Travel Inspiration board",
     "createdAt": 1638986360388,
     "createdBy": {
-      "_id": "u101",
       "fullname": "Oshra Hartuv",
       "username": "oshraHartuv1",
-      "color": "pink",
       "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg"
     },
     "style": {
@@ -70,6 +67,7 @@
         "imgUrl": "https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg"
       }
     ],
+    "activities": [],
     "lists": [
       {
         "id": "LHr6zU",

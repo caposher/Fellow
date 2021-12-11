@@ -1,11 +1,20 @@
 <template>
-  <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
+  <header
+    class="board-header"
+    :class="{ 'main-menu-spacing': showMainMenu }"
+    v-if="board"
+  >
     <section class="left-header">
       <router-link to="/home" class="back-home" v-if="!editTitle">
         <span class="icon-md icon-back"></span>
       </router-link>
       <!--   -->
-      <button class="close-small" v-if="editTitle" @click="closeEditTitle" :class="{ edit: this.editTitle }">
+      <button
+        class="close-small"
+        v-if="editTitle"
+        @click="closeEditTitle"
+        :class="{ edit: this.editTitle }"
+      >
         <span class="icon-close"></span>
       </button>
       <div
@@ -24,14 +33,22 @@
         <!-- @blur="updateTitle" -->
         <!-- @keydown.enter="removeBr" -->
         <!-- @blur="closeEditTitle" -->
-        <div @click="openEditTitle" contenteditable="true" ref="smallEdit" class="title-small">{{ board.title }}</div>
+        <div
+          @keydown.enter="updateTitle"
+          @click="openEditTitle"
+          contenteditable="true"
+          ref="smallEdit"
+          class="title-small"
+        >
+          {{ board.title }}
+        </div>
       </div>
 
       <span class="board-star bh-btn">
         <i class="icon-sm icon-star"></i>
       </span>
       <Container
-        tag="P"
+        tag="p"
         group-name="card-list"
         @drop="onDrop"
         @onDragStart="onDragStart()"
@@ -53,29 +70,73 @@
 
         <!-- <button @click="deleteBoard" class="bh-btn">Delete Board</button> -->
       </Container>
-      <button @click="inviteMembers" class="invite-btn bh-btn">Invite</button>
+      <button @click="openInvite = true" class="invite-btn bh-btn">
+        <span class="icon-sm icon-add-member icon-header"></span>
+        Invite
+        <!-- <span>Invite</span> -->
+        <invite
+          v-if="openInvite"
+          @close="openInvite = false"
+          @update="inviteMembers"
+        />
+        <!-- <section class="card-popup invite-popup" @click.stop="">
+          <section class="popup-header">
+            <div @click.stop="listMenu = false">
+              <span class="close-popup icon-md icon-close"></span>
+            </div>
+            <h4>Invite to board</h4>
+          </section>
+          <input type="search" placeholder="Email address or name" />
+
+   
+          <span class="action" @click.stop="">Delete this list</span>
+        </section> -->
+      </button>
       <!-- </p> -->
     </section>
+
+    <!-- Right Part -->
     <section>
       <!-- <button class="bh-btn">Filter</button> -->
-      <button class="bh-btn show" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
-      <button class="show-small" v-if="!showMainMenu && !editTitle" @click.stop.prevent="showMainMenu = true">
+      <button
+        class="bh-btn show-menu-btn"
+        v-if="!showMainMenu"
+        @click="showMainMenu = true"
+      >
+        Show menu
+      </button>
+      <button
+        class="show-small"
+        v-if="!showMainMenu && !editTitle"
+        @click.stop.prevent="showMainMenu = true"
+      >
         <span class="icon-sm icon-dots"></span>
       </button>
       <!--  -->
-      <button class="title-small-check" @click="updateTitle" v-if="editTitle" :class="{ edit: this.editTitle }">
+      <button
+        class="title-small-check"
+        @click="updateTitle"
+        v-if="editTitle"
+        :class="{ edit: this.editTitle }"
+      >
         <span class="icon-check"></span>
       </button>
-      <main-menu :class="mainMenuToggle" @deleteBoard="deleteBoard" @close="showMainMenu = false" />
+      <main-menu
+        :class="mainMenuToggle"
+        @deleteBoard="deleteBoard"
+        @close="showMainMenu = false"
+        @showUserAccount="(state) => $emit('updatePopupState', state)"
+      />
     </section>
   </header>
 </template>
 
 <script>
-import Avatar from 'vue-avatar';
-import mainMenu from '@/cmps/main-menu.cmp.vue';
-import { Container, Draggable } from 'vue-smooth-dnd';
-import { focus } from 'vue-focus';
+import Avatar from "vue-avatar";
+import mainMenu from "@/cmps/main-menu.cmp.vue";
+import { Container, Draggable } from "vue-smooth-dnd";
+import { focus } from "vue-focus";
+import invite from "../cmps/invite.cmp.vue";
 
 // import { applyDrag, generateItems } from "./utils";
 export default {
@@ -84,8 +145,9 @@ export default {
     return {
       showMainMenu: false,
       editTitle: false,
-      lastTitle: '',
+      lastTitle: "",
       isSmall: false,
+      openInvite: false,
     };
   },
   mounted() {
@@ -111,17 +173,20 @@ export default {
     updateTitle() {
       console.log(this.lastTitle);
       // if (!this.$refs.editBoardTitle.innerText) return;
-      this.board.title = this.isSmall ? this.$refs.smallEdit.innerText : this.$refs.editBoardTitle.innerText;
+      this.board.title = this.isSmall
+        ? this.$refs.smallEdit.innerText
+        : this.$refs.editBoardTitle.innerText;
       // console.log(this.$refs.editBoardTitle.innerText);
       // this.$refs.editBoardTitle.innerText;
-      this.$emit('updateBoard', this.board);
+      this.$emit("updateBoard", this.board);
       // this.$refs.smallEdit.innerText = this.$refs.editBoardTitle.innerText
       this.editTitle = false;
       this.isSmall = false;
-      // this.showMainMenu = false
+      this.$refs.smallEdit.blur();
     },
     deleteBoard() {
-      if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
+      if (confirm("This action will delete the board! continue?"))
+        this.$emit("deleteBoard");
     },
     onDragStart(dragResult) {
       // console.log("start", isSource, payload, willAcceptDrop);
@@ -137,9 +202,11 @@ export default {
       // console.log("payload", payload);
       return false;
     },
-    inviteMembers() {
-      const users = this.$store.getters.users;
-      // console.log("users = ", users);
+    inviteMembers(member) {
+      if (!this.board.members.find((mbr) => mbr._id === member._id)) {
+        this.board.members.push(member);
+        this.$emit("updateBoard", this.board);
+      }
     },
   },
   computed: {
@@ -151,7 +218,7 @@ export default {
       return this.board.members;
     },
     mainMenuToggle() {
-      return this.showMainMenu ? 'show-main-menu' : 'hide-main-menu';
+      return this.showMainMenu ? "show-main-menu" : "hide-main-menu";
     },
   },
 
@@ -160,6 +227,7 @@ export default {
     Avatar,
     Container,
     Draggable,
+    invite,
   },
 };
 </script>

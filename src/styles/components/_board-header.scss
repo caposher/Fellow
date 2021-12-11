@@ -24,6 +24,14 @@
     }
   }
 
+  .icon-header {
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+
   .title,
   .title-small {
     // background-color: #00000014;
@@ -44,6 +52,10 @@
   .title,
   .bh-btn {
     background-color: #ffffff3d;
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.4) !important;
+    }
   }
 
   & button,
@@ -59,7 +71,7 @@
     padding-right: 12px;
     padding-left: 12px;
     max-width: 400px;
-    overflow: hidden;
+    // overflow: hidden;
     position: relative;
     text-decoration: none;
     text-overflow: ellipsis;
@@ -122,6 +134,9 @@
       margin-left: 12px;
     }
     & .vue-avatar--wrapper {
+      & > * {
+        margin: 0;
+      }
     }
     & .smooth-dnd-draggable-wrapper {
       // border: 3px solid white;
@@ -209,9 +224,6 @@
       }
     }
 
-    // .show {
-    //   display: none;
-    // }
     .back-home {
       float: left;
       display: block;
@@ -265,4 +277,13 @@
   //     background-color: red;
   //   }
   // }
+}
+
+.show-menu-btn {
+  display: none;
+}
+@media (min-width: 550px) {
+  .show-menu-btn {
+    display: block;
+  }
 }

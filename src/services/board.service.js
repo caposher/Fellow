@@ -3089,10 +3089,9 @@ export const boardService = {
   getBgImgs,
   setBackground,
   getActivity,
-  saveTask
 };
 
-_createBoards();
+// _createBoards();
 
 // function query() {
 //   return storageService.query(KEY);
@@ -3112,51 +3111,40 @@ _createBoards();
 // }
 
 async function query(filterBy) {
-  
   try {
-    return httpService.get('board/', filterBy)
+    return httpService.get('board/', filterBy);
   } catch (err) {
-    console.log('error:', err)
+    console.log('error:', err);
   }
 }
 
 async function getById(id) {
   try {
-    return httpService.get('board/' + id)
+    return httpService.get('board/' + id);
   } catch (err) {
-    console.log('error:', err)
+    console.log('error:', err);
   }
 }
 
 async function save(board) {
   try {
     if (board._id) {
-      socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
-      return httpService.put('board/' + board._id, board)
-
+      socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board);
+      return httpService.put('board/' + board._id, board);
     } else {
-      return httpService.post('board/', board)
+      return httpService.post('board/', board);
     }
   } catch (err) {
-    console.log('err', err)
+    console.log('err', err);
   }
 }
 
 async function remove(id) {
   try {
-    return httpService.delete('board/' + id)
+    return httpService.delete('board/' + id);
   } catch (err) {
-    console.log('error:', err)
+    console.log('error:', err);
   }
-}
-
-function saveTask(boardId, groupId, task, activity) {
-  const board = getById(boardId)
-
-  // TODO: find the task, and update
-  board.activities.unshift(activity)
-  save(board)
-  return board
 }
 
 async function getListAndCardById(boardId, cardId) {
@@ -3198,7 +3186,6 @@ async function updateCard(cardToUpdate, listToUpdate, boardId, activity) {
     const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardToUpdate.id);
     listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
     boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
-    console.log('boardToUpdate.activities', boardToUpdate.activities);
     try {
       const savedBoard = await save(boardToUpdate);
       const savedList = savedBoard.lists[listIdx];
@@ -3307,9 +3294,8 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 
 async function getBgImgs(searchKey, imgNum, page) {
   try {
-    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
-      imgNum ? imgNum : 50
-    }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${imgNum ? imgNum : 50
+      }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
     let res = await axios.get(search);
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {
@@ -3354,7 +3340,7 @@ function _createBoards() {
     //   'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/e1b4d655b33c1ef09b9aea6c6360f70c/photo-1637928114342-05b15ee4034e.jpg'
     // ),
     // ];
-    console.log('boards', boards);
+    // console.log('boards', boards);
     localStorage.setItem(KEY, JSON.stringify(boards));
   }
   return boards;
@@ -5317,12 +5303,13 @@ function getActivity(txt, card = null) {
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    card: card
-      ? {
+    card:
+      card ?
+        {
           id: card.id,
           title: card.title,
         }
-      : null,
+        : null,
   };
   return activity;
 }

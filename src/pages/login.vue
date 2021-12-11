@@ -17,7 +17,7 @@
         <section class="inner-section">
           <div class="section-wrapper quick-switch">
             <div class="layout-twothirds-center account-form">
-              <h1>{{signUp ? 'Sign up for your account' : 'Log in to Fellow'}}</h1>
+              <h1>{{ signUp ? 'Sign up for your account' : 'Log in to Fellow' }}</h1>
               <p v-show="invalid">Invalid name or password</p>
               <p v-show="error">An error accrued, please try again</p>
               <div class="login-password-container">
@@ -75,7 +75,7 @@
                         id="submit"
                         type="submit"
                         class="button account-button button-green btn btn-success"
-                        :value="signUp ? 'Sign up': 'Log in'"
+                        :value="signUp ? 'Sign up' : 'Log in'"
                       />
                       <!-- @click="submit" -->
                     </div>
@@ -93,10 +93,7 @@
                       tabindex="0"
                     >
                       <span id="google-icon" class="google-icon icon"></span>
-                      <span
-                        class="label"
-                        data-analytics-button="loginWithGmailButton"
-                      >Continue with Google</span>
+                      <span class="label" data-analytics-button="loginWithGmailButton">Continue with Google</span>
                     </GoogleLogin>
                     <div id="msftButton" class="msft-button oauth-button" tabindex="0">
                       <!-- <span id="google-icon" class="facebook-icon icon"></span> -->
@@ -134,18 +131,18 @@
 </template>
 
 <script>
-import logo from "../cmps/logo.cmp.vue";
-import { focus } from "vue-focus";
-import GoogleLogin from "vue-google-login";
+import logo from '../cmps/logo.cmp.vue';
+import { focus } from 'vue-focus';
+import GoogleLogin from 'vue-google-login';
 
 export default {
   directives: { focus },
   data() {
     return {
       user: {
-        fullname: "",
-        username: "demo",
-        password: "demo"
+        fullname: '',
+        username: 'demo',
+        password: 'demo',
       },
       signUp: false,
       isLoading: false,
@@ -206,36 +203,31 @@ export default {
       this.error = false;
       try {
         await this.$store.dispatch({
-          type: this.signUp ? "signup" : "login",
+          type: this.signUp ? 'signup' : 'login',
           username: this.user.username,
           password: this.user.password,
-          fullname: this.signUp ? this.user.fullname : ""
+          fullname: this.signUp ? this.user.fullname : '',
         });
-        this.user.fullname = "";
-        this.user.username = "demo";
-        this.user.password = "demo";
-        this.$router.push("/home");
+        this.user.fullname = '';
+        this.user.username = 'demo';
+        this.user.password = 'demo';
+        this.$router.push('/home');
       } catch (err) {
-        console.log(
-          `cant ${this.signUp ? "signup" : "login "} user:  ${
-            this.user.username
-          }`,
-          err
-        );
+        console.log(`cant ${this.signUp ? 'signup' : 'login '} user:  ${this.user.username}`, err);
         this.invalid = true;
-        this.user.password = "";
+        this.user.password = '';
       } finally {
         this.isLoading = false;
       }
     },
     toggleSignUp() {
       if (this.signUp) {
-        this.user.username = "demo";
-        this.user.password = "demo";
+        this.user.username = 'demo';
+        this.user.password = 'demo';
       } else {
-        this.user.username = "";
-        this.user.password = "";
-        this.user.fullname = "";
+        this.user.username = '';
+        this.user.password = '';
+        this.user.fullname = '';
       }
       this.signUp = !this.signUp;
       this.error = false;

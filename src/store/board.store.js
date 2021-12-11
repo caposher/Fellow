@@ -127,7 +127,7 @@ export const boardStore = {
     async createBoard({ commit }, { title }) {
       try {
         const board = boardService.getEmptyBoard(title);
-        const savedBoard = boardService.save(board, activity);
+        const savedBoard = boardService.save(board);
         commit({ type: 'setBoard', board: savedBoard });
         commit({ type: 'setBoards', boards: savedBoard });
         return savedBoard;

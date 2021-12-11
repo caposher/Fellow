@@ -159,6 +159,7 @@ export default {
             boardId,
           });
           socketService.emit("board new-enter", boardId);
+          this.scroll();
         } catch (err) {
           console.log("problem with getting board", err);
         }
@@ -175,9 +176,6 @@ export default {
     } catch (err) {
       console.log("problem with getting board", err);
     }
-  },
-  mounted() {
-    this.scroll();
   },
   destroyed() {
     socketService.off("board pushed");

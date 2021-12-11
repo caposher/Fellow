@@ -17,8 +17,21 @@ export const userService = {
   googleLogin
 };
 
-function query() {
-  return storageService.query(KEY);
+// async function query() {
+//   try {
+//     return await storageService.query(KEY);
+//   } catch (err) {
+//     console.log('err', err)
+//   }
+// }
+
+async function query(filterBy) {
+  console.log('filter userservice query', filterBy)
+  try {
+    return httpService.get('user/', filterBy)
+  } catch (err) {
+    console.log('error:', err)
+  }
 }
 
 // Debug technique

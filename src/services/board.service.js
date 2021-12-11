@@ -3187,7 +3187,6 @@ async function updateCard(cardToUpdate, listToUpdate, boardId, activity) {
     const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardToUpdate.id);
     listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
     boardToUpdate.lists.splice(listIdx, 1, listToUpdate);
-    console.log('boardToUpdate.activities', boardToUpdate.activities);
     try {
       const savedBoard = await save(boardToUpdate);
       const savedList = savedBoard.lists[listIdx];
@@ -3295,9 +3294,8 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 
 async function getBgImgs(searchKey, imgNum, page) {
   try {
-    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
-      imgNum ? imgNum : 50
-    }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${imgNum ? imgNum : 50
+      }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
     let res = await axios.get(search);
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {
@@ -3342,7 +3340,7 @@ function _createBoards() {
     //   'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/e1b4d655b33c1ef09b9aea6c6360f70c/photo-1637928114342-05b15ee4034e.jpg'
     // ),
     // ];
-    console.log('boards', boards);
+    // console.log('boards', boards);
     localStorage.setItem(KEY, JSON.stringify(boards));
   }
   return boards;
@@ -5305,12 +5303,13 @@ function getActivity(txt, card = null) {
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    card: card
-      ? {
+    card:
+      card ?
+        {
           id: card.id,
           title: card.title,
         }
-      : null,
+        : null,
   };
   return activity;
 }

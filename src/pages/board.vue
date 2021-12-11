@@ -196,9 +196,12 @@ export default {
   },
   methods: {
     pushedBoard(board) {
+      const lastUpdate = this.$store.getters.getLastUpdateTime;
+      const haveUpdate = board.activities[0].createdAt > lastUpdate;
       this.$store.dispatch({
         type: "pushedBoard",
         board,
+        haveUpdate,
       });
     },
 

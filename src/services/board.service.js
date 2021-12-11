@@ -3091,62 +3091,61 @@ export const boardService = {
   getActivity,
 };
 
-_createBoards();
+// _createBoards();
 
-function query() {
-  return storageService.query(KEY);
-}
-
-function getById(id) {
-  return storageService.get(KEY, id);
-}
-
-function remove(id) {
-  return storageService.remove(KEY, id);
-}
-
-function save(board) {
-  const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
-  return savedBoard;
-}
-
-// async function query(filterBy) {
-//   try {
-//     return httpService.get('board/', filterBy)
-//   } catch (err) {
-//     console.log('error:', err)
-//   }
+// function query() {
+//   return storageService.query(KEY);
 // }
 
-// async function getById(id) {
-//   try {
-//     return httpService.get('board/' + id)
-//   } catch (err) {
-//     console.log('error:', err)
-//   }
+// function getById(id) {
+//   return storageService.get(KEY, id);
 // }
 
-// async function save(board) {
-//   try {
-//     if (board._id) {
-//       socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
-//       return httpService.put('board/' + board._id, board)
-
-//     } else {
-//       return httpService.post('board/', board)
-//     }
-//   } catch (err) {
-//     console.log('err', err)
-//   }
+// function remove(id) {
+//   return storageService.remove(KEY, id);
 // }
 
-// async function remove(id) {
-//   try {
-//     return httpService.delete('board/' + id)
-//   } catch (err) {
-//     console.log('error:', err)
-//   }
+// function save(board) {
+//   const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
+//   return savedBoard;
 // }
+
+async function query(filterBy) {
+  try {
+    return httpService.get('board/', filterBy);
+  } catch (err) {
+    console.log('error:', err);
+  }
+}
+
+async function getById(id) {
+  try {
+    return httpService.get('board/' + id);
+  } catch (err) {
+    console.log('error:', err);
+  }
+}
+
+async function save(board) {
+  try {
+    if (board._id) {
+      socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board);
+      return httpService.put('board/' + board._id, board);
+    } else {
+      return httpService.post('board/', board);
+    }
+  } catch (err) {
+    console.log('err', err);
+  }
+}
+
+async function remove(id) {
+  try {
+    return httpService.delete('board/' + id);
+  } catch (err) {
+    console.log('error:', err);
+  }
+}
 
 async function getListAndCardById(boardId, cardId) {
   const board = await getById(boardId);

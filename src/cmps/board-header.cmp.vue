@@ -34,6 +34,7 @@
         <!-- @keydown.enter="removeBr" -->
         <!-- @blur="closeEditTitle" -->
         <div
+          @keydown.enter="updateTitle"
           @click="openEditTitle"
           contenteditable="true"
           ref="smallEdit"
@@ -47,7 +48,7 @@
         <i class="icon-sm icon-star"></i>
       </span>
       <Container
-        tag="P"
+        tag="p"
         group-name="card-list"
         @drop="onDrop"
         @onDragStart="onDragStart()"
@@ -94,10 +95,11 @@
       <!-- </p> -->
     </section>
 
+    <!-- Right Part -->
     <section>
       <!-- <button class="bh-btn">Filter</button> -->
       <button
-        class="bh-btn show"
+        class="bh-btn show-menu-btn"
         v-if="!showMainMenu"
         @click="showMainMenu = true"
       >
@@ -123,6 +125,7 @@
         :class="mainMenuToggle"
         @deleteBoard="deleteBoard"
         @close="showMainMenu = false"
+        @showUserAccount="(state) => $emit('updatePopupState', state)"
       />
     </section>
   </header>
@@ -179,7 +182,7 @@ export default {
       // this.$refs.smallEdit.innerText = this.$refs.editBoardTitle.innerText
       this.editTitle = false;
       this.isSmall = false;
-      // this.showMainMenu = false
+      this.$refs.smallEdit.blur();
     },
     deleteBoard() {
       if (confirm("This action will delete the board! continue?"))

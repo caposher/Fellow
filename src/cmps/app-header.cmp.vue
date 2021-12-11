@@ -1,14 +1,11 @@
 <template>
   <header class="main-header">
     <div class="left-container">
-      <router-link
-        class="logo"
-        :to="$route.path !== '/home' ? '/home' : ''"
-        aria-label="Back to home"
-      >
+      <router-link class="logo" :to="$route.path !== '/home' ? '/home' : ''" aria-label="Back to home">
         <span>
           <logo />
-        </span> Fellow
+        </span>
+        Fellow
       </router-link>
       <!-- <button>Workspaces <i class="fas fa-chevron-down"></i></button> -->
       <!-- <button>Recent <i class="fas fa-chevron-down"></i></button> -->
@@ -19,16 +16,9 @@
     <div class="container">
       <div class="input-container">
         <i class="fas fa-search search-icon"></i>
-        <input
-          autocomplete="off"
-          autocorrect="off"
-          spellcheck="false"
-          type="search"
-          placeholder="Search..."
-          value
-        />
+        <input autocomplete="off" autocorrect="off" spellcheck="false" type="search" placeholder="Search..." value />
       </div>
-      <button class="header-bell">
+      <button class="header-bell" :class="notify" @click="toggleNotification">
         <span>
           <svg width="24" height="32" focusable="false" viewBox="0 0 24 24">
             <path
@@ -40,7 +30,12 @@
           </svg>
         </span>
       </button>
-      <div class="user-section" @click="showUserPopup= !showUserPopup" v-if="user">
+      <notification-popup
+        @close="showNotifyPopup = false"
+        :showPopup="showNotifyPopup"
+        :activities="$store.getters.getActivities"
+      />
+      <div class="user-section" @click="showUserPopup = !showUserPopup" v-if="user">
         <avatar
           :username="user.fullname"
           :size="32"
@@ -55,25 +50,37 @@
 </template>
 
 <script>
-import Avatar from "vue-avatar";
-import logo from "../cmps/logo.cmp.vue";
-import userPopup from "../cmps/user-popup.cmp.vue"
+import Avatar from 'vue-avatar';
+import logo from '../cmps/logo.cmp.vue';
+import userPopup from '../cmps/user-popup.cmp.vue';
+import notificationPopup from '../cmps/notification-popup.cmp.vue';
 
 export default {
   data() {
     return {
-      showUserPopup: false
+      showUserPopup: false,
+      showNotifyPopup: false,
     };
+  },
+  methods: {
+    toggleNotification() {
+      this.showNotifyPopup = !this.showNotifyPopup;
+      this.$store.commit({ type: 'resetNotification' });
+    },
   },
   computed: {
     user() {
       return this.$store.getters.user;
-    }
+    },
+    notify() {
+      return this.$store.getters.getNotificationCnt > 0 ? 'bell-notify' : '';
+    },
   },
   components: {
     logo,
     Avatar,
-    userPopup
-  }
+    userPopup,
+    notificationPopup,
+  },
 };
 </script>

@@ -257,29 +257,13 @@
               /> -->
               <button class="submit-btn">save</button>
               <div class="log" v-show="showActivities">
-                <!-- <ul> -->
                 <div
                   class="activity-item"
                   v-for="activity in activitiesToShow"
                   :key="activity.id"
                 >
-                  <!-- {{ activity }} -->
-                  <avatar
-                    :username="activity.byMember.fullname"
-                    :size="32"
-                    :lighten="200"
-                    :src="activity.byMember.imgUrl"
-                    class="activity-avatar"
-                  ></avatar>
-                  <span class="activity-by">{{
-                    activity.byMember.fullname
-                  }}</span>
-                  {{ activity.txt }}this card
-                  <span class="activity-time">
-                    {{ timeToShow(activity.createdAt) }}</span
-                  >
+                  <activity-item :activity="activity" />
                 </div>
-                <!-- </ul> -->
               </div>
             </div>
           </div>
@@ -448,9 +432,9 @@ import date from "../cmps/date.cmp.vue";
 import addAttachment from "../cmps/add-attachment.cmp.vue";
 import attachment from "../cmps/attachment.cmp.vue";
 import cover from "../cmps/cover.cmp.vue";
+import activityItem from "../cmps/activity-item.cmp.vue";
 // import coverMenu from "../cmps/cover-menu.cmp.vue";
 import Avatar from "vue-avatar";
-
 import { utilService } from "../services/util.service.js";
 import checklist from "../cmps/checklist.cmp.vue";
 import { userService } from "../services/user.service.js";
@@ -555,9 +539,6 @@ export default {
     },
   },
   methods: {
-    timeToShow(timeStamp) {
-      return utilService.timeSince(timeStamp);
-    },
     async removeCover() {
       this.cardToEdit.style = null;
       try {
@@ -793,6 +774,7 @@ export default {
     // coverMenu,
     cardMembers,
     Avatar,
+    activityItem,
   },
 };
 </script>

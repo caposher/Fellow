@@ -216,3 +216,6 @@ input[id="cb"],
 input.cb-cl {
   display: none;
 }
+.icon-members {
+  @include to-icon('\e951');
+}

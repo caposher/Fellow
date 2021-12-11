@@ -1,10 +1,10 @@
 <template>
   <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
+    <!-- Left Part -->
     <section class="left-header">
       <router-link to="/home" class="back-home" v-if="!editTitle">
         <span class="icon-md icon-back"></span>
       </router-link>
-      <!--   -->
       <button class="close-small" v-if="editTitle" @click="closeEditTitle" :class="{ edit: this.editTitle }">
         <span class="icon-close"></span>
       </button>
@@ -24,7 +24,15 @@
         <!-- @blur="updateTitle" -->
         <!-- @keydown.enter="removeBr" -->
         <!-- @blur="closeEditTitle" -->
-        <div @click="openEditTitle" contenteditable="true" ref="smallEdit" class="title-small">{{ board.title }}</div>
+        <div
+          @keydown.enter="updateTitle"
+          @click="openEditTitle"
+          contenteditable="true"
+          ref="smallEdit"
+          class="title-small"
+        >
+          {{ board.title }}
+        </div>
       </div>
 
       <span class="board-star bh-btn">
@@ -56,9 +64,11 @@
       <button @click="inviteMembers" class="invite-btn bh-btn">Invite</button>
       <!-- </p> -->
     </section>
+
+    <!-- Right Part -->
     <section>
       <!-- <button class="bh-btn">Filter</button> -->
-      <button class="bh-btn show" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <button class="bh-btn show-menu-btn" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
       <button class="show-small" v-if="!showMainMenu && !editTitle" @click.stop.prevent="showMainMenu = true">
         <span class="icon-sm icon-dots"></span>
       </button>
@@ -66,7 +76,12 @@
       <button class="title-small-check" @click="updateTitle" v-if="editTitle" :class="{ edit: this.editTitle }">
         <span class="icon-check"></span>
       </button>
-      <main-menu :class="mainMenuToggle" @deleteBoard="deleteBoard" @close="showMainMenu = false" />
+      <main-menu
+        :class="mainMenuToggle"
+        @deleteBoard="deleteBoard"
+        @close="showMainMenu = false"
+        @showUserAccount="(state) => $emit('updatePopupState', state)"
+      />
     </section>
   </header>
 </template>
@@ -118,7 +133,7 @@ export default {
       // this.$refs.smallEdit.innerText = this.$refs.editBoardTitle.innerText
       this.editTitle = false;
       this.isSmall = false;
-      // this.showMainMenu = false
+      this.$refs.smallEdit.blur();
     },
     deleteBoard() {
       if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');

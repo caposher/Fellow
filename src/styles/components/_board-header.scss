@@ -209,9 +209,6 @@
       }
     }
 
-    // .show {
-    //   display: none;
-    // }
     .back-home {
       float: left;
       display: block;
@@ -265,4 +262,13 @@
   //     background-color: red;
   //   }
   // }
+}
+
+.show-menu-btn {
+  display: none;
+}
+@media (min-width: 550px) {
+  .show-menu-btn {
+    display: block;
+  }
 }

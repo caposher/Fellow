@@ -55,8 +55,9 @@
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #091e4221;
-    padding-block-end: 15px;
+    padding-block-end: 10px;
     padding-block-start: 16px;
+    margin-bottom: 3px;
     li {
       cursor: pointer;
     }
@@ -79,9 +80,8 @@
   }
 
   .menu-action {
-    // padding-block-start: 14px;
-    // display: flex;
-    // align-items: center;
+    margin-bottom: -5px;
+
     .icon-img {
       height: 0;
       padding: 9px;
@@ -95,7 +95,13 @@
     h3 {
       font-weight: 600;
       font-size: 14px;
-      // line-height: 32px;
+    }
+
+    .main-menu-user {
+      top: 270px;
+      &:hover {
+        background-color: #fff;
+      }
     }
   }
 
@@ -111,6 +117,7 @@
     margin: 0 4px 8px 4px;
     cursor: pointer;
     position: relative;
+    background-position: center center;
     .loader {
       width: 100%;
       border-radius: 0 0 8px 8px;
@@ -181,6 +188,7 @@
 
   .main-menu-search {
     position: relative;
+    padding-top: 10px;
   }
 }
 .show-main-menu {
@@ -198,8 +206,8 @@
 }
 
 .menu-about,
-.menu-action,
-.delete-board {
+.menu-action {
+  // .action-board {
   h3 {
     font-weight: 600;
     font-size: 14px;
@@ -216,7 +224,9 @@
   }
 }
 
-.delete-board {
+.action-board {
+  display: flex;
+  flex-direction: column;
   h3 {
     color: #5e6c84;
     cursor: pointer;
@@ -233,5 +243,16 @@
     // vertical-align: baseline;
     margin: 0px 0px 0 12px;
     padding: 0;
+  }
+
+  .main-menu-members-container {
+    display: flex;
+    width: 100%;
+    padding: 0 0 8px 7px;
+
+    &:hover {
+      cursor: unset;
+      background-color: rgba(0, 0, 0, 0%);
+    }
   }
 }

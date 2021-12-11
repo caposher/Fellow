@@ -8,8 +8,8 @@
 }
 .board-app {
   overflow-y: hidden;
+  overflow-x: hidden;
   min-height: 100vh;
-
 }
 
 body {
@@ -53,9 +53,8 @@ body {
 }
 .board {
   @media (max-width: 550px) {
-  height: calc(100vh - 69px);
-  padding-left: 8px;
-
+    height: calc(100vh - 69px);
+    padding-left: 8px;
   }
   display: flex !important;
   list-style: none;
@@ -70,13 +69,11 @@ body {
   padding-left: 28px;
   margin-inline-start: 4px;
   margin: 0;
-  transition: margin 0.5s;
-
-
+  transition: padding 0.5s;
 }
 
 .nav-open {
-  margin-left: 242px;
+  padding-left: 267px;
 }
 
 .add-list-wrapper {

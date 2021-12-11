@@ -7,6 +7,7 @@
   margin-block-end: 8px;
   padding: 6px 8px 2px;
   position: relative;
+  overflow: hidden;
   &.is-quick {
     width: 248px;
     min-height: 200px;
@@ -34,6 +35,10 @@
     .card-wrapper,
     .edit-title {
       padding: 0 8px 0;
+    }
+
+    .card-members-preview {
+      margin-right: 7px;
     }
   }
 
@@ -101,6 +106,8 @@
   }
 
   .card-icons {
+    float: left;
+
     .icon-wrapper {
       color: #5e6c84;
       display: inline-block;
@@ -221,9 +228,8 @@
     z-index: 1000;
   }
   .card-members-preview {
+    float: right;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
     margin: 0px -2px 0px 0;
     padding-bottom: 5px;
     padding-top: 2px;

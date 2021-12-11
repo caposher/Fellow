@@ -17,7 +17,7 @@
         <section class="inner-section">
           <div class="section-wrapper quick-switch">
             <div class="layout-twothirds-center account-form">
-              <h1>{{signUp ? 'Sign up for your account' : 'Log in to Fellow'}}</h1>
+              <h1>{{ signUp ? 'Sign up for your account' : 'Log in to Fellow' }}</h1>
               <p v-show="invalid">Invalid name or password</p>
               <div class="login-password-container">
                 <form id="login-form" @submit.prevent="submit">
@@ -74,7 +74,7 @@
                         id="submit"
                         type="submit"
                         class="button account-button button-green btn btn-success"
-                        :value="signUp ? 'Sign up': 'Log in'"
+                        :value="signUp ? 'Sign up' : 'Log in'"
                       />
                       <!-- @click="submit" -->
                     </div>
@@ -83,20 +83,21 @@
                 <div class="login-methods hide-when-two-factor">
                   <div class="login-method-separator">OR</div>
                   <div class="login-oauth-container">
-                    <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure" id="googleButton" class="google-button oauth-button" tabindex="0">
+                    <GoogleLogin
+                      :params="params"
+                      :onSuccess="onSuccess"
+                      :onFailure="onFailure"
+                      id="googleButton"
+                      class="google-button oauth-button"
+                      tabindex="0"
+                    >
                       <span id="google-icon" class="google-icon icon"></span>
-                      <span
-                        class="label"
-                        data-analytics-button="loginWithGmailButton"
-                      >Continue with Google</span>
+                      <span class="label" data-analytics-button="loginWithGmailButton">Continue with Google</span>
                     </GoogleLogin>
                     <div id="msftButton" class="msft-button oauth-button" tabindex="0">
                       <!-- <span id="google-icon" class="facebook-icon icon"></span> -->
                       <i class="fab fa-facebook-square facebook-icon"></i>
-                      <span
-                        class="label"
-                        data-analytics-button="loginWithMicrosoftButton"
-                      >Continue with Facebook</span>
+                      <span class="label" data-analytics-button="loginWithMicrosoftButton">Continue with Facebook</span>
                     </div>
                   </div>
                 </div>
@@ -139,11 +140,9 @@
               <ul class="bottom-form-link">
                 <li>
                   <!-- href="/signup" -->
-                  <a
-                    @click="toggleSignUp"
-                    class="signupLink bottom-form-link"
-                    data-analytics-link="signUpLoginLink"
-                  >{{signUp ? 'Already have an account? Log In' : 'Sign up for an account'}}</a>
+                  <a @click="toggleSignUp" class="signupLink bottom-form-link" data-analytics-link="signUpLoginLink">{{
+                    signUp ? 'Already have an account? Log In' : 'Sign up for an account'
+                  }}</a>
                 </li>
               </ul>
             </div>
@@ -151,12 +150,12 @@
         </section>
       </div>
       <!--  -->
-      <facebook-login class="button"
+      <!-- <facebook-login class="button"
       appId="668161277923698"
       @logout="logout"
       @login="getFBUserData"
       @get-initial-status="getFBUserData">
-    </facebook-login>
+    </facebook-login> -->
       <!-- :renderParams="renderParams" -->
       <!-- <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure">Google</GoogleLogin> -->
     </section>
@@ -170,9 +169,9 @@
 </template>
 
 <script>
-import logo from "../cmps/logo.cmp.vue";
-import { focus } from "vue-focus";
-import GoogleLogin from "vue-google-login";
+import logo from '../cmps/logo.cmp.vue';
+import { focus } from 'vue-focus';
+import GoogleLogin from 'vue-google-login';
 import facebookLogin from 'facebook-login-vuejs';
 
 export default {
@@ -180,27 +179,26 @@ export default {
   data() {
     return {
       user: {
-        fullname: "",
-        username: "demo",
-        password: "demo"
+        fullname: '',
+        username: 'demo',
+        password: 'demo',
       },
       googleUser: {
-        fullname: "",
-        username: "",
-        imgUrl: ""
+        fullname: '',
+        username: '',
+        imgUrl: '',
       },
       signUp: false,
       isLoading: false,
       invalid: false,
       params: {
-        client_id:
-          "961995621272-60aj5sk5o9vlm2a68pqoqbtd32uo5ka3.apps.googleusercontent.com"
+        client_id: '961995621272-60aj5sk5o9vlm2a68pqoqbtd32uo5ka3.apps.googleusercontent.com',
       },
       renderParams: {
         width: 250,
         height: 50,
-        longtitle: true
-      }
+        longtitle: true,
+      },
     };
   },
   methods: {
@@ -209,36 +207,31 @@ export default {
       this.invalid = false;
       try {
         await this.$store.dispatch({
-          type: this.signUp ? "signup" : "login",
+          type: this.signUp ? 'signup' : 'login',
           username: this.user.username,
           password: this.user.password,
-          fullname: this.signUp ? this.user.fullname : ""
+          fullname: this.signUp ? this.user.fullname : '',
         });
-        this.user.fullname = "";
-        this.user.username = "demo";
-        this.user.password = "demo";
-        this.$router.push("/home");
+        this.user.fullname = '';
+        this.user.username = 'demo';
+        this.user.password = 'demo';
+        this.$router.push('/home');
       } catch (err) {
-        console.log(
-          `cant ${this.signUp ? "signup" : "login "} user:  ${
-            this.user.username
-          }`,
-          err
-        );
+        console.log(`cant ${this.signUp ? 'signup' : 'login '} user:  ${this.user.username}`, err);
         this.invalid = true;
-        this.user.password = "";
+        this.user.password = '';
       } finally {
         this.isLoading = false;
       }
     },
     toggleSignUp() {
       if (this.signUp) {
-        this.user.username = "demo";
-        this.user.password = "demo";
+        this.user.username = 'demo';
+        this.user.password = 'demo';
       } else {
-        this.user.username = "";
-        this.user.password = "";
-        this.user.fullname = "";
+        this.user.username = '';
+        this.user.password = '';
+        this.user.fullname = '';
       }
       this.signUp = !this.signUp;
     },
@@ -250,33 +243,32 @@ export default {
         this.googleUser.fullname = userFromGoogle.jf;
         this.googleUser.username = userFromGoogle.pv;
         this.googleUser.imgUrl = userFromGoogle.oN;
-        await this.$store.dispatch( {
+        await this.$store.dispatch({
           type: 'googleLogin',
           username: this.googleUser.username,
           fullname: this.googleUser.fullname,
-          imgUrl: this.googleUser.imgUrl
+          imgUrl: this.googleUser.imgUrl,
         });
-        this.$router.push("/home");
-
-      }catch(err){
+        this.$router.push('/home');
+      } catch (err) {
         console.log('cant login with google', err);
       }
     },
     onFailure(err) {
-      console.log("failed", err);
+      console.log('failed', err);
     },
-    getFBUserData(data){
+    getFBUserData(data) {
       console.log(data);
     },
-   logout(){
+    logout() {
       console.log('logged out');
-    }
+    },
   },
   components: {
     logo,
     GoogleLogin,
-    facebookLogin
-  }
+    facebookLogin,
+  },
 };
 </script>
 

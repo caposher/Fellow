@@ -90,14 +90,16 @@ export const boardStore = {
     async updateBoard({ commit }, { board }) {
       const boardId = board._id;
       try {
+        const filterBy = {user: await userService.getLoggedInUser()}
         commit({ type: 'setBoard', board: board });
         await boardService.save(board);
-        const user = await userService.getLoggedInUser()
-        const filterBy = {user}
         const updatedBoards = await boardService.query(filterBy);
         commit({ type: 'setBoards', boards: updatedBoards });
       } catch (err) {
         const board = await boardService.getById(boardId);
+        const filterBy = {user: await userService.getLoggedInUser()}
+        const updatedBoards = await boardService.query(filterBy);
+        commit({ type: 'setBoards', boards: updatedBoards });
         commit({ type: 'setBoard', board });
         console.log('failed to update board');
       }
@@ -105,7 +107,8 @@ export const boardStore = {
     async deleteBoard({ commit }, { boardId }) {
       try {
         await boardService.remove(boardId);
-        const boards = await boardService.query();
+        const filterBy = {user: await userService.getLoggedInUser()}
+        const boards = await boardService.query(filterBy);
         commit({ type: 'setBoards', boards });
         commit({ type: 'setBoard', board: null });
       } catch (err) {
@@ -133,8 +136,7 @@ export const boardStore = {
         const user = await userService.getLoggedInUser()
         const board = boardService.getEmptyBoard(title,user);
         const savedBoard = boardService.save(board);
-        const filterBy = {user}
-        console.log(filterBy);
+        const filterBy = {user: await userService.getLoggedInUser()}
         const boards = await boardService.query(filterBy);
         commit({ type: 'setBoard', board: savedBoard });
         commit({ type: 'setBoards', boards });

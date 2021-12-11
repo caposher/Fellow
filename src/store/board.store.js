@@ -45,7 +45,7 @@ export const boardStore = {
       return state.notification.updatesCount;
     },
     getActivities(state) {
-      return state.currBoard.activities;
+      return state.currBoard ? state.currBoard.activities : [];
     },
   },
 
@@ -87,9 +87,9 @@ export const boardStore = {
       commit({ type: 'setBoard', board });
       if (haveUpdate) commit({ type: 'addNotificationCnt' });
     },
-    async loadBoards({ commit}) {
+    async loadBoards({ commit }) {
       try {
-        const filterBy = {user: await userService.getLoggedInUser()}
+        const filterBy = { user: await userService.getLoggedInUser() };
         console.log(filterBy);
         const boards = await boardService.query(filterBy);
         console.log('boards', boards);
@@ -113,14 +113,14 @@ export const boardStore = {
     async updateBoard({ commit }, { board }) {
       const boardId = board._id;
       try {
-        const filterBy = {user: await userService.getLoggedInUser()}
+        const filterBy = { user: await userService.getLoggedInUser() };
         commit({ type: 'setBoard', board: board });
         await boardService.save(board);
         const updatedBoards = await boardService.query(filterBy);
         commit({ type: 'setBoards', boards: updatedBoards });
       } catch (err) {
         const board = await boardService.getById(boardId);
-        const filterBy = {user: await userService.getLoggedInUser()}
+        const filterBy = { user: await userService.getLoggedInUser() };
         const updatedBoards = await boardService.query(filterBy);
         commit({ type: 'setBoards', boards: updatedBoards });
         commit({ type: 'setBoard', board });
@@ -130,7 +130,7 @@ export const boardStore = {
     async deleteBoard({ commit }, { boardId }) {
       try {
         await boardService.remove(boardId);
-        const filterBy = {user: await userService.getLoggedInUser()}
+        const filterBy = { user: await userService.getLoggedInUser() };
         const boards = await boardService.query(filterBy);
         commit({ type: 'setBoards', boards });
         commit({ type: 'setBoard', board: null });
@@ -156,10 +156,10 @@ export const boardStore = {
     },
     async createBoard({ commit }, { title }) {
       try {
-        const user = await userService.getLoggedInUser()
-        const board = boardService.getEmptyBoard(title,user);
+        const user = await userService.getLoggedInUser();
+        const board = boardService.getEmptyBoard(title, user);
         const savedBoard = await boardService.save(board);
-        const filterBy = {user: await userService.getLoggedInUser()}
+        const filterBy = { user: await userService.getLoggedInUser() };
         const boards = await boardService.query(filterBy);
         commit({ type: 'setBoard', board: savedBoard });
         commit({ type: 'setBoards', boards });

@@ -65,9 +65,11 @@ export const boardStore = {
     pushedBoard({ commit }, { board }) {
       commit({ type: 'setBoard', board });
     },
-    async loadBoards({ commit }) {
+    async loadBoards({ commit}) {
       try {
-        const boards = await boardService.query();
+        const filterBy = {user: await userService.getLoggedInUser()}
+        console.log(filterBy);
+        const boards = await boardService.query(filterBy);
         commit({ type: 'setBoards', boards });
       } catch (err) {
         console.log('cant load boards:', err);
@@ -90,7 +92,9 @@ export const boardStore = {
       try {
         commit({ type: 'setBoard', board: board });
         await boardService.save(board);
-        const updatedBoards = await boardService.query();
+        const user = await userService.getLoggedInUser()
+        const filterBy = {user}
+        const updatedBoards = await boardService.query(filterBy);
         commit({ type: 'setBoards', boards: updatedBoards });
       } catch (err) {
         const board = await boardService.getById(boardId);
@@ -126,16 +130,21 @@ export const boardStore = {
     },
     async createBoard({ commit }, { title }) {
       try {
-        const board = boardService.getEmptyBoard(title);
-        const savedBoard = boardService.save(board, activity);
+        const user = await userService.getLoggedInUser()
+        const board = boardService.getEmptyBoard(title,user);
+        const savedBoard = boardService.save(board);
+        const filterBy = {user}
+        console.log(filterBy);
+        const boards = await boardService.query(filterBy);
         commit({ type: 'setBoard', board: savedBoard });
-        commit({ type: 'setBoards', boards: savedBoard });
+        commit({ type: 'setBoards', boards });
         return savedBoard;
       } catch (err) {
         console.log("can't create board", err);
       }
     },
     async addList({ commit }, { board, title }) {
+      console.log('board', board);
       const list = boardService.getEmptyList(title);
       const activityText = `added list ${list.title}`;
       const activity = boardService.getActivity(activityText);
@@ -243,7 +252,7 @@ export const boardStore = {
       try {
         const board = await boardService.setBackground(boardId, style);
         commit({ type: 'setBoard', board });
-        dispatch({ type: 'loadBoards' });
+        // dispatch({ type: 'loadBoards' });
       } catch (err) {
         console.log('failed to set background', err);
       }

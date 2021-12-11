@@ -155,6 +155,11 @@ export default {
     try {
       await this.$store.dispatch({ type: 'loadBoard', boardId });
       await this.$store.dispatch({ type: 'loadBoards' });
+      // const filterBy = {user: this.$store.getters.user}
+      // await this.$store.dispatch({ type: 'loadBoards' , filterBy});
+      console.log('board',this.$store.getters.board);
+      console.log('boards',this.$store.getters.boards);
+      // console.log('user', filterBy.user);
       socketService.on('board pushed', this.pushedBoard);
     } catch (err) {
       console.log('problem with getting board', err);

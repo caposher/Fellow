@@ -405,7 +405,7 @@ export default {
     console.log(this.card, 'card');
   },
   mounted() {
-    this.$refs.desc.innerText = this.cardToEdit.description;
+    this.$refs.desc.innerText =this.cardToEdit.description ? this.cardToEdit.description : '';
     // this.$refs.desc.innerText.select();
   },
   computed: {
@@ -424,8 +424,9 @@ export default {
     },
     activitiesToShow() {
       let activities = [];
-      if (this.boardActivities) {
-        activities = this.boardActivities.filter((act) => act.card.id === this.card.id);
+      if (this.boardActivities &&this.boardActivities.length) {
+        activities = this.boardActivities.filter((act) => act.card && 
+ act.card.id === this.card.id);
       }
       return activities;
     },

@@ -143,9 +143,13 @@ export default {
         };
       }
       try {
+        
         console.log('style', style);
         const boardId = this.$store.getters.boardId;
         await this.$store.dispatch({ type: 'setBackground', boardId, style });
+        //  const filterBy = {user: this.$store.getters.user}
+      // await this.$store.dispatch({ type: 'loadBoards' , filterBy});
+      await this.$store.dispatch({ type: 'loadBoards'});
         this.loading = '';
       } catch (err) {
         console.log('cant set board bg', err);

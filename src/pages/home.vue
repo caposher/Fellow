@@ -204,6 +204,8 @@ export default {
   async created() {
     // get userId
     await this.$store.dispatch({ type: "loadBoards" });
+          // const filterBy = {user: this.$store.getters.user}
+      // await this.$store.dispatch({ type: 'loadBoards' , filterBy});
   },
   computed: {
     boards() {

@@ -31,10 +31,10 @@
         :logoutButton="true"
         :onSuccess="logout"
       >Logout</GoogleLogin>
-      <div class="logout" @click.stop="fbLogout" v-if="user.fbUser">
+      <!-- <div class="logout" @click.stop="fbLogout" v-if="user.fbUser">
         <button class="user-btn">Logout</button>
-      </div>
-      <div class="logout" @click.stop="logout" v-if="!user.googleUser && !user.fbUser">
+      </div> -->
+      <div class="logout" @click.stop="logout" v-else>
         <button class="user-btn">Logout</button>
       </div>
     </section>
@@ -83,18 +83,18 @@ export default {
         console.log("cant logout", err);
       }
     },
-    async fbLogout() {
-      const copyThis = this;
-      // console.log("fb");
-      var connected = true;
-      window.FB.logout(async function(response) {
-        // console.log("fb logged out", response);
-        if (connected) {
-          copyThis.logout();
-          connected = false;
-        } else return;
-      });
-    }
+    // async fbLogout() {
+    //   const copyThis = this;
+    //   // console.log("fb");
+    //   var connected = true;
+    //   window.FB.logout(async function(response) {
+    //     // console.log("fb logged out", response);
+    //     if (connected) {
+    //       copyThis.logout();
+    //       connected = false;
+    //     } else return;
+    //   });
+    // }
   },
   components: {
     Avatar,

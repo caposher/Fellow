@@ -3089,73 +3089,75 @@ export const boardService = {
   getBgImgs,
   setBackground,
   getActivity,
+  saveTask
 };
 
 _createBoards();
 
-function query() {
-  return storageService.query(KEY);
+// function query() {
+//   return storageService.query(KEY);
+// }
+
+// function getById(id) {
+//   return storageService.get(KEY, id);
+// }
+
+// function remove(id) {
+//   return storageService.remove(KEY, id);
+// }
+
+// function save(board) {
+//   const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
+//   return savedBoard;
+// }
+
+async function query(filterBy) {
+  
+  try {
+    return httpService.get('board/', filterBy)
+  } catch (err) {
+    console.log('error:', err)
+  }
 }
 
-function getById(id) {
-  return storageService.get(KEY, id);
+async function getById(id) {
+  try {
+    return httpService.get('board/' + id)
+  } catch (err) {
+    console.log('error:', err)
+  }
 }
 
-function remove(id) {
-  return storageService.remove(KEY, id);
+async function save(board) {
+  try {
+    if (board._id) {
+      socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
+      return httpService.put('board/' + board._id, board)
+
+    } else {
+      return httpService.post('board/', board)
+    }
+  } catch (err) {
+    console.log('err', err)
+  }
 }
 
-function save(board) {
-  const savedBoard = board._id ? storageService.put(KEY, board) : storageService.post(KEY, board);
-  return savedBoard;
+async function remove(id) {
+  try {
+    return httpService.delete('board/' + id)
+  } catch (err) {
+    console.log('error:', err)
+  }
 }
 
-// async function query(filterBy) {
-//   try {
-//     return httpService.get('board/', filterBy)
-//   } catch (err) {
-//     console.log('error:', err)
-//   }
-// }
+function saveTask(boardId, groupId, task, activity) {
+  const board = getById(boardId)
 
-// async function getById(id) {
-//   try {
-//     return httpService.get('board/' + id)
-//   } catch (err) {
-//     console.log('error:', err)
-//   }
-// }
-
-// async function save(board) {
-//   try {
-//     if (board._id) {
-//       socketService.emit(SOCKET_EVENT_BOARD_UPDATED, board)
-//       return httpService.put('board/' + board._id, board)
-
-//     } else {
-//       return httpService.post('board/', board)
-//     }
-//   } catch (err) {
-//     console.log('err', err)
-//   }
-// }
-
-// async function remove(id) {
-//   try {
-//     return httpService.delete('board/' + id)
-//   } catch (err) {
-//     console.log('error:', err)
-//   }
-// }
-
-// function saveTask(boardId, groupId, task, activity) {
-//   const board = getById(boardId)
-
-//   // TODO: find the task, and update
-//   board.activities.unshift(activity)
-//   save(board)
-//   return board
-// }
+  // TODO: find the task, and update
+  board.activities.unshift(activity)
+  save(board)
+  return board
+}
 
 async function getListAndCardById(boardId, cardId) {
   const board = await getById(boardId);
@@ -3238,12 +3240,12 @@ async function removeCard(cardId, listToUpdate, boardId) {
 //   }
 // }
 
-function getEmptyBoard(title) {
+function getEmptyBoard(title,user) {
   return {
     // _id: '',
     title,
     createdAt: '',
-    createdBy: 'user',
+    createdBy: user,
     style: {
       imgUrl:
         'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/e1b4d655b33c1ef09b9aea6c6360f70c/photo-1637928114342-05b15ee4034e.jpg',
@@ -3257,8 +3259,9 @@ function getEmptyBoard(title) {
       { id: utilService.makeId(), txt: 'test5', colorClass: 'label-purple' },
       { id: utilService.makeId(), txt: 'test6', colorClass: 'label-blue' },
     ],
-    members: [],
+    members: [user],
     lists: [],
+    activities:[]
   };
 }
 

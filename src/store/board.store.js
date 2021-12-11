@@ -92,6 +92,7 @@ export const boardStore = {
         const filterBy = {user: await userService.getLoggedInUser()}
         console.log(filterBy);
         const boards = await boardService.query(filterBy);
+        console.log('boards', boards);
         commit({ type: 'setBoards', boards });
       } catch (err) {
         console.log('cant load boards:', err);

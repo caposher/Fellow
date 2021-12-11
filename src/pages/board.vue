@@ -177,10 +177,14 @@ export default {
   },
   methods: {
     pushedBoard(board) {
-      // console.log("board - pushBoard");
+      const lastUpdate = this.$store.getters.getLastUpdateTime;
+      const haveUpdate = board.activities[0].createdAt > lastUpdate;
+      console.log('changes', haveUpdate);
+
       this.$store.dispatch({
         type: 'pushedBoard',
         board,
+        haveUpdate,
       });
     },
 

@@ -30,47 +30,47 @@ function getLoggedInUser() {
 
 async function login(username, password) {
   try {
-    // const user = await httpService.post('auth/login', { username, password });
-    // console.log('Got User:', user);
-    // const userToSave = JSON.parse(JSON.stringify(user));
-    // sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToSave));
-    // return userToSave;
-    let user;
-    switch (username) {
-      case 'adam':
-        user = {
-          _id: 'u103',
-          fullname: 'Adam Bercovich',
-          username: 'adamBerco',
-          color: 'green',
-          imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg',
-        };
-        break;
-      case 'oshra':
-        user = {
-          _id: 'u101',
-          fullname: 'Oshra Hartuv',
-          username: 'oshraHartuv1',
-          color: 'pink',
-          imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg',
-        };
-        break;
-      case 'osher':
-        user = {
-          _id: 'u102',
-          fullname: 'Osher Cappelli',
-          username: 'osherCappelli',
-          color: 'blue',
-          imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg',
-        };
-        break;
-      default:
-        user = {
-          _id: 'u111',
-          fullname: username,
-          username: username,
-        };
-    }
+    const user = await httpService.post('auth/login', { username, password });
+    console.log('Got User:', user);
+    const userToSave = JSON.parse(JSON.stringify(user));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToSave));
+    return userToSave;
+    // let user;
+    // switch (username) {
+    //   case 'adam':
+    //     user = {
+    //       _id: 'u103',
+    //       fullname: 'Adam Bercovich',
+    //       username: 'adamBerco',
+    //       color: 'green',
+    //       imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638867158/ohpwye1f7oidmqy7cujl.jpg',
+    //     };
+    //     break;
+    //   case 'oshra':
+    //     user = {
+    //       _id: 'u101',
+    //       fullname: 'Oshra Hartuv',
+    //       username: 'oshraHartuv1',
+    //       color: 'pink',
+    //       imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865116/zlvylnqwvx8bcvp66lpn.jpg',
+    //     };
+    //     break;
+    //   case 'osher':
+    //     user = {
+    //       _id: 'u102',
+    //       fullname: 'Osher Cappelli',
+    //       username: 'osherCappelli',
+    //       color: 'blue',
+    //       imgUrl: 'https://res.cloudinary.com/oshra/image/upload/v1638865093/fefzoaamkdnpvk9pt4sj.jpg',
+    //     };
+    //     break;
+    //   default:
+    //     user = {
+    //       _id: 'u111',
+    //       fullname: username,
+    //       username: username,
+    //     };
+    // }
 
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     return user;

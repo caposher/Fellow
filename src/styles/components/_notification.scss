@@ -1,0 +1,13 @@
+.bell-notify {
+  background-color: #eb5a46 !important;
+}
+
+.notification-popup {
+  display: flex;
+  width: 333px;
+  flex-direction: column;
+  padding-left: 20px;
+  align-items: center;
+  height: 87vh;
+  overflow-y: scroll;
+}

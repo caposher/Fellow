@@ -39,7 +39,7 @@
         <i class="icon-sm icon-star"></i>
       </span>
       <Container
-        tag="P"
+        tag="p"
         group-name="card-list"
         @drop="onDrop"
         @onDragStart="onDragStart()"

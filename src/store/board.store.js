@@ -157,7 +157,7 @@ export const boardStore = {
       try {
         const user = await userService.getLoggedInUser()
         const board = boardService.getEmptyBoard(title,user);
-        const savedBoard = boardService.save(board);
+        const savedBoard = await boardService.save(board);
         const filterBy = {user: await userService.getLoggedInUser()}
         const boards = await boardService.query(filterBy);
         commit({ type: 'setBoard', board: savedBoard });

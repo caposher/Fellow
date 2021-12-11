@@ -19,6 +19,7 @@
             <div class="layout-twothirds-center account-form">
               <h1>{{signUp ? 'Sign up for your account' : 'Log in to Fellow'}}</h1>
               <p v-show="invalid">Invalid name or password</p>
+              <p v-show="error">An error accrued, please try again</p>
               <div class="login-password-container">
                 <form id="login-form" @submit.prevent="submit">
                   <div class="login-password-container-email">
@@ -83,7 +84,14 @@
                 <div class="login-methods hide-when-two-factor">
                   <div class="login-method-separator">OR</div>
                   <div class="login-oauth-container">
-                    <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure" id="googleButton" class="google-button oauth-button" tabindex="0">
+                    <GoogleLogin
+                      :params="params"
+                      :onSuccess="logInWithGoogle"
+                      :onFailure="onFailure"
+                      id="googleButton"
+                      class="google-button oauth-button"
+                      tabindex="0"
+                    >
                       <span id="google-icon" class="google-icon icon"></span>
                       <span
                         class="label"
@@ -96,49 +104,15 @@
                       <span
                         class="label"
                         data-analytics-button="loginWithMicrosoftButton"
+                        @click="logInWithFacebook"
                       >Continue with Facebook</span>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- <div class="hidden">
-                <form id="login-atlassian-google" action="/authenticate_openid" method="post">
-                  <input type="hidden" name="subProvider" value="google" />
-                  <input type="hidden" name="isSignup" value="false" />
-                  <input type="hidden" name="locale" id="login-atlassian-google-locale" value />
-                </form>
-                <form id="login-atlassian" action="/authenticate_openid" method="post">
-                  <input
-                    type="hidden"
-                    name="openid_identifier"
-                    value="https://id.atlassian.com/openid/v2/op"
-                  />
-                  <input type="hidden" name="provider" value="atlassian" />
-                  <input type="hidden" name="restrictEmail" value="true" />
-                  <input type="hidden" name="locale" id="login-atlassian-locale" value />
-                  <input type="hidden" name="user" id="login-atlassian-user" value />
-                  <input type="hidden" name="confirmNew" value="true" />
-                </form>
-                <form id="login-atlassian-apple" action="/authenticate_openid" method="post">
-                  <input type="hidden" name="provider" value="atlassian" />
-                  <input type="hidden" name="subProvider" value="apple" />
-                  <input type="hidden" name="locale" id="login-atlassian-apple-locale" value />
-                </form>
-                <form id="login-atlassian-msft" action="/authenticate_openid" method="post">
-                  <input type="hidden" name="provider" value="atlassian" />
-                  <input type="hidden" name="subProvider" value="microsoft" />
-                  <input type="hidden" name="locale" id="login-atlassian-msft-locale" value />
-                </form>
-                <form id="login-atlassian-slack" action="/authenticate_openid" method="post">
-                  <input type="hidden" name="provider" value="atlassian" />
-                  <input type="hidden" name="subProvider" value="slack" />
-                  <input type="hidden" name="locale" id="login-atlassian-slack-locale" value />
-                </form>
-              </div>-->
               <hr class="bottom-form-separator" />
               <ul class="bottom-form-link">
                 <li>
-                  <!-- href="/signup" -->
                   <a
                     @click="toggleSignUp"
                     class="signupLink bottom-form-link"
@@ -150,22 +124,12 @@
           </div>
         </section>
       </div>
-      <!--  -->
-      <facebook-login class="button"
-      appId="668161277923698"
-      @logout="logout"
-      @login="getFBUserData"
-      @get-initial-status="getFBUserData">
-    </facebook-login>
-      <!-- :renderParams="renderParams" -->
-      <!-- <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure">Google</GoogleLogin> -->
+      <br />
     </section>
     <div v-else class="loader">
       <img :src="require('../assets/img/loader.svg')" alt />
     </div>
     <div class="fellow-right"></div>
-
-    <!-- <img class="fellow-right" src="../assets/img/fellow-right.svg" alt="" /> -->
   </div>
 </template>
 
@@ -173,7 +137,6 @@
 import logo from "../cmps/logo.cmp.vue";
 import { focus } from "vue-focus";
 import GoogleLogin from "vue-google-login";
-import facebookLogin from 'facebook-login-vuejs';
 
 export default {
   directives: { focus },
@@ -184,29 +147,63 @@ export default {
         username: "demo",
         password: "demo"
       },
-      googleUser: {
-        fullname: "",
-        username: "",
-        imgUrl: ""
-      },
       signUp: false,
       isLoading: false,
       invalid: false,
+      error: false,
       params: {
         client_id:
           "961995621272-60aj5sk5o9vlm2a68pqoqbtd32uo5ka3.apps.googleusercontent.com"
-      },
-      renderParams: {
-        width: 250,
-        height: 50,
-        longtitle: true
       }
     };
   },
+  async created() {
+    // window.fbAsyncInit = function() {
+    //   window.FB.init({
+    //     appId: "668161277923698",
+    //     xfbml: true,
+    //     version: "v2.7"
+    //   });
+    //   window.FB.AppEvents.logPageView();
+    // };
+
+    // (function(d, s, id) {
+    //   var js,
+    //     fjs = d.getElementsByTagName(s)[0];
+    //   if (d.getElementById(id)) {
+    //     return;
+    //   }
+    //   js = d.createElement(s);
+    //   js.id = id;
+    //   js.src = "//connect.facebook.net/en_US/sdk.js";
+    //   fjs.parentNode.insertBefore(js, fjs);
+    // })(document, "script", "facebook-jssdk");
+
+  },
   methods: {
+    async loginExternal(username, fullname, imgUrl, googleUser, fbUser) {
+      try {
+        await this.$store.dispatch({
+          type: "externalLogin",
+          username,
+          fullname,
+          imgUrl,
+          googleUser: googleUser,
+          fbUser: fbUser
+        });
+        this.$router.push("/home");
+      } catch (err) {
+        console.log(
+          "cant login with external " + googleUser ? "googl user" : "fb user",
+          err
+        );
+        this.error = true;
+      }
+    },
     async submit() {
       this.isLoading = true;
       this.invalid = false;
+      this.error = false;
       try {
         await this.$store.dispatch({
           type: this.signUp ? "signup" : "login",
@@ -241,41 +238,60 @@ export default {
         this.user.fullname = "";
       }
       this.signUp = !this.signUp;
+      this.error = false;
     },
-    async onSuccess(googleUser) {
+    async logInWithGoogle(googleUser) {
       try {
-        console.log(googleUser);
-        console.log(googleUser.getBasicProfile());
+        this.error = false;
         const userFromGoogle = googleUser.getBasicProfile();
-        this.googleUser.fullname = userFromGoogle.jf;
-        this.googleUser.username = userFromGoogle.pv;
-        this.googleUser.imgUrl = userFromGoogle.oN;
-        await this.$store.dispatch( {
-          type: 'googleLogin',
-          username: this.googleUser.username,
-          fullname: this.googleUser.fullname,
-          imgUrl: this.googleUser.imgUrl
-        });
-        this.$router.push("/home");
-
-      }catch(err){
-        console.log('cant login with google', err);
+        this.loginExternal(
+          userFromGoogle.pv,
+          userFromGoogle.jf,
+          userFromGoogle.oN,
+          true,
+          false,
+        );
+      } catch (err) {
+        console.log("cant login with google", err);
+        this.error = true;
       }
     },
     onFailure(err) {
       console.log("failed", err);
+      this.error = true;
     },
-    getFBUserData(data){
-      console.log(data);
-    },
-   logout(){
-      console.log('logged out');
+    async logInWithFacebook() {
+      this.error = false;
+      const copyThis = this;
+      window.FB.login(
+        async function(response) {
+          if (response.authResponse) {
+            FB.api("/me", { fields: "name, email, picture" }, async function(
+              response
+            ) {
+              console.log(response);
+              copyThis.loginExternal(
+                response.email,
+                response.name,
+                response.picture.data.url,
+                false,
+                true
+              );
+            });
+          } else {
+            this.error = true;
+            alert("User cancelled login or did not fully authorize.");
+          }
+        },
+        {
+          return_scopes: true
+        }
+      );
     }
   },
   components: {
     logo,
-    GoogleLogin,
-    facebookLogin
+    GoogleLogin
   }
 };
 </script>

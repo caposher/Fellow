@@ -31,29 +31,13 @@
         :logoutButton="true"
         :onSuccess="logout"
       >Logout</GoogleLogin>
-      <div class="logout" @click.stop="logout" v-else>
+      <div class="logout" @click.stop="fbLogout" v-if="user.fbUser">
+        <button class="user-btn">Logout</button>
+      </div>
+      <div class="logout" @click.stop="logout" v-if="!user.googleUser && !user.fbUser">
         <button class="user-btn">Logout</button>
       </div>
     </section>
-
-    <!-- <form @submit.prevent="addAttach">
-      <label class="img-upload-container">
-        Computer
-        <div>
-          <label class="clickable add-img" v-if="!isLoading">
-            <input type="file" id="uploadImg" @change="onUploadImg" hidden />
-          </label>
-          <div v-else class="loader">
-            <img :src="require('../assets/img/loader.svg')" alt />
-          </div>
-        </div>
-      </label>
-      <label v-if="!isLoading">Attach a link</label>
-      <input v-if="!isLoading" type="text" v-model="newAttach.href" />
-      <label v-show="newAttach.href">Link name (optional)</label>
-      <input v-show="newAttach.href" type="text" v-model="newAttach.name" />
-      <button class="submit">Add</button>
-    </form>-->
   </section>
 </template>
 
@@ -75,17 +59,41 @@ export default {
       }
     };
   },
+  created() {
+    // console.log('created');
+    // window.fbAsyncInit = function() {
+    //   window.FB.init({
+    //     appId: "668161277923698",
+    //     xfbml: true,
+    //     version: "v2.7"
+    //   });
+    //   window.FB.AppEvents.logPageView();
+    // };
+  },
   methods: {
     close() {
       this.$emit("closePopup");
     },
     async logout() {
+      if (!this.user) return;
       try {
         await this.$store.dispatch({ type: "logout" });
         this.$router.push("/");
       } catch (err) {
         console.log("cant logout", err);
       }
+    },
+    async fbLogout() {
+      const copyThis = this;
+      // console.log("fb");
+      var connected = true;
+      window.FB.logout(async function(response) {
+        // console.log("fb logged out", response);
+        if (connected) {
+          copyThis.logout();
+          connected = false;
+        } else return;
+      });
     }
   },
   components: {

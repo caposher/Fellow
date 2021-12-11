@@ -11,7 +11,7 @@ import appHeader from "@/cmps/app-header.cmp.vue";
 export default {
   data() {
     return {
-      onBoard: false,
+      onBoard: false
     };
   },
   async created() {
@@ -21,6 +21,27 @@ export default {
     } catch (err) {
       console.log("err", err);
     }
+
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId: "668161277923698",
+        xfbml: true,
+        version: "v2.7"
+      });
+      window.FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
   },
   watch: {
     "$route.params.boardId": {
@@ -43,29 +64,26 @@ export default {
         }
         // console.log(this.onBoard);
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   methods: {},
   computed: {
     board() {
       var board = this.$store.getters.board;
-      // if (board) {
-      //   board.imgUrl = "/img/background1.jpg";
-      // }
       return board;
     },
     appStyle() {
       if (!this.board || !this.board.style) return;
       if (this.board.style.imgUrl)
         return {
-          backgroundImage: `url("${this.board.style.imgUrl}")`,
+          backgroundImage: `url("${this.board.style.imgUrl}")`
         };
       return {
-        backgroundColor: this.board.style.bgColor,
+        backgroundColor: this.board.style.bgColor
       };
-    },
+    }
   },
-  components: {},
+  components: {}
 };
 </script>

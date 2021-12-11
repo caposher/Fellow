@@ -14,15 +14,13 @@ export const userService = {
   logout,
   signup,
   query,
-  googleLogin
+  externalLogin,
 };
 
 function query() {
   return storageService.query(KEY);
 }
 
-// Debug technique
-// window.userService = userService
 
 function getLoggedInUser() {
   return JSON.parse(sessionStorage.getItem(STORAGE_KEY));
@@ -82,9 +80,11 @@ async function login(username, password) {
   }
 }
 
-async function googleLogin(username, fullname, imgUrl) {
+async function externalLogin(username, fullname, imgUrl,googleUser,
+  fbUser) {
   try {
-    const user = await httpService.post('auth/googleLogin', { username, fullname, imgUrl });
+    const user = await httpService.post('auth/externalLogin', { username, fullname, imgUrl,googleUser,
+      fbUser });
     console.log('Got User:', user);
     const userToSave = JSON.parse(JSON.stringify(user));
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userToSave));

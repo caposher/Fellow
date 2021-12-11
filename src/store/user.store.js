@@ -59,9 +59,11 @@ export const userStore = {
         throw err
       }
     },
-    async googleLogin({ dispatch }, { username, fullname, imgUrl }) {
+    async externalLogin({ dispatch }, { username, fullname, imgUrl,googleUser,
+      fbUser }) {
       try {
-        await userService.googleLogin(username, fullname, imgUrl);
+        await userService.externalLogin(username, fullname, imgUrl,googleUser,
+          fbUser);
         dispatch({ type: 'setUser' });
       } catch (err) {
         console.log('cant login user', err);

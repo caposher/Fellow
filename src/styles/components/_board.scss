@@ -5,6 +5,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   overflow-y: hidden;
+  @media (max-width: 550px) {
+    header.main-header {
+      display: none;
+    }
+  }
+
 }
 .board-app {
   overflow-y: hidden;

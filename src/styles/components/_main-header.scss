@@ -1,6 +1,8 @@
 header.main-header {
   @media (max-width: 550px) {
-    display: none;
+    .input-container{
+      display: none;
+    }
   }
   display: flex;
   justify-content: space-between;

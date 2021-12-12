@@ -34,8 +34,6 @@
 
   .title,
   .title-small {
-    // background-color: #00000014;
-    // color: #172b4d;
     flex-grow: 1;
     font-weight: 700;
     padding: 0 12px;
@@ -169,6 +167,7 @@
     &.light {
       .title-small,
       .bh-btn {
+
         color: #fff;
         background-color: transparent;
       }
@@ -182,11 +181,15 @@
       display: none;
     }
     .show-small {
+      // background-color: #faefef25;
+      // border-radius: 3px;
       display: inline-block;
       line-height: 40px;
       margin: 0;
       margin-right: 8px;
       padding: 0;
+      // min-height: 44px;
+      // min-width: 44px;
       span {
         padding-right: 13px;
         padding-top: 2px;
@@ -214,11 +217,15 @@
 
     .title-small-check {
       right: -13px;
+      // background-color: #faefef25;
+      // border-radius: 3px;
       span {
         font-size: 24px;
       }
     }
     .close-small {
+      // background-color: #faefef25;
+      // border-radius: 3px;
       span {
         font-size: 20px;
       }
@@ -228,7 +235,8 @@
       float: left;
       display: block;
       padding: 0;
-
+//       background-color: #faefef25;
+// border-radius: 3px;
       width: 44px;
       height: 44px;
       span {
@@ -240,12 +248,13 @@
       display: inline-block;
       width: 100%;
       width: calc(100vw - 100px);
-
+      
+      
       .title-small {
         display: inline-block;
         width: 100%;
         margin-top: 8px;
-
+    
         &:focus-visible {
           background-color: rgba(0, 0, 0, 0);
           text-decoration: underline;

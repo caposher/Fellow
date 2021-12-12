@@ -3,6 +3,7 @@
   top: -100px;
   padding: 0 11px;
   color: #5e6c84;
+  padding-bottom: 12px;
 
   .icon-close {
     margin-right: 0;
@@ -143,6 +144,20 @@
       .loader {
         position: absolute;
       }
+    }
+  }
+
+  &.top-cover {
+    top: 50px !important
+    ;
+    left: unset;
+  }
+  @media (max-width: 780px) {
+    .suggestions-container {
+      display: none;
+    }
+    .search-imgs.action-btn {
+      line-height: 32px;
     }
   }
 }

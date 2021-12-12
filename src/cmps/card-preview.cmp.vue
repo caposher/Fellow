@@ -2,11 +2,11 @@
   <section
     class="card"
     ref="card"
-    :class="{ 'with-cover': card.style, 'is-quick': isQuick }"
+    :class="{ 'with-cover': card.style}"
     @click="showDetails"
     v-if="card"
   >
-    <button v-show="isQuick" @click.stop="isQuick = false">close</button>
+    <!-- <button v-show="isQuick" @click.stop="isQuick = false">close</button> -->
     <div class="cover-img" v-show="card.style" :style="getCover"></div>
     <!-- <div> -->
     <span class="card-wrapper" @click.stop.prevent>
@@ -22,13 +22,13 @@
         <span class="text-label">{{ label.txt }}</span>
       </span>
     </span>
-    <span class="edit-wrapper" v-show="!isQuick" @click.stop="openQuick">
+    <span class="edit-wrapper">
       <span class="icon-sm icon-edit q-edit"></span>
     </span>
-    <section class="card-title" v-show="!isQuick">
+    <section class="card-title">
       <p :ref="card.id">{{ card.title }}</p>
     </section>
-    <section class="edit-title" v-if="isQuick">
+    <!-- <section class="edit-title" v-if="isQuick">
       <textarea
         v-focus="isQuick"
         @focus="$event.target.select()"
@@ -37,7 +37,7 @@
         @input="checkHeight"
         v-model="cardToEdit.title"
       ></textarea>
-    </section>
+    </section> -->
     <section class="card-icons">
       <div class="icon-wrapper" v-if="card.isWatch">
         <span class="icon-sm icon-watch badge"></span>
@@ -96,28 +96,28 @@ export default {
   data() {
     return {
       islabelHover: false,
-      isQuick: false,
+      // isQuick: false,
       pos: null,
       cardToEdit: {
         title: '',
       },
-      height: '',
+      // height: '',
       doIconsOverflow: false,
       // todos: 0,
       // doneTodos: 0
     };
   },
   mounted() {
-    this.height = this.$refs[this.card.id].clientHeight + 'px';
+    // this.height = this.$refs[this.card.id].clientHeight + 'px';
   },
   methods: {
-    checkHeight() {
-      if (!this.isQuick || !this.$refs.text) console.log('N');
-      // console.log("text", this.$refs.text.scrollHeight);
-      this.height = this.$refs.text.scrollHeight + 'px';
-    },
+    // checkHeight() {
+    //   if (!this.isQuick || !this.$refs.text) console.log('N');
+    //   // console.log("text", this.$refs.text.scrollHeight);
+    //   this.height = this.$refs.text.scrollHeight + 'px';
+    // },
     showDetails() {
-      if (this.isQuick) return;
+      // if (this.isQuick) return;
       this.$router.push(this.$route.path + '/c/' + this.card.id);
     },
     formatDate(dueDate) {
@@ -160,15 +160,15 @@ export default {
         labelsState: this.labelsState,
       });
     },
-    openQuick(ev) {
-      // console.log(ev);
-      this.pos = {
-        x: ev.clientX,
-        y: ev.clientY,
-      };
-      this.cardToEdit = JSON.parse(JSON.stringify(this.card));
-      this.isQuick = true;
-    },
+    // openQuick(ev) {
+    //   // console.log(ev);
+    //   this.pos = {
+    //     x: ev.clientX,
+    //     y: ev.clientY,
+    //   };
+    //   this.cardToEdit = JSON.parse(JSON.stringify(this.card));
+    //   this.isQuick = true;
+    // },
     // getShouldAcceptDrop(index, src, payload) {
     //   // console.log("index", index);
     //   // console.log("src", src);

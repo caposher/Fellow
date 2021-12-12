@@ -632,7 +632,7 @@
     .cover-menu-header {
       min-width: calc(100% - 8px);
       button,
-      span:not(.close-popup) {
+      span:not(.close-popup , .img-back) {
         // display: flex;
         min-height: 44px;
         max-height: 44px;

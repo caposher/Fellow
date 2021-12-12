@@ -38,29 +38,6 @@
       <span class="board-star bh-btn">
         <i class="icon-sm icon-star"></i>
       </span>
-      <Container
-        tag="p"
-        group-name="card-list"
-        @drop="onDrop"
-        @onDragStart="onDragStart()"
-        :should-animate-drop="shouldAnimateDrop"
-        behaviour="copy"
-        class="members"
-      >
-        <Draggable v-for="(member, index) in membersToShow" :key="member.id">
-          <avatar
-            :style="{ 'z-index': board.members.length - index }"
-            :username="member.fullname"
-            :size="28"
-            :lighten="200"
-            :src="member.imgUrl"
-            :title="member.fullname"
-            class="header-member"
-          />
-        </Draggable>
-
-        <!-- <button @click="deleteBoard" class="bh-btn">Delete Board</button> -->
-      </Container>
       <button @click="openInvite = true" class="invite-btn bh-btn">
         <span class="icon-sm icon-add-member icon-header"></span>
         <p>Invite</p>
@@ -80,13 +57,39 @@
           <span class="action" @click.stop="">Delete this list</span>
         </section> -->
       </button>
+      <Container
+        tag="p"
+        group-name="card-list"
+        @drop="onDrop"
+        @onDragStart="onDragStart()"
+        :should-animate-drop="shouldAnimateDrop"
+        behaviour="copy"
+        class="members"
+      >
+        <Draggable v-for="(member, index) in membersToShow" :key="member.id">
+          <avatar
+            :style="{ 'z-index': board.members.length - index }"
+            :username="member.fullname"
+            :size="28"
+            :lighten="200"
+            :src="member.imgUrl"
+            :title="member.fullname"
+            class=""
+          />
+        </Draggable>
+
+        <!-- <button @click="deleteBoard" class="bh-btn">Delete Board</button> -->
+      </Container>
+
       <!-- </p> -->
     </section>
 
     <!-- Right Part -->
     <section>
       <!-- <button class="bh-btn">Filter</button> -->
-      <button class="bh-btn show-menu-btn" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <button class="bh-btn show-menu-btn" v-if="!showMainMenu" @click="showMainMenu = true">
+        <span class="icon-sm icon-dots icon-header header-show-menu"></span>Show menu
+      </button>
       <button class="show-small" v-if="!showMainMenu && !editTitle" @click.stop.prevent="showMainMenu = true">
         <span class="icon-sm icon-dots"></span>
       </button>

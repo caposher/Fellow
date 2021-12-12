@@ -19,11 +19,11 @@
     .members {
       display: none;
       @media (min-width: 520px) {
-        display: block;
-        max-width: calc(100vw - 600px);
+        display: inline-flex;
+        max-width: calc(100vw - 405px);
         padding: 0 5px;
         padding-bottom: 2px;
-        min-width: 80px;
+        min-width: 124px;
       }
     }
   }
@@ -151,35 +151,41 @@
   }
 
   .show-menu-btn {
-    width: 58px;
+    width: 43px;
     overflow-x: clip;
+
+    @media (min-width: 520px) {
+      width: 100%;
+      .header-show-menu {
+        display: none;
+      }
+    }
+  }
+
+  .members-popup {
+    top: 5px !important;
+    left: -226px !important;
   }
 
   .invite-btn {
     width: 35px;
-    color: red;
     display: flex;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     span {
       padding-right: 10px;
       margin-left: -2px;
     }
-  }
-
-  .header-member {
-    width: 500px;
-  }
-
-  @media (min-width: 700px) {
-    .show-menu-btn {
-      width: 100%;
+    p {
+      opacity: 0;
     }
-    .invite-btn {
+
+    @media (min-width: 700px) {
       width: 75px;
       span {
         padding-right: 0;
       }
       p {
+        opacity: 1;
         padding: 0;
       }
     }

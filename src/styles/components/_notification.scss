@@ -10,4 +10,17 @@
   align-items: center;
   height: 87vh;
   overflow-y: scroll;
+
+  .notification-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .activity-item {
+      max-width: 220px;
+      min-width: 205px;
+    }
+  }
 }

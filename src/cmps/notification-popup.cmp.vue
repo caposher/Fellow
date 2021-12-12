@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     getLatestActivities() {
-      return this.activities.slice(0, 10);
+      return this.activities.slice(0, 10).reverse();
     },
   },
   components: {

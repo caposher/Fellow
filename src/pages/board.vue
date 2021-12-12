@@ -1,9 +1,5 @@
 <template>
-  <section
-    v-if="board"
-    :class="{ 'display-modal': selectedCardId }"
-    class="board-app"
-  >
+  <section v-if="board" :class="{ 'display-modal': selectedCardId }" class="board-app">
     <app-header />
     <workspace-nav @openBar="onOpenBar" />
     <board-header
@@ -31,12 +27,7 @@
         drag-handle-selector=".drag-handle"
         :class="{ 'nav-open': openBar }"
       >
-        <Draggable
-          :tag="'li'"
-          v-for="(list, idx) in board.lists"
-          :key="list.id"
-          class="list-wrapper"
-        >
+        <Draggable :tag="'li'" v-for="(list, idx) in board.lists" :key="list.id" class="list-wrapper">
           <!--  -->
           <board-list
             :list="list"
@@ -64,26 +55,12 @@
               {{ addListText }}
             </p>
           </li>
-          <li
-            :class="{ 'height-0': !isAddList, 'add-list': isAddList }"
-            class="list-add"
-          >
-            <input
-              type="text"
-              ref="input"
-              v-focus="isAddList"
-              v-model="newListTitle"
-              @keydown.enter="addList"
-            />
+          <li :class="{ 'height-0': !isAddList, 'add-list': isAddList }" class="list-add">
+            <input type="text" ref="input" v-focus="isAddList" v-model="newListTitle" @keydown.enter="addList" />
             <div class="list-add-controls">
-              <button class="submit-btn add-list-btn" @click="addList">
-                Add List
-              </button>
+              <button class="submit-btn add-list-btn" @click="addList">Add List</button>
               <button>
-                <span
-                  @click="isAddList = false"
-                  class="icon-close icon-lg close-add-btn"
-                ></span>
+                <span @click="isAddList = false" class="icon-close icon-lg close-add-btn"></span>
               </button>
             </div>
           </li>
@@ -95,16 +72,16 @@
 </template>
 
 <script>
-import appHeader from "../cmps/app-header.cmp.vue";
-import boardHeader from "../cmps/board-header.cmp.vue";
-import mainMenu from "../cmps/main-menu.cmp.vue";
-import boardMenu from "../cmps/board-menu.cmp.vue";
-import boardList from "../cmps/board-list.cmp.vue";
-import workspaceNav from "../cmps/workspace-nav.cmp.vue";
-import dashBoard from "../cmps/dashboard.cmp.vue";
-import { Container, Draggable } from "vue-smooth-dnd";
-import { focus } from "vue-focus";
-import { socketService } from "@/services/socket.service";
+import appHeader from '../cmps/app-header.cmp.vue';
+import boardHeader from '../cmps/board-header.cmp.vue';
+import mainMenu from '../cmps/main-menu.cmp.vue';
+import boardMenu from '../cmps/board-menu.cmp.vue';
+import boardList from '../cmps/board-list.cmp.vue';
+import workspaceNav from '../cmps/workspace-nav.cmp.vue';
+import dashBoard from '../cmps/dashboard.cmp.vue';
+import { Container, Draggable } from 'vue-smooth-dnd';
+import { focus } from 'vue-focus';
+import { socketService } from '@/services/socket.service';
 
 export default {
   directives: { focus: focus },
@@ -113,55 +90,55 @@ export default {
       selectedCardId: null,
       slider: null,
       isAddList: false,
-      newListTitle: "",
+      newListTitle: '',
       openBar: false,
       // dragging: false,
       showDashboard: false,
     };
   },
   watch: {
-    "$route.params.cardId": {
+    '$route.params.cardId': {
       async handler() {
         const { cardId } = this.$route.params;
         const { boardId } = this.$route.params;
         if (cardId) {
           try {
             await this.$store.dispatch({
-              type: "setListAndCard",
+              type: 'setListAndCard',
               boardId,
               cardId,
             });
             this.selectedCardId = cardId;
           } catch (err) {
-            console.log("problem with getting board", err);
+            console.log('problem with getting board', err);
           }
         } else {
           try {
             await this.$store.dispatch({
-              type: "setListAndCard",
-              boardId: "",
-              cardId: "",
+              type: 'setListAndCard',
+              boardId: '',
+              cardId: '',
             });
             this.selectedCardId = null;
           } catch (err) {
-            console.log("problem with getting board", err);
+            console.log('problem with getting board', err);
           }
         }
       },
       immediate: true,
     },
-    "$route.params.boardId": {
+    '$route.params.boardId': {
       async handler() {
         const { boardId } = this.$route.params;
         try {
           await this.$store.dispatch({
-            type: "loadBoard",
+            type: 'loadBoard',
             boardId,
           });
-          socketService.emit("board new-enter", boardId);
+          socketService.emit('board new-enter', boardId);
           this.scroll();
         } catch (err) {
-          console.log("problem with getting board", err);
+          console.log('problem with getting board', err);
         }
       },
       immediate: true,
@@ -170,15 +147,15 @@ export default {
   async created() {
     const { boardId } = this.$route.params;
     try {
-      await this.$store.dispatch({ type: "loadBoard", boardId });
-      await this.$store.dispatch({ type: "loadBoards" });
-      socketService.on("board pushed", this.pushedBoard);
+      await this.$store.dispatch({ type: 'loadBoard', boardId });
+      await this.$store.dispatch({ type: 'loadBoards' });
+      socketService.on('board pushed', this.pushedBoard);
     } catch (err) {
-      console.log("problem with getting board", err);
+      console.log('problem with getting board', err);
     }
   },
   destroyed() {
-    socketService.off("board pushed");
+    socketService.off('board pushed');
     // socketService.terminate();
   },
   computed: {
@@ -186,9 +163,7 @@ export default {
       return this.$store.getters.board;
     },
     addListText() {
-      return this.board.lists && this.board.lists.length
-        ? "Add another list"
-        : "Add a list";
+      return this.board.lists && this.board.lists.length ? 'Add another list' : 'Add a list';
     },
     boards() {
       return this.$store.getters.boards;
@@ -199,7 +174,7 @@ export default {
       const lastUpdate = this.$store.getters.getLastUpdateTime;
       const haveUpdate = board.activities[0].createdAt > lastUpdate;
       this.$store.dispatch({
-        type: "pushedBoard",
+        type: 'pushedBoard',
         board,
         haveUpdate,
       });
@@ -216,55 +191,55 @@ export default {
       if (!title) return;
       try {
         await this.$store.dispatch({
-          type: "addList",
+          type: 'addList',
           title,
           board: this.board,
         });
         this.isAddList = false;
-        this.newListTitle = "";
+        this.newListTitle = '';
       } catch (err) {
-        console.log("cant add list", err);
+        console.log('cant add list', err);
       }
     },
 
     async updateList(list) {
       try {
         await this.$store.dispatch({
-          type: "updateList",
+          type: 'updateList',
           list,
           board: this.board,
         });
       } catch (err) {
-        console.log("cant update list", err);
+        console.log('cant update list', err);
       }
     },
     async deleteList(list) {
       try {
         await this.$store.dispatch({
-          type: "deleteList",
+          type: 'deleteList',
           list,
           board: this.board,
         });
       } catch (err) {
-        console.log("cant delete list", err);
+        console.log('cant delete list', err);
       }
     },
     async updateBoard(board) {
       try {
-        this.$store.dispatch({ type: "updateBoard", board });
+        this.$store.dispatch({ type: 'updateBoard', board });
       } catch (err) {
-        console.log("cant update board", err);
+        console.log('cant update board', err);
       }
     },
     async deleteBoard() {
       try {
         await this.$store.dispatch({
-          type: "deleteBoard",
+          type: 'deleteBoard',
           boardId: this.board._id,
         });
-        this.$router.push("/home");
+        this.$router.push('/home');
       } catch (err) {
-        console.log("cant delete board", err);
+        console.log('cant delete board', err);
       }
     },
     scroll() {
@@ -272,23 +247,23 @@ export default {
       let isDown = false;
       let startX;
       let scrollLeft;
-      slider.addEventListener("mousedown", (ev) => {
+      slider.addEventListener('mousedown', (ev) => {
         if (ev.path.length > 10) return;
         isDown = true;
-        slider.classList.add("active");
+        slider.classList.add('active');
         startX = ev.pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
       });
-      slider.addEventListener("mouseleave", () => {
+      slider.addEventListener('mouseleave', () => {
         isDown = false;
-        slider.classList.remove("active");
+        slider.classList.remove('active');
       });
-      slider.addEventListener("mouseup", () => {
+      slider.addEventListener('mouseup', () => {
         isDown = false;
-        slider.classList.remove("active");
+        slider.classList.remove('active');
       });
 
-      slider.addEventListener("mousemove", (ev) => {
+      slider.addEventListener('mousemove', (ev) => {
         if (!isDown) return;
         ev.preventDefault();
         const x = ev.pageX - slider.offsetLeft;
@@ -296,19 +271,19 @@ export default {
         slider.scrollLeft = scrollLeft - walk;
       });
 
-      slider.addEventListener("touchstart", (ev) => {
+      slider.addEventListener('touchstart', (ev) => {
         if (ev.path.length > 10) return;
 
         isDown = true;
-        slider.classList.add("active");
+        slider.classList.add('active');
         startX = ev.touches[0].pageX - slider.offsetLeft;
         scrollLeft = slider.scrollLeft;
       });
-      slider.addEventListener("touchend", () => {
+      slider.addEventListener('touchend', () => {
         isDown = false;
-        slider.classList.remove("active");
+        slider.classList.remove('active');
       });
-      slider.addEventListener("touchmove", (ev) => {
+      slider.addEventListener('touchmove', (ev) => {
         if (ev.path.length > 10) return;
         if (!isDown) return;
         ev.preventDefault();

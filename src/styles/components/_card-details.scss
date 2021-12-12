@@ -643,6 +643,10 @@
         }
       }
     }
+
+    & .not-yet{
+      display: none;
+    }
   }
 
   .label-popup,
@@ -726,6 +730,10 @@
     }
     .cover-menu-btn {
       top: -9px;
+    }
+
+    & .not-yet{
+      display: none;
     }
   }
   .members-popup,

@@ -67,20 +67,13 @@ export default {
   // },
   data() {
     return {
-      // selectedMembers: JSON.parse(JSON.stringify(this.boardMembers)),
       searchedMembers: null,
       filterBy: {
         txt: "",
       },
     };
   },
-  async created() {
-    // try {
-    //   this.searchMembers();
-    // } catch (err) {
-    //   console.log("err", err);
-    // }
-  },
+
   methods: {
     isMember(memberId) {
       // if (!this.$store.getters.card) return;

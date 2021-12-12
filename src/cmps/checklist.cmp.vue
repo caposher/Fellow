@@ -65,17 +65,10 @@
               <input class="cb-cl" type="checkbox" :checked="todo.isDone" />
               <label class="c-b-btn" @click.stop="toggleTodo(todo.id)"></label>
             </label>
-            <!-- <input
-              class="c-b-btn"
-              type="checkbox"
-              :checked="todo.isDone"
-              @click.stop="toggleTodo(todo.id)"
-            /> -->
             <span @click.stop="editTodo(todo)" :class="{ done: todo.isDone }"
               >{{ todo.title }}
             </span>
           </span>
-          <!-- <span class="td-action" @click="removeTodo(todo.id)">X</span> -->
           <button class="td-action" @click.stop="tdMenu = !tdMenu">
             <span class="icon-sm icon-dots"> </span>
             <section class="card-popup td-popup" v-show="tdMenu" @click.stop="">
@@ -148,10 +141,8 @@ export default {
     editTodo(todo) {
       this.newTodo = true;
       this.todoToAdd = JSON.parse(JSON.stringify(todo));
-      // this.todoToAdd.title = todo.title;
     },
     toggleTodo    (todoId    ) {
-      // console.log('toggleTodo',todoId)
       const idx = this.CLtoUpdate.todos.findIndex((td) => td.id === todoId);
       let currTodo = this.CLtoUpdate.todos[idx];
       currTodo.isDone = !currTodo.isDone;

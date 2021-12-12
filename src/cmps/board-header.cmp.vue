@@ -1,20 +1,11 @@
 <template>
-  <header
-    class="board-header"
-    :class="{ 'main-menu-spacing': showMainMenu }"
-    v-if="board"
-  >
+  <header class="board-header" :class="{ 'main-menu-spacing': showMainMenu }" v-if="board">
     <section class="left-header">
       <router-link to="/home" class="back-home" v-if="!editTitle">
         <span class="icon-md icon-back"></span>
       </router-link>
       <!--   -->
-      <button
-        class="close-small"
-        v-if="editTitle"
-        @click="closeEditTitle"
-        :class="{ edit: this.editTitle }"
-      >
+      <button class="close-small" v-if="editTitle" @click="closeEditTitle" :class="{ edit: this.editTitle }">
         <span class="icon-close"></span>
       </button>
       <div
@@ -64,7 +55,7 @@
             :lighten="200"
             :src="member.imgUrl"
             :title="member.fullname"
-            class=""
+            class="header-member"
           />
         </Draggable>
 
@@ -72,13 +63,10 @@
       </Container>
       <button @click="openInvite = true" class="invite-btn bh-btn">
         <span class="icon-sm icon-add-member icon-header"></span>
-        Invite
+        <p>Invite</p>
+
         <!-- <span>Invite</span> -->
-        <invite
-          v-if="openInvite"
-          @close="openInvite = false"
-          @update="inviteMembers"
-        />
+        <invite v-if="openInvite" @close="openInvite = false" @update="inviteMembers" />
         <!-- <section class="card-popup invite-popup" @click.stop="">
           <section class="popup-header">
             <div @click.stop="listMenu = false">
@@ -98,27 +86,12 @@
     <!-- Right Part -->
     <section>
       <!-- <button class="bh-btn">Filter</button> -->
-      <button
-        class="bh-btn show-menu-btn"
-        v-if="!showMainMenu"
-        @click="showMainMenu = true"
-      >
-        Show menu
-      </button>
-      <button
-        class="show-small"
-        v-if="!showMainMenu && !editTitle"
-        @click.stop.prevent="showMainMenu = true"
-      >
+      <button class="bh-btn show-menu-btn" v-if="!showMainMenu" @click="showMainMenu = true">Show menu</button>
+      <button class="show-small" v-if="!showMainMenu && !editTitle" @click.stop.prevent="showMainMenu = true">
         <span class="icon-sm icon-dots"></span>
       </button>
       <!--  -->
-      <button
-        class="title-small-check"
-        @click="updateTitle"
-        v-if="editTitle"
-        :class="{ edit: this.editTitle }"
-      >
+      <button class="title-small-check" @click="updateTitle" v-if="editTitle" :class="{ edit: this.editTitle }">
         <span class="icon-check"></span>
       </button>
       <main-menu
@@ -132,11 +105,11 @@
 </template>
 
 <script>
-import Avatar from "vue-avatar";
-import mainMenu from "@/cmps/main-menu.cmp.vue";
-import { Container, Draggable } from "vue-smooth-dnd";
-import { focus } from "vue-focus";
-import invite from "../cmps/invite.cmp.vue";
+import Avatar from 'vue-avatar';
+import mainMenu from '@/cmps/main-menu.cmp.vue';
+import { Container, Draggable } from 'vue-smooth-dnd';
+import { focus } from 'vue-focus';
+import invite from '../cmps/invite.cmp.vue';
 
 // import { applyDrag, generateItems } from "./utils";
 export default {
@@ -145,7 +118,7 @@ export default {
     return {
       showMainMenu: false,
       editTitle: false,
-      lastTitle: "",
+      lastTitle: '',
       isSmall: false,
       openInvite: false,
     };
@@ -173,20 +146,17 @@ export default {
     updateTitle() {
       console.log(this.lastTitle);
       // if (!this.$refs.editBoardTitle.innerText) return;
-      this.board.title = this.isSmall
-        ? this.$refs.smallEdit.innerText
-        : this.$refs.editBoardTitle.innerText;
+      this.board.title = this.isSmall ? this.$refs.smallEdit.innerText : this.$refs.editBoardTitle.innerText;
       // console.log(this.$refs.editBoardTitle.innerText);
       // this.$refs.editBoardTitle.innerText;
-      this.$emit("updateBoard", this.board);
+      this.$emit('updateBoard', this.board);
       // this.$refs.smallEdit.innerText = this.$refs.editBoardTitle.innerText
       this.editTitle = false;
       this.isSmall = false;
       this.$refs.smallEdit.blur();
     },
     deleteBoard() {
-      if (confirm("This action will delete the board! continue?"))
-        this.$emit("deleteBoard");
+      if (confirm('This action will delete the board! continue?')) this.$emit('deleteBoard');
     },
     onDragStart(dragResult) {
       // console.log("start", isSource, payload, willAcceptDrop);
@@ -205,7 +175,7 @@ export default {
     inviteMembers(member) {
       if (!this.board.members.find((mbr) => mbr._id === member._id)) {
         this.board.members.push(member);
-        this.$emit("updateBoard", this.board);
+        this.$emit('updateBoard', this.board);
       }
     },
   },
@@ -218,7 +188,7 @@ export default {
       return this.board.members;
     },
     mainMenuToggle() {
-      return this.showMainMenu ? "show-main-menu" : "hide-main-menu";
+      return this.showMainMenu ? 'show-main-menu' : 'hide-main-menu';
     },
   },
 

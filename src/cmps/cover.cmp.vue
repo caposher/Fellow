@@ -40,19 +40,20 @@
           @click="makeCover(img.small)"
         ></button>
       </div>
-      <div class="searchImgs action-btn">
-        <button @click="openUnsplash">Search for photos</button>
+      <div class="search-imgs action-btn" @click="openUnsplash">
+        Search for photos
+        <!-- <button @click="openUnsplash">Search for photos</button> -->
       </div>
     </section>
     <section class="photo-search" v-show="showUnsplash">
-      <span @click="showUnsplash = false" class="icon-sm icon-back"></span>
+      <span @click="showUnsplash = false" class="img-back icon-sm icon-back"></span>
       <input
         type="text"
         placeholder="Search Unsplash for photos"
         v-model="searchStr"
         @input="search()"
       />
-      <div v-show="!showResults">
+      <div v-show="!showResults" class="suggestions-container">
         <label>Suggested searches</label>
         <div class="suggestions">
           <button
@@ -60,9 +61,7 @@
             @click="search(suggestion)"
             v-for="suggestion in suggestions"
             :key="suggestion"
-          >
-            {{ suggestion }}
-          </button>
+          >{{ suggestion }}</button>
         </div>
       </div>
       <section>
@@ -80,9 +79,7 @@
         </div>
         <div class="results" v-show="showResults">
           <label>Results</label>
-          <p v-show="noResults">
-            Sorry, your search didn't return any results. Please try again!
-          </p>
+          <p v-show="noResults">Sorry, your search didn't return any results. Please try again!</p>
           <div
             v-show="!isLoading && !noResults"
             class="search-results"
@@ -110,8 +107,7 @@
             <a
               href="https://unsplash.com/?utm_source=trello&utm_medium=referral&utm_campaign=api-credit"
               target="_blank"
-              >Upsplash</a
-            >
+            >Upsplash</a>
           </div>
         </footer>
       </section>
@@ -125,8 +121,8 @@ import FastAverageColor from "fast-average-color";
 export default {
   props: {
     card: {
-      type: Object,
-    },
+      type: Object
+    }
   },
   data() {
     return {
@@ -139,52 +135,52 @@ export default {
       imgs: [
         {
           small:
-            "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxfHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxfHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1533470192478-9897d90d5461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwyfHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1533470192478-9897d90d5461?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwyfHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwzfHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwzfHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1502759683299-cdcd6974244f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw0fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1502759683299-cdcd6974244f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw0fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw1fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw1fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1502657877623-f66bf489d236?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw2fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1502657877623-f66bf489d236?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw2fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5Mjc1OA&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1426604966848-d7adac402bff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw3fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5OTgzMg&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1426604966848-d7adac402bff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw3fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5OTgzMg&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw4fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5OTgzMg&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw4fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5OTgzMg&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1548983965-416c1920352e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw5fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5OTgzMg&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1548983965-416c1920352e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHw5fHx3YWxscGFwZXJzfGVufDB8fHx8MTYzODc5OTgzMg&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1480497490787-505ec076689f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxMHx8d2FsbHBhcGVyc3xlbnwwfHx8fDE2Mzg3OTk4MzI&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1480497490787-505ec076689f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxMHx8d2FsbHBhcGVyc3xlbnwwfHx8fDE2Mzg3OTk4MzI&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxMXx8d2FsbHBhcGVyc3xlbnwwfHx8fDE2Mzg3OTk4MzI&ixlib=rb-1.2.1&q=80&w=400",
+            "https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxMXx8d2FsbHBhcGVyc3xlbnwwfHx8fDE2Mzg3OTk4MzI&ixlib=rb-1.2.1&q=80&w=400"
         },
         {
           small:
-            "https://images.unsplash.com/photo-1479030160180-b1860951d696?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxMnx8d2FsbHBhcGVyc3xlbnwwfHx8fDE2Mzg3OTk4MzI&ixlib=rb-1.2.1&q=80&w=400",
-        },
+            "https://images.unsplash.com/photo-1479030160180-b1860951d696?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwxMnx8d2FsbHBhcGVyc3xlbnwwfHx8fDE2Mzg3OTk4MzI&ixlib=rb-1.2.1&q=80&w=400"
+        }
       ],
       searchResults: [],
       previewImgs: [],
@@ -201,7 +197,7 @@ export default {
         "#29cce5",
         "#6deca9",
         "#ff8ed4",
-        "#172b4d",
+        "#172b4d"
       ],
       suggestions: [
         "Productivity",
@@ -212,16 +208,19 @@ export default {
         "Business",
         "Minimal",
         "Space",
-        "Animals",
-      ],
+        "Animals"
+      ]
     };
   },
   created() {
+    console.log("card", this.card);
     this.showUnsplash = false;
     this.previewImgs = this.imgs.slice(0, 6);
-    this.putInPrev(
-      this.card.style.img ? this.card.style.img : this.card.style.bgColor
-    );
+    if (this.card.style) {
+      this.putInPrev(
+        this.card.style.img ? this.card.style.img : this.card.style.bgColor
+      );
+    }
   },
   methods: {
     isSelected(val) {
@@ -243,7 +242,7 @@ export default {
           type: "requestPhotos",
           searchKey: this.searchStr,
           imgNum: 30,
-          page: ++this.page,
+          page: ++this.page
         });
         this.searchResults.push(...this.$store.getters.getBgPhotos);
         // console.log(this.searchResults.length);
@@ -257,7 +256,7 @@ export default {
       let style = {
         img: null,
         bgColor: null,
-        isDark: false,
+        isDark: false
       };
       const fac = new FastAverageColor();
       if (val.charAt(0) === "#") {
@@ -300,7 +299,7 @@ export default {
         await this.$store.dispatch({
           type: "requestPhotos",
           searchKey: this.searchStr,
-          imgNum: 30,
+          imgNum: 30
         });
         this.searchResults.push(...this.$store.getters.getBgPhotos);
         if (!this.searchResults.length) this.noResults = true;
@@ -315,13 +314,13 @@ export default {
     },
     putInPrev(val) {
       if (!this.card.style || !this.card.style.img) return;
-      var inPreview = this.previewImgs.some((img) => img.small === val);
+      var inPreview = this.previewImgs.some(img => img.small === val);
       if (inPreview) return;
-      inPreview = this.imgAttachs.some((attachment) => attachment.href === val);
+      inPreview = this.imgAttachs.some(attachment => attachment.href === val);
       if (inPreview) return;
       this.previewImgs.unshift({ small: val });
       this.previewImgs.pop();
-    },
+    }
   },
   computed: {
     unsplashImgs() {
@@ -331,10 +330,10 @@ export default {
     imgAttachs() {
       if (!this.card.attachments) return;
       return this.card.attachments.filter(
-        (attachment) => attachment.type === "img"
+        attachment => attachment.type === "img"
       );
-    },
-  },
+    }
+  }
 };
 </script>
 

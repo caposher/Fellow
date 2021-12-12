@@ -3182,6 +3182,8 @@ async function updateCard(cardToUpdate, listToUpdate, boardId, activity) {
     if (boardToUpdate.activities) boardToUpdate.activities.unshift(activity);
     else boardToUpdate.activities = [activity];
 
+    if (boardToUpdate.activities.length >= 400) boardToUpdate.activities.pop();
+
     const listIdx = boardToUpdate.lists.findIndex((currList) => listToUpdate.id === currList.id);
     const cardIdx = listToUpdate.cards.findIndex((currCard) => currCard.id === cardToUpdate.id);
     listToUpdate.cards.splice(cardIdx, 1, cardToUpdate);
@@ -3227,7 +3229,7 @@ async function removeCard(cardId, listToUpdate, boardId) {
 //   }
 // }
 
-function getEmptyBoard(title,user) {
+function getEmptyBoard(title, user) {
   return {
     // _id: '',
     title,
@@ -3239,16 +3241,16 @@ function getEmptyBoard(title,user) {
       isDark: true,
     },
     labels: [
-      { id: utilService.makeId(), txt: 'test1', colorClass: 'label-green' },
-      { id: utilService.makeId(), txt: 'test2', colorClass: 'label-yellow' },
-      { id: utilService.makeId(), txt: 'test3', colorClass: 'label-orange' },
-      { id: utilService.makeId(), txt: 'test4', colorClass: 'label-red' },
-      { id: utilService.makeId(), txt: 'test5', colorClass: 'label-purple' },
-      { id: utilService.makeId(), txt: 'test6', colorClass: 'label-blue' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-green' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-yellow' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-orange' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-red' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-purple' },
+      { id: utilService.makeId(), txt: '', colorClass: 'label-blue' },
     ],
     members: [user],
     lists: [],
-    activities:[]
+    activities: [],
   };
 }
 
@@ -3294,8 +3296,9 @@ function getEmptyLabel(txt = '', colorClass = '.label-green') {
 
 async function getBgImgs(searchKey, imgNum, page) {
   try {
-    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${imgNum ? imgNum : 50
-      }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
+    const search = `https://api.unsplash.com/search/photos/?query=${searchKey ? searchKey : 'wallpapers'}&per_page=${
+      imgNum ? imgNum : 50
+    }&${page ? `page=${page}&` : ''}client_id=9xScnkiVqupizQUOywM06WUClEpMUbRg0wri1zPyIDo`;
     let res = await axios.get(search);
     return res.data.results.map((obj) => obj.urls);
   } catch (err) {
@@ -5303,13 +5306,12 @@ function getActivity(txt, card = null) {
     txt,
     createdAt: Date.now(),
     byMember: userService.getLoggedInUser(),
-    card:
-      card ?
-        {
+    card: card
+      ? {
           id: card.id,
           title: card.title,
         }
-        : null,
+      : null,
   };
   return activity;
 }

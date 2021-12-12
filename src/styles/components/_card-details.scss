@@ -241,7 +241,7 @@
         position: absolute;
         font-family: icomoon;
         &::after {
-          content: "\e922";
+          content: '\e922';
         }
       }
       & .content {
@@ -361,7 +361,7 @@
     top: 8px;
     font-family: icomoon;
     &::after {
-      content: "\e91a";
+      content: '\e91a';
     }
   }
 }
@@ -378,7 +378,7 @@
   font-family: icomoon;
   font-size: 20px;
   &::after {
-    content: "\e912";
+    content: '\e912';
   }
 }
 
@@ -644,7 +644,7 @@
       }
     }
 
-    & .not-yet{
+    & .not-yet {
       display: none;
     }
   }
@@ -672,7 +672,7 @@
 
   .cover-popup {
     position: absolute;
-    top: -583px !important;
+    top: -466px !important;
     left: 0px;
   }
 }
@@ -732,7 +732,7 @@
       top: -9px;
     }
 
-    & .not-yet{
+    & .not-yet {
       display: none;
     }
   }

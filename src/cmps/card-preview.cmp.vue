@@ -108,7 +108,7 @@ export default {
     };
   },
   mounted() {
-    this.height = this.$refs[this.card.id].clientHeight + 'px';
+    // this.height = this.$refs[this.card.id].clientHeight + 'px';
   },
   methods: {
     checkHeight() {

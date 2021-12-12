@@ -5,12 +5,11 @@
   background-size: cover;
   background-repeat: no-repeat;
   overflow-y: hidden;
-  @media (max-width: 550px) {
-    header.main-header {
-      display: none;
-    }
-  }
-
+  // @media (max-width: 550px) {
+  //   header.main-header {
+  //     display: none;
+  //   }
+  // }
 }
 .board-app {
   overflow-y: hidden;
@@ -58,10 +57,10 @@ body {
   display: flex;
 }
 .board {
-  @media (max-width: 550px) {
-    height: calc(100vh - 69px);
-    padding-left: 8px;
-  }
+  // @media (max-width: 550px) {
+  // height: calc(100vh - 69px);
+  // padding-left: 8px;
+  // }
   display: flex !important;
   list-style: none;
   align-items: flex-start;

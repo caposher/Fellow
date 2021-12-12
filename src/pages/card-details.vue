@@ -27,12 +27,14 @@
             Cover
           </button>
           <cover
+          class="top-cover"
             v-if="showCoverMenu"
             @makeCover="makeCover"
             :card="cardToEdit"
             @removeCover="removeCover"
             @closeCover="showCoverMenu = false"
           ></cover>
+            <!-- :style="topCoverStyle" -->
         </section>
       </div>
 
@@ -537,6 +539,9 @@ export default {
       const user = this.$store.getters.user;
       return this.cardToEdit.members.find((u) => u._id === user._id);
     },
+    // topCoverStyle(){
+    //   return{top:'50px !important', left: 'unset'}
+    // }
   },
   methods: {
     async removeCover() {

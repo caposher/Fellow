@@ -3,18 +3,31 @@
     <span @click="$emit('close')" class="icon-md icon-close"></span>
     <h2>Dashboard</h2>
     <section class="chart-wrapper">
-      <activities-chart :stat="allActivities" :colors="colorSet" :title="'All activities'" :fillArea="true" />
-      <activities-chart :stat="activitiesStat" :colors="colorSet" :title="'Activities types'" />
+      <activities-chart
+        :stat="allActivities"
+        :colors="colorSet"
+        :title="'All activities'"
+        :fillArea="true"
+      />
+      <activities-chart
+        :stat="activitiesStat"
+        :colors="colorSet"
+        :title="'Activities types'"
+      />
       <users-chart :title="'Cards per user'" />
-      <cards-chart :stat="cardsStat" :colors="colorSet" :title="'Cards per list'" />
+      <cards-chart
+        :stat="cardsStat"
+        :colors="colorSet"
+        :title="'Cards per list'"
+      />
     </section>
   </section>
 </template>
 
 <script>
-import cardsChart from './cards-chart.cmp.vue';
-import activitiesChart from './activities-chart.cmp';
-import usersChart from './users-chart.cmp';
+import cardsChart from "./cards-chart.cmp.vue";
+import activitiesChart from "./activities-chart.cmp";
+import usersChart from "./users-chart.cmp";
 export default {
   props: {
     board: { type: Object },
@@ -25,16 +38,16 @@ export default {
   data() {
     return {
       colorSet: [
-        '#548EEB',
-        '#3E67AB',
-        '#27416B',
-        '#4B7FC5',
-        '#4D49AB',
-        '#302E6B',
-        '#6965EB',
-        '#5996F7',
-        '#6F6AF7',
-        '#5E59D1',
+        "#548EEB",
+        "#3E67AB",
+        "#27416B",
+        "#4B7FC5",
+        "#4D49AB",
+        "#302E6B",
+        "#6965EB",
+        "#5996F7",
+        "#6F6AF7",
+        "#5E59D1",
       ],
       intervalId1: null,
       intervalId2: null,
@@ -50,7 +63,7 @@ export default {
 
     //create demo data
     this.intervalId2 = setInterval(() => {
-      this.$store.dispatch({ type: 'updateStat' });
+      this.$store.dispatch({ type: "updateStat" });
     }, 1000);
   },
   destroyed() {
@@ -91,16 +104,33 @@ export default {
       //   },
       // ];
       params.labels = this.statistics.map((snap) => snap.snapShot);
-      params.data[0] = { label: 'Removed', data: this.statistics.map((snap) => snap.status.removed) };
-      params.data[1] = { label: 'Created', data: this.statistics.map((snap) => snap.status.created) };
-      params.data[2] = { label: 'Refresh', data: this.statistics.map((snap) => snap.status.refresh) };
-      params.data[3] = { label: 'Updated', data: this.statistics.map((snap) => snap.status.updated) };
+      params.data[0] = {
+        label: "Removed",
+        data: this.statistics.map((snap) => snap.status.removed),
+      };
+      params.data[1] = {
+        label: "Created",
+        data: this.statistics.map((snap) => snap.status.created),
+      };
+      params.data[2] = {
+        label: "Refresh",
+        data: this.statistics.map((snap) => snap.status.refresh),
+      };
+      params.data[3] = {
+        label: "Updated",
+        data: this.statistics.map((snap) => snap.status.updated),
+      };
       return params;
     },
     allActivities() {
       let params = { labels: [], data: [] };
       params.labels = this.statistics.map((snap) => snap.snapShot);
-      params.data = [{ label: 'activity', data: this.statistics.map((snap) => snap.status.total) }];
+      params.data = [
+        {
+          label: "activity",
+          data: this.statistics.map((snap) => snap.status.total),
+        },
+      ];
       return params;
     },
   },

@@ -54,6 +54,7 @@
           type="text"
           v-focus="isAddCard"
           v-model="newCardTitle"
+          @blur="addCard"
           @keydown.enter="addCard"
         />
         <div class="add-card-btns">
@@ -115,7 +116,8 @@ export default {
       // console.log(name);
       // }
     },
-    async addCard() {
+    async addCard(e) {
+      // console.log("e", e);
       // if (!this.isAddCard) return
       // console.log("adding card");
       // const title = prompt('card title');
@@ -125,14 +127,14 @@ export default {
         return;
       }
       try {
+        this.newCardTitle = "";
         await this.$store.dispatch({
           type: "addCard",
           board: this.$store.getters.board,
           list: this.list,
           title,
         });
-        this.newCardTitle = "";
-        this.isAddCard = false;
+        // this.isAddCard = false;
       } catch (err) {
         console.log("cant add card", err);
       }

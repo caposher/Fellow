@@ -9,14 +9,14 @@
       class="activity-avatar"
     ></avatar>
     <span class="activity-by">{{ activity.byMember.fullname }}</span>
-    {{ activity.txt }}this card
+    {{ activity.txt }} this card
     <span class="activity-time"> {{ timeToShow(activity.createdAt) }}</span>
   </div>
 </template>
 
 <script>
-import { utilService } from '../services/util.service.js';
-import Avatar from 'vue-avatar';
+import { utilService } from "../services/util.service.js";
+import Avatar from "vue-avatar";
 export default {
   props: {
     activity: Object,

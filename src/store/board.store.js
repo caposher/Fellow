@@ -209,10 +209,10 @@ export const boardStore = {
     },
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
+      list.cards.push(card);
       const activityText = `added ${card.title} to ${list.title}`;
       const activity = boardService.getActivity(activityText, card);
       board.activities.push(activity);
-      list.cards.push(card);
       try {
         const updatedBoard = await boardService.saveList(list, board);
         commit({ type: 'setBoard', board: updatedBoard });
@@ -277,7 +277,7 @@ export const boardStore = {
       try {
         const board = await boardService.setBackground(boardId, style);
         commit({ type: 'setBoard', board });
-        // dispatch({ type: 'loadBoards' });
+        dispatch({ type: 'loadBoards' });
       } catch (err) {
         console.log('failed to set background', err);
       }

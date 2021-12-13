@@ -219,3 +219,20 @@ input.cb-cl {
 .icon-members {
   @include to-icon('\e951');
 }
+
+.underline{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.blue{
+  color: #0079bf;
+  text-decoration-color: #0079bf;
+
+}
+
+.grey{
+  color: #5e6c84;
+  text-decoration-color:  #5e6c84;
+  cursor: unset;
+}

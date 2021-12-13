@@ -73,7 +73,7 @@ export const boardStore = {
       state.notification.updatesCount++;
       state.notification.lastUpdate = Date.now();
 
-      console.log('new update:', state.notification);
+      // console.log('new update:', state.notification);
     },
     resetNotification(state) {
       state.notification.updatesCount = 0;
@@ -90,9 +90,9 @@ export const boardStore = {
     async loadBoards({ commit }) {
       try {
         const filterBy = { user: await userService.getLoggedInUser() };
-        console.log(filterBy);
+        // console.log(filterBy);
         const boards = await boardService.query(filterBy);
-        console.log('boards', boards);
+        // console.log('boards', boards);
         commit({ type: 'setBoards', boards });
       } catch (err) {
         console.log('cant load boards:', err);
@@ -171,7 +171,7 @@ export const boardStore = {
     async addList({ commit }, { board, title }) {
       console.log('board', board);
       const list = boardService.getEmptyList(title);
-      const activityText = `added list ${list.title}`;
+      const activityText = `created list ${list.title}`;
       const activity = boardService.getActivity(activityText);
       board.activities.push(activity);
       try {
@@ -209,9 +209,9 @@ export const boardStore = {
     },
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
-      list.cards.push(card);
-      const activityText = `added ${card.title} to ${list.title}`;
-      const activity = boardService.getActivity(activityText, card);
+      const activityText = `created `;
+      var activity = boardService.getActivity(activityText, card);
+
       board.activities.push(activity);
       try {
         const updatedBoard = await boardService.saveList(list, board);

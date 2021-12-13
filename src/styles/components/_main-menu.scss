@@ -11,7 +11,18 @@
   height: 100vh;
   padding: 0 6px 0 12px;
   transition: transform 0.5s;
-
+  .menu-br {
+    width: 100%;
+    padding: 0;
+    &::after {
+      background-color: rgba(9, 30, 66, 0.13);
+      content: ' ';
+      display: block;
+      height: 1px;
+      margin: 16px 0;
+      // width: calc(100% - 20px);
+    }
+  }
   // @media (max-width: 550px) {
   //   max-width: 90vw;
   // }
@@ -55,9 +66,9 @@
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #091e4221;
-    padding-block-end: 10px;
+    padding-block-end: 16px;
     padding-block-start: 16px;
-    margin-bottom: 3px;
+    margin-bottom: 16px;
     li {
       cursor: pointer;
     }
@@ -189,6 +200,20 @@
   .main-menu-search {
     position: relative;
     padding-top: 10px;
+  }
+
+  .menu-act-list {
+    .activity-item {
+      background-color: violet;
+      // margin-left: 40px;
+      min-height: 72px;
+      padding: 8px 0;
+      position: relative;
+      .vue-avatar--wrapper {
+        // left: 0;
+        // top: 0;
+      }
+    }
   }
 }
 .show-main-menu {

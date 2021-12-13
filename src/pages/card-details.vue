@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="list && cardToEdit"
-    class="card-details-container"
-    @click.stop.prevent="closeModal"
-  >
+  <div v-if="list && cardToEdit" class="card-details-container" @click.stop.prevent="closeModal">
     <div class="card-details" @click.stop>
       <button @click.stop="closeModal" class="close">
         <span class="icon-md icon-close"></span>
@@ -20,21 +16,18 @@
               'dark-btn': !cardToEdit.style.isDark,
             }"
           >
-            <span
-              :style="{ color: textColor }"
-              class="icon-sm icon-cover"
-            ></span>
+            <span :style="{ color: textColor }" class="icon-sm icon-cover"></span>
             Cover
           </button>
           <cover
-          class="top-cover"
+            class="top-cover"
             v-if="showCoverMenu"
             @makeCover="makeCover"
             :card="cardToEdit"
             @removeCover="removeCover"
             @closeCover="showCoverMenu = false"
           ></cover>
-            <!-- :style="topCoverStyle" -->
+          <!-- :style="topCoverStyle" -->
         </section>
       </div>
 
@@ -66,10 +59,7 @@
           <div class="icon-header">
             <div class="detail-labels">
               <!-- card  members icons -->
-              <div
-                class="card-members card-labels"
-                v-show="cardToEdit.members.length > 0"
-              >
+              <div class="card-members card-labels" v-show="cardToEdit.members.length > 0">
                 <h4>Members</h4>
                 <span class="label-wrapper" @click="showMembers = !showMembers">
                   <avatar
@@ -81,10 +71,7 @@
                     :src="member.imgUrl"
                     class="member-avatar"
                   ></avatar>
-                  <button
-                    v-show="cardToEdit.members.length > 0"
-                    class="action-btn round"
-                  >
+                  <button v-show="cardToEdit.members.length > 0" class="action-btn round">
                     <span class="icon-sm icon-plus"></span>
                   </button>
                 </span>
@@ -99,9 +86,7 @@
                     :key="label.id"
                     :class="label.colorClass"
                     class="label-tag white-text"
-                  >
-                    {{ label.txt }}
-                  </button>
+                  >{{ label.txt }}</button>
                   <button v-show="getLabels.length > 0" class="action-btn">
                     <span class="icon-sm icon-plus"></span>
                   </button>
@@ -151,9 +136,7 @@
                   v-show="cardToEdit.description && !isEditDesc"
                   @click.stop="setFocus"
                   class="action-btn"
-                >
-                  Edit
-                </button>
+                >Edit</button>
               </div>
             </div>
             <form @submit.prevent="updateDesc">
@@ -165,28 +148,20 @@
                 placeholder="Add a more detailed description..."
               ></div>
               <div class="buttons" v-show="isEditDesc">
-                <button class="submit-btn" @click.stop.prevent="updateDesc">
-                  Save
-                </button>
+                <button class="submit-btn" @click.stop.prevent="updateDesc">Save</button>
                 <span @click.stop="undoDesc" class="icon-lg icon-close"></span>
               </div>
             </form>
           </div>
 
           <!-- card attachments -->
-          <div
-            class="attachments"
-            v-show="cardToEdit.attachments && cardToEdit.attachments.length"
-          >
+          <div class="attachments" v-show="cardToEdit.attachments && cardToEdit.attachments.length">
             <section class="attach-header">
               <span class="icon-attach icon-lg"></span>
               <h3>Attachments</h3>
             </section>
 
-            <div
-              v-for="attachment in cardToEdit.attachments"
-              :key="attachment.id"
-            >
+            <div v-for="attachment in cardToEdit.attachments" :key="attachment.id">
               <attachment
                 :attachment="attachment"
                 @makeCover="makeCover"
@@ -199,31 +174,20 @@
             <section class="card-popup" v-show="openEditAttach">
               <section class="popup-header">
                 <div>
-                  <span
-                    @click.stop="openEditAttach = false"
-                    class="close-popup icon-md icon-close"
-                  ></span>
+                  <span @click.stop="openEditAttach = false" class="close-popup icon-md icon-close"></span>
                 </div>
                 <h4>Edit</h4>
               </section>
               <form @submit.stop.prevent="updateAttach">
                 <label>Link name</label>
-                <input
-                  @focus="$event.target.select()"
-                  type="text"
-                  v-model="attachToEdit.name"
-                />
+                <input @focus="$event.target.select()" type="text" v-model="attachToEdit.name" />
                 <button class="submit">Update</button>
               </form>
             </section>
           </div>
 
           <!-- card checklists -->
-          <div
-            class="check-list"
-            v-for="checklist in cardToEdit.checklists"
-            :key="checklist.id"
-          >
+          <div class="check-list" v-for="checklist in cardToEdit.checklists" :key="checklist.id">
             <span class="card-details-icon icon-lg"></span>
 
             <checklist :checklist="checklist" @updateCL="updateCL" />
@@ -237,34 +201,28 @@
               <button
                 class="action-btn"
                 @click="showActivities = !showActivities"
-              >
-                {{ showActivities ? "Hide details" : "Show details" }}
-              </button>
+              >{{ showActivities ? "Hide details" : "Show details" }}</button>
             </section>
             <div class="comment-box" @click="isComment = true">
               <!-- <div
               class="comment-box"
               :class="{ onComment: isComment }"
               @click="isComment = true"
-            > -->
+              >-->
               <!-- <textarea
                 rows="1"
                 placeholder="Write a comment..."
                 @blur="isComment = false"
-              /> -->
+              />-->
               <!-- <textarea
                 rows="1"
                 placeholder="not yet developed..."
                 @blur="isComment = false"
-              /> -->
+              />-->
               <button class="submit-btn">save</button>
               <div class="log" v-show="showActivities">
-                <div
-                  class="activity-item"
-                  v-for="activity in activitiesToShow"
-                  :key="activity.id"
-                >
-                  <activity-item :activity="activity" />
+                <div class="activity-item" v-for="(activity,idx) in activitiesToShow" :key="activity.id">
+                  <activity-item :activity="activity" :idx="idx" :inCard="true" />
                 </div>
               </div>
             </div>
@@ -286,11 +244,7 @@
           <!-- side menu renders cmp in click -->
           <section class="btn-group">
             <section class="relative-btn">
-              <button
-                class="action-btn"
-                title="Members"
-                @click.stop="showMembers = !showMembers"
-              >
+              <button class="action-btn" title="Members" @click.stop="showMembers = !showMembers">
                 <span class="icon-sm icon-member"></span>Members
               </button>
 
@@ -307,7 +261,9 @@
             <!-- labels btn -->
             <section class="relative-btn">
               <button @click.stop="toggleLabels" class="action-btn">
-                <p><span class="icon-sm icon-label"></span>Labels</p>
+                <p>
+                  <span class="icon-sm icon-label"></span>Labels
+                </p>
               </button>
             </section>
             <card-labels
@@ -325,17 +281,14 @@
                   <span>Checklist</span>
                 </span>
               </button>
-              <section
-                class="card-popup checklist-popup"
-                v-show="openCheckList"
-              >
+              <section class="card-popup checklist-popup" v-show="openCheckList">
                 <section class="popup-header">
                   <div @click.stop="openCheckList = false">
                     <span class="close-popup icon-md icon-close"></span>
                   </div>
                   <!-- <button class="close-popup" @click.stop="openCheckList = false">
                   x
-                </button>-->
+                  </button>-->
                   <h4>Add checklist</h4>
                 </section>
                 <form @submit.prevent="addCheckList">
@@ -367,8 +320,8 @@
             <section class="relative-btn">
               <button @click.stop="openAddAttach = !openAddAttach">
                 <span class="action-btn">
-                  <span class="icon-sm icon-attach"></span>Attachments</span
-                >
+                  <span class="icon-sm icon-attach"></span>Attachments
+                </span>
               </button>
               <add-attachment
                 @addNewAttach="addNewAttach"
@@ -378,10 +331,7 @@
             </section>
 
             <!-- cover btn -->
-            <section
-              v-show="!card.style"
-              class="relative-btn cover-menu-header"
-            >
+            <section v-show="!card.style" class="relative-btn cover-menu-header">
               <button
                 @click.stop="showCoverMenu = !showCoverMenu"
                 class="cover-menu-btn action-btn"
@@ -459,15 +409,17 @@ export default {
       showCoverMenu: false,
       showActivities: false,
       attachToEdit: {
-        name: "",
-      },
+        name: ""
+      }
     };
   },
   created() {
     this.cardToEdit = this.card;
   },
   mounted() {
-    this.$refs.desc.innerText =this.cardToEdit.description ? this.cardToEdit.description : '';
+    this.$refs.desc.innerText = this.cardToEdit.description
+      ? this.cardToEdit.description
+      : "";
     // this.$refs.desc.innerText.select();
   },
   computed: {
@@ -485,9 +437,10 @@ export default {
     },
     activitiesToShow() {
       let activities = [];
-      if (this.boardActivities &&this.boardActivities.length) {
-        activities = this.boardActivities.filter((act) => act.card && 
- act.card.id === this.card.id);
+      if (this.boardActivities && this.boardActivities.length) {
+        activities = this.boardActivities.filter(
+          act => act.card && act.card.id === this.card.id
+        );
       }
       return activities;
     },
@@ -497,13 +450,13 @@ export default {
       if (this.cardToEdit.style.img) {
         return {
           backgroundImage: `url("${this.cardToEdit.style.img}")`,
-          backgroundColor,
+          backgroundColor
         };
       }
       return {
         backgroundColor,
         height: "116px",
-        minHeight: "116px",
+        minHeight: "116px"
       };
     },
     dateToShow() {
@@ -524,10 +477,10 @@ export default {
     getLabels() {
       const allLabels = this.$store.getters.labels;
       const labelIds = this.card.labelIds;
-      const labels = labelIds.map((lId) =>
-        allLabels.find((label) => label.id === lId)
+      const labels = labelIds.map(lId =>
+        allLabels.find(label => label.id === lId)
       );
-      return labels.filter((label) => label); //filter invalid labels
+      return labels.filter(label => label); //filter invalid labels
     },
     bgColor() {
       return this.cardToEdit.style.isDark ? "#ffffff3d" : "#00000014";
@@ -537,8 +490,8 @@ export default {
     },
     checkJoined() {
       const user = this.$store.getters.user;
-      return this.cardToEdit.members.find((u) => u._id === user._id);
-    },
+      return this.cardToEdit.members.find(u => u._id === user._id);
+    }
     // topCoverStyle(){
     //   return{top:'50px !important', left: 'unset'}
     // }
@@ -571,20 +524,18 @@ export default {
     },
     async updateAttach() {
       const idx = this.cardToEdit.attachments.findIndex(
-        (currAttach) => currAttach.id === this.attachToEdit.id
+        currAttach => currAttach.id === this.attachToEdit.id
       );
       this.cardToEdit.attachments.splice(idx, 1, this.attachToEdit);
       try {
-        const activityText = `updated ${
-          this.attachToEdit.name ||
+        const activityText = `updated ${this.attachToEdit.name ||
           this.attachToEdit.file ||
-          this.attachToEdit.url
-        } attachment of `;
+          this.attachToEdit.url} attachment of `;
         console.log("activityText", activityText);
         await this.updateCard(activityText);
         this.openEditAttach = false;
         this.attachToEdit = {
-          name: "",
+          name: ""
         };
         console.log(this.card);
       } catch (err) {
@@ -597,12 +548,12 @@ export default {
     },
     deleteAttach(attach) {
       const idx = this.cardToEdit.attachments.findIndex(
-        (attachment) => attachment.id === attach.id
+        attachment => attachment.id === attach.id
       );
       this.cardToEdit.attachments.splice(idx, 1);
-      const activityText = `deleted ${
-        attach.name || attach.file || attach.href
-      } attachment from `;
+      const activityText = `deleted ${attach.name ||
+        attach.file ||
+        attach.href} attachment from `;
       console.log("activityText", activityText);
       this.updateCard(activityText);
     },
@@ -638,9 +589,9 @@ export default {
       this.cardToEdit.attachments.push(newAttach);
       try {
         console.log("newAttach", newAttach);
-        const activityText = `added ${
-          newAttach.name || newAttach.file || newAttach.href
-        } attachment to `;
+        const activityText = `added ${newAttach.name ||
+          newAttach.file ||
+          newAttach.href} attachment to `;
         console.log("activityText", activityText);
         await this.updateCard(activityText);
       } catch (err) {
@@ -654,15 +605,21 @@ export default {
     // async updateCard(ev, activityText) {
     async updateCard(activityText) {
       this.isEditDesc = false;
+      const user = this.$store.getters.user;
       const activity = {
         id: "act" + utilService.makeId(),
         txt: activityText,
         createdAt: Date.now(),
-        byMember: this.$store.getters.user,
+        byMember: {
+          imgUrl: user.imgUrl ? user.imgUrl : "",
+          fullname: user.fullname,
+          _id: user._id
+        },
         card: {
           id: this.cardToEdit.id,
-          title: this.cardToEdit.title,
+          title: this.cardToEdit.title
         },
+        listTitle: this.list.title
       };
       try {
         await this.$store.dispatch({
@@ -670,7 +627,7 @@ export default {
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
           card: JSON.parse(JSON.stringify(this.cardToEdit)),
-          activity,
+          activity
         });
         // if (ev) ev.target.blur();
         // this.$emit('reload')
@@ -685,7 +642,7 @@ export default {
           type: "removeCard",
           boardId: this.boardId,
           list: JSON.parse(JSON.stringify(this.list)),
-          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id)),
+          cardId: JSON.parse(JSON.stringify(this.cardToEdit.id))
         });
         this.closeModal();
       } catch (err) {
@@ -733,7 +690,7 @@ export default {
     },
     async updateCL(checklist) {
       const idx = this.cardToEdit.checklists.findIndex(
-        (cl) => cl.id === checklist.id
+        cl => cl.id === checklist.id
       );
       if (checklist.title) this.cardToEdit.checklists.splice(idx, 1, checklist);
       else this.cardToEdit.checklists.splice(idx, 1);
@@ -754,7 +711,7 @@ export default {
     async updateMembers(members) {
       this.cardToEdit.members = members;
       const activityText = `updated members of `;
-      console.log("activityText", activityText);
+      // console.log("activityText", activityText);
       await this.updateCard(activityText);
     },
     toggleLabels() {
@@ -767,7 +724,7 @@ export default {
       const activityText = `joined as member to `;
       console.log("activityText", activityText);
       this.updateCard(activityText);
-    },
+    }
   },
   components: {
     checklist,
@@ -779,8 +736,8 @@ export default {
     // coverMenu,
     cardMembers,
     Avatar,
-    activityItem,
-  },
+    activityItem
+  }
 };
 </script>
 

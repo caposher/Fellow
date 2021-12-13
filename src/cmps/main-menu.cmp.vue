@@ -71,11 +71,11 @@
         </h3>
       </li>
     </ul>
-      <ul v-for="(activity,idx) in getLatestActivities" :key="activity.id" class="menu-act-list">
+      <!-- <ul v-for="(activity,idx) in getLatestActivities" :key="activity.id" class="menu-act-list">
       <li>
          <activity-item :activity="activity" :idx="idx" :inCard="false" />
         </li>
-      </ul>
+      </ul> -->
 
     <!-- Change background -->
     <section v-show="isChangeColor" class="card-popup main-menu">
@@ -256,11 +256,11 @@ export default {
     membersToShow() {
       return this.$store.getters.board.members;
     },
-        getLatestActivities() {
-      // console.log('this.activities.', this.activities);
-      // return this.activities.slice(0, 10);
-      return this.$store.getters.getActivities;
-    },
+    //     getLatestActivities() {
+    //   // console.log('this.activities.', this.activities);
+    //   // return this.activities.slice(0, 10);
+    //   return this.$store.getters.getActivities;
+    // },
   },
   components: {
     Avatar,

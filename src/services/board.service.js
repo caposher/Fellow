@@ -252,7 +252,7 @@ async function setBackground(boardId, style) {
   }
 }
 
-function getActivity(txt, type, card = null) {
+function getActivity(txt, card = null) {
   const user = userService.getLoggedInUser();
   const activity = {
     id: 'act' + utilService.makeId(),
@@ -269,7 +269,6 @@ function getActivity(txt, type, card = null) {
           title: card.title,
         }
       : null,
-    type,
   };
   return activity;
 }

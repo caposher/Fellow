@@ -7,11 +7,11 @@
         <span class="close-popup icon-md icon-close"></span>
       </div>
     </header>
-    <section class="notification-body">
+    <!-- <section class="notification-body">
       <section v-for="(activity,idx) in getLatestActivities" :key="activity.id">
         <activity-item :activity="activity" :idx="idx" :inCard="false" />
       </section>
-    </section>
+    </section> -->
   </section>
 </template>
 
@@ -22,9 +22,9 @@ export default {
     showPopup: {
       type: Boolean,
     },
-    // activities: {
-    //   type: Array,
-    // },
+    activities: {
+      type: Array,
+    },
   },
   created(){
 // console.log(this.activities);

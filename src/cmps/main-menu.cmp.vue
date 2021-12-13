@@ -52,10 +52,8 @@
       </li>-->
     </ul>
 
-    <span class="menu-br"></span>
-
-    <ul class="activity">
-      <li class="menu-action" @click="showAct = !showAct">
+    <ul class="menu-action main-menu-activities">
+      <li class="" @click="showAct = !showAct">
         <h3><span class="menu-action-icon icon-lg icon-activity"></span>Activity</h3>
       </li>
     </ul>

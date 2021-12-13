@@ -1,7 +1,11 @@
 <template>
   <header class="main-header">
     <div class="left-container">
-      <router-link class="logo" :to="$route.path !== '/home' ? '/home' : ''" aria-label="Back to home">
+      <router-link
+        class="logo"
+        :to="$route.path !== '/home' ? '/home' : ''"
+        aria-label="Back to home"
+      >
         <span>
           <logo />
         </span>
@@ -11,12 +15,19 @@
       <!-- <button>Recent <i class="fas fa-chevron-down"></i></button> -->
       <!-- <button>Starred <i class="fas fa-chevron-down"></i></button> -->
       <!-- <button>Templates <i class="fas fa-chevron-down"></i></button> -->
-      <button>Create</button>
+      <button @click="onAddBoard">Create</button>
     </div>
     <div class="container">
       <div class="input-container">
         <i class="fas fa-search search-icon"></i>
-        <input autocomplete="off" autocorrect="off" spellcheck="false" type="search" placeholder="Search..." value />
+        <input
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          type="search"
+          placeholder="Search..."
+          value
+        />
       </div>
       <button class="header-bell" :class="notify" @click="toggleNotification">
         <span>
@@ -50,12 +61,16 @@
 </template>
 
 <script>
-import Avatar from 'vue-avatar';
-import logo from '../cmps/logo.cmp.vue';
-import userPopup from '../cmps/user-popup.cmp.vue';
-import notificationPopup from '../cmps/notification-popup.cmp.vue';
+import Avatar from "vue-avatar";
+import logo from "../cmps/logo.cmp.vue";
+import userPopup from "../cmps/user-popup.cmp.vue";
+import notificationPopup from "../cmps/notification-popup.cmp.vue";
+// import { focus } from "vue-focus";
+import addBoard from "@/cmps/add-board.cmp.vue";
+
 
 export default {
+  // directives: { focus },
   data() {
     return {
       showUserPopup: false,
@@ -65,7 +80,10 @@ export default {
   methods: {
     toggleNotification() {
       this.showNotifyPopup = !this.showNotifyPopup;
-      this.$store.commit({ type: 'resetNotification' });
+      this.$store.commit({ type: "resetNotification" });
+    },
+    onAddBoard(){
+this.$emit('addBoard')
     },
   },
   computed: {
@@ -73,14 +91,15 @@ export default {
       return this.$store.getters.user;
     },
     notify() {
-      return this.$store.getters.getNotificationCnt > 0 ? 'bell-notify' : '';
-    },
+      return this.$store.getters.getNotificationCnt > 0 ? "bell-notify" : "";
+    }
   },
   components: {
     logo,
     Avatar,
     userPopup,
     notificationPopup,
-  },
+    addBoard
+  }
 };
 </script>

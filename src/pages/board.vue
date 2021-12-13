@@ -4,7 +4,8 @@
     :class="{ 'display-modal': selectedCardId }"
     class="board-app"
   >
-    <app-header />
+    <app-header @addBoard="onAddBoard=true"/>
+     <add-board v-show="onAddBoard" @close="onAddBoard=false" />
     <workspace-nav @openBar="onOpenBar" />
     <board-header
       @updateBoard="updateBoard"
@@ -96,6 +97,7 @@
 </template>
 
 <script>
+import addBoard from "../cmps/add-board.cmp.vue"
 import appHeader from "../cmps/app-header.cmp.vue";
 import boardHeader from "../cmps/board-header.cmp.vue";
 import mainMenu from "../cmps/main-menu.cmp.vue";
@@ -116,6 +118,7 @@ export default {
       isAddList: false,
       newListTitle: "",
       openBar: false,
+      onAddBoard:false,
       // dragging: false,
       showDashboard: false,
     };
@@ -357,6 +360,7 @@ export default {
     Draggable,
     appHeader,
     dashBoard,
+    addBoard
   },
 };
 </script>

@@ -200,7 +200,7 @@ export const boardStore = {
       try {
         const updatedBoard = await boardService.save(board);
         commit({ type: 'setBoard', board: updatedBoard });
-        console.log('activity', updatedBoard.activities);
+        // console.log('activity', updatedBoard.activities);
 
         return updatedBoard;
       } catch (err) {

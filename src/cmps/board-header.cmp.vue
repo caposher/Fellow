@@ -40,7 +40,7 @@
       </span>
       <button @click="openInvite = true" class="invite-btn bh-btn">
         <span class="icon-sm icon-add-member icon-header"></span>
-        <p>Invite</p>
+        <p class="invite-txt">Invite</p>
 
         <!-- <span>Invite</span> -->
         <invite v-if="openInvite" @close="openInvite = false" @update="inviteMembers" />

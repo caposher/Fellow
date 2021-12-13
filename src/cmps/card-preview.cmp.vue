@@ -37,7 +37,7 @@
         @input="checkHeight"
         v-model="cardToEdit.title"
       ></textarea>
-    </section> -->
+//    </section>-->
     <section class="card-icons">
       <div class="icon-wrapper" v-if="card.isWatch">
         <span class="icon-sm icon-watch badge"></span>
@@ -79,6 +79,7 @@ import { focus } from 'vue-focus';
 import Avatar from 'vue-avatar';
 import { Container, Draggable } from 'vue-smooth-dnd';
 import { utilService } from '../services/util.service.js';
+import { userService } from '../services/user.service';
 
 export default {
   directives: { focus },
@@ -136,7 +137,12 @@ export default {
         id: 'act' + utilService.makeId(),
         txt: activityText,
         createdAt: Date.now(),
-        byMember: this.$store.getters.user,
+        byMember: {
+          imgUrl: this.user.imgUrl ? this.user.imgUrl : '',
+          fullname: this.user.fullname,
+          _id: this.user._id
+        },
+        listTitle: this.list.title,
         card: {
           id: this.card.id,
           title: this.card.title,
@@ -196,6 +202,9 @@ export default {
         });
       }
       return todos;
+    },
+    user(){
+return this.$store.getters.user
     },
     dateClass() {
       if (!this.card.dueDate) return;

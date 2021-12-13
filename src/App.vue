@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import appHeader from "@/cmps/app-header.cmp.vue";
 
 export default {
   data() {

@@ -10,13 +10,13 @@
       input {
         border: none;
         background-color: rgba(64, 224, 208, 0);
-        max-width: 125px;
+        max-width: 151px;
         max-height: 32px;
         
         padding: 2px;
-        // &.input{
-        //   display: none;
-        // }
+        &::placeholder{
+          display: none;
+        }
       }
       .icon-sm {
         color: #172b4d;

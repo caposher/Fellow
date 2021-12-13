@@ -80,7 +80,7 @@
   }
 
   .menu-action {
-    margin-bottom: -5px;
+    margin-bottom: -1px;
 
     .icon-img {
       height: 0;
@@ -247,6 +247,7 @@
 
   .main-menu-members-container {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     padding: 0 0 8px 7px;
 

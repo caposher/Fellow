@@ -711,7 +711,7 @@ export default {
     async updateMembers(members) {
       this.cardToEdit.members = members;
       const activityText = `updated members of `;
-      console.log("activityText", activityText);
+      // console.log("activityText", activityText);
       await this.updateCard(activityText);
     },
     toggleLabels() {

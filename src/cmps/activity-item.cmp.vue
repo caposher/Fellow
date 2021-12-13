@@ -45,9 +45,9 @@ export default {
     };
   },
   created() {
-    console.log("activity", this.activity);
-    console.log("idx", this.idx);
-    console.log("inCard", this.inCard);
+    // console.log("activity", this.activity);
+    // console.log("idx", this.idx);
+    // console.log("inCard", this.inCard);
   },
   methods: {
     timeToShow(timeStamp) {
@@ -84,15 +84,15 @@ export default {
     activeLink() {
       if (!this.activity.card) return false
       const board = this.$store.getters.board;
-      console.log("board", board);
+      // console.log("board", board);
       const cardId = this.activity.card.id;
       const list = board.lists.find(list => {
         return list.cards.find(card => card.id === cardId);
       });
-      console.log("list", list);
+      // console.log("list", list);
       if (!list) return false;
       const card = list.cards.find(card => card.id === cardId);
-      console.log("card", card);
+      // console.log("card", card);
       if (!card) return false;
       return true
     }

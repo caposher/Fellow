@@ -73,7 +73,7 @@ export const boardStore = {
       state.notification.updatesCount++;
       state.notification.lastUpdate = Date.now();
 
-      console.log('new update:', state.notification);
+      // console.log('new update:', state.notification);
     },
     resetNotification(state) {
       state.notification.updatesCount = 0;
@@ -209,8 +209,8 @@ export const boardStore = {
     },
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
-      const activityText = `created`;
-      var activity = boardService.getActivity(activityText,'add', card);
+      const activityText = `created `;
+      var activity = boardService.getActivity(activityText, card);
       
       board.activities.push(activity);
       list.cards.push(card);

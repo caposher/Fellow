@@ -209,6 +209,7 @@ export const boardStore = {
     },
     async addCard({ commit }, { board, list, title }) {
       const card = boardService.getEmptyCard(title);
+      list.cards.push(card);
       const activityText = `created `;
       var activity = boardService.getActivity(activityText, card);
 

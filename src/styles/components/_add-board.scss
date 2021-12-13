@@ -93,7 +93,7 @@
           position: absolute;
         //   right: 110px;
         right: 6px;
-          top: 3px;
+          top: 12px;
           background-color: transparent;
           border: none;
           box-shadow: none;
@@ -101,6 +101,10 @@
           padding: 0;
           text-decoration: none;
           cursor: pointer;
+          svg{
+          color: #fff;
+
+          }
         }
       }
     }

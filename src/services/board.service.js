@@ -170,7 +170,7 @@ function getEmptyBoard(title, user) {
     createdBy: user,
     style: {
       imgUrl:
-        'https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2400x1600/e1b4d655b33c1ef09b9aea6c6360f70c/photo-1637928114342-05b15ee4034e.jpg',
+        'https://images.unsplash.com/photo-1599940824219-e6aa9be5fba2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwyMXx8d29vZHN8ZW58MHx8fHwxNjM5NDA1OTYw&ixlib=rb-1.2.1&q=80&w=1080',
       isDark: true,
     },
     labels: [

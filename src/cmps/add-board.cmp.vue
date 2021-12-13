@@ -3,7 +3,7 @@
     <!-- <div class="add" @click.stop="onAddBoard = true">
       <div>Create new board</div>
       <div>{{ 10 - boards.length }} remaining</div>
-    </div> -->
+    </div>-->
 
     <div class="add-board-screen" @click.stop="close">
       <section class="add-board" @click.stop>
@@ -11,7 +11,8 @@
           class="add-title"
           style="
                     background-color: rgb(0, 121, 191);
-                    background-image: url('https://images.unsplash.com/photo-1632042704576-7ae3ef405c78?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=Mnw3MDY2fDB8MXxjb2xsZWN0aW9ufDF8MzE3MDk5fHx8fHwyfHwxNjM4OTUxODI5&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=400');
+                 
+                    background-image: url('https://images.unsplash.com/photo-1599940824219-e6aa9be5fba2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyODA4Mzl8MHwxfHNlYXJjaHwyMXx8d29vZHN8ZW58MHx8fHwxNjM5NDA1OTYw&ixlib=rb-1.2.1&q=80&w=1080');
                   "
         >
           <input
@@ -27,11 +28,7 @@
             @keydown.enter="createBoard"
           />
         </div>
-        <button
-          class="close _3eEh_cvwCUDPos MojEVyztONxhst"
-          aria-label="Close"
-          @click.stop="close"
-        >
+        <button class="close _3eEh_cvwCUDPos MojEVyztONxhst" aria-label="Close" @click.stop="close">
           <span class="nch-icon _3W-26fmi3tFfon j0fswhntKdStWa">
             <span class="sc-bdVaJa kBFJig" role="img" aria-label="CloseIcon">
               <svg
@@ -72,42 +69,47 @@ export default {
   directives: { focus },
 
   name: "Home",
+  props: {
+    onAddBoard: {
+      type: Boolean
+    }
+  },
   data() {
     return {
-      onAddBoard: true,
+      // onAddBoard: false,
       emptyTitle: true
     };
   },
-  async created() {},
+  async created() {
+    // this.onAddBoard = true;
+  },
   computed: {
     boards() {
       var boards = this.$store.getters.boards;
       return boards;
-    },
+    }
   },
   methods: {
     checkTitle(ev) {
       if (ev.target.value) this.emptyTitle = false;
       else this.emptyTitle = true;
     },
-    close(){
-this.$emit('close')
+    close() {
+      // this.onAddBoard = false;
+      this.$emit("close");
     },
 
     async createBoard() {
       if (this.emptyTitle) return;
-      this.onAddBoard = false;
+      // this.onAddBoard = false;
       const title = this.$refs.title.value;
       if (this.boards.length === 10) return;
-      // // const title = prompt("add title");
-      // if (!title) return;
-
       try {
         const board = await this.$store.dispatch({
           type: "createBoard",
           title
         });
-        this.$emit('close')
+        this.$emit("close");
         this.$router.push("/b/" + board._id);
       } catch (err) {
         console.log("cant get new board", err);
@@ -122,7 +124,6 @@ this.$emit('close')
       }
     }
   },
-  components: {
-  }
+  components: {}
 };
 </script>

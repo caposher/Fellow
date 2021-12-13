@@ -72,7 +72,7 @@
                 <div>{{ 10 - boards.length }} remaining</div>
               </div>
             </ul>
-            <add-board v-show="onAddBoard" @close="onAddBoard=false" />
+            <add-board v-show="onAddBoard" @close="onAddBoard=false" :onAddBoard="onAddBoard" />
           </div>
         </div>
       </div>

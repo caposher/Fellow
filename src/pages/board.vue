@@ -5,7 +5,7 @@
     class="board-app"
   >
     <app-header @addBoard="onAddBoard=true"/>
-     <add-board v-show="onAddBoard" @close="onAddBoard=false" />
+     <add-board v-show="onAddBoard" @close="onAddBoard=false" :onAddBoard="onAddBoard"/>
     <workspace-nav @openBar="onOpenBar" />
     <board-header
       @updateBoard="updateBoard"

@@ -175,8 +175,8 @@
       padding-right: 10px;
       margin-left: -2px;
     }
-    p {
-      // opacity: 0;
+    .invite-txt {
+      opacity: 0;
     }
 
     @media (min-width: 700px) {
@@ -184,7 +184,7 @@
       span {
         padding-right: 0;
       }
-      p {
+      .invite-txt {
         opacity: 1;
         padding: 0;
       }

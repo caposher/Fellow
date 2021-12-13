@@ -10,18 +10,14 @@
     <!-- main actions -->
     <ul class="main-menu-actions">
       <li class="menu-about">
-        <h3>
-          <span class="menu-action-icon icon-lg icon-board"></span> About this board
-        </h3>
+        <h3><span class="menu-action-icon icon-lg icon-board"></span> About this board</h3>
       </li>
       <li class="menu-action" @click="isChangeColor = true">
         <span class="icon-img" :style="styleToShow"></span>
         <h3>Change background</h3>
       </li>
       <li class="menu-action" @click="openDashboard">
-        <h3>
-          <span class="menu-action-icon icon-lg icon-home"></span>Dashboard
-        </h3>
+        <h3><span class="menu-action-icon icon-lg icon-home"></span>Dashboard</h3>
       </li>
     </ul>
 
@@ -30,9 +26,7 @@
     <!-- side actions -->
     <ul class="action-board">
       <li class="menu-action">
-        <h3>
-          <span class="menu-action-icon icon-md icon-members"></span>Members
-        </h3>
+        <h3><span class="menu-action-icon icon-md icon-members"></span>Members</h3>
         <section class="main-menu-members-container">
           <avatar
             v-for="(member, index) in membersToShow"
@@ -48,14 +42,10 @@
         </section>
       </li>
       <li class="menu-action" @click="showUserPopup = true">
-        <h3>
-          <span class="menu-action-icon icon-md icon-member"></span>User account
-        </h3>
+        <h3><span class="menu-action-icon icon-md icon-member"></span>User account</h3>
       </li>
       <li class="menu-action" @click="deleteBoard">
-        <h3>
-          <span class="menu-action-icon icon-md icon-archive"></span>Archive board
-        </h3>
+        <h3><span class="menu-action-icon icon-md icon-archive"></span>Archive board</h3>
       </li>
       <!-- <li class="menu-action" @click="showAct=!showAct">
         <h3><span class="menu-action-icon icon-md icon-activity"></span>Activity</h3>
@@ -65,17 +55,15 @@
     <span class="menu-br"></span>
 
     <ul class="activity">
-      <li class="menu-action" @click="showAct=!showAct">
-        <h3>
-          <span class="menu-action-icon icon-lg icon-activity"></span>Activity
-        </h3>
+      <li class="menu-action" @click="showAct = !showAct">
+        <h3><span class="menu-action-icon icon-lg icon-activity"></span>Activity</h3>
       </li>
     </ul>
-      <ul v-for="(activity,idx) in getLatestActivities" :key="activity.id" class="menu-act-list">
-      <li>
+    <ul v-for="(activity, idx) in getLatestActivities" :key="activity.id" class="menu-act-list">
+      <!-- <li>
          <activity-item :activity="activity" :idx="idx" :inCard="false" />
-        </li>
-      </ul>
+        </li> -->
+    </ul>
 
     <!-- Change background -->
     <section v-show="isChangeColor" class="card-popup main-menu">
@@ -115,11 +103,7 @@
       </header>
       <ul class="menu-color-set">
         <li v-for="color in colorSet" :key="color">
-          <div
-            @click="setBg(color)"
-            class="menu-background-size"
-            :style="{ backgroundColor: color }"
-          ></div>
+          <div @click="setBg(color)" class="menu-background-size" :style="{ backgroundColor: color }"></div>
         </li>
       </ul>
     </section>
@@ -155,10 +139,10 @@
 </template>
 
 <script>
-import FastAverageColor from "fast-average-color";
-import Avatar from "vue-avatar";
-import userPopup from "../cmps/user-popup.cmp.vue";
-import activityItem from "../cmps/activity-item.cmp.vue";
+import FastAverageColor from 'fast-average-color';
+import Avatar from 'vue-avatar';
+import userPopup from '../cmps/user-popup.cmp.vue';
+import activityItem from '../cmps/activity-item.cmp.vue';
 
 export default {
   data() {
@@ -166,20 +150,10 @@ export default {
       isChangeColor: false,
       isColorSelected: false,
       isPhotosSelected: false,
-      searchKey: "",
-      colorSet: [
-        "#0079bf",
-        "#d29134",
-        "#519839",
-        "#b04632",
-        "#89609e",
-        "#cd5a91",
-        "#4bbf6b",
-        "#13aecc",
-        "#838c91"
-      ],
-      loading: "",
-      showAct: false
+      searchKey: '',
+      colorSet: ['#0079bf', '#d29134', '#519839', '#b04632', '#89609e', '#cd5a91', '#4bbf6b', '#13aecc', '#838c91'],
+      loading: '',
+      showAct: false,
     };
   },
 
@@ -187,17 +161,17 @@ export default {
     requestPhotos() {
       this.isPhotosSelected = true;
       this.$store.dispatch({
-        type: "requestPhotos",
-        searchKey: this.searchKey
+        type: 'requestPhotos',
+        searchKey: this.searchKey,
       });
     },
     async setBg(val) {
       let style;
-      if (val.charAt(0) === "#") {
+      if (val.charAt(0) === '#') {
         style = {
           imgUrl: null,
           bgColor: val,
-          isDark: true
+          isDark: true,
         };
       } else {
         this.loading = val;
@@ -206,45 +180,45 @@ export default {
         style = {
           imgUrl: val,
           bgColor: color.rgba,
-          isDark: color.isDark
+          isDark: color.isDark,
         };
       }
       try {
-        console.log("style", style);
+        console.log('style', style);
         const boardId = this.$store.getters.boardId;
-        await this.$store.dispatch({ type: "setBackground", boardId, style });
+        await this.$store.dispatch({ type: 'setBackground', boardId, style });
         //  const filterBy = {user: this.$store.getters.user}
         // await this.$store.dispatch({ type: 'loadBoards' , filterBy});
-        await this.$store.dispatch({ type: "loadBoards" });
-        this.loading = "";
+        await this.$store.dispatch({ type: 'loadBoards' });
+        this.loading = '';
       } catch (err) {
-        console.log("cant set board bg", err);
+        console.log('cant set board bg', err);
       }
     },
     openDashboard() {
-      this.$store.commit({ type: "toggleDashboard" });
+      this.$store.commit({ type: 'toggleDashboard' });
       this.closeMenu();
     },
     closeMenu() {
-      this.$emit("close");
+      this.$emit('close');
       this.isChangeColor = false;
       this.isColorSelected = false;
       this.isPhotosSelected = false;
-      this.searchKey = "";
+      this.searchKey = '';
     },
     deleteBoard() {
-      this.$emit("deleteBoard");
-    }
+      this.$emit('deleteBoard');
+    },
   },
   computed: {
     styleToShow() {
       if (!this.boardStyle) return;
       if (this.boardStyle.imgUrl)
         return {
-          backgroundImage: `url("${this.boardStyle.imgUrl}")`
+          backgroundImage: `url("${this.boardStyle.imgUrl}")`,
         };
       return {
-        backgroundColor: this.boardStyle.bgColor
+        backgroundColor: this.boardStyle.bgColor,
       };
     },
     boardStyle() {
@@ -256,7 +230,7 @@ export default {
     membersToShow() {
       return this.$store.getters.board.members;
     },
-        getLatestActivities() {
+    getLatestActivities() {
       // console.log('this.activities.', this.activities);
       // return this.activities.slice(0, 10);
       return this.$store.getters.getActivities;
@@ -265,7 +239,7 @@ export default {
   components: {
     Avatar,
     userPopup,
-    activityItem
-  }
+    activityItem,
+  },
 };
 </script>

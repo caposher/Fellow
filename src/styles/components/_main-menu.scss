@@ -203,11 +203,12 @@
   }
 
   .menu-act-list {
+    width: 100%;
     .activity-item {
       background-color: violet;
       // margin-left: 40px;
       min-height: 72px;
-      padding: 8px 0;
+      // padding: 8px 0;
       position: relative;
       .vue-avatar--wrapper {
         // left: 0;
@@ -279,6 +280,12 @@
     &:hover {
       cursor: unset;
       background-color: rgba(0, 0, 0, 0%);
+    }
+
+    span {
+      margin: 0;
+      color: white;
+      font-size: 12px;
     }
   }
 }
